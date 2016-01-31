@@ -4197,6 +4197,645 @@
             </h:form>
         </p:dialog>
 
+         <!--******************************************************************** 
+        ********* Pantalla mantenimiento de Grupos de Seguridad *****************
+        *********************************************************************-->
+
+        <p:dialog  id="dlgGrupo" widgetVar="wGrupo" modal="true" 
+                   width="440" height="290" closable="false" resizable="false" 
+                   header="Mantenimiento de Grupos" rendered="true" 
+                   dynamic="false" visible="false" 
+                   >
+
+            <h:form id="frmGrupo"> 
+                <p:growl id="msgGrupo" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manGrupos.nuevo()}"
+                                         update=":frmGrupo"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         actionListener="#{manGrupos.guardar()}"
+                                         update=":frmGrupo"
+                                         icon="ui-icon-disk"
+                                         > 
+                            <p:confirm header="Guardar Registro" 
+                                       message="¿Realmente desea Guardar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         actionListener="#{manGrupos.eliminar()}"
+                                         update=":frmGrupo"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wGrupo').hide()"
+                                         actionListener="#{manGrupos.cerrarventana()}"
+                                         update=":frmGrupo"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+
+                <p:panel>
+                    <div style=" background-color:  #666666;">
+                        <p:focus for="txtdescripciongrupo" />
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value="Nombre" style="font-weight:bold;"/>
+                            <p:inputText id="txtdescripciongrupo" 
+                                         size="50"
+                                         maxlength="50"
+                                         value="#{manGrupos.des_grp}"
+                                         onfocus="this.select()"
+                                         />
+                        </h:panelGrid>
+                    </div>
+                </p:panel>
+
+                <p:panel>
+                    <p:dataTable id="dtGrupo" var="vGrupo" 
+                                 value="#{manGrupos.grupos}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manGrupos.catgrupos}" 
+                                 rowKey="#{vGrupo.id_grp}"
+                                 editable="false" 
+                                 scrollable="true"
+                                 scrollHeight="120"
+                                 style="width:380px"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manGrupos.onRowSelect}" 
+                                update=":frmGrupo"/>
+                        <p:ajax event="rowUnselect"/>
+
+                        <p:column style="width:30px" headerText="Id">
+                            <h:outputText value="#{vGrupo.id_grp}" />
+                        </p:column>
+                        <p:column style="width:300px" headerText="Nombre">
+                            <h:outputText value="#{vGrupo.des_grp}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </p:dialog>
+         
+
+         <!--******************************************************************** 
+        ****** Pantalla mantenimiento de Controles de aplicacion ***************
+        *********************************************************************-->
+
+        <p:dialog  id="dlgControl" widgetVar="wControl" modal="true" 
+                   width="540" height="390" closable="false" resizable="false" 
+                   header="Mantenimiento de Controles" rendered="true" 
+                   dynamic="false" visible="false" 
+                   >
+
+            <h:form id="frmControl"> 
+                <p:growl id="msgControl" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manControles.nuevo()}"
+                                         update=":frmControl"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         actionListener="#{manControles.guardar()}"
+                                         update=":frmControl"
+                                         icon="ui-icon-disk"
+                                         > 
+                            <p:confirm header="Guardar Registro" 
+                                       message="¿Realmente desea Guardar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         actionListener="#{manControles.eliminar()}"
+                                         update=":frmControl"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wControl').hide()"
+                                         actionListener="#{manControles.cerrarventana()}"
+                                         update=":frmControl"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+
+                <p:panel>
+                    <div style=" background-color:  #666666;">
+                        <p:focus for="ommodulocontrol" />
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value="Modulo" style="font-weight:bold;" />
+                            <p:selectOneMenu id="ommodulocontrol" value="#{manControles.id_mod}" style=" width: 150px;">
+                                <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                <f:selectItems value="#{manControles.modulos}" var="modusu"
+                                           itemLabel="#{modusu.des_mod}" itemValue="#{modusu.id_mod}"/> 
+                            </p:selectOneMenu>
+                            <h:outputText value="Identificador" style="font-weight:bold;"/>
+                            <p:inputText id="txtsidcontrol" 
+                                         size="50"
+                                         maxlength="50"
+                                         value="#{manControles.sid_ctrl}"
+                                         onfocus="this.select()"
+                                         />
+                            <h:outputText value="Descripción" style="font-weight:bold;"/>
+                            <p:inputText id="txtdescripcioncontrol" 
+                                         size="70"
+                                         maxlength="150"
+                                         value="#{manControles.ctrl_desc}"
+                                         onfocus="this.select()"
+                                         />
+                        </h:panelGrid>
+                    </div>
+                </p:panel>
+
+                <p:panel>
+                    <p:dataTable id="dtControl" var="vControl" 
+                                 value="#{manControles.controles}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manControles.catcontroles}" 
+                                 rowKey="#{vControl.cod_ctrl}"
+                                 editable="false" 
+                                 scrollable="true"
+                                 scrollHeight="120"
+                                 style="width:480px"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manControles.onRowSelect}" 
+                                update=":frmControl"/>
+                        <p:ajax event="rowUnselect"/>
+
+                        <p:column style="width:30px" headerText="Id">
+                            <h:outputText value="#{vControl.cod_ctrl}" />
+                        </p:column>
+                        <p:column style="width:50px" headerText="Modulo">
+                            <h:outputText value="#{vControl.modulo}" />
+                        </p:column>
+                        <p:column style="width:80px" headerText="Nombre">
+                            <h:outputText value="#{vControl.sid_ctrl}" />
+                        </p:column>
+                        <p:column style="width:200px" headerText="Descripción">
+                            <h:outputText value="#{vControl.ctrl_desc}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </p:dialog>
+
+         
+          <!--******************************************************************** 
+        ****** Pantalla de Asignación de usuarios a grupos *********
+        *********************************************************************-->
+
+        <p:dialog  id="dlgUsrGrp" widgetVar="wUsrGrp" modal="true" 
+                   width="540" height="390" closable="false" resizable="false" 
+                   header="Asignación de Usuarios a Grupos" rendered="true" 
+                   dynamic="false" visible="false" 
+                   >
+
+            <h:form id="frmUsrGrp"> 
+                <p:growl id="msgUsrGrp" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manUserGroup.nuevo()}"
+                                         update=":frmUsrGrp"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         actionListener="#{manUserGroup.guardar()}"
+                                         update=":frmUsrGrp"
+                                         icon="ui-icon-disk"
+                                         > 
+                            <p:confirm header="Guardar Registro" 
+                                       message="¿Realmente desea Guardar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         actionListener="#{manUserGroup.eliminar()}"
+                                         update=":frmUsrGrp"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wUsrGrp').hide()"
+                                         actionListener="#{manUserGroup.cerrarventana()}"
+                                         update=":frmUsrGrp"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+
+                <p:panel>
+                    <div style=" background-color:  #666666;">
+                        <p:focus for="omgrupousrgrp" />
+                        <h:panelGrid columns="4" cellpadding="5">
+                            <h:outputText value="Grupo" style="font-weight:bold;" />
+                            <p:selectOneMenu id="omgrupousrgrp" value="#{manUserGroup.id_grp}" style=" width: 200px;">
+                                <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                <f:selectItems value="#{manUserGroup.grupos}" var="manusrgrpgroup"
+                                               itemLabel="#{manusrgrpgroup.des_grp}" itemValue="#{manusrgrpgroup.id_grp}"/> 
+                            </p:selectOneMenu>
+                            
+                            <h:outputText value="Usuario" style="font-weight:bold;" />
+                            <p:selectOneMenu id="omusuariousrgrp" value="#{manUserGroup.cod_usu}" style=" width: 125px;">
+                                <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                <f:selectItems value="#{manUserGroup.usuarios}" var="manusrgrpuser"
+                                               itemLabel="#{manusrgrpuser.nom_usu}" itemValue="#{manusrgrpuser.cod_usu}"/> 
+                            </p:selectOneMenu>
+                            
+                        </h:panelGrid>
+                    </div>
+                </p:panel>
+
+                <p:panel>
+                    <p:dataTable id="dtUsrGrp" var="vUsrGrp" 
+                                 value="#{manUserGroup.usergroup}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manUserGroup.catusergroup}" 
+                                 rowKey="#{vUsrGrp.id_usr_grp}"
+                                 editable="false" 
+                                 scrollable="true"
+                                 scrollHeight="120"
+                                 style="width:485px"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manUserGroup.onRowSelect}" 
+                                update=":frmUsrGrp"/>
+                        <p:ajax event="rowUnselect"/>
+
+                        <p:column style="width:30px" headerText="Id">
+                            <h:outputText value="#{vUsrGrp.id_usr_grp}" />
+                        </p:column>
+                        <p:column style="width:120px" headerText="Grupo">
+                            <h:outputText value="#{vUsrGrp.grupo}" />
+                        </p:column>
+                        <p:column style="width:100px" headerText="Usuario">
+                            <h:outputText value="#{vUsrGrp.usuario}" />
+                        </p:column>
+                        
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </p:dialog>
+
+          
+         <!--******************************************************************** 
+        **********    Pantalla de Registro de derechos de seguridad  ************
+        *********************************************************************-->
+
+        <p:dialog  id="dlgSecurity" widgetVar="wSecurity" modal="true" 
+                   width="640" height="450" closable="false" resizable="false" 
+                   header="Asignación de Permisos" rendered="true" 
+                   dynamic="false" visible="false" 
+                   >
+
+            <h:form id="frmSecurity"> 
+                <p:growl id="msgSecurity" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manSeguridad.nuevo()}"
+                                         update=":frmSecurity"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         actionListener="#{manSeguridad.guardar()}"
+                                         update=":frmSecurity"
+                                         icon="ui-icon-disk"
+                                         > 
+                            <p:confirm header="Guardar Registro" 
+                                       message="¿Realmente desea Guardar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         actionListener="#{manSeguridad.eliminar()}"
+                                         update=":frmSecurity"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wSecurity').hide()"
+                                         actionListener="#{manSeguridad.cerrarventana()}"
+                                         update=":frmSecurity"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+
+                <p:panel>
+                    <div style=" background-color:  #666666;">
+                        <p:focus for="ommodsecurity" />
+                        <h:panelGrid columns="4" cellpadding="5">
+                            <h:outputText value="Modulo" style="font-weight:bold;" />
+                            <p:selectOneMenu id="ommodsecurity" value="#{manSeguridad.id_mod}" style=" width: 150px;">
+                                <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                <f:selectItems value="#{manSeguridad.modulos}" var="manmodsecurity"
+                                               itemLabel="#{manmodsecurity.des_mod}" itemValue="#{manmodsecurity.id_mod}"/> 
+                            </p:selectOneMenu>
+                            
+                            <h:outputText value="Control" style="font-weight:bold;" />
+                            <p:selectOneMenu id="omctrlsecurity" value="#{manSeguridad.cod_ctrl}" style=" width: 250px;">
+                                <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                <f:selectItems value="#{manSeguridad.controles}" var="manctrlsecurity"
+                                               itemLabel="#{manctrlsecurity.ctrl_desc}" itemValue="#{manctrlsecurity.cod_ctrl}"/> 
+                            </p:selectOneMenu>
+                                                        
+                            <h:outputText value="Grupo" style="font-weight:bold;" />
+                            <p:selectOneMenu id="omgrpsecurity" value="#{manSeguridad.id_grp}" style=" width: 150px;">
+                                <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                <f:selectItems value="#{manSeguridad.grupos}" var="mangrpsecurity"
+                                               itemLabel="#{mangrpsecurity.des_grp}" itemValue="#{mangrpsecurity.id_grp}"/> 
+                            </p:selectOneMenu>
+                            <h:outputText value="Usuario" style="font-weight:bold;" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="omususecurity" value="#{manSeguridad.cod_usu}" style=" width: 150px;">
+                                    <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                    <f:selectItems value="#{manSeguridad.usuarios}" var="manususecurity"
+                                                   itemLabel="#{manususecurity.nom_usu}" itemValue="#{manususecurity.cod_usu}"/> 
+                                </p:selectOneMenu>
+                                 <p:spacer width="20"/>
+                                <h:outputLabel value="Activo: " style="font-weight:bold;" />
+                                <p:spacer width="10"/>
+                                <p:selectBooleanButton value="#{manSeguridad.activo}" onLabel="Si" offLabel="No" style="width:30px" />
+                            </h:panelGroup>
+                            
+                        </h:panelGrid>
+                    </div>
+                </p:panel>
+
+                <p:panel>
+                    <p:dataTable id="dtSecurity" var="vSecurity" 
+                                 value="#{manSeguridad.seguridad}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manSeguridad.catseguridad}" 
+                                 rowKey="#{vSecurity.cod_sec}"
+                                 editable="false" 
+                                 scrollable="true"
+                                 scrollHeight="120"
+                                 style="width:560px; height:280px "
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manSeguridad.onRowSelect}" 
+                                update=":frmSecurity"/>
+                        <p:ajax event="rowUnselect"/>
+
+                        <p:column style="width:30px" headerText="Id">
+                            <h:outputText value="#{vSecurity.cod_sec}" />
+                        </p:column>
+                        <p:column style="width:150px" headerText="Control">
+                            <h:outputText value="#{vSecurity.control}" />
+                        </p:column>
+                        <p:column style="width:100px" headerText="Grupo">
+                            <h:outputText value="#{vSecurity.grupo}" />
+                        </p:column>
+                        <p:column style="width:100px" headerText="Usuario">
+                            <h:outputText value="#{vSecurity.usuario}" />
+                        </p:column>
+                        <p:column style="width:70px; text-align:center;" headerText="Activo">
+                            <p:selectBooleanCheckbox value="#{vSecurity.activo}" />
+                        </p:column>                        
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </p:dialog>
+
+          <!--******************************************************************** 
+        ***************** Pantalla mantenimiento de Personal       ***************
+        *********************************************************************-->
+
+        <p:dialog  id="dlgPersonal" widgetVar="wPersonal" modal="true" 
+                   width="600" height="445" closable="false" resizable="false" 
+                   header="Control de Personal" rendered="true" 
+                   dynamic="false" visible="false" 
+                   >
+
+            <h:form id="frmPersonal"> 
+                <p:growl id="msgPersonal" showDetail="true" life="6500"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manPersonas.nuevo()}"
+                                         update=":frmPersonal"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         actionListener="#{manPersonas.guardar()}"
+                                         update=":frmPersonal"
+                                         icon="ui-icon-disk"
+                                         > 
+                            <p:confirm header="Guardar Registro" 
+                                       message="¿Realmente desea Guardar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         actionListener="#{manPersonas.eliminar()}"
+                                         update=":frmPersonal"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wPersonal').hide()"
+                                         actionListener="#{manPersonas.cerrarventana()}"
+                                         update=":frmPersonal"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+
+                <p:panel>
+                    <div style=" background-color: #D4DEDF;">
+                        <p:focus for="txtnombreper" />
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value="Nombres" style="font-weight:bold;"/>
+                            <h:panelGroup>
+                                <p:inputText id="txtnombreper" 
+                                         size="35"
+                                         maxlength="30"
+                                         value="#{manPersonas.nombres}"
+                                         onfocus="this.select()"
+                                         />
+                                <p:spacer width="20"/>
+                                <h:outputText value="Apellidos" style="font-weight:bold;"/>
+                                <p:spacer width="10"/>
+                                <p:inputText id="txtapellidosper" 
+                                         size="35"
+                                         maxlength="30"
+                                         value="#{manPersonas.apellidos}"
+                                         onfocus="this.select()"
+                                         />
+                            </h:panelGroup>
+                            <h:outputText value="Dirección" style="font-weight:bold;"/>
+                            <p:inputText id="txtdireccionper" 
+                                         size="90"
+                                         maxlength="150"
+                                         value="#{manPersonas.direccion}"
+                                         onfocus="this.select()"
+                                         />
+                            <h:outputText value="Teléfono" style="font-weight:bold;"/>
+                            <h:panelGroup>
+                                <p:inputText id="txttelefonoper" 
+                                             size="10"
+                                             maxlength="8"
+                                             value="#{manPersonas.telefono}"
+                                             onfocus="this.select()"
+                                             />
+                                <p:spacer width="10"/>
+                                <h:outputText value="Celular" style="font-weight:bold;"/>
+                                <p:spacer width="10"/>
+                                <p:inputText id="txtcelularper" 
+                                             size="10"
+                                             maxlength="8"
+                                             value="#{manPersonas.celular}"
+                                             onfocus="this.select()"
+                                             />
+                                <p:spacer width="10"/>
+                                <h:outputText value="E-Mail" style="font-weight:bold;"/>
+                                <p:spacer width="10"/>
+                                <p:inputText id="txtemailper" 
+                                             size="40"
+                                             maxlength="50"
+                                             value="#{manPersonas.email}"
+                                             onfocus="this.select()"
+                                             />
+                            </h:panelGroup>
+                            <h:outputText value="Dui" style="font-weight:bold;"/>
+                            <h:panelGroup>
+                                <p:inputText id="txtduiper" 
+                                             size="12"
+                                             maxlength="10"
+                                             value="#{manPersonas.dui}"
+                                             onfocus="this.select()"
+                                             />
+                                <p:spacer width="10"/>
+                                <h:outputText value="Nit" style="font-weight:bold;"/>
+                                <p:spacer width="10"/>
+                                <p:inputText id="txtnitper" 
+                                             size="16"
+                                             maxlength="14"
+                                             value="#{manPersonas.nit}"
+                                             onfocus="this.select()"
+                                             />
+                                <p:spacer width="10"/>
+                                <h:outputText value="ISSS" style="font-weight:bold;"/>
+                                <p:spacer width="12"/>
+                                <p:inputText id="txtisssper" 
+                                             size="20"
+                                             maxlength="20"
+                                             value="#{manPersonas.isss}"
+                                             onfocus="this.select()"
+                                             />
+                            </h:panelGroup>
+                            <h:outputText value="Cargo" style="font-weight:bold;"/>
+                            <h:panelGroup>
+                                <p:inputText id="txtidcargoper" 
+                                             size="45"
+                                             maxlength="50"
+                                             value="#{manPersonas.id_cargo}"
+                                             onfocus="this.select()"
+                                             />
+                                <p:spacer width="20"/>
+                                <h:outputText value="Usuario" style="font-weight:bold;"/>
+                                <p:spacer width="10"/>
+                                <p:inputText id="txtusuarioper" 
+                                             size="25"
+                                             maxlength="30"
+                                             value="#{manPersonas.usuario}"
+                                             onfocus="this.select()"
+                                             />                            
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </div>
+                </p:panel>
+
+                <p:panel>
+                    <p:dataTable id="dtPersonal" var="vPersonal" 
+                                 value="#{manPersonas.personas}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manPersonas.catpersonas}" 
+                                 rowKey="#{vPersonal.id_per}"
+                                 editable="false"
+                                 scrollable="true"
+                                 scrollHeight="150"
+                                 style="width:530px"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manPersonas.onRowSelect}" 
+                                update=":frmPersonal"/>
+                        <p:ajax event="rowUnselect"/>
+
+                        <p:column style="width:110px" headerText="Nombres">
+                            <h:outputText value="#{vPersonas.nombres}" />
+                        </p:column>
+                        <p:column style="width:110px" headerText="Apellidos">
+                            <h:outputText value="#{vPersonas.apellidos}" />
+                        </p:column>
+                        <p:column style="width:60px" headerText="Teléfono">
+                            <h:outputText value="#{vPersonas.telefono}" />
+                        </p:column>
+                        <p:column style="width:150px" headerText="E-Mail">
+                            <h:outputText value="#{vPersonas.email}" />
+                        </p:column>
+                        
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </p:dialog>
 
     </h:body>
 
