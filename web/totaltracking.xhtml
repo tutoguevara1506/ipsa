@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <title>TOTAL TRACKING</title>
+        <title>IPSA</title>
         <h:outputStylesheet library="css" name="estilo.css"/>
         <script type="text/javascript" src="anfora.js"/>
         <script type="text/javascript" src="es.js"/>
@@ -24,80 +24,102 @@
             <p:menubar id="menumadre">
 
                 <p:submenu label="Catálogos" icon="ui-icon-folder-open">
-                    <p:menuitem value="Usuarios" icon="ui-icon-person"
-                                onclick="PF('wUsuarios').show()"
-                                update=":frmUsuarios"
-                                actionListener="#{manUsuarios.iniciarventana()}"
-                                />
-                    <p:menuitem value="Paises" icon="ui-icon-flag" 
-                                onclick="PF('wPaises').show()"
-                                update=":frmPaises"
-                                actionListener="#{manPaises.iniciarventana()}"
-                                />
                     <p:menuitem value="Departamentos" icon="ui-icon-home" 
                                 onclick="PF('wDepartamentos').show()"
                                 update=":frmDepartamentos"
+                                style="width: 125px;"
                                 actionListener="#{manDepartamentos.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuDeptos')}"
                                 />
                     <p:menuitem value="Unidades" icon="ui-icon-bookmark" 
                                 onclick="PF('wUniMed').show()"
                                 update=":frmUniMed"
+                                style="width: 125px;"
                                 actionListener="#{manUniMed.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuUnidades')}"
                                 />
-                    <p:menuitem value="Movimientos" icon="ui-icon-arrowthick-2-n-s" 
+                     <p:menuitem value="Movimientos" icon="ui-icon-arrowthick-2-n-s" 
                                 onclick="PF('wMov').show()"
                                 update=":frmMov"
+                                style="width: 125px;"
                                 actionListener="#{manMovimientos.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuMovimientos')}"
                                 />
                     <p:menuitem value="Bodegas" icon="ui-icon-home" 
+                                onclick="PF('wPaises').show()"
+                                update=":frmPaises"
+                                style="width: 125px;"
+                                actionListener="#{manPaises.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuBodegas')}"
+                                />
+                    <p:menuitem value="Estantes" icon="ui-icon-flag" 
                                 onclick="PF('wBod').show()"
                                 update=":frmBod"
                                 actionListener="#{manBodegas.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuEstantes')}"
                                 />
-                    <p:menuitem value="Ubicaciones" icon="ui-icon-notice" 
+                    <p:menuitem value="Repisas" icon="ui-icon-notice" 
                                 onclick="PF('wUbi').show()"
                                 update=":frmUbi"
+                                style="width: 125px;"
                                 actionListener="#{manUbicaciones.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuRepisas')}"
                                 />
                     <p:menuitem value="Proveedores" icon="ui-icon-person" 
                                 onclick="PF('wPro').show()"
+                                style="width: 125px;"
                                 action="#{manProveedores.iniciarventana()}" 
+                                disabled="#{manSeguridad.disableOpt('menuProveedores')}"
                                 update=":frmPro"
-                                />
-                    <p:menuitem value="Clientes" icon="ui-icon-person" 
-                                onclick="PF('wCli').show()"
-                                action="#{manClientes.iniciarventana()}" 
-                                update=":frmCli"
                                 />
                     <p:menuitem value="Marcas" icon="ui-icon-tag" 
                                 onclick="PF('wMarca').show()"
+                                style="width: 125px;"
                                 action="#{manMarcas.iniciarventana()}" 
                                 update=":frmMarca"
+                                disabled="#{manSeguridad.disableOpt('menuMarcas')}"
                                 />
                     <p:menuitem value="Tipología Mant." icon="ui-icon-wrench" 
                                 onclick="PF('wTipMan').show()"
+                                style="width: 125px;"
                                 action="#{manTipos.iniciarventana()}" 
                                 update=":frmTipMan"
+                                disabled="#{manSeguridad.disableOpt('menuTipoMtto')}"
                                 />
                     <p:menuitem value="Categorías Piezas" icon="ui-icon-note" 
                                 onclick="PF('wCatPie').show()"
+                                style="width: 125px;"
                                 action="#{manCategorias.iniciarventana()}" 
                                 update=":frmCatPie"
+                                disabled="#{manSeguridad.disableOpt('menuCategoriaPiezas')}"
                                 />
                     <p:menuitem value="Operaciones" icon="ui-icon-wrench" 
                                 onclick="PF('wOpe').show()"
+                                style="width: 125px;"
                                 action="#{manOperaciones.iniciarventana()}" 
                                 update=":frmOpe"
+                                disabled="#{manSeguridad.disableOpt('menuOperaciones')}"
                                 />
                     <p:menuitem value="Equipos" icon="ui-icon-gear" 
                                 onclick="PF('wEquipos').show()"
+                                style="width: 125px;"
                                 action="#{manEquipos.iniciarventana()}" 
                                 update=":frmEquipos"
+                                disabled="#{manSeguridad.disableOpt('menuEquipos')}"
                                 />
                     <p:menuitem value="Piezas" icon="ui-icon-pin-s" 
                                 onclick="PF('wPiezas').show()"
+                                style="width: 125px;"
                                 action="#{manPiezas.iniciarventana()}" 
                                 update=":frmPiezas"
+                                disabled="#{manSeguridad.disableOpt('menuPiezas')}"
+                                />
+                    <p:menuitem value="Personal" icon="ui-icon-person" 
+                                onclick="PF('wPersonal').show()"
+                                style="width: 125px;"
+                                action="#{manPiezas.iniciarventana()}" 
+                                update=":frmPersonal"
+                                disabled="#{manSeguridad.disableOpt('menuPersonal')}"
                                 />
                 </p:submenu>
 
@@ -106,52 +128,66 @@
                         <p:menuitem value="Nueva Solicitud" icon="ui-icon-document" 
                                     onclick="PF('wSol').show()"
                                     update=":frmSol"
+                                    style="width: 125px;"
                                     actionListener="#{manSolicitudes.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuNuevaSolicitud')}"
                                     />
 
                         <p:menuitem value="Estado Solicitud" icon="ui-icon-help" 
                                     onclick="PF('wEstado').show()"
                                     update=":frmEstado"
+                                    style="width: 125px;"
                                     actionListener="#{manEstado.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuEstadoSolicitud')}"
                                     />
                     </p:submenu>
                     <p:menuitem value="Detalle Equipo" icon="ui-icon-gear" 
                                 onclick="PF('wListaEquipos').show()"
+                                style="width: 125px;"
                                 update=":frmListaEquipos"
                                 actionListener="#{manListaEquipos.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuDetalleEquipo')}"
                                 />
                     <p:menuitem value="Mantenimientos" icon="ui-icon-wrench" 
                                 onclick="PF('wMaestra').show()"
+                                style="width: 125px;"
                                 update=":frmMaestra"
                                 actionListener="#{manMaestroMan.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuMattoMaestro')}"
                                 />
-
-
                 </p:submenu>
 
                 <p:submenu label="Compras" icon="ui-icon-cart">
                     <p:menuitem value="Aprobaciones" icon="ui-icon-check" 
                                 onclick="PF('wAprobado').show()"
                                 update=":frmAprobado"
+                                style="width: 125px;"
                                 actionListener="#{manAprobacion.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuAprovaciones')}"
                                 />
 
                     <p:menuitem value="Modificaciones" icon="ui-icon-wrench" 
                                 onclick="PF('wModificaciones').show()"
                                 update=":frmModificaciones"
+                                style="width: 125px;"
                                 actionListener="#{manModificaciones.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuModificaciones')}"
                                 />
 
                     <p:menuitem value="Dar Seguimiento" icon="ui-icon-search" 
                                 onclick="PF('wSeguimiento').show()"
                                 update=":frmSeguimiento"
+                                style="width: 125px;"
                                 actionListener="#{manSeguimiento.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuSeguimiento')}"
                                 />
 
                     <p:menuitem value="Histórico" icon="ui-icon-clock" 
                                 onclick="PF('wHistorico').show()"
                                 update=":frmHistorico"
+                                style="width: 125px;"
                                 actionListener="#{manHistorico.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuHistorico')}"
                                 />
                 </p:submenu>
 
@@ -159,7 +195,9 @@
                     <p:menuitem value="Inventario Piezas" icon="ui-icon-suitcase" 
                                 onclick="PF('wListaPiezas').show()"
                                 update=":frmListaPiezas"
+                                style="width: 125px;"
                                 actionListener="#{manTblPiezas.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuInventarioPiezas')}"
                                 />
                 </p:submenu>
 
@@ -167,6 +205,57 @@
 
                 </p:submenu>
 
+                <p:submenu label="Seguridad" icon="ui-icon-wrench">
+                    <p:menuitem value="Usuarios" icon="ui-icon-person"
+                                id="menuUsuarios"
+                                onclick="PF('wUsuarios').show()"
+                                update=":frmUsuarios"
+                                actionListener="#{manUsuarios.iniciarventana()}"
+                                style="width: 190px;"
+                                disabled="#{manSeguridad.disableOpt('menuUsuarios')}"
+                                />
+                    <p:menuitem value="Grupos de seguridad" icon="ui-icon-suitcase" 
+                                id="menuGruposSeg"
+                                onclick="PF('wGrupo').show()"
+                                update=":frmGrupo"
+                                actionListener="#{manGrupos.iniciarventana()}"
+                                style="width: 190px;"
+                                disabled="#{manSeguridad.disableOpt('menuGruposSeg')}"
+                                />
+                    <p:menuitem value="Catalogo Controles" icon="ui-icon-flag" 
+                                id="menuCatCtrl"
+                                onclick="PF('wControl').show()"
+                                update=":frmControl"
+                                actionListener="#{manControles.iniciarventana()}"
+                                style="width: 190px;"
+                                disabled="#{manSeguridad.disableOpt('menuCatCtrl')}"
+                                />
+                         
+                    <p:menuitem value="Asignación Usuarios-Grupos" icon="ui-icon-pin-s" 
+                                id="menuAsigUsrGrp"
+                                onclick="PF('wUsrGrp').show()"
+                                update=":frmUsrGrp"
+                                actionListener="#{manUserGroup.iniciarventana()}"
+                                style="width: 190px;"
+                                disabled="#{manSeguridad.disableOpt('menuAsigUsrGrp')}"
+                                />
+                    <p:menuitem value="Asignacion de derechos" icon="ui-icon-locked" 
+                                id="menuAsigDerechos"
+                                onclick="PF('wSecurity').show()"
+                                update=":frmSecurity"
+                                actionListener="#{manSeguridad.iniciarventana()}"
+                                style="width: 190px;"
+                                disabled="#{manSeguridad.disableOpt('menuAsigDerechos')}"
+                                />
+                    <p:menuitem value="Control de  alertas" icon="ui-icon-alert" 
+                                id="menuControlAlertas"
+                                onclick="PF('wEstado').show()"
+                                update=":frmUsuarios"
+                                actionListener="#{manUsuarios.iniciarventana()}"
+                                style="width: 190px;"
+                                disabled="#{manSeguridad.disableOpt('menuControlAlertas')}"
+                                />
+                </p:submenu>
                 <f:facet name="options">
                     <p:commandButton value="Logout" icon="ui-icon-extlink"
                                      actionListener="#{login.endConversation()}"
