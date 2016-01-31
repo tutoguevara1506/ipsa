@@ -5,7 +5,7 @@ root {
 body {
     font-family: Arial, Helvetica, sans-serif;
     color: #3a4f54;
-    background-color: #ebfcfc;
+    background-color: #eff5fa;
     font-size: x-small;
 }
 
@@ -84,12 +84,12 @@ tr.jsfcrud_even_row {
     width: 98% !important;
 }
 
+.ui-menu-child {
+    white-space: nowrap;
+    width: auto !important;
+}
+
 .ui-progressbar {  /* made progress bar smaller to fit on same line */
     width: 50px!important;
     height: 15px!important; 
-}
-
-.noBorders tr, .noBorders td {
-    background: none !important;
-    border: none !important;
 }
