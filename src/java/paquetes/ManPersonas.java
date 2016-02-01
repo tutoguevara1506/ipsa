@@ -20,7 +20,9 @@ public class ManPersonas implements Serializable {
     Login cbean;
     private CatPersonas catpersonas;
     private List<CatPersonas> personas;
-    private String id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, id_cargo, usuario;
+    private CatCargos catcargos;
+    private List<CatCargos> cargos;
+    private String id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, id_car, usuario;
 
     public ManPersonas() {
     }
@@ -41,6 +43,22 @@ public class ManPersonas implements Serializable {
         this.personas = personas;
     }
 
+    public CatCargos getCatcargos() {
+        return catcargos;
+    }
+
+    public void setCatcargos(CatCargos catcargos) {
+        this.catcargos = catcargos;
+    }
+
+    public List<CatCargos> getCargos() {
+        return cargos;
+    }
+
+    public void setCargos(List<CatCargos> cargos) {
+        this.cargos = cargos;
+    }
+    
     public String getId_per() {
         return id_per;
     }
@@ -121,12 +139,12 @@ public class ManPersonas implements Serializable {
         this.isss = isss;
     }
 
-    public String getId_cargo() {
-        return id_cargo;
+    public String getId_car() {
+        return id_car;
     }
 
-    public void setId_cargo(String id_cargo) {
-        this.id_cargo = id_cargo;
+    public void setId_car(String id_cargo) {
+        this.id_car = id_car;
     }
 
     public String getUsuario() {
@@ -149,8 +167,9 @@ public class ManPersonas implements Serializable {
         dui = "";
         nit = "";
         isss = "";
-        id_cargo = "";
+        id_car = "";
         usuario = "";
+        llenarCargos();
         llenarPersonas();
     }
 
@@ -165,18 +184,42 @@ public class ManPersonas implements Serializable {
         dui = "";
         nit = "";
         isss = "";
-        id_cargo = "";
+        id_car = "";
         usuario = "";
         personas = new ArrayList<>();
     }
 
+    public void llenarCargos() {
+        String mQuery = "";
+        try {
+            catcargos = new CatCargos();
+            cargos = new ArrayList<>();
+
+            mQuery = "select id_car, des_car from cat_car order by id_car;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                cargos.add(new CatCargos(
+                        resVariable.getString(1),
+                        resVariable.getString(2)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Cargos de Personal. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+    
     public void llenarPersonas() {
         String mQuery = "";
         try {
             catpersonas = new CatPersonas();
             personas = new ArrayList<>();
 
-            mQuery = "select id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, id_cargo, cod_usu from cat_persona order by id_persona;";
+            mQuery = "select id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, id_cargo, cod_usu from cat_per order by id_per;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -215,7 +258,7 @@ public class ManPersonas implements Serializable {
         dui = "";
         nit = "";
         isss = "";
-        id_cargo = "";
+        id_car = "";
         usuario = "";
         catpersonas = new CatPersonas();
     }
@@ -227,13 +270,13 @@ public class ManPersonas implements Serializable {
                 Accesos mAccesos = new Accesos();
                 mAccesos.Conectar();
                 if ("".equals(id_per)) {
-                    mQuery = "select ifnull(max(id_per),0)+1 as codigo from cat_persona;";
+                    mQuery = "select ifnull(max(id_per),0)+1 as codigo from cat_per;";
                     id_per = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into cat_persona (id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, id_cargo, cod_usu) "
+                    mQuery = "insert into cat_per (id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, id_cargo, cod_usu) "
                             + "values (" + id_per + ",'" + nombres + "','" + apellidos + "','" + direccion + "','" + telefono 
-                            + "','" + celular + "','" + email + "','" + dui + "','" + nit + "','" + isss + "'," + id_cargo + ",'" + usuario + "');";
+                            + "','" + celular + "','" + email + "','" + dui + "','" + nit + "','" + isss + "'," + id_car + ",'" + usuario + "');";
                 } else {
-                    mQuery = "update cat_persona SET "
+                    mQuery = "update cat_per SET "
                             + " nombres = '" + nombres + "',"
                             + " apellidos = '" + apellidos + "',"
                             + " direccion = '" + direccion + "',"
@@ -243,7 +286,7 @@ public class ManPersonas implements Serializable {
                             + " dui = '" + dui + "',"
                             + " nit = '" + nit + "',"
                             + " isss = '" + isss + "',"
-                            + " id_cargo = '" + id_cargo + "',"
+                            + " id_cargo = '" + id_car + "',"
                             + " cod_usu = '" + usuario + "'"
                             + "WHERE id_per = " + id_per + ";";
 
@@ -267,7 +310,7 @@ public class ManPersonas implements Serializable {
         mAccesos.Conectar();
         if ("".equals(id_per) == false) {
             try {
-                mQuery = "delete from cat_persona where id_persona=" + id_per + ";";
+                mQuery = "delete from cat_per where id_per=" + id_per + ";";
                 mAccesos.dmlSQLvariable(mQuery);
                 addMessage("Eliminar Persona", "Información Eliminada con éxito.", 1);
             } catch (Exception e) {
@@ -304,14 +347,14 @@ public class ManPersonas implements Serializable {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar E-Mail de la persona.", 2);
         }
-        if ("0".equals(id_cargo) == true) {
+        if ("0".equals(id_car) == true) {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar El cargo de la persona.", 2);
         }
         
         Accesos maccesos = new Accesos();
         maccesos.Conectar();
-        if ("0".equals(maccesos.strQuerySQLvariable("select count(id_per) from cat_persona "
+        if ("0".equals(maccesos.strQuerySQLvariable("select count(id_per) from cat_per "
                 + "where dui='" + dui + "';")) == false && "".equals(id_per)) {
             mValidar = false;
             addMessage("Validar Datos", "El DUI de la Persona ya existe.", 2);
@@ -331,7 +374,7 @@ public class ManPersonas implements Serializable {
         dui = ((CatPersonas) event.getObject()).getDui();
         nit = ((CatPersonas) event.getObject()).getNit();
         isss = ((CatPersonas) event.getObject()).getIsss();
-        id_cargo = ((CatPersonas) event.getObject()).getId_cargo();
+        id_car = ((CatPersonas) event.getObject()).getId_cargo();
         usuario = ((CatPersonas) event.getObject()).getUsuario();
     }
 

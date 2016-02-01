@@ -124,7 +124,7 @@
                     <p:menuitem value="Personal" icon="ui-icon-person" 
                                 onclick="PF('wPersonal').show()"
                                 style="width: 125px;"
-                                action="#{manPiezas.iniciarventana()}" 
+                                action="#{manPersonas.iniciarventana()}" 
                                 update=":frmPersonal"
                                 disabled="#{manSeguridad.disableOpt('menuPersonal')}"
                                 />
@@ -4791,12 +4791,14 @@
                             </h:panelGroup>
                             <h:outputText value="Cargo" style="font-weight:bold;"/>
                             <h:panelGroup>
-                                <p:inputText id="txtidcargoper" 
-                                             size="45"
-                                             maxlength="50"
-                                             value="#{manPersonas.id_cargo}"
-                                             onfocus="this.select()"
-                                             />
+                                <p:selectOneMenu value="#{manPersonas.id_car}" 
+                                    style="width:180px;text-align:right;"
+                                    immediate="false"
+                                    >  
+                                    <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                                    <f:selectItems value="#{manPersonas.cargos}" var="mpercar"
+                                        itemLabel="#{mpercar.des_car}" itemValue="#{mpercar.id_car}"/>
+                                </p:selectOneMenu>
                                 <p:spacer width="20"/>
                                 <h:outputText value="Usuario" style="font-weight:bold;"/>
                                 <p:spacer width="10"/>
