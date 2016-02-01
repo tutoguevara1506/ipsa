@@ -118,7 +118,7 @@ public class ManBodegas implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Paises en Bodegas. " + e.getMessage());
+            System.out.println("Error en el llenado de Bodegas en Estantes. " + e.getMessage());
         }
     }
      
@@ -147,7 +147,7 @@ public class ManBodegas implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Catálogo Bodegas. " + e.getMessage() + " Query: " + mQuery);
+            System.out.println("Error en el llenado de Catálogo de Estantes. " + e.getMessage() + " Query: " + mQuery);
         }
     }
 
@@ -178,10 +178,10 @@ public class ManBodegas implements Serializable {
                 }
                 mAccesos.dmlSQLvariable(mQuery);
                 mAccesos.Desconectar();
-                addMessage("Guardar Bodegas", "Información Almacenada con éxito.", 1);
+                addMessage("Guardar Estantes", "Información Almacenada con éxito.", 1);
             } catch (Exception e) {
-                addMessage("Guardar Bodegas", "Error al momento de guardar la información. " + e.getMessage(), 2);
-                System.out.println("Error al Guardar Bodegas. " + e.getMessage() + " Query: " + mQuery);
+                addMessage("Guardar Estantes", "Error al momento de guardar la información. " + e.getMessage(), 2);
+                System.out.println("Error al Guardar Estantes. " + e.getMessage() + " Query: " + mQuery);
             }
             llenarBodegas();
         }
@@ -197,15 +197,15 @@ public class ManBodegas implements Serializable {
             try {
                 mQuery = "delete from cat_bodegas where id_bod=" + id_bod + ";";
                 mAccesos.dmlSQLvariable(mQuery);
-                addMessage("Eliminar Bodegas", "Información Eliminada con éxito.", 1);
+                addMessage("Eliminar Estantes", "Información Eliminada con éxito.", 1);
             } catch (Exception e) {
-                addMessage("Eliminar Bodegas", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
-                System.out.println("Error al Eliminar Bodegas. " + e.getMessage() + " Query: " + mQuery);
+                addMessage("Eliminar Estantes", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
+                System.out.println("Error al Eliminar Estantes. " + e.getMessage() + " Query: " + mQuery);
             }
             llenarBodegas();
             nuevo();
         } else {
-            addMessage("Eliminar Bodegas", "Debe elegir un Registro.", 2);
+            addMessage("Eliminar Estantes", "Debe elegir un Registro.", 2);
         }
         mAccesos.Desconectar();
 
@@ -215,11 +215,11 @@ public class ManBodegas implements Serializable {
         boolean mValidar = true;
         if ("".equals(nom_bod) == true) {
             mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un Nombre para la Bodega.", 2);
+            addMessage("Validar Datos", "Debe Ingresar un Nombre para el Estante.", 2);
         }
         if ("0".equals(cod_pai) == true) {
             mValidar = false;
-            addMessage("Validar Datos", "Debe Seleccionar un País.", 2);
+            addMessage("Validar Datos", "Debe Seleccionar una Bodega.", 2);
         }
         Accesos maccesos = new Accesos();
         maccesos.Conectar();
@@ -228,7 +228,7 @@ public class ManBodegas implements Serializable {
                 + cbean.getCod_pai() + ";")) == false
                 && "".equals(id_bod)) {
             mValidar = false;
-            addMessage("Validar Datos", "El Nombre de la Bodega ya existe.", 2);
+            addMessage("Validar Datos", "El Nombre de Estante ya existe.", 2);
         }
         maccesos.Desconectar();
         return mValidar;

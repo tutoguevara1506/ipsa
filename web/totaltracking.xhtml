@@ -412,12 +412,12 @@
         </p:dialog>  
 
         <!-- *******************************************************************
-        **************** Pantalla mantenimiento de Paises ********************
+        **************** Pantalla mantenimiento de Bodegas ********************
         *********************************************************************-->
 
         <p:dialog  id="dlgPaises" widgetVar="wPaises" modal="true" 
                    width="500" height="300" closable="false" resizable="false" 
-                   header="Mantenimiento Paises" rendered="true" 
+                   header="Mantenimiento Bodegas" rendered="true" 
                    dynamic="true" visible="false" 
                    >
 
@@ -479,7 +479,7 @@
                         <p:ajax event="rowSelect" listener="#{manPaises.onRowSelect}" 
                                 update=":frmPaises" />
 
-                        <p:column style="width:50px" headerText="Nombre País">
+                        <p:column style="width:50px" headerText="Nombre Bodega">
                             <h:outputText value="#{vPai.nom_pai}" />
                         </p:column>
                     </p:dataTable>
@@ -1140,12 +1140,12 @@
         </p:dialog>
 
         <!--******************************************************************** 
-        ***************** Pantalla mantenimiento de Bodegas ********************
+        ***************** Pantalla mantenimiento de Estantes ********************
         *********************************************************************-->
 
         <p:dialog  id="dlgBodegas" widgetVar="wBod" modal="true" 
                    width="440" height="330" closable="false" resizable="false" 
-                   header="Mantenimiento de Bodegas" rendered="true" 
+                   header="Mantenimiento de Estantes" rendered="true" 
                    dynamic="false" visible="false" 
                    >
 
@@ -1197,7 +1197,7 @@
                     <div style=" background-color: #ebf8fe;">
                         <p:focus for="txtnombrebod" />
                         <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputText value="País" style="font-weight:bold;"/>
+                            <h:outputText value="Bodega" style="font-weight:bold;"/>
                             <p:selectOneMenu value="#{manBodegas.cod_pai}" 
                                              style="width:280px;text-align:right;"
                                              immediate="false"
@@ -1225,17 +1225,17 @@
                                  rowKey="#{vBod.id_bod}"
                                  editable="false"
                                  scrollable="true"
-                                 scrollHeight="110"
-                                 style="width:380px"
+                                 scrollHeight="140"
+                                 style="width:400px"
                                  >
                         <p:ajax event="rowSelect" listener="#{manBodegas.onRowSelect}" 
                                 update=":frmBod"/>
                         <p:ajax event="rowUnselect"/>
 
-                        <p:column style="width:100px" headerText="País">
+                        <p:column style="width:100px" headerText="Bodega">
                             <h:outputText value="#{vBod.nompai}" />
                         </p:column>
-                        <p:column style="width:200px" headerText="Nombre">
+                        <p:column style="width:200px" headerText="Estante">
                             <h:outputText value="#{vBod.nom_bod}" />
                         </p:column>
                     </p:dataTable>
@@ -1244,12 +1244,12 @@
         </p:dialog>
 
         <!--******************************************************************** 
-        ************** Pantalla mantenimiento de Ubicaciones *******************
+        ************** Pantalla mantenimiento de Repisas *******************
         *********************************************************************-->
 
         <p:dialog  id="dlgUbi" widgetVar="wUbi" modal="true" 
                    width="500" height="350" closable="false" resizable="false" 
-                   header="Mantenimiento de Ubicaciones" rendered="true" 
+                   header="Mantenimiento de Repisas" rendered="true" 
                    dynamic="false" visible="false" 
                    >
 
@@ -1301,7 +1301,7 @@
                     <div style=" background-color: #ebf8fe;">
                         <p:focus for="txtnombreubi" />
                         <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputText value="País" style="font-weight:bold;"/>
+                            <h:outputText value="Bodega" style="font-weight:bold;"/>
                             <p:selectOneMenu value="#{manUbicaciones.cod_pai}" 
                                              style="width:280px;text-align:right;"
                                              immediate="false"
@@ -1311,7 +1311,7 @@
                                 <f:selectItems value="#{manUbicaciones.paises}" var="mpaiubi"
                                                itemLabel="#{mpaiubi.nom_pai}" itemValue="#{mpaiubi.cod_pai}"/>
                             </p:selectOneMenu>
-                            <h:outputText value="Bodega" style="font-weight:bold;"/>
+                            <h:outputText value="Estante" style="font-weight:bold;"/>
                             <p:selectOneMenu value="#{manUbicaciones.cod_bod}" 
                                              style="width:280px;text-align:right;"
                                              immediate="false"
@@ -1346,13 +1346,13 @@
                         <p:ajax event="rowSelect" listener="#{manUbicaciones.onRowSelect}" 
                                 update=":frmUbi"/>
                         <p:ajax event="rowUnselect"/>
-                        <p:column style="width:60px" headerText="País">
+                        <p:column style="width:90px" headerText="Bodega">
                             <h:outputText value="#{vUbi.nompai}" />
                         </p:column>
-                        <p:column style="width:60px" headerText="Bodega">
+                        <p:column style="width:80px" headerText="Estante">
                             <h:outputText value="#{vUbi.nombod}" />
                         </p:column>
-                        <p:column style="width:150px" headerText="Ubicación">
+                        <p:column style="width:100px" headerText="Repisa">
                             <h:outputText value="#{vUbi.nom_ubi}" />
                         </p:column>
                     </p:dataTable>

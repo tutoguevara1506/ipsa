@@ -95,7 +95,7 @@ public class ManPaises implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado del Catálogo de Paises. " + e.getMessage());
+            System.out.println("Error en el llenado del Catálogo de Bodegas. " + e.getMessage());
         }
     }
 
@@ -122,10 +122,10 @@ public class ManPaises implements Serializable {
                 }
                 mAccesos.dmlSQLvariable(mQuery);
                 mAccesos.Desconectar();
-                addMessage("Guardar País", "Información Almacenada con Éxito.", 1);
+                addMessage("Guardar Bodega", "Información Almacenada con Éxito.", 1);
             } catch (Exception e) {
-                addMessage("Guardar País", "Error al momento de guardar la información. " + e.getMessage(), 2);
-                System.out.println("Error al Guardar País. " + e.getMessage());
+                addMessage("Guardar Bodega", "Error al momento de guardar la información. " + e.getMessage(), 2);
+                System.out.println("Error al Guardar Bodega. " + e.getMessage());
             }
             llenarPaises();
             nuevo();
@@ -142,14 +142,14 @@ public class ManPaises implements Serializable {
             try {
                 String mQuery = "delete from cat_pai where cod_pai=" + cod_pai + ";";
                 mAccesos.dmlSQLvariable(mQuery);
-                addMessage("Eliminar País", "Información Eliminada con Éxito.", 1);
+                addMessage("Eliminar Bodega", "Información Eliminada con Éxito.", 1);
             } catch (Exception e) {
-                addMessage("Eliminar País", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
-                System.out.println("Error al Eliminar País. " + e.getMessage());
+                addMessage("Eliminar Bodega", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
+                System.out.println("Error al Eliminar Bodega. " + e.getMessage());
             }
             llenarPaises();
         } else {
-            addMessage("Eliminar País", "Debe elegir un Registro.", 2);
+            addMessage("Eliminar Bodega", "Debe elegir un Registro.", 2);
         }
 
         mAccesos.Desconectar();
@@ -161,7 +161,7 @@ public class ManPaises implements Serializable {
         boolean mValidar = true;
         if ("".equals(nom_pai)) {
             mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un Nombre de País.", 2);
+            addMessage("Validar Datos", "Debe Ingresar un Nombre de Bodega  .", 2);
         }
 
         return mValidar;
