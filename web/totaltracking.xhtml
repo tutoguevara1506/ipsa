@@ -262,6 +262,14 @@
                                 style="width: 190px;"
                                 disabled="#{manSeguridad.disableOpt('menuControlAlertas')}"
                                 />
+                    <p:menuitem value="Control de Mantenimientos" icon="ui-icon-alert" 
+                                id="menuControlMtto"
+                                onclick="PF('wCalend').show()"
+                                update=":frmCalend"
+                                actionListener="#{manUsuarios.iniciarventana()}"
+                                style="width: 190px;"
+                                disabled="#{manSeguridad.disableOpt('menuCalendMtto')}"
+                                />
                 </p:submenu>
                 <f:facet name="options">
                     <p:commandButton value="Logout" icon="ui-icon-extlink"
@@ -4943,6 +4951,74 @@
             </h:form>
         </p:dialog>
 
+           <!--******************************************************************** 
+        **************** Pantalla Calendarización de mantenimientos ****************
+        *********************************************************************-->
+
+        <p:dialog  id="dlgCalend" widgetVar="wCalend" modal="true" 
+                   width="800" height="600" closable="false" resizable="false" 
+                   header="Calendario de Mantenimientos" rendered="true" 
+                   dynamic="false" visible="false" 
+                   >
+
+        <h:form id="frmCalend">
+            <p:growl id="messages" showDetail="true" />
+ 
+        <h:panelGrid columnClasses="value">
+            <h3 style="margin-top: 0">Los mantenimientos se pueden desplazar a conveniencia</h3>
+            <p:schedule id="schedule" value="#{scheduleView.eventModel}" widgetVar="myschedule" timeZone="GMT+2" locale="es">
+                 <p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                <p:ajax event="eventMove" listener="#{scheduleView.onEventMove}" update="messages" />
+                <p:ajax event="eventResize" listener="#{scheduleView.onEventResize}" update="messages" />
+             </p:schedule>
+        </h:panelGrid>
+ 
+        <p:dialog widgetVar="eventDialog" header="Detalle de mantenimiento" showEffect="clip" hideEffect="clip">
+            <h:panelGrid id="eventDetails" columns="2">
+                <p:outputLabel for="title" value="Titulo:" />
+                <p:inputText id="title" value="#{scheduleView.event.title}" required="true" />
+ 
+                <p:outputLabel for="from" value="Desde:" />
+                <p:calendar id="from" value="#{scheduleView.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+ 
+                <p:outputLabel for="to" value="Hasta:" />
+                <p:calendar id="to" value="#{scheduleView.event.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+ 
+                <p:outputLabel for="allDay" value="Todo el dia:" />
+                <h:selectBooleanCheckbox id="allDay" value="#{scheduleView.event.allDay}" />
+
+                <p:commandButton type="reset" value="Borrar" />
+                <p:commandButton id="addButton" value="Guardar" actionListener="#{scheduleView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+            </h:panelGrid>
+        </p:dialog>    
+        </h:form>
+    </p:dialog>
+           
+    <script type="text/javascript">
+        PrimeFaces.locales['es'] = {
+            closeText: 'Cerrar',
+            prevText: 'Pervio',
+            nextText: 'Siguiente',
+            currentText: 'Actual',
+            monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+                'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+            monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+                'Jul','Ago','Sep','Oct','Nov','Dic'],
+            dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+            dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+            dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+            weekHeader: 'Hf',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            month: 'Mes',
+            week: 'Semana',
+            day: 'Dia',
+            allDayText : 'Todo el dia'
+    };
+</script>
 
     </h:body>
 
