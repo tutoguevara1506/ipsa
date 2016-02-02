@@ -161,7 +161,7 @@ public class ManPersonas implements Serializable {
         return id_car;
     }
 
-    public void setId_car(String id_cargo) {
+    public void setId_car(String id_car) {
         this.id_car = id_car;
     }
 
@@ -326,7 +326,7 @@ public class ManPersonas implements Serializable {
                 if ("".equals(id_per)) {
                     mQuery = "select ifnull(max(id_per),0)+1 as codigo from cat_persona;";
                     id_per = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into cat_persona (id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, id_cargo, cod_usu) "
+                    mQuery = "insert into cat_persona (id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, id_car, cod_usu) "
                             + "values (" + id_per + ",'" + nombres + "','" + apellidos + "','" + direccion + "','" + telefono 
                             + "','" + celular + "','" + email + "','" + dui + "','" + nit + "','" + isss + "'," + id_car + ",'" + usuario + "');";
                 } else {
@@ -340,7 +340,7 @@ public class ManPersonas implements Serializable {
                             + " dui = '" + dui + "',"
                             + " nit = '" + nit + "',"
                             + " isss = '" + isss + "',"
-                            + " id_cargo = '" + id_car + "',"
+                            + " id_car = '" + id_car + "',"
                             + " cod_usu = '" + usuario + "'"
                             + "WHERE id_per = " + id_per + ";";
 
@@ -425,10 +425,11 @@ public class ManPersonas implements Serializable {
         direccion = ((CatPersonas) event.getObject()).getDireccion();
         telefono = ((CatPersonas) event.getObject()).getTelefono();
         celular = ((CatPersonas) event.getObject()).getCelular();
+        email = ((CatPersonas) event.getObject()).getEmail();
         dui = ((CatPersonas) event.getObject()).getDui();
         nit = ((CatPersonas) event.getObject()).getNit();
         isss = ((CatPersonas) event.getObject()).getIsss();
-        id_car = ((CatPersonas) event.getObject()).getId_cargo();
+        id_car = ((CatPersonas) event.getObject()).getId_car();
         usuario = ((CatPersonas) event.getObject()).getUsuario();
     }
 
