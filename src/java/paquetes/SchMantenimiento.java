@@ -1,0 +1,193 @@
+package paquetes;
+
+import java.io.Serializable;
+import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent; 
+import org.primefaces.event.ScheduleEntryMoveEvent;
+import org.primefaces.event.ScheduleEntryResizeEvent;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.DefaultScheduleEvent;
+import org.primefaces.model.DefaultScheduleModel;
+import org.primefaces.model.ScheduleEvent;
+import org.primefaces.model.ScheduleModel;
+ 
+@ManagedBean
+@ViewScoped
+public class SchMantenimiento implements Serializable {
+ 
+    private CatCalendario catcalendario;
+    private List<CatCalendario> listaMttos;
+    private ScheduleModel mttoModel;
+    private ScheduleEvent event = new DefaultScheduleEvent();
+ 
+    @PostConstruct
+    public void init() {
+        catcalendario = new CatCalendario();
+        mttoModel = new DefaultScheduleModel();
+        llenarMantenimientos();
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+	      
+        for (CatCalendario cm : listaMttos){
+            DefaultScheduleEvent cmt = new DefaultScheduleEvent();
+            cmt.setId(cm.getCod_man());
+            cmt.setDescription(cm.getDet_obs());
+            cmt.setTitle(cm.getCod_lis_equ());
+            cmt.setAllDay(true);
+            cmt.setEditable(true);
+            try {
+                cmt.setStartDate(formato.parse(cm.getFec_ini()));
+                if (cm.getFec_fin()== null)
+                    cm.setFec_fin(cm.getFec_ini());
+                
+                cmt.setEndDate(formato.parse(cm.getFec_fin()));
+            }catch(ParseException e){
+                e.printStackTrace();
+            }
+            
+            mttoModel.addEvent(cmt);
+  
+        }
+    }
+
+    public CatCalendario getCatcalendario() {
+        return catcalendario;
+    }
+
+    public void setCatcalendario(CatCalendario catcalendario) {
+        this.catcalendario = catcalendario;
+    }
+
+    public List<CatCalendario> getListaMttos() {
+        return listaMttos;
+    }
+
+    public void setListaMttos(List<CatCalendario> listaMttos) {
+        this.listaMttos = listaMttos;
+    }
+
+    public ScheduleModel getMttoModel() {
+        return mttoModel;
+    }
+
+    public void setMttoModel(ScheduleModel mttoModel) {
+        this.mttoModel = mttoModel;
+    }
+    
+    public void llenarMantenimientos() {
+        String mQuery = "";
+        try {
+            catcalendario = new CatCalendario();
+            listaMttos = new ArrayList<>();
+
+            mQuery = "select cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu from tbl_mae_man order by cod_man;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                listaMttos.add(new CatCalendario(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Calendarización. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+    
+     
+    public Date getRandomDate(Date base) {
+        Calendar date = Calendar.getInstance();
+        date.setTime(base);
+        date.add(Calendar.DATE, ((int) (Math.random()*30)) + 1);    //set random day of month
+         
+        return date.getTime();
+    }
+     
+    public Date getInitialDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);
+         
+        return calendar.getTime();
+    }
+     
+    public ScheduleModel getEventModel() {
+        return mttoModel;
+    }
+      
+    private Calendar today() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 0, 0, 0);
+ 
+        return calendar;
+    }
+     
+    
+     
+    public ScheduleEvent getEvent() {
+        return event;
+    }
+ 
+    public void setEvent(ScheduleEvent event) {
+        this.event = event;
+    }
+     
+    public void addEvent(ActionEvent actionEvent) {
+        if(event.getId() == null)
+            mttoModel.addEvent(event);
+        else
+            mttoModel.updateEvent(event);
+         
+        event = new DefaultScheduleEvent();
+    }
+     
+    public void onEventSelect(SelectEvent selectEvent) {
+        event = (ScheduleEvent) selectEvent.getObject();
+    }
+     
+    public void onDateSelect(SelectEvent selectEvent) {
+        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+    }
+    
+    public void onEventMove(ScheduleEntryMoveEvent event) {
+        addMessage("Calendario", "Se ha movido el mantenimiento de fecha. ", 2);
+    }
+     
+    public void onEventResize(ScheduleEntryResizeEvent event) {
+        addMessage("Calendario", "Se ha modificado el mantenimiento. ", 2);
+    }
+     
+    
+    public void addMessage(String summary, String detail, int tipo) {
+        FacesMessage message = new FacesMessage();
+        switch (tipo) {
+            case 1:
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+                break;
+            case 2:
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
+                break;
+        }
+
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+}
