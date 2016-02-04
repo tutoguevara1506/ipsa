@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent; 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
@@ -29,37 +30,8 @@ public class SchMantenimiento implements Serializable {
     private CatCalendario catcalendario;
     private List<CatCalendario> listaMttos;
     private ScheduleModel mttoModel;
-    private ScheduleEvent event = new DefaultScheduleEvent();
+    private ScheduleEvent mtto = new DefaultScheduleEvent();
  
-    @PostConstruct
-    public void init() {
-        catcalendario = new CatCalendario();
-        mttoModel = new DefaultScheduleModel();
-        llenarMantenimientos();
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-	      
-        for (CatCalendario cm : listaMttos){
-            DefaultScheduleEvent cmt = new DefaultScheduleEvent();
-            cmt.setId(cm.getCod_man());
-            cmt.setDescription(cm.getDet_obs());
-            cmt.setTitle(cm.getCod_lis_equ());
-            cmt.setAllDay(true);
-            cmt.setEditable(true);
-            try {
-                cmt.setStartDate(formato.parse(cm.getFec_ini()));
-                if (cm.getFec_fin()== null)
-                    cm.setFec_fin(cm.getFec_ini());
-                
-                cmt.setEndDate(formato.parse(cm.getFec_fin()));
-            }catch(ParseException e){
-                e.printStackTrace();
-            }
-            
-            mttoModel.addEvent(cmt);
-  
-        }
-    }
-
     public CatCalendario getCatcalendario() {
         return catcalendario;
     }
@@ -82,6 +54,36 @@ public class SchMantenimiento implements Serializable {
 
     public void setMttoModel(ScheduleModel mttoModel) {
         this.mttoModel = mttoModel;
+    }
+    
+    @PostConstruct
+    public void init() {
+        catcalendario = new CatCalendario();
+        mttoModel = new DefaultScheduleModel();
+        llenarMantenimientos();
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+	      
+        for (CatCalendario cm : listaMttos){
+            DefaultScheduleEvent cmt = new DefaultScheduleEvent();
+            cmt.setId(cm.getCod_man());
+            cmt.setDescription(cm.getDet_obs());
+            cmt.setTitle(cm.getCod_lis_equ());
+            cmt.setData(cm.getCod_man());
+            cmt.setAllDay(true);
+            cmt.setEditable(true);
+            try {
+                cmt.setStartDate(formato.parse(cm.getFec_ini()));
+                if (cm.getFec_fin()== null)
+                    cm.setFec_fin(cm.getFec_ini());
+                
+                cmt.setEndDate(formato.parse(cm.getFec_fin()));
+            }catch(ParseException e){
+                e.printStackTrace();
+            }
+            
+            mttoModel.addEvent(cmt);
+  
+        }
     }
     
     public void llenarMantenimientos() {
@@ -114,6 +116,52 @@ public class SchMantenimiento implements Serializable {
         }
     }
     
+    /*public void guardar() {
+        String mQuery = "";
+        if (validardatos()) {
+            try {
+                Accesos mAccesos = new Accesos();
+                mAccesos.Conectar();
+
+                mQuery = "select ifnull(max(cod_man),0)+1 as codigo from tbl_mae_man where cod_lis_equ = " + mtto.getId()+ ";";
+                cod_man = mAccesos.strQuerySQLvariable(mQuery);
+                
+                mQuery = "insert into tbl_mae_man (cod_lis_equ,cod_man,cod_tip,det_obs,fec_ini,fec_fin,det_sta,cod_usu,cod_per) "
+                        + "VALUES (" + catcalendario.getCod_lis_equ() + "," + catcalendario.getCod_man() + "," + catcalendario.getCod_tip() + ",'" + catcalendario.getDet_obs() + "',"
+                        + catcalendario.getFec_ini() + " ," + catcalendario.getFec_fin()+ " ,"+ catcalendario.getCod_usu() + "," + catcalendario.getCod_per() + ");";
+                
+                mAccesos.dmlSQLvariable(mQuery);
+                mAccesos.Desconectar();
+                addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);
+            } catch (Exception e) {
+                addMessage("Guardar Mantenimiento", "Error al momento de guardar la información. " + e.getMessage(), 2);
+                System.out.println("Error al Guardar Mantenimiento. " + e.getMessage() + " Query: " + mQuery);
+            }
+            llenarMantenimientos();
+            RequestContext.getCurrentInstance().execute("PF('wMaestraNew').hide()");
+        }
+    }
+    
+     public boolean validardatos() {
+        boolean mValidar = true;
+        if ("".equals(nom_mar) == true) {
+            mValidar = false;
+            addMessage("Validar Datos", "Debe Ingresar un Nombre para la Marca.", 2);
+        }
+        Accesos maccesos = new Accesos();
+        maccesos.Conectar();
+        if ("0".equals(maccesos.strQuerySQLvariable("select count(id_mar) from cat_mar "
+                + "where upper(nom_mar)='" + nom_mar.toUpperCase() + "';")) == false && "".equals(id_mar)) {
+            mValidar = false;
+            addMessage("Validar Datos", "El Nombre de la Marca ya existe.", 2);
+        }
+        maccesos.Desconectar();
+        return mValidar;
+
+    }
+    
+    */
+    
      
     public Date getRandomDate(Date base) {
         Calendar date = Calendar.getInstance();
@@ -143,29 +191,36 @@ public class SchMantenimiento implements Serializable {
      
     
      
-    public ScheduleEvent getEvent() {
-        return event;
+    public ScheduleEvent getMtto() {
+        return mtto;
     }
  
-    public void setEvent(ScheduleEvent event) {
-        this.event = event;
+    public void setMtto (ScheduleEvent mtto) {
+        this.mtto = mtto;
     }
      
     public void addEvent(ActionEvent actionEvent) {
-        if(event.getId() == null)
-            mttoModel.addEvent(event);
+        if(mtto.getId() == null)
+            mttoModel.addEvent(mtto);
         else
-            mttoModel.updateEvent(event);
+            mttoModel.updateEvent(mtto);
          
-        event = new DefaultScheduleEvent();
+        mtto = new DefaultScheduleEvent();
     }
      
     public void onEventSelect(SelectEvent selectEvent) {
-        event = (ScheduleEvent) selectEvent.getObject();
+       
+        ScheduleEvent mtto = (ScheduleEvent) selectEvent.getObject();
+        
+         for (CatCalendario cm : listaMttos){
+             if (cm.getCod_man() == mtto.getData()){
+                 break;
+             }         
+         }        
     }
      
     public void onDateSelect(SelectEvent selectEvent) {
-        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+        mtto = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
     }
     
     public void onEventMove(ScheduleEntryMoveEvent event) {
