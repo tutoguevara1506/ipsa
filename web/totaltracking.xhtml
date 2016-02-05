@@ -254,7 +254,7 @@
                                 style="width: 190px;"
                                 disabled="#{manSeguridad.disableOpt('menuAsigDerechos')}"
                                 />
-                    <p:menuitem value="Control de  alertas" icon="ui-icon-alert" 
+                    <p:menuitem value="Control de  alertas" icon="ui-icon-calendar" 
                                 id="menuControlAlertas"
                                 onclick="PF('wEstado').show()"
                                 update=":frmUsuarios"
@@ -4977,20 +4977,21 @@
         <p:dialog widgetVar="eventDialog" header="Detalle de mantenimiento" showEffect="clip" hideEffect="clip">
             <h:panelGrid id="eventDetails" columns="2">
                 <p:outputLabel for="title" value="Titulo:" />
-                <p:inputText id="title" value="#{schMantenimiento.event.title}" required="true" />
+                <p:inputText id="title" value="#{schMantenimiento.mtto.title}" required="true" />
  
                 <p:outputLabel for="from" value="Desde:" />
-                <p:calendar id="from" value="#{schMantenimiento.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+                <p:calendar id="from" value="#{schMantenimiento.mtto.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
  
                 <p:outputLabel for="to" value="Hasta:" />
-                    <p:calendar id="to" value="#{schMantenimiento.event.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+                    <p:calendar id="to" value="#{schMantenimiento.mtto.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
  
                 <p:outputLabel for="allDay" value="Todo el dia:" />
-                <h:selectBooleanCheckbox id="allDay" value="#{schMantenimiento.event.allDay}" />
+                <h:selectBooleanCheckbox id="allDay" value="#{schMantenimiento.mtto.allDay}" />
 
                 <p:commandButton type="reset" value="Borrar" />
-                <p:commandButton id="addButton" value="Guardar" actionListener="#{schMantenimiento.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                <p:commandButton id="addButton" value="Guardar" actionListener="#{schMantenimiento.actualizar()}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
             </h:panelGrid>
+            
         </p:dialog>    
         </h:form>
     </p:dialog>

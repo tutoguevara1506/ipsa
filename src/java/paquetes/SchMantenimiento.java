@@ -116,20 +116,21 @@ public class SchMantenimiento implements Serializable {
         }
     }
     
-    /*public void guardar() {
+    public void actualizar() {
         String mQuery = "";
         if (validardatos()) {
             try {
                 Accesos mAccesos = new Accesos();
                 mAccesos.Conectar();
 
-                mQuery = "select ifnull(max(cod_man),0)+1 as codigo from tbl_mae_man where cod_lis_equ = " + mtto.getId()+ ";";
-                cod_man = mAccesos.strQuerySQLvariable(mQuery);
-                
-                mQuery = "insert into tbl_mae_man (cod_lis_equ,cod_man,cod_tip,det_obs,fec_ini,fec_fin,det_sta,cod_usu,cod_per) "
-                        + "VALUES (" + catcalendario.getCod_lis_equ() + "," + catcalendario.getCod_man() + "," + catcalendario.getCod_tip() + ",'" + catcalendario.getDet_obs() + "',"
-                        + catcalendario.getFec_ini() + " ," + catcalendario.getFec_fin()+ " ,"+ catcalendario.getCod_usu() + "," + catcalendario.getCod_per() + ");";
-                
+                mQuery = "update tbl_mae_man SET "
+                        + " cod_tip = '" + catcalendario.getCod_tip() + "', "
+                        + " det_obs = '" + catcalendario.getDet_obs() + "', "
+                        + " fec_ini = '" + catcalendario.getFec_ini() + "', "
+                        + " fec_fin = '" + catcalendario.getFec_fin() + "', "
+                        + " det_sta = '" + catcalendario.getDet_sta() + "' "
+                        + "WHERE cod_man = " + catcalendario.getCod_man() + " AND cod_lis_equ = '"+ catcalendario.getCod_lis_equ() +"';";
+                        
                 mAccesos.dmlSQLvariable(mQuery);
                 mAccesos.Desconectar();
                 addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);
@@ -138,29 +139,19 @@ public class SchMantenimiento implements Serializable {
                 System.out.println("Error al Guardar Mantenimiento. " + e.getMessage() + " Query: " + mQuery);
             }
             llenarMantenimientos();
-            RequestContext.getCurrentInstance().execute("PF('wMaestraNew').hide()");
         }
     }
     
      public boolean validardatos() {
         boolean mValidar = true;
-        if ("".equals(nom_mar) == true) {
+        
+        if (catcalendario.getDet_obs() == "") {
             mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un Nombre para la Marca.", 2);
+            addMessage("Validar Datos", "Debe Ingresar una descripción.", 2);
         }
-        Accesos maccesos = new Accesos();
-        maccesos.Conectar();
-        if ("0".equals(maccesos.strQuerySQLvariable("select count(id_mar) from cat_mar "
-                + "where upper(nom_mar)='" + nom_mar.toUpperCase() + "';")) == false && "".equals(id_mar)) {
-            mValidar = false;
-            addMessage("Validar Datos", "El Nombre de la Marca ya existe.", 2);
-        }
-        maccesos.Desconectar();
+        
         return mValidar;
-
     }
-    
-    */
     
      
     public Date getRandomDate(Date base) {
@@ -214,6 +205,7 @@ public class SchMantenimiento implements Serializable {
         
          for (CatCalendario cm : listaMttos){
              if (cm.getCod_man() == mtto.getData()){
+                 mtto = (ScheduleEvent)cm;
                  break;
              }         
          }        
