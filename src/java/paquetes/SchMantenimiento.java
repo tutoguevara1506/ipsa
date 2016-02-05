@@ -61,26 +61,21 @@ public class SchMantenimiento implements Serializable {
         catcalendario = new CatCalendario();
         mttoModel = new DefaultScheduleModel();
         llenarMantenimientos();
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-	      
+        	      
         for (CatCalendario cm : listaMttos){
             DefaultScheduleEvent cmt = new DefaultScheduleEvent();
             cmt.setId(cm.getCod_man());
             cmt.setDescription(cm.getDet_obs());
-            cmt.setTitle(cm.getCod_lis_equ());
+            cmt.setTitle(cm.getDes_equ());
             cmt.setData(cm.getCod_man());
             cmt.setAllDay(true);
             cmt.setEditable(true);
-            try {
-                cmt.setStartDate(formato.parse(cm.getFec_ini()));
-                if (cm.getFec_fin()== null)
-                    cm.setFec_fin(cm.getFec_ini());
-                
-                cmt.setEndDate(formato.parse(cm.getFec_fin()));
-            }catch(ParseException e){
-                e.printStackTrace();
-            }
+            cmt.setStartDate(cm.getFec_ini());
+            if (cm.getFec_fin()== null)
+                cm.setFec_fin(cm.getFec_ini());
             
+            cmt.setEndDate(cm.getFec_fin());
+                        
             mttoModel.addEvent(cmt);
   
         }
@@ -92,7 +87,11 @@ public class SchMantenimiento implements Serializable {
             catcalendario = new CatCalendario();
             listaMttos = new ArrayList<>();
 
-            mQuery = "select cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu from tbl_mae_man order by cod_man;";
+            mQuery = "select tbl_mae_man.cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, "
+                    + "det_sta, cod_usu, des_equ from tbl_mae_man inner join lis_equ on "
+                    + "tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ " 
+                    + "order by cod_man;";
+            
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -103,10 +102,11 @@ public class SchMantenimiento implements Serializable {
                         resVariable.getString(2),
                         resVariable.getString(3),
                         resVariable.getString(4),
-                        resVariable.getString(5),
-                        resVariable.getString(6),
+                        resVariable.getDate(5),
+                        resVariable.getDate(6),
                         resVariable.getString(7),
-                        resVariable.getString(8)
+                        resVariable.getString(8),
+                        resVariable.getString(9)
                 ));
             }
             mAccesos.Desconectar();
@@ -118,6 +118,8 @@ public class SchMantenimiento implements Serializable {
     
     public void actualizar() {
         String mQuery = "";
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        
         if (validardatos()) {
             try {
                 Accesos mAccesos = new Accesos();
@@ -126,9 +128,9 @@ public class SchMantenimiento implements Serializable {
                 mQuery = "update tbl_mae_man SET "
                         + " cod_tip = '" + catcalendario.getCod_tip() + "', "
                         + " det_obs = '" + catcalendario.getDet_obs() + "', "
-                        + " fec_ini = '" + catcalendario.getFec_ini() + "', "
-                        + " fec_fin = '" + catcalendario.getFec_fin() + "', "
-                        + " det_sta = '" + catcalendario.getDet_sta() + "' "
+                        + " fec_ini = '" + fmt.format(catcalendario.getFec_ini()) + "', "
+                        + " fec_fin = '" + fmt.format(catcalendario.getFec_fin()) + "' "
+                       /* + " det_sta = '" + catcalendario.getDet_sta() + "' "*/
                         + "WHERE cod_man = " + catcalendario.getCod_man() + " AND cod_lis_equ = '"+ catcalendario.getCod_lis_equ() +"';";
                         
                 mAccesos.dmlSQLvariable(mQuery);
@@ -138,7 +140,7 @@ public class SchMantenimiento implements Serializable {
                 addMessage("Guardar Mantenimiento", "Error al momento de guardar la información. " + e.getMessage(), 2);
                 System.out.println("Error al Guardar Mantenimiento. " + e.getMessage() + " Query: " + mQuery);
             }
-            llenarMantenimientos();
+            init();
         }
     }
     
@@ -152,7 +154,8 @@ public class SchMantenimiento implements Serializable {
         
         return mValidar;
     }
-    
+     
+     
      
     public Date getRandomDate(Date base) {
         Calendar date = Calendar.getInstance();
@@ -202,8 +205,7 @@ public class SchMantenimiento implements Serializable {
     public void onEventSelect(SelectEvent selectEvent) {
        
         ScheduleEvent mtto = (ScheduleEvent) selectEvent.getObject();
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-        
+               
          for (CatCalendario cm : listaMttos){
              if (cm.getCod_man() == mtto.getData()){
                  catcalendario = cm;                

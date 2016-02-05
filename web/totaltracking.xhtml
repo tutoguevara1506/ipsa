@@ -4956,7 +4956,7 @@
         *********************************************************************-->
 
         <p:dialog  id="dlgCalend" widgetVar="wCalend" modal="true" 
-                   width="800" height="600" closable="false" resizable="false" 
+                   width="800" height="600" closable="true" resizable="false" 
                    header="Calendario de Mantenimientos" rendered="true" 
                    dynamic="false" visible="false" 
                    >
@@ -4977,19 +4977,26 @@
         <p:dialog widgetVar="eventDialog" header="Detalle de mantenimiento" showEffect="clip" hideEffect="clip">
             <h:panelGrid id="eventDetails" columns="2">
                 <p:outputLabel for="title" value="Titulo:" />
-                <p:inputText id="title" value="#{schMantenimiento.catcalendario.cod_lis_equ}" required="true" />
- 
-                <p:outputLabel for="from" value="Desde:" />
-                <p:calendar id="from" value="#{schMantenimiento.catcalendario.fec_ini}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+                <p:inputText id="title" value="#{schMantenimiento.catcalendario.des_equ}" disabled="true"/>
+                <p:outputLabel  value="Desde:" />
+                <p:calendar value="#{schMantenimiento.catcalendario.fec_ini}" locale="es" 
+                            readonlyInput="true" showOn="button" 
+                            size="25" pattern="dd/MM/yyyy HH:mm" onfocus="this.select()" />
  
                 <p:outputLabel for="to" value="Hasta:" />
-                    <p:calendar id="to" value="#{schMantenimiento.catcalendario.fec_fin}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
- 
-                <p:outputLabel for="allDay" value="Todo el dia:" />
-                <h:selectBooleanCheckbox id="allDay" value="#{schMantenimiento.catcalendario.det_sta}" />
-
-                <p:commandButton type="reset" value="Borrar" />
-                <p:commandButton id="addButton" value="Guardar" actionListener="#{schMantenimiento.actualizar()}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                <p:calendar id="to" value="#{schMantenimiento.catcalendario.fec_fin}" locale="es" 
+                            readonlyInput="true" showOn="button" 
+                            size="25" pattern="dd/MM/yyyy HH:mm" onfocus="this.select()"/>
+                
+                <p:outputLabel for="obs" value="Observaciones:" />
+                <p:inputTextarea id="obs" value="#{schMantenimiento.catcalendario.det_obs}" 
+                                 rows="3" cols="30" counter="display" maxlength="200" readonly="false"
+                                 counterTemplate="{0} characters remaining." autoResize="false" onfocus="this.select()"/>
+                
+                <p:commandButton id="addButton" value="Guardar" 
+                                 actionListener="#{schMantenimiento.actualizar()}" 
+                                 oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                <h:outputText id="display" />
             </h:panelGrid>
             
         </p:dialog>    

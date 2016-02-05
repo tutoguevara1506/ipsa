@@ -1,15 +1,17 @@
 package paquetes;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class CatCalendario implements Serializable {
 
-    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu;
+    private String cod_lis_equ, cod_man, cod_tip, det_obs, det_sta, cod_usu, des_equ;
+    private Date fec_ini, fec_fin;
 
     public CatCalendario() {
     }
 
-    public CatCalendario(String cod_lis_equ, String cod_man, String cod_tip, String det_obs, String fec_ini, String fec_fin, String det_sta, String cod_usu) {
+    public CatCalendario(String cod_lis_equ, String cod_man, String cod_tip, String det_obs, Date fec_ini, Date fec_fin, String det_sta, String cod_usu, String des_equ) {
         this.cod_lis_equ = cod_lis_equ;
         this.cod_man = cod_man;
         this.cod_tip = cod_tip;
@@ -18,6 +20,7 @@ public class CatCalendario implements Serializable {
         this.fec_fin = fec_fin;
         this.det_sta = det_sta;
         this.cod_usu = cod_usu;
+        this.des_equ = des_equ;
     }
 
     public String getCod_lis_equ() {
@@ -52,19 +55,19 @@ public class CatCalendario implements Serializable {
         this.det_obs = det_obs;
     }
 
-    public String getFec_ini() {
+    public Date getFec_ini() {
         return fec_ini;
     }
 
-    public void setFec_ini(String fec_ini) {
+    public void setFec_ini(Date fec_ini) {
         this.fec_ini = fec_ini;
     }
 
-    public String getFec_fin() {
+    public Date getFec_fin() {
         return fec_fin;
     }
 
-    public void setFec_fin(String fec_fin) {
+    public void setFec_fin(Date fec_fin) {
         this.fec_fin = fec_fin;
     }
 
@@ -83,4 +86,12 @@ public class CatCalendario implements Serializable {
     public void setCod_usu(String cod_usu) {
         this.cod_usu = cod_usu;
     }
+
+    public String getDes_equ() {
+        return des_equ;
+    }
+
+    public void setDes_equ(String des_equ) {
+        this.des_equ = des_equ;
+    }    
 }
