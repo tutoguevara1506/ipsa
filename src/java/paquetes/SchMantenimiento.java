@@ -202,10 +202,11 @@ public class SchMantenimiento implements Serializable {
     public void onEventSelect(SelectEvent selectEvent) {
        
         ScheduleEvent mtto = (ScheduleEvent) selectEvent.getObject();
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         
          for (CatCalendario cm : listaMttos){
              if (cm.getCod_man() == mtto.getData()){
-                 mtto = (ScheduleEvent)cm;
+                 catcalendario = cm;                
                  break;
              }         
          }        
