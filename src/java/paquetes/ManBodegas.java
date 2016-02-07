@@ -19,29 +19,29 @@ public class ManBodegas implements Serializable {
     private static final long serialVersionUID = 8799345674716638L;
     @Inject
     Login cbean;
-    private CatPaises catpaises;
-    private List<CatPaises> paises;
+    private CatAlmacenes catalmacenes;
+    private List<CatAlmacenes> almacenes;
     private CatBodegas catbodegas;
     private List<CatBodegas> bodegas;
-    private String id_bod, nom_bod, cod_pai;
+    private String id_bod, nom_bod, cod_alm;
 
     public ManBodegas() {
     }
 
-    public CatPaises getCatpaises() {
-        return catpaises;
+    public CatAlmacenes getCatalmacenes() {
+        return catalmacenes;
     }
 
-    public void setCatpaises(CatPaises catpaises) {
-        this.catpaises = catpaises;
+    public void setCatalmacenes(CatAlmacenes catalmacenes) {
+        this.catalmacenes = catalmacenes;
     }
 
-    public List<CatPaises> getPaises() {
-        return paises;
+    public List<CatAlmacenes> getAlmacenes() {
+        return almacenes;
     }
 
-    public void setPaises(List<CatPaises> paises) {
-        this.paises = paises;
+    public void setAlmacenes(List<CatAlmacenes> almacenes) {
+        this.almacenes = almacenes;
     }
 
     public CatBodegas getCatbodegas() {
@@ -76,41 +76,41 @@ public class ManBodegas implements Serializable {
         this.nom_bod = nom_bod;
     }
 
-    public String getCod_pai() {
-        return cod_pai;
+    public String getCod_alm() {
+        return cod_alm;
     }
 
-    public void setCod_pai(String cod_pai) {
-        this.cod_pai = cod_pai;
+    public void setCod_alm(String cod_alm) {
+        this.cod_alm = cod_alm;
     }
 
     public void iniciarventana() {
         id_bod = "";
         nom_bod = "";
-        cod_pai = cbean.getCod_pai();
-        llenarPaises();
+        cod_alm = getCod_alm();
+        llenarAlmacenes();
         llenarBodegas();
     }
 
     public void cerrarventana() {
         id_bod = "";
         nom_bod = "";
-        cod_pai = "";
+        cod_alm = "";
         bodegas = new ArrayList<>();
     }
 
-     public void llenarPaises() {
+     public void llenarAlmacenes() {
         try {
-            paises = new ArrayList<>();
+            almacenes = new ArrayList<>();
 
-            String mQuery = "select cod_pai, nom_pai "
-                    + "from cat_pai order by cod_pai;";
+            String mQuery = "select cod_alm, nom_alm "
+                    + "from cat_alm order by cod_alm;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
             resVariable = mAccesos.querySQLvariable(mQuery);
             while (resVariable.next()) {
-                paises.add(new CatPaises(
+                almacenes.add(new CatAlmacenes(
                         resVariable.getString(1),
                         resVariable.getString(2)
                 ));
@@ -128,9 +128,9 @@ public class ManBodegas implements Serializable {
             catbodegas = new CatBodegas();
             bodegas = new ArrayList<>();
 
-            mQuery = "select bod.id_bod, bod.nom_bod,bod.cod_pai,pai.nom_pai "
+            mQuery = "select bod.id_bod, bod.nom_bod,bod.cod_pai,alm.nom_alm "
                     + "from cat_bodegas as bod "
-                    + "inner join cat_pai as pai on bod.cod_pai = pai.cod_pai "
+                    + "inner join cat_alm as alm on bod.cod_pai = alm.cod_alm "
                     + "order by id_bod;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -154,7 +154,7 @@ public class ManBodegas implements Serializable {
     public void nuevo() {
         id_bod = "";
         nom_bod = "";
-        cod_pai = cbean.getCod_pai();
+        cod_alm = getCod_alm();
         catbodegas = new CatBodegas();
     }
 
@@ -167,12 +167,12 @@ public class ManBodegas implements Serializable {
                 if ("".equals(id_bod)) {
                     mQuery = "select ifnull(max(id_bod),0)+1 as codigo from cat_bodegas;";
                     id_bod = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into cat_bodegas (id_bod,nom_bod,cod_pai) "
-                            + "values (" + id_bod + ",'" + nom_bod + "'," + cod_pai + ");";
+                    mQuery = "insert into cat_bodegas (id_bod,nom_bod,cod_alm) "
+                            + "values (" + id_bod + ",'" + nom_bod + "'," + cod_alm + ");";
                 } else {
                     mQuery = "update cat_bodegas SET "
                             + " nom_bod = '" + nom_bod + "', "
-                            + " cod_pai = " + cod_pai + " "
+                            + " cod_pai = " + cod_alm + " "
                             + "WHERE id_bod = " + id_bod + ";";
 
                 }
@@ -217,15 +217,15 @@ public class ManBodegas implements Serializable {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar un Nombre para el Estante.", 2);
         }
-        if ("0".equals(cod_pai) == true) {
+        if ("0".equals(cod_alm) == true) {
             mValidar = false;
             addMessage("Validar Datos", "Debe Seleccionar una Bodega.", 2);
         }
         Accesos maccesos = new Accesos();
         maccesos.Conectar();
         if ("0".equals(maccesos.strQuerySQLvariable("select count(id_bod) from cat_bodegas "
-                + "where upper(nom_bod)='" + nom_bod.toUpperCase() + "' and cod_pai ="
-                + cbean.getCod_pai() + ";")) == false
+                + "where upper(nom_bod)='" + nom_bod.toUpperCase() + "' and cod_alm ="
+                + getCod_alm() + ";")) == false
                 && "".equals(id_bod)) {
             mValidar = false;
             addMessage("Validar Datos", "El Nombre de Estante ya existe.", 2);
@@ -238,7 +238,7 @@ public class ManBodegas implements Serializable {
     public void onRowSelect(SelectEvent event) {
         id_bod = ((CatBodegas) event.getObject()).getId_bod();
         nom_bod = ((CatBodegas) event.getObject()).getNom_bod();
-        cod_pai = ((CatBodegas) event.getObject()).getCod_pai();
+        cod_alm = ((CatBodegas) event.getObject()).getCod_alm();
     }
 
     public void addMessage(String summary, String detail, int tipo) {

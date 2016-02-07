@@ -16,7 +16,7 @@ public class Conexion {
     public static String databaseName = "ipsa"; //"harolda1_distasoft001";
     private String url = "jdbc:mysql://localhost:3306/" + databaseName;
     private String userName = "root"; //"root"; "harolda1_root";
-    private String password = ""; //"Dist@soft.."; //"W3bS0l..."; //"H@rold2015..";
+    private String password = "";//"Dist@soft.."; //"W3bS0l..."; //"H@rold2015..";
     private String errString = "";
 
     public String getDatabaseName() {
