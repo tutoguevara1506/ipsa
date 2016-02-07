@@ -93,3 +93,11 @@ tr.jsfcrud_even_row {
     width: 50px!important;
     height: 15px!important; 
 }
+
+ .emp1 .fc-event-inner{
+    background: #006600;
+ }
+ 
+ .emp2 .fc-event-inner{
+    background: #003399;
+ }

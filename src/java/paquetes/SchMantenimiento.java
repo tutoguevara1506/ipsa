@@ -75,6 +75,12 @@ public class SchMantenimiento implements Serializable {
                 cm.setFec_fin(cm.getFec_ini());
             
             cmt.setEndDate(cm.getFec_fin());
+            
+            if("1".equals(cm.getDet_sta())){
+                cmt.setStyleClass("emp1");
+            } else if ("2".equals(cm.getDet_sta())){
+                cmt.setStyleClass("emp2");
+            }
                         
             mttoModel.addEvent(cmt);
   
@@ -204,10 +210,10 @@ public class SchMantenimiento implements Serializable {
      
     public void onEventSelect(SelectEvent selectEvent) {
        
-        ScheduleEvent mtto = (ScheduleEvent) selectEvent.getObject();
+        ScheduleEvent smtto = (ScheduleEvent) selectEvent.getObject();
                
          for (CatCalendario cm : listaMttos){
-             if (cm.getCod_man() == mtto.getData()){
+             if (cm.getCod_man() == smtto.getData()){
                  catcalendario = cm;                
                  break;
              }         
@@ -218,12 +224,28 @@ public class SchMantenimiento implements Serializable {
         mtto = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
     }
     
-    public void onEventMove(ScheduleEntryMoveEvent event) {
-        addMessage("Calendario", "Se ha movido el mantenimiento de fecha. ", 2);
+    public void onEventMove(ScheduleEntryMoveEvent mttoMove) {
+              
+        for (CatCalendario cm : listaMttos){
+             if (cm.getCod_man() == mttoMove.getScheduleEvent().getData()){
+                 catcalendario = cm; 
+                 actualizar();
+                 init();
+                 break;
+             }         
+         }    
+        //addMessage("Calendario", "Se ha movido el mantenimiento de fecha. ", 1);
     }
      
-    public void onEventResize(ScheduleEntryResizeEvent event) {
-        addMessage("Calendario", "Se ha modificado el mantenimiento. ", 2);
+    public void onEventResize(ScheduleEntryResizeEvent mttoResize) {
+        for (CatCalendario cm : listaMttos){
+             if (cm.getCod_man() == mttoResize.getScheduleEvent().getData()){
+                 catcalendario = cm; 
+                 actualizar();
+                 init();
+                 break;
+             }         
+         }   
     }
      
     
