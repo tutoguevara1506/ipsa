@@ -2,7 +2,10 @@ package paquetes;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
@@ -24,8 +27,9 @@ public class ManPersonas implements Serializable {
     private List<CatCargos> cargos;
     private CatUsuarios catusuarios;
     private List<CatUsuarios> usuarios;
-    private String id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, id_car, usuario;
-
+    private String id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, cod_dep, id_jef, fingreso, codigo, id_car, usuario;
+    private Date dfingreso;
+    
     public ManPersonas() {
     }
 
@@ -157,12 +161,53 @@ public class ManPersonas implements Serializable {
         this.isss = isss;
     }
 
+    public String getCod_dep() {
+        return cod_dep;
+    }
+
+    public void setCod_dep(String cod_dep) {
+        this.cod_dep = cod_dep;
+    }
+
+    public String getId_jef() {
+        return id_jef;
+    }
+
+    public void setId_jef(String id_jef) {
+        this.id_jef = id_jef;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    
     public String getId_car() {
         return id_car;
     }
 
     public void setId_car(String id_car) {
         this.id_car = id_car;
+    }
+
+    public String getFingreso() {
+        return fingreso;
+    }
+
+    public void setFingreso(String fingreso) {
+        this.fingreso = fingreso;
+    }
+
+    public Date getDfingreso() {
+        return dfingreso;
+    }
+
+    public void setDfingreso(Date dfingreso) {
+        this.dfingreso = dfingreso;
     }
 
     public String getUsuario() {
@@ -175,6 +220,8 @@ public class ManPersonas implements Serializable {
 
     
     public void iniciarventana() {
+        
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         id_per = "";
         nombres = "";
         apellidos = "";
@@ -185,8 +232,13 @@ public class ManPersonas implements Serializable {
         dui = "";
         nit = "";
         isss = "";
+        codigo = "";
+        cod_dep = "";
+        id_jef = "";
+        dfingreso = Date.from(Instant.now());
         id_car = "";
         usuario = "";
+        fingreso = format.format(dfingreso);
         llenarCargos();
         llenarUsuarios();
         llenarPersonas();
@@ -203,6 +255,10 @@ public class ManPersonas implements Serializable {
         dui = "";
         nit = "";
         isss = "";
+        codigo = "";
+        cod_dep = "";
+        id_jef = "";
+        fingreso = "";
         id_car = "";
         usuario = "";
         personas = new ArrayList<>();
@@ -273,7 +329,7 @@ public class ManPersonas implements Serializable {
             catpersonas = new CatPersonas();
             personas = new ArrayList<>();
 
-            mQuery = "select id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, id_car, cod_usu from cat_persona order by id_per;";
+            mQuery = "select id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, codigo, cod_dep, id_jef, fingreso, id_car, cod_usu from cat_persona order by id_per;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -291,7 +347,11 @@ public class ManPersonas implements Serializable {
                         resVariable.getString(9),
                         resVariable.getString(10),
                         resVariable.getString(11),
-                        resVariable.getString(11)
+                        resVariable.getString(12),
+                        resVariable.getString(13),
+                        resVariable.getString(14),
+                        resVariable.getString(15),
+                        resVariable.getString(16)
                 ));
             }
             mAccesos.Desconectar();
@@ -312,6 +372,11 @@ public class ManPersonas implements Serializable {
         dui = "";
         nit = "";
         isss = "";
+        codigo = "";
+        cod_dep = "";
+        id_jef = "";
+        fingreso = "";
+        id_car = "";
         id_car = "";
         usuario = "";
         catpersonas = new CatPersonas();
@@ -326,9 +391,9 @@ public class ManPersonas implements Serializable {
                 if ("".equals(id_per)) {
                     mQuery = "select ifnull(max(id_per),0)+1 as codigo from cat_persona;";
                     id_per = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into cat_persona (id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, id_car, cod_usu) "
+                    mQuery = "insert into cat_persona (id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, codigo, cod_dep, id_jef, fingreso, id_car, cod_usu) "
                             + "values (" + id_per + ",'" + nombres + "','" + apellidos + "','" + direccion + "','" + telefono 
-                            + "','" + celular + "','" + email + "','" + dui + "','" + nit + "','" + isss + "'," + id_car + ",'" + usuario + "');";
+                            + "','" + celular + "','" + email + "','" + dui + "','" + nit + "','" + isss + "','" + codigo + "'," + cod_dep + "," + id_jef + ", " + "str_to_date('" + fingreso + "','%d/%m/%Y')" + "," + id_car + ",'" + usuario + "');";
                 } else {
                     mQuery = "update cat_persona SET "
                             + " nombres = '" + nombres + "',"
@@ -340,9 +405,13 @@ public class ManPersonas implements Serializable {
                             + " dui = '" + dui + "',"
                             + " nit = '" + nit + "',"
                             + " isss = '" + isss + "',"
-                            + " id_car = '" + id_car + "',"
-                            + " cod_usu = '" + usuario + "'"
-                            + "WHERE id_per = " + id_per + ";";
+                            + " codigo = '" + codigo + "',"
+                            + " cod_dep = " + cod_dep + ","
+                            + " id_jef = '" + id_jef + "',"
+                            + " fingreso = " + "str_to_date('" + fingreso + "','%d/%m/%Y'),"
+                            + " id_car = " + id_car + ","
+                            + " cod_usu = " + usuario 
+                            + " WHERE id_per = " + id_per + ";";
 
                 }
                 mAccesos.dmlSQLvariable(mQuery);
@@ -380,6 +449,12 @@ public class ManPersonas implements Serializable {
 
     }
 
+    public void dateSelectedFingreso(SelectEvent f) {
+        Date date = (Date) f.getObject();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        fingreso = format.format(date);
+    }
+    
     public boolean validardatos() {
         boolean mValidar = true;
         if ("".equals(nombres) == true) {
@@ -429,6 +504,10 @@ public class ManPersonas implements Serializable {
         dui = ((CatPersonas) event.getObject()).getDui();
         nit = ((CatPersonas) event.getObject()).getNit();
         isss = ((CatPersonas) event.getObject()).getIsss();
+        codigo = ((CatPersonas) event.getObject()).getCodigo();
+        cod_dep = ((CatPersonas) event.getObject()).getCod_dep();
+        fingreso = ((CatPersonas) event.getObject()).getFingreso();
+        id_jef = ((CatPersonas) event.getObject()).getId_jef();
         id_car = ((CatPersonas) event.getObject()).getId_car();
         usuario = ((CatPersonas) event.getObject()).getUsuario();
     }

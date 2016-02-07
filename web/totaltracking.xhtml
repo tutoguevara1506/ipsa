@@ -22,8 +22,8 @@
         <h:form id="frmMadre">
 
             <p:menubar id="menumadre">
-
-                <p:submenu label="Catálogos" icon="ui-icon-folder-open">
+                <p:submenu label="Mantenimiento" icon="ui-icon-wrench">
+                    <p:submenu label="Configuración" icon="ui-icon-folder-open">
                     <p:menuitem value="Departamentos" icon="ui-icon-home" 
                                 onclick="PF('wDepartamentos').show()"
                                 update=":frmDepartamentos"
@@ -31,13 +31,7 @@
                                 actionListener="#{manDepartamentos.iniciarventana()}"
                                 disabled="#{manSeguridad.disableOpt('menuDeptos')}"
                                 />
-                    <p:menuitem value="Unidades" icon="ui-icon-bookmark" 
-                                onclick="PF('wUniMed').show()"
-                                update=":frmUniMed"
-                                style="width: 125px;"
-                                actionListener="#{manUniMed.iniciarventana()}"
-                                disabled="#{manSeguridad.disableOpt('menuUnidades')}"
-                                />
+                    
                      <p:menuitem value="Movimientos" icon="ui-icon-arrowthick-2-n-s" 
                                 onclick="PF('wMov').show()"
                                 update=":frmMov"
@@ -52,27 +46,8 @@
                                 actionListener="#{manPaises.iniciarventana()}"
                                 disabled="#{manSeguridad.disableOpt('menuProcesos')}"
                                 />
-                    <p:menuitem value="Bodegas" icon="ui-icon-home" 
-                                onclick="PF('wAlmacenes').show()"
-                                update=":frmAlmacenes"
-                                style="width: 125px;"
-                                actionListener="#{manAlmacenes.iniciarventana()}"
-                                disabled="#{manSeguridad.disableOpt('menuBodegas')}"
-                                />
-                    <p:menuitem value="Estantes" icon="ui-icon-flag" 
-                                onclick="PF('wBod').show()"
-                                update=":frmBod"
-                                actionListener="#{manBodegas.iniciarventana()}"
-                                disabled="#{manSeguridad.disableOpt('menuEstantes')}"
-                                />
-                    <p:menuitem value="Repisas" icon="ui-icon-notice" 
-                                onclick="PF('wUbi').show()"
-                                update=":frmUbi"
-                                style="width: 125px;"
-                                actionListener="#{manUbicaciones.iniciarventana()}"
-                                disabled="#{manSeguridad.disableOpt('menuRepisas')}"
-                                />
-                    <p:menuitem value="Proveedores" icon="ui-icon-person" 
+                    
+                    <p:menuitem value="Fabricantes" icon="ui-icon-person" 
                                 onclick="PF('wPro').show()"
                                 style="width: 125px;"
                                 action="#{manProveedores.iniciarventana()}" 
@@ -100,7 +75,7 @@
                                 update=":frmCatPie"
                                 disabled="#{manSeguridad.disableOpt('menuCategoriaPiezas')}"
                                 />
-                    <p:menuitem value="Operaciones" icon="ui-icon-wrench" 
+                    <p:menuitem value="Acciones" icon="ui-icon-wrench" 
                                 onclick="PF('wOpe').show()"
                                 style="width: 125px;"
                                 action="#{manOperaciones.iniciarventana()}" 
@@ -121,23 +96,8 @@
                                 update=":frmPiezas"
                                 disabled="#{manSeguridad.disableOpt('menuPiezas')}"
                                 />
-                    <p:menuitem value="Cargos Personal" icon="ui-icon-contact" 
-                                onclick="PF('wCargo').show()"
-                                style="width: 125px;"
-                                action="#{manCargos.iniciarventana()}" 
-                                update=":frmCargo"
-                                disabled="#{manSeguridad.disableOpt('menuCargos')}"
-                                />
-                    <p:menuitem value="Personal" icon="ui-icon-person" 
-                                onclick="PF('wPersonal').show()"
-                                style="width: 125px;"
-                                action="#{manPersonas.iniciarventana()}" 
-                                update=":frmPersonal"
-                                disabled="#{manSeguridad.disableOpt('menuPersonal')}"
-                                />
+                    
                 </p:submenu>
-
-                <p:submenu label="Mantenimiento" icon="ui-icon-wrench">
                     <p:submenu label="Solicitar Piezas" icon="ui-icon-pencil">
                         <p:menuitem value="Nueva Solicitud" icon="ui-icon-document" 
                                     onclick="PF('wSol').show()"
@@ -168,6 +128,14 @@
                                 update=":frmMaestra"
                                 actionListener="#{manMaestroMan.iniciarventana()}"
                                 disabled="#{manSeguridad.disableOpt('menuMattoMaestro')}"
+                                />
+                    <p:menuitem value="Control de Mantenimientos" icon="ui-icon-calendar" 
+                                id="menuControlMtto"
+                                onclick="PF('wCalend').show()"
+                                update=":frmCalend"
+                                actionListener="#{manUsuarios.iniciarventana()}"
+                                style="width: 190px;"
+                                disabled="#{manSeguridad.disableOpt('menuCalendMtto')}"
                                 />
                 </p:submenu>
 
@@ -206,12 +174,64 @@
                 </p:submenu>
 
                 <p:submenu label="Almacén" icon="ui-icon-home">
+                    <p:submenu label="Configuración" icon="ui-icon-pencil">
+                        <p:menuitem value="Bodegas" icon="ui-icon-home" 
+                                    onclick="PF('wAlmacenes').show()"
+                                    update=":frmAlmacenes"
+                                    style="width: 125px;"
+                                    actionListener="#{manAlmacenes.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuBodegas')}"
+                                    />
+                        <p:menuitem value="Estantes" icon="ui-icon-flag" 
+                                    onclick="PF('wBod').show()"
+                                    update=":frmBod"
+                                    actionListener="#{manBodegas.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuEstantes')}"
+                                    />
+                        <p:menuitem value="Repisas" icon="ui-icon-notice" 
+                                    onclick="PF('wUbi').show()"
+                                    update=":frmUbi"
+                                    style="width: 125px;"
+                                    actionListener="#{manUbicaciones.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuRepisas')}"
+                                    />
+                        <p:menuitem value="Unidades" icon="ui-icon-bookmark" 
+                                    onclick="PF('wUniMed').show()"
+                                    update=":frmUniMed"
+                                    style="width: 125px;"
+                                    actionListener="#{manUniMed.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuUnidades')}"
+                                    />
+                        <p:menuitem value="Grupos Piezas" icon="ui-icon-wrench" 
+                                    onclick="PF('wGruPie').show()"
+                                    update=":frmGruPie"
+                                    style="width: 125px;"
+                                    actionListener="#{manGruPie.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuGruposPiezas')}"
+                                    />
+                    </p:submenu>
                     <p:menuitem value="Inventario Piezas" icon="ui-icon-suitcase" 
                                 onclick="PF('wListaPiezas').show()"
                                 update=":frmListaPiezas"
                                 style="width: 125px;"
                                 actionListener="#{manTblPiezas.iniciarventana()}"
                                 disabled="#{manSeguridad.disableOpt('menuInventarioPiezas')}"
+                                />
+                </p:submenu>
+                <p:submenu label="Personal" icon="ui-icon-person">
+                    <p:menuitem value="Cargos Personal" icon="ui-icon-contact" 
+                                onclick="PF('wCargo').show()"
+                                style="width: 125px;"
+                                action="#{manCargos.iniciarventana()}" 
+                                update=":frmCargo"
+                                disabled="#{manSeguridad.disableOpt('menuCargos')}"
+                                />
+                    <p:menuitem value="Personal" icon="ui-icon-person" 
+                                onclick="PF('wPersonal').show()"
+                                style="width: 125px;"
+                                action="#{manPersonas.iniciarventana()}" 
+                                update=":frmPersonal"
+                                disabled="#{manSeguridad.disableOpt('menuPersonal')}"
                                 />
                 </p:submenu>
 
@@ -268,14 +288,6 @@
                                 actionListener="#{manUsuarios.iniciarventana()}"
                                 style="width: 190px;"
                                 disabled="#{manSeguridad.disableOpt('menuControlAlertas')}"
-                                />
-                    <p:menuitem value="Control de Mantenimientos" icon="ui-icon-calendar" 
-                                id="menuControlMtto"
-                                onclick="PF('wCalend').show()"
-                                update=":frmCalend"
-                                actionListener="#{manUsuarios.iniciarventana()}"
-                                style="width: 190px;"
-                                disabled="#{manSeguridad.disableOpt('menuCalendMtto')}"
                                 />
                 </p:submenu>
                 <f:facet name="options">
@@ -962,12 +974,12 @@
         </p:dialog>
 
         <!--******************************************************************** 
-        ***************** Pantalla mantenimiento de Opereaciones ***************
+        ***************** Pantalla mantenimiento de Operaciones ***************
         *********************************************************************-->
 
         <p:dialog  id="dlgOperaciones" widgetVar="wOpe" modal="true" 
                    width="540" height="320" closable="false" resizable="false" 
-                   header="Mantenimiento de Operaciones" rendered="true" 
+                   header="Mantenimiento de Acciones" rendered="true" 
                    dynamic="false" visible="false" 
                    >
 
@@ -1019,7 +1031,7 @@
                     <div style=" background-color: #ebf8fe;">
                         <p:focus for="txtnombreope" />
                         <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputText value="Nombre" style="font-weight:bold;"/>
+                            <h:outputText value="Acción" style="font-weight:bold;"/>
                             <p:inputTextarea id="txtnombreope" 
                                              cols="60"
                                              maxlength="300"
@@ -1046,7 +1058,7 @@
                                 update=":frmOpe"/>
                         <p:ajax event="rowUnselect"/>
 
-                        <p:column style="width:300px" headerText="Nombre">
+                        <p:column style="width:300px" headerText="Acción">
                             <h:outputText value="#{vOpe.nom_ope}" />
                         </p:column>
                     </p:dataTable>
@@ -4672,7 +4684,7 @@
         *********************************************************************-->
 
         <p:dialog  id="dlgPersonal" widgetVar="wPersonal" modal="true" 
-                   width="600" height="445" closable="false" resizable="false" 
+                   width="625" height="470" closable="false" resizable="false" 
                    header="Control de Personal" rendered="true" 
                    dynamic="false" visible="false" 
                    >
@@ -4728,7 +4740,7 @@
                             <h:outputText value="Nombres" style="font-weight:bold;"/>
                             <h:panelGroup>
                                 <p:inputText id="txtnombreper" 
-                                         size="35"
+                                         size="28"
                                          maxlength="30"
                                          value="#{manPersonas.nombres}"
                                          onfocus="this.select()"
@@ -4737,7 +4749,7 @@
                                 <h:outputText value="Apellidos" style="font-weight:bold;"/>
                                 <p:spacer width="10"/>
                                 <p:inputText id="txtapellidosper" 
-                                         size="35"
+                                         size="28"
                                          maxlength="30"
                                          value="#{manPersonas.apellidos}"
                                          onfocus="this.select()"
@@ -4745,7 +4757,7 @@
                             </h:panelGroup>
                             <h:outputText value="Dirección" style="font-weight:bold;"/>
                             <p:inputText id="txtdireccionper" 
-                                         size="90"
+                                         size="70"
                                          maxlength="150"
                                          value="#{manPersonas.direccion}"
                                          onfocus="this.select()"
@@ -4771,7 +4783,7 @@
                                 <h:outputText value="E-Mail" style="font-weight:bold;"/>
                                 <p:spacer width="10"/>
                                 <p:inputText id="txtemailper" 
-                                             size="40"
+                                             size="30"
                                              maxlength="50"
                                              value="#{manPersonas.email}"
                                              onfocus="this.select()"
@@ -4789,7 +4801,7 @@
                                 <h:outputText value="Nit" style="font-weight:bold;"/>
                                 <p:spacer width="10"/>
                                 <p:inputText id="txtnitper" 
-                                             size="16"
+                                             size="20"
                                              maxlength="14"
                                              value="#{manPersonas.nit}"
                                              onfocus="this.select()"
@@ -4798,12 +4810,49 @@
                                 <h:outputText value="ISSS" style="font-weight:bold;"/>
                                 <p:spacer width="12"/>
                                 <p:inputText id="txtisssper" 
-                                             size="20"
+                                             size="22"
                                              maxlength="20"
                                              value="#{manPersonas.isss}"
                                              onfocus="this.select()"
                                              />
                             </h:panelGroup>
+                            <h:outputText value="Area" style="font-weight:bold;"/>
+                            <h:panelGroup>
+                                <p:inputText id="txtareaper" 
+                                         size="28"
+                                         maxlength="30"
+                                         value="#{manPersonas.cod_dep}"
+                                         onfocus="this.select()"
+                                         />
+                                <p:spacer width="20"/>
+                                <h:outputText value="Codigo" style="font-weight:bold;"/>
+                                <p:spacer width="10"/>
+                                <p:inputText id="txtcodigoper" 
+                                         size="28"
+                                         maxlength="30"
+                                         value="#{manPersonas.codigo}"
+                                         onfocus="this.select()"
+                                         />
+                            </h:panelGroup>
+                            <h:outputText value="Jefe Inmediato" style="font-weight:bold;"/>
+                            <h:panelGroup>
+                                <p:inputText id="txtjefeper" 
+                                         size="28"
+                                         maxlength="30"
+                                         value="#{manPersonas.id_jef}"
+                                         onfocus="this.select()"
+                                         />
+                                <p:spacer width="20"/>
+                                <h:outputText value="Fecha Ingreso" style="font-weight:bold;"/>
+                                <p:spacer width="10"/>
+                                <p:calendar  pattern="dd/MM/yyyy" locale="es" 
+                                            readonlyInput="true" showOn="button" size="10"
+                                            style="width: 10px"
+                                            value="#{manPersonas.dfingreso}" 
+                                            >
+                                <p:ajax event="dateSelect" listener="#{manPersonas.dateSelectedFingreso}" />
+                                </p:calendar> 
+                            </h:panelGroup> 
                             <h:outputText value="Cargo" style="font-weight:bold;"/>
                             <h:panelGroup>
                                 <p:selectOneMenu value="#{manPersonas.id_car}" 
@@ -4818,7 +4867,7 @@
                                 <h:outputText value="Usuario" style="font-weight:bold;"/>
                                 <p:spacer width="10"/>
                                 <p:selectOneMenu value="#{manPersonas.usuario}" 
-                                    style="width:180px;text-align:right;"
+                                    style="width:150px;text-align:right;"
                                     immediate="false"
                                     >  
                                     <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
@@ -4838,7 +4887,7 @@
                                  rowKey="#{vPersonal.id_per}"
                                  editable="false"
                                  scrollable="true"
-                                 scrollHeight="150"
+                                 scrollHeight="110"
                                  style="width:530px"
                                  >
                         <p:ajax event="rowSelect" listener="#{manPersonas.onRowSelect}" 
@@ -5086,7 +5135,83 @@
 
             </h:form>
         </p:dialog>  
-           
+
+    <!-- *******************************************************************
+        **************** Pantalla mantenimiento de Grupos piezas  ************
+        *********************************************************************-->
+
+        <p:dialog  id="dlgGruPie" widgetVar="wGruPie" modal="true" 
+                   width="500" height="300" closable="false" resizable="false" 
+                   header="Mantenimiento de Grupos Piezas" rendered="true" 
+                   dynamic="true" visible="false" 
+                   >
+
+            <h:form id="frmGruPie"> 
+                <p:growl id="msgGruPie" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manGruposPiezas.nuevo()}"
+                                         update=":frmGruPie"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         action="#{manGruposPiezas.guardar()}"
+                                         update=":frmGruPie"
+                                         icon="ui-icon-disk"
+                                         />
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         actionListener="#{manGruposPiezas.eliminar()}"
+                                         update=":frmGruPie"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wGruPie').hide()"
+                                         action="#{manGruposPiezas.cerrarventana()}" 
+                                         update=":frmGruPie"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+                <div style=" background-color: #ebf8fe;">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Grupo" style="font-weight:bold;" />
+                        <p:inputText maxlength="20" size="60" value="#{manGruposPiezas.nom_gru}" 
+                                     onfocus="this.select()"/>
+                    </h:panelGrid>
+                    <p:dataTable id="dtGruPie" var="vGru" 
+                                 value="#{manGruposPiezas.grupospiezas}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manGruposPiezas.catgrupospiezas}" 
+                                 rowKey="#{vGru.cod_gru}"
+                                 editable="false" 
+                                 style="width:475px"
+                                 scrollable="true"
+                                 scrollHeight="190"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manGruposPiezas.onRowSelect}" 
+                                update=":frmGruPie" />
+
+                        <p:column style="width:50px" headerText="Nombre Grupo">
+                            <h:outputText value="#{vGru.nom_gru}" />
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </h:form>
+        </p:dialog>  
+    
     <script type="text/javascript">
         PrimeFaces.locales['es'] = {
             closeText: 'Cerrar',
