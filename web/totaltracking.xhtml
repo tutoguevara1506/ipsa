@@ -1648,7 +1648,7 @@
             </h:form>
         </p:dialog>
 
-       <!--******************************************************************** 
+        <!--******************************************************************** 
         *************** Pantalla mantenimiento de Equipos **********************
         *********************************************************************-->
 
@@ -2006,7 +2006,7 @@
                             <h:panelGrid columns="4" cellpadding="5">
                                 <h:outputText value="Fecha" style="font-weight:bold;"/>
                                 <h:outputText value="Solicitante" style="font-weight:bold;"/>
-                                <h:outputText value="País" style="font-weight:bold;"/>
+                                <h:outputText value="Almacén" style="font-weight:bold;"/>
                                 <h:outputText value="Departamento" style="font-weight:bold;"/>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fecing"
                                              readonlyInput="true" 
@@ -2162,7 +2162,7 @@
                                 update=":frmSol"/>
                         <p:ajax event="rowUnselect"/>
 
-                        <p:column style="width:70px;" headerText="País">
+                        <p:column style="width:70px;" headerText="Almacén">
                             <h:outputText value="#{vSol.nompai}" />
                         </p:column>
                         <p:column style="width:50px;" headerText="Cantidad">
@@ -2429,7 +2429,7 @@
                                 <p:column style="width:60px;" headerText="Fecha">
                                     <h:outputText value="#{vSegui.fec_sol}" />
                                 </p:column>
-                                <p:column style="width:70px;" headerText="País">
+                                <p:column style="width:70px;" headerText="Almacén">
                                     <h:outputText value="#{vSegui.nompai}" />
                                 </p:column>
                                 <p:column style="width:100px" headerText="Solicitante">
@@ -2617,7 +2617,7 @@
                                 <p:column style="width:70px;" headerText="Fecha">
                                     <h:outputText value="#{vSeguiApr.fec_sol}" />
                                 </p:column>
-                                <p:column style="width:90px;" headerText="País">
+                                <p:column style="width:90px;" headerText="Almacén">
                                     <h:outputText value="#{vSeguiApr.nompai}" />
                                 </p:column>
                                 <p:column style="width:110px" headerText="Solicitante">
@@ -2713,7 +2713,7 @@
                                 <p:column style="width:60px;" headerText="Fecha">
                                     <h:outputText value="#{vHistoricos.fec_sol}" />
                                 </p:column>
-                                <p:column style="width:70px;" headerText="País">
+                                <p:column style="width:70px;" headerText="Almacén">
                                     <h:outputText value="#{vSvHistoricos.nompai}" />
                                 </p:column>
                                 <p:column style="width:90px" headerText="Solicitante">
@@ -2872,7 +2872,7 @@
                             <h:panelGrid columns="4" cellpadding="5">
                                 <h:outputText value="Fecha" style="font-weight:bold;"/>
                                 <h:outputText value="Solicitante" style="font-weight:bold;"/>
-                                <h:outputText value="País" style="font-weight:bold;"/>
+                                <h:outputText value="Almacén" style="font-weight:bold;"/>
                                 <h:outputText value="Departamento" style="font-weight:bold;"/>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fecingreq"
                                              readonlyInput="true" 
@@ -3001,7 +3001,7 @@
                                 update=":frmReq"/>
                         <p:ajax event="rowUnselect"/>
 
-                        <p:column style="width:90px;" headerText="País">
+                        <p:column style="width:90px;" headerText="Almacén">
                             <h:outputText value="#{vReq.nompai}" />
                         </p:column>
                         <p:column style="width:50px;" headerText="Cantidad">
@@ -3265,7 +3265,7 @@
                                 <p:column style="width:60px;" headerText="Fecha">
                                     <h:outputText value="#{vSeguiReq.fec_sol}" />
                                 </p:column>
-                                <p:column style="width:70px;" headerText="País">
+                                <p:column style="width:70px;" headerText="Almacén">
                                     <h:outputText value="#{vSeguiReq.nompai}" />
                                 </p:column>
                                 <p:column style="width:100px" headerText="Solicitante">
@@ -3326,10 +3326,10 @@
                                         update=":frmSeguimientoReq:msgSeguimientoReq, :frmSeguimientoReq:tabseguimientoreq:dtSeguiDetReq"/>
 
 
-                                <p:column style="width:50px;" headerText="Bodega">
+                                <p:column style="width:50px;" headerText="Estante">
                                     <h:outputText value="#{vSeguiDetReq.nombod}" />
                                 </p:column>
-                                <p:column style="width:50px;" headerText="Ubicación">
+                                <p:column style="width:50px;" headerText="Repisa">
                                     <h:outputText value="#{vSeguiDetReq.nomubi}" />
                                 </p:column>
                                 <p:column style="width:30px;" headerText="C.Sol.">
@@ -3450,7 +3450,7 @@
                                 <p:column style="width:70px;" headerText="Fecha">
                                     <h:outputText value="#{vSeguiAprReq.fec_sol}" />
                                 </p:column>
-                                <p:column style="width:90px;" headerText="País">
+                                <p:column style="width:90px;" headerText="Almacén">
                                     <h:outputText value="#{vSeguiAprReq.nompai}" />
                                 </p:column>
                                 <p:column style="width:110px" headerText="Solicitante">
@@ -3480,10 +3480,10 @@
                                          scrollHeight="180"
                                          >
 
-                                <p:column style="width:50px;" headerText="Bodega">
+                                <p:column style="width:50px;" headerText="Estante">
                                     <h:outputText value="#{vSeguiDetAprReq.nombod}" />
                                 </p:column>
-                                <p:column style="width:50px;" headerText="Ubicación">
+                                <p:column style="width:50px;" headerText="Repisa">
                                     <h:outputText value="#{vSeguiDetAprReq.nomubi}" />
                                 </p:column>
                                 <p:column style="width:30px;" headerText="C.Sol.">
@@ -3727,7 +3727,7 @@
                             <p:panel header="Identificación">
                                 <h:panelGrid columns="4" cellpadding="5">
                                     <h:outputText value="Equipo" style="font-weight:bold;"/>
-                                    <h:outputText value="País" style="font-weight:bold;"/>
+                                    <h:outputText value="Proceso" style="font-weight:bold;"/>
                                     <h:outputText value="Proveedor" style="font-weight:bold;"/>
                                     <h:outputText value="Cliente" style="font-weight:bold;"/>
                                     <p:selectOneMenu id ="cmbEquipolis" value="#{manListaEquipos.cod_equ}" 
@@ -4231,7 +4231,7 @@
                     <h:panelGrid columns="5" cellpadding="5">
                         <h:outputText value="" style="font-weight:bold;"/>
                         <h:outputText value="Fecha" style="font-weight:bold;"/>
-                        <h:outputText value="País" style="font-weight:bold;"/>
+                        <h:outputText value="Almacén" style="font-weight:bold;"/>
                         <h:outputText value="Proveedor" style="font-weight:bold;"/>
                         <h:outputText value="Movimiento" style="font-weight:bold;"/>
                         <p:inputSwitch offLabel="Entrada" onLabel="Salida" value="#{manTblPiezas.boolinout}" >
@@ -4294,8 +4294,8 @@
                     <h:panelGrid columns="7" cellpadding="5">
                         <h:outputText value="Pieza" style="font-weight:bold;"/>
                         <h:outputText value="" style="font-weight:bold;"/>
-                        <h:outputText value="Bodega" style="font-weight:bold;"/>
-                        <h:outputText value="Ubicación" style="font-weight:bold;"/>
+                        <h:outputText value="Estante" style="font-weight:bold;"/>
+                        <h:outputText value="Repisa" style="font-weight:bold;"/>
                         <h:outputText value="Cantidad" style="font-weight:bold;"/>
                         <h:outputText value="Precio Unitario" style="font-weight:bold;"/>
                         <h:outputText value="" style="font-weight:bold;"/>
@@ -4365,7 +4365,7 @@
                     <p:column style="width:90px;" headerText="Pieza">
                         <h:outputText value="#{vDetInv.nompie}" />
                     </p:column>
-                    <p:column style="width:50px;" headerText="Bodega">
+                    <p:column style="width:50px;" headerText="Estante">
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{vDetInv.nombod}" /></f:facet>
                             <f:facet name="input">
@@ -4379,7 +4379,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column style="width:50px;" headerText="Ubicación">
+                    <p:column style="width:50px;" headerText="Repisa">
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{vDetInv.nomubi}" /></f:facet>
                             <f:facet name="input">
@@ -4424,9 +4424,9 @@
                 <p:panel>
                     <h:panelGrid columns="5" cellpadding="5">
                         <h:outputText value="Pieza" style="font-weight:bold;"/>
-                        <h:outputText value="País" style="font-weight:bold;"/>
-                        <h:outputText value="Bodega" style="font-weight:bold;"/>
-                        <h:outputText value="Ubicación" style="font-weight:bold;"/>
+                        <h:outputText value="Almacén" style="font-weight:bold;"/>
+                        <h:outputText value="Estante" style="font-weight:bold;"/>
+                        <h:outputText value="Repisa" style="font-weight:bold;"/>
                         <h:outputText value="" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manTblPiezas.cod_pie}" 
                                          style=" width: 200px;"
@@ -4475,10 +4475,10 @@
                     <p:column style="width:50px;" headerText="Pieza">
                         <h:outputText value="#{vExistencias.nompie}" />
                     </p:column>
-                    <p:column style="width:50px;" headerText="Bodega">
+                    <p:column style="width:50px;" headerText="Estante">
                         <h:outputText value="#{vExistencias.nombod}" />
                     </p:column>
-                    <p:column style="width:50px;" headerText="Ubicación">
+                    <p:column style="width:50px;" headerText="Repisa">
                         <h:outputText value="#{vExistencias.nomubi}" />
                     </p:column>
                     <p:column style="width:50px;" headerText="Stock">
@@ -4570,7 +4570,7 @@
                     <p:column style="width:30px;" headerText="Fecha">
                         <h:outputText value="#{vIngSal.fec_tra}" />
                     </p:column>
-                    <p:column style="width:40px;" headerText="País">
+                    <p:column style="width:40px;" headerText="Almacén">
                         <h:outputText value="#{vIngSal.nompai}" />
                     </p:column>
                     <p:column style="width:60px;" headerText="Proveedor">
@@ -4797,7 +4797,7 @@
                                     <p:column style="width:12px;" headerText="Fecha y Hora">
                                         <h:outputText value="#{vDetTec.fec_man}" />
                                     </p:column>
-                                    <p:column style="width:80px" headerText="Operación">
+                                    <p:column style="width:80px" headerText="Acción">
                                         <h:outputText value="#{vDetTec.nomope}" />
                                     </p:column>
                                     <p:column style="width:80px" headerText="Observaciones">
@@ -4878,7 +4878,7 @@
                                     <p:column style="width:30px;" headerText="Fecha">
                                         <h:outputText value="#{vDetPie.fec_man}" />
                                     </p:column>
-                                    <p:column style="width:30px;" headerText="País">
+                                    <p:column style="width:30px;" headerText="Almacén">
                                         <h:outputText value="#{vDetPie.nompai}" />
                                     </p:column>
                                     <p:column style="width:10px" headerText="Cant">
@@ -4901,7 +4901,7 @@
                                     <h:panelGrid columns="3" cellpadding="5">
                                         <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
                                         <h:outputText value="Responsable" style="font-weight:bold;"/>
-                                        <h:outputText value="País" style="font-weight:bold;"/>
+                                        <h:outputText value="Almacén" style="font-weight:bold;"/>
 
                                         <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                                      readonlyInput="true" showOn="button" size="16"
@@ -4958,7 +4958,7 @@
                                     <p:column style="width:110px;" headerText="Fecha">
                                         <h:outputText value="#{vDetAcc.fec_man}" />
                                     </p:column>
-                                    <p:column style="width:100px;" headerText="País">
+                                    <p:column style="width:100px;" headerText="Almacén">
                                         <h:outputText value="#{vDetAcc.nompai}" />
                                     </p:column>
                                     <p:column style="width:50px" headerText="Cantidad">
@@ -5386,8 +5386,8 @@
             </h:form>
         </p:dialog>
 
-         <!--******************************************************************** 
-        ********* Pantalla mantenimiento de Grupos de Seguridad *****************
+        <!--******************************************************************** 
+        ********* Pantalla mantenimiento de Grupos de Seguridad ****************
         *********************************************************************-->
 
         <p:dialog  id="dlgGrupo" widgetVar="wGrupo" modal="true" 
@@ -5482,7 +5482,7 @@
         </p:dialog>
          
 
-         <!--******************************************************************** 
+        <!--******************************************************************** 
         ****** Pantalla mantenimiento de Controles de aplicacion ***************
         *********************************************************************-->
 
@@ -5701,10 +5701,10 @@
                 </p:panel>
             </h:form>
         </p:dialog>
-
         
-         <!--******************************************************************** 
-        **********    Pantalla de Registro de derechos de seguridad  ************
+
+        <!--******************************************************************** 
+        **********   Pantalla de Registro de derechos de seguridad  ************
         *********************************************************************-->
 
         <p:dialog  id="dlgSecurity" widgetVar="wSecurity" modal="true" 
@@ -5833,8 +5833,8 @@
             </h:form>
         </p:dialog>
 
-          <!--******************************************************************** 
-        ***************** Pantalla mantenimiento de Personal       ***************
+        <!--******************************************************************** 
+        ***************** Pantalla mantenimiento de Personal     ***************
         *********************************************************************-->
 
         <p:dialog  id="dlgPersonal" widgetVar="wPersonal" modal="true" 
@@ -6066,7 +6066,7 @@
             </h:form>
         </p:dialog>
           
-          <!--******************************************************************** 
+        <!--******************************************************************** 
         **************** Pantalla mantenimiento de Cargos **********************
         *********************************************************************-->
 
@@ -6161,8 +6161,8 @@
             </h:form>
         </p:dialog>
 
-           <!--******************************************************************** 
-        **************** Pantalla Calendarización de mantenimientos ****************
+        <!--******************************************************************** 
+        **************** Pantalla Calendarización de mantenimientos ************
         *********************************************************************-->
 
         <p:dialog  id="dlgCalend" widgetVar="wCalend" modal="true" 
@@ -6208,8 +6208,8 @@
         </h:form>
     </p:dialog>
            
-    <!-- *******************************************************************
-        **************** Pantalla mantenimiento de Almacenes ********************
+        <!-- *******************************************************************
+        **************** Pantalla mantenimiento de Almacenes *******************
         *********************************************************************-->
 
         <p:dialog  id="dlgAlmacenes" widgetVar="wAlmacenes" modal="true" 
@@ -6285,8 +6285,8 @@
             </h:form>
         </p:dialog>  
 
-    <!-- *******************************************************************
-        **************** Pantalla mantenimiento de Grupos piezas  ************
+        <!-- *******************************************************************
+        **************** Pantalla mantenimiento de Grupos piezas  **************
         *********************************************************************-->
 
         <p:dialog  id="dlgGruPie" widgetVar="wGruPie" modal="true" 
@@ -6361,8 +6361,8 @@
             </h:form>
         </p:dialog> 
     
-    <!-- *******************************************************************
-        **************** Pantalla mantenimiento de Evaluaciones **************
+        <!-- *******************************************************************
+        **************** Pantalla mantenimiento de Evaluaciones ****************
         *********************************************************************-->
 
         <p:dialog  id="dlgEval" widgetVar="wEval" modal="true" 
