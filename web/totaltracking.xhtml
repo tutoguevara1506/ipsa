@@ -5206,7 +5206,84 @@
                     </p:dataTable>
                 </div>
             </h:form>
-        </p:dialog>  
+        </p:dialog> 
+    
+    <!-- *******************************************************************
+        **************** Pantalla mantenimiento de Evaluaciones **************
+        *********************************************************************-->
+
+        <p:dialog  id="dlgEval" widgetVar="wEval" modal="true" 
+                   width="500" height="300" closable="false" resizable="false" 
+                   header="Mantenimiento de Evaluaciones" rendered="true" 
+                   dynamic="true" visible="false" 
+                   >
+
+            <h:form id="frmEval"> 
+                <p:growl id="msgEval" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manEvaluaciones.nuevo()}"
+                                         update=":frmEval"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         action="#{manEvaluaciones.guardar()}"
+                                         update=":frmEval"
+                                         icon="ui-icon-disk"
+                                         />
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         actionListener="#{manEvaluaciones.eliminar()}"
+                                         update=":frmEval"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wEval').hide()"
+                                         action="#{manEvaluaciones.cerrarventana()}" 
+                                         update=":frmEval"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+                <div style=" background-color: #ebf8fe;">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Evaluacion" style="font-weight:bold;" />
+                        <p:inputText maxlength="20" size="60" value="#{manEvaluaciones.nom_alm}" 
+                                     onfocus="this.select()"/>
+                    </h:panelGrid>
+                    <p:dataTable id="dtAlmacenes" var="vAlm" 
+                                 value="#{manAlmacenes.almacenes}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manAlmacenes.catalmacenes}" 
+                                 rowKey="#{vAlm.cod_alm}"
+                                 editable="false" 
+                                 style="width:475px"
+                                 scrollable="true"
+                                 scrollHeight="190"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manAlmacenes.onRowSelect}" 
+                                update=":frmAlmacenes" />
+
+                        <p:column style="width:50px" headerText="Nombre Bodega">
+                            <h:outputText value="#{vAlm.nom_alm}" />
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+            </h:form>
+        </p:dialog> 
     
     <script type="text/javascript">
         PrimeFaces.locales['es'] = {
