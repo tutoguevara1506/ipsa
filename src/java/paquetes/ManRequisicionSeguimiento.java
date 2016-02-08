@@ -30,9 +30,9 @@ import org.primefaces.event.UnselectEvent;
 @Named
 @ConversationScoped
 
-public class ManSeguimiento extends Conexion implements Serializable {
+public class ManRequisicionSeguimiento extends Conexion implements Serializable {
 
-    private static final long serialVersionUID = 8791111238764288L;
+    private static final long serialVersionUID = 8791117452189288L;
     @Inject
     Login cbean;
     private List<CatHistorico> historico;
@@ -51,7 +51,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
     private CatSolicitudesDetalle catdetalleshistoria;
     private List<CatSolicitudesDetalle> detalleshistoria;
 
-    private String cod_mae, det_sta, det_can_sol, det_can_ent, det_can_pen, det_fec_cie, fec_cie;
+    private String cod_mae, det_sta, det_can_sol, det_can_ent, det_can_pen, det_fec_cie, fec_cie, cod_equ;
     private String apr_cod_mae, his_cod_mae;
     private String tabindex;
     private Date mfecha, mfecha2;
@@ -60,7 +60,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
     private String nombrereporte, nombreexportar;
     private Map<String, Object> parametros;
 
-    public ManSeguimiento() {
+    public ManRequisicionSeguimiento() {
     }
 
     public List<CatHistorico> getHistorico() {
@@ -239,6 +239,14 @@ public class ManSeguimiento extends Conexion implements Serializable {
         this.fec_cie = fec_cie;
     }
 
+    public String getCod_equ() {
+        return cod_equ;
+    }
+
+    public void setCod_equ(String cod_equ) {
+        this.cod_equ = cod_equ;
+    }
+
     public String getTabindex() {
         return tabindex;
     }
@@ -364,6 +372,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
         cod_pai = "";
         cod_alt = "";
         idbuscar = "";
+        cod_equ = "0";
         maestrohistoria = new ArrayList<>();
         detalles = new ArrayList<>();
         detallesaprobar = new ArrayList<>();
@@ -385,6 +394,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
         det_can_pen = "";
         det_fec_cie = "";
         fec_cie = "";
+        cod_equ = "0";
         maestro = new ArrayList<>();
         detalles = new ArrayList<>();
         maestroaprobar = new ArrayList<>();
@@ -412,6 +422,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
         cod_pai = "";
         cod_alt = "";
         idbuscar = "";
+        cod_equ = "0";
         maestrohistoria = new ArrayList<>();
         detalles = new ArrayList<>();
         detallesaprobar = new ArrayList<>();
@@ -511,7 +522,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     + "date_format(mae.fec_cie,'%d/%m/%Y'), mae.flg_loc,mae.cod_pai, "
                     + "dep.nom_dep, concat(lis.num_ser,'-',maq.nom_equ) as nomequ,"
                     + "pai.nom_pai, usu.det_nom "
-                    + "FROM sol_mae as mae "
+                    + "FROM req_mae as mae "
                     + "left join cat_dep as dep on mae.cod_dep = dep.cod_dep "
                     + "left join lis_equ as lis on mae.cod_maq = lis.cod_lis_equ "
                     + "left join cat_equ as maq on lis.cod_equ = maq.cod_equ "
@@ -549,7 +560,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado Maestro en Seguimiento Solicitud. " + e.getMessage());
+            System.out.println("Error en el llenado Maestro en Seguimiento Requisición. " + e.getMessage());
         }
     }
 
@@ -573,7 +584,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     + "det.fec_cie, "
                     + "det.cos_uni, "
                     + "pai.nom_pai, bod.nom_bod, ubi.nom_ubi "
-                    + "from sol_det as det "
+                    + "from req_det as det "
                     + "left join cat_pai as pai on det.cod_pai = pai.cod_pai "
                     + "left join cat_bodegas as bod on det.cod_pai = bod.cod_pai and det.cod_bod = bod.id_bod "
                     + "left join cat_ubicaciones as ubi on det.cod_bod = ubi.cod_bod and det.cod_ubi = ubi.id_ubi "
@@ -608,7 +619,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado Detalles en Seguimiento Solicitud. " + e.getMessage());
+            System.out.println("Error en el llenado Detalles en Seguimiento Requisición. " + e.getMessage());
         }
     }
 
@@ -633,7 +644,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     + "date_format(mae.fec_cie,'%d/%m/%Y'), mae.flg_loc,mae.cod_pai, "
                     + "dep.nom_dep, concat(lis.num_ser,'-',maq.nom_equ) as nomequ,"
                     + "pai.nom_pai, usu.det_nom "
-                    + "FROM sol_mae as mae "
+                    + "FROM req_mae as mae "
                     + "left join cat_dep as dep on mae.cod_dep = dep.cod_dep "
                     + "left join lis_equ as lis on mae.cod_maq = lis.cod_lis_equ "
                     + "left join cat_equ as maq on lis.cod_equ = maq.cod_equ "
@@ -671,7 +682,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado Maestro en Seguimiento Solicitud. " + e.getMessage());
+            System.out.println("Error en el llenado Maestro en Seguimiento Requisición. " + e.getMessage());
         }
     }
 
@@ -695,7 +706,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     + "det.fec_cie, "
                     + "det.cos_uni, "
                     + "pai.nom_pai, bod.nom_bod, ubi.nom_ubi "
-                    + "from sol_det as det "
+                    + "from req_det as det "
                     + "left join cat_pai as pai on det.cod_pai = pai.cod_pai "
                     + "left join cat_bodegas as bod on det.cod_pai = bod.cod_pai and det.cod_bod = bod.id_bod "
                     + "left join cat_ubicaciones as ubi on det.cod_bod = ubi.cod_bod and det.cod_ubi = ubi.id_ubi "
@@ -728,7 +739,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado Detalles en Seguimiento Solicitud. " + e.getMessage());
+            System.out.println("Error en el llenado Detalles en Seguimiento Requisición. " + e.getMessage());
         }
     }
 
@@ -736,13 +747,6 @@ public class ManSeguimiento extends Conexion implements Serializable {
         try {
             catmaestrohistoria = new CatSolicitudes();
             maestrohistoria = new ArrayList<>();
-            String mwhere;
-            if ("".equals(idbuscar)) {
-                mwhere = " ";
-            } else {
-                mwhere = "where "
-                        + "mae.cod_mae in (" + idbuscar + ") ";
-            }
 
             String mQuery = "select "
                     + "mae.cod_mae, mae.cod_alt, "
@@ -760,13 +764,14 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     + "date_format(mae.fec_cie,'%d/%m/%Y'), mae.flg_loc,mae.cod_pai, "
                     + "dep.nom_dep, concat(lis.num_ser,'-',maq.nom_equ) as nomequ,"
                     + "pai.nom_pai, usu.det_nom "
-                    + "FROM sol_mae as mae "
+                    + "FROM req_mae as mae "
                     + "left join cat_dep as dep on mae.cod_dep = dep.cod_dep "
                     + "left join lis_equ as lis on mae.cod_maq = lis.cod_lis_equ "
                     + "left join cat_equ as maq on lis.cod_equ = maq.cod_equ "
                     + "left join cat_pai as pai on mae.cod_pai = pai.cod_pai "
                     + "left join cat_usu as usu on mae.cod_usu_sol = usu.cod_usu "
-                    + mwhere
+                    + "where "
+                    + "mae.cod_mae in (" + idbuscar + ") "
                     + "order by mae.fec_sol desc;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -797,7 +802,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
             mAccesos.Desconectar();
             idbuscar = "";
         } catch (Exception e) {
-            System.out.println("Error en el llenado Maestro Historia en Seguimiento Solicitud. " + e.getMessage());
+            System.out.println("Error en el llenado Maestro Historia en Seguimiento Requisición. " + e.getMessage());
         }
     }
 
@@ -821,7 +826,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     + "det.fec_cie, "
                     + "det.cos_uni, "
                     + "pai.nom_pai, bod.nom_bod, ubi.nom_ubi "
-                    + "from sol_det as det "
+                    + "from req_det as det "
                     + "left join cat_pai as pai on det.cod_pai = pai.cod_pai "
                     + "left join cat_bodegas as bod on det.cod_pai = bod.cod_pai and det.cod_bod = bod.id_bod "
                     + "left join cat_ubicaciones as ubi on det.cod_bod = ubi.cod_bod and det.cod_ubi = ubi.id_ubi "
@@ -854,7 +859,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado Detalles en Seguimiento Solicitud. " + e.getMessage());
+            System.out.println("Error en el llenado Detalles en Seguimiento Requisición. " + e.getMessage());
         }
     }
 
@@ -866,13 +871,13 @@ public class ManSeguimiento extends Conexion implements Serializable {
         if (!"".equals(apr_cod_mae) && !"0".equals(aprobador)) {
 
             try {
-                String mQuery = "update sol_mae set det_sta=2, cod_usu_apr=" + aprobador
+                String mQuery = "update req_mae set det_sta=2, cod_usu_apr=" + aprobador
                         + " where cod_mae=" + apr_cod_mae + ";";
                 mAccesos.dmlSQLvariable(mQuery);
-                addMessage("Aprobar Solicitud", "La Solicitud ha sido Aprobada.", 1);
+                addMessage("Aprobar Requisición", "La Requisición ha sido Aprobada.", 1);
             } catch (Exception e) {
-                addMessage("Aprobar Solicitud", "Error al Aprobar Solicitud. " + e.getMessage(), 2);
-                System.out.println("Error al Aprobar Solicitud. " + e.getMessage());
+                addMessage("Aprobar Requisición", "Error al Aprobar Requisición. " + e.getMessage(), 2);
+                System.out.println("Error al Aprobar Requisición. " + e.getMessage());
             }
             maestrohistoria = new ArrayList<>();
             detalles = new ArrayList<>();
@@ -882,7 +887,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
             llenarMaestroAprobar();
 
         } else {
-            addMessage("Aprobar Solicitud", "Debe elegir un Registro y un Aprobador.", 2);
+            addMessage("Aprobar Requisición", "Debe elegir una Requisición y un Aprobador.", 2);
         }
 
         mAccesos.Desconectar();
@@ -897,12 +902,12 @@ public class ManSeguimiento extends Conexion implements Serializable {
         if ("".equals(cod_mae) == false) {
 
             try {
-                String mQuery = "update sol_mae set det_sta=3 where cod_mae=" + apr_cod_mae + ";";
+                String mQuery = "update req_mae set det_sta=3 where cod_mae=" + apr_cod_mae + ";";
                 mAccesos.dmlSQLvariable(mQuery);
-                addMessage("Cancelar Solicitud", "La Solicitud ha sido denegada.", 1);
+                addMessage("Cancelar Requisición", "La Requisición ha sido denegada.", 1);
             } catch (Exception e) {
-                addMessage("Cancelar Solicitud", "Error al Denegar Solicitud. " + e.getMessage(), 2);
-                System.out.println("Error al Cancelar Solicitud. " + e.getMessage());
+                addMessage("Cancelar Requisición", "Error al Denegar Requisición. " + e.getMessage(), 2);
+                System.out.println("Error al Cancelar Requisición. " + e.getMessage());
             }
             maestrohistoria = new ArrayList<>();
             detalles = new ArrayList<>();
@@ -912,7 +917,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
             llenarMaestroAprobar();
 
         } else {
-            addMessage("Cancelar Solicitud", "Debe elegir un Registro.", 2);
+            addMessage("Cancelar Requisición", "Debe elegir un Registro.", 2);
         }
 
         mAccesos.Desconectar();
@@ -952,11 +957,8 @@ public class ManSeguimiento extends Conexion implements Serializable {
                             break;
                     }
 
-                    if ("".equals(detalles.get(i).getCos_uni().replace(",", ""))) {
-                        mCostoUni = "0";
-                    } else {
-                        mCostoUni = detalles.get(i).getCos_uni().replace(",", "");
-                    }
+                    mCostoUni = "0";
+
                     if ("".equals(detalles.get(i).getDet_can_ent().replace(",", ""))) {
                         mCanEnt = "0";
                     } else {
@@ -964,7 +966,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     }
 
                     acc.Conectar();
-                    mQuery = "update sol_det set "
+                    mQuery = "update req_det set "
                             + "det_sta = " + mEstado + ", "
                             + "det_can_ent = (det_can_ent + " + mCanEnt + "), "
                             + "det_can_pen = (det_can_pen-" + mCanEnt + "), "
@@ -981,7 +983,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                         String mnewCod = acc.strQuerySQLvariable("select ifnull(max(cod_rec),0)+1 as newcod from sol_req_det_rec;");
                         mQuery = "insert into sol_req_det_rec ( cod_rec,cod_mae,det_mae,cod_usu_rec,fec_rec,flg_sol_req,det_can) VALUES "
                                 + "( " + mnewCod + "," + cod_mae + "," + detalles.get(i).getCod_det() + "," + recibidapor
-                                + ",str_to_date('" + det_fec_cie + "','%d/%m/%Y'),'SOL'," + detalles.get(i).getDet_can_ent() + ");";
+                                + ",str_to_date('" + det_fec_cie + "','%d/%m/%Y'),'REQ'," + detalles.get(i).getDet_can_ent() + ");";
                         acc.dmlSQLvariable(mQuery);
                         acc.Desconectar();
                     }
@@ -992,28 +994,35 @@ public class ManSeguimiento extends Conexion implements Serializable {
                             acc.Conectar();
                             mNonStock = acc.strQuerySQLvariable("select count(cod_det) as count from sol_det where cod_mae = " + cod_mae + " and non_sto=1;");
 
-                            // *************** Suma Existencias de Pieza por País *******************
-                            if (!"0".equals(mNonStock)) {
-                                if ("0".equals(acc.strQuerySQLvariable("select count(cod_pai) as count from bol_exi_pai where cod_pai = " + cod_pai
-                                        + " and cod_pie=" + detalles.get(i).getCod_ite() + " and ing_sal = 0;"))) {
-                                    mQuery = "insert into bol_exi_pai (cod_pai,cod_pie,ing_sal,det_exi) "
-                                            + "values (" + cod_pai + "," + detalles.get(i).getCod_ite() + ",0,"
-                                            + detalles.get(i).getDet_can_ent() + ");";
-
-                                } else {
-                                    mQuery = "update into bol_exi_pai set det_exi = (det_exi + " + detalles.get(i).getDet_can_ent() + ") where "
-                                            + "cod_pai = " + cod_pai + " "
-                                            + "and cod_pie = " + detalles.get(i).getCod_ite() + " "
-                                            + "and ing_sal = 0;";
-                                }
+                            // *************** Creación Encabezado Requisión  *******************
+                            if ("0".equals(acc.strQuerySQLvariable("select count(cod_lis_pie) as count from tbl_pie where cod_sol = " + cod_mae
+                                    + " and por_qbo='" + cod_alt + "' and flg_ing = 1 and det_sta= 0;"))) {
+                                mQuery = "select ifnull(max(cod_lis_pie),0)+1 as codigo from tbl_pie;";
+                                cod_lis_pie = acc.strQuerySQLvariable(mQuery);
+                                mQuery = "insert into tbl_pie (cod_lis_pie,por_qbo,cod_pai,cod_pro,cod_mov,"
+                                        + "doc_tra,cod_sol,fec_tra,det_obs,flg_ing,det_sta) "
+                                        + "values (" + cod_lis_pie + ",'" + cod_alt + "'," + cod_pai + ",0,"
+                                        + "5" + ",'Requisición Automática'," + cod_mae + ","
+                                        + "STR_TO_DATE('" + fec_cie + "','%d/%m/%Y')" + ",'Requisición Automatizada',1,0);";
+                                acc.dmlSQLvariable(mQuery);
+                            } else {
+                                cod_lis_pie = acc.strQuerySQLvariable("select cod_lis_pie from tbl_pie where cod_sol = " + cod_mae
+                                        + " and por_qbo='" + cod_alt + "' and flg_ing = 1 and det_sta= 0;");
                             }
-                            acc.dmlSQLvariable(mQuery);
 
+                            int newDetalle = Integer.valueOf(acc.strQuerySQLvariable("select ifnull(max(cod_det),0) as codigo from tbl_pie_det where cod_enc = " + cod_lis_pie + ";"));
                             acc.Desconectar();
+                            // *************** Ingreso Detalle Requisión  *******************
+                            salidaalmacen(cod_lis_pie, det_fec_cie, detalles.get(i).getCod_bod(), detalles.get(i).getCod_ubi(), detalles.get(i).getDet_can_ent(),
+                                    detalles.get(i).getCod_ite(), detalles.get(i).getCos_uni(), newDetalle, recibidapor);
+                            // *************** Fin Ingreso Detalle Requisión  *******************
+
+                            // ******************* Borrar Reservas*****************
+                            mQuery = "delete from tbl_res where cod_req =" + cod_mae + "and det_req=" + i + 1 + ";";
+                            acc.dmlSQLvariable(mQuery);
 
                         }
                     }
-                    // ******************* Fin Existencias de Pieza por País *****************************
 
                     if ("ENTREGADO".equals(detalles.get(i).getDet_sta()) || "CANCELADO".equals(detalles.get(i).getDet_sta())) {
                         contador = contador + 1;
@@ -1024,7 +1033,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     if ("ENTREGADO".equals(detalles.get(i).getDet_sta()) || "ENTREGA PARCIAL".equals(detalles.get(i).getDet_sta())) {
                         if (!"PENDIENTE".equals(det_sta)) {
                             acc.Conectar();
-                            mQuery = "update sol_mae set det_sta = 4 where cod_mae = " + cod_mae + ";";
+                            mQuery = "update req_mae set det_sta = 4 where cod_mae = " + cod_mae + ";";
                             acc.dmlSQLvariable(mQuery);
                         }
                         acc.Desconectar();
@@ -1034,12 +1043,12 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
                 if (detalles.size() == contador2) {
                     acc.Conectar();
-                    mQuery = "update sol_mae set det_sta = 1 where cod_ma = " + cod_mae + ";";
+                    mQuery = "update req_mae set det_sta = 1 where cod_ma = " + cod_mae + ";";
                     acc.dmlSQLvariable(mQuery);
                     acc.Desconectar();
                 } else if (detalles.size() == contador) {
                     acc.Conectar();
-                    mQuery = "update sol_mae set "
+                    mQuery = "update req_mae set "
                             + "det_sta = 5, "
                             + "fec_cie = str_to_date('" + fec_cie + "','%d/%m/%Y') "
                             + "where cod_mae = " + cod_mae + ";";
@@ -1049,11 +1058,11 @@ public class ManSeguimiento extends Conexion implements Serializable {
                 catdetalles = new CatSolicitudesDetalle();
                 detalles = new ArrayList<>();
                 llenarMaestro();
-                addMessage("Guardar Solicitud", "Cambios Almacenados con Éxito.", 1);
+                addMessage("Guardar Requisición", "Cambios Almacenados con Éxito.", 1);
             }
 
         } catch (Exception e) {
-            System.out.println("Error al Guardar Cambios en Seguimiento." + e.getMessage() + " Query: " + mQuery);
+            System.out.println("Error al Guardar Cambios en Requisición." + e.getMessage() + " Query: " + mQuery);
         }
     }
 
@@ -1105,7 +1114,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                 String mQuery2 = "select DATEDIFF(str_to_date('" + det_fec_cie + "','%d/%m/%Y'), str_to_date('" + macc.strQuerySQLvariable(mQuery) + "','%d/%m/%Y')) as datedif;";
                 if (macc.doubleQuerySQLvariable(mQuery2) < 0.0) {
                     mvalidar = false;
-                    addMessage("Validar Datos", "La Fecha de Recepción no puede ser anterior a la Creación de Solicitud.", 2);
+                    addMessage("Validar Datos", "La Fecha de Recepción no puede ser anterior a la Creación de Requisición.", 2);
                 }
                 macc.Desconectar();
             }
@@ -1115,7 +1124,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
         return mvalidar;
     }
 
-    public void ingresoalmacen(String cod_lis_pie, String fec_tra, String cod_bod, String cod_ubi, String det_can,
+    public void salidaalmacen(String cod_lis_pie, String fec_tra, String cod_bod, String cod_ubi, String det_can,
             String cod_pie, String det_cos, int i, String cod_usu) {
         try {
             Accesos mAccesos = new Accesos();
@@ -1143,6 +1152,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     + "as codigo from tbl_pie_his where cod_pie=" + cod_pie + ";");
             //Costo promedio
             Double cPromedio, exisAnt, cunitario, mNuevaExistencia;
+
             if ("0".equals(cuentaregs)) {
                 cPromedio = Double.valueOf(det_cos.replace(",", ""));
                 exisAnt = 0.0;
@@ -1174,13 +1184,13 @@ public class ManSeguimiento extends Conexion implements Serializable {
             }
             //Inserta Registro
 
-            mNuevaExistencia = (exisAnt + mCantidad);
+            mNuevaExistencia = (exisAnt - mCantidad);
 
             cunitario = Double.valueOf(det_cos.replace(",", ""));
             mQuery2 = " insert into tbl_pie_his (cod_his,cod_pie,fec_his,ord_dia,flg_ing,"
                     + "cod_enc,cod_det,det_can,det_cos,can_exi,cos_pro,det_sta,fec_mod,cod_usu) "
                     + "VALUES (" + cod_cor_exi_art + "," + cod_pie + ","
-                    + "STR_TO_DATE('" + fec_tra + "','%d/%m/%Y')" + "," + cor_dia + ",0,"
+                    + "STR_TO_DATE('" + fec_tra + "','%d/%m/%Y')" + "," + cor_dia + ",1,"
                     + cod_lis_pie + "," + (i + 1) + "," + mCantidad + "," + cunitario + ","
                     + mNuevaExistencia + ","
                     + cPromedio + "," + "0" + "," + "now()" + "," + cod_usu + ");";
@@ -1325,7 +1335,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
         } catch (Exception e) {
             addMessage("Guardar Almacén", "Error al momento de guardar la información. " + e.getMessage(), 2);
-            System.out.println("Error al Guardar Detalle en Almacén en Seguimiento Solicitudes. " + e.getMessage());
+            System.out.println("Error al Sacar Detalle Almacén en Seguimiento de Requisición. " + e.getMessage());
         }
 
     }
@@ -1333,11 +1343,11 @@ public class ManSeguimiento extends Conexion implements Serializable {
     //******************* Reporte ***************************************
     public void limpiar() {
         if ("".equals(apr_cod_mae) || "0".equals(apr_cod_mae)) {
-            addMessage("Imprimir Solicitud", "Debe elegir un Registro.", 2);
-            RequestContext.getCurrentInstance().update("frmSeguimiento");
-            RequestContext.getCurrentInstance().execute("PF('wCodImp').hide()");
+            addMessage("Imprimir Requisición", "Debe elegir un Registro.", 2);
+            RequestContext.getCurrentInstance().update("frmSeguimientoReq");
+            RequestContext.getCurrentInstance().execute("PF('wCodImpReq').hide()");
         } else {
-            RequestContext.getCurrentInstance().execute("PF('wCodImp').show()");
+            RequestContext.getCurrentInstance().execute("PF('wCodImpReq').show()");
         }
     }
 
@@ -1354,19 +1364,19 @@ public class ManSeguimiento extends Conexion implements Serializable {
         Accesos mAccesos = new Accesos();
         mAccesos.Conectar();
         try {
-            mQuery = "select count(cod_alt) from sol_mae where UPPER(cod_alt)='" + cod_alt.replace("'", "").toUpperCase() + "' and cod_mae <> " + apr_cod_mae + ";";
+            mQuery = "select count(cod_alt) from req_mae where UPPER(cod_alt)='" + cod_alt.replace("'", "").toUpperCase() + "' and cod_mae <> " + apr_cod_mae + ";";
             if ("0".equals(mAccesos.strQuerySQLvariable(mQuery))) {
                 if ("".equals(cod_alt)) {
-                    addMessage("Modificar Solicitud", "Código de Impresión Vacío.", 2);
+                    addMessage("Modificar Requisición", "Código de Impresión Vacío.", 2);
                 } else {
-                    addMessage("Modificar Solicitud", "Código de Impresión Válido.", 1);
+                    addMessage("Modificar Requisición", "Código de Impresión Válido.", 1);
                 }
             } else {
-                addMessage("Modificar Solicitud", "Código de Impresión ya Existe.", 2);
+                addMessage("Modificar Requisición", "Código de Impresión ya Existe.", 2);
             }
         } catch (Exception e) {
-            addMessage("Modificar Solicitud", "Error al Validar Código de Impresión. " + e.getMessage(), 2);
-            System.out.println("Error al Validar Código de Impresión en Seguimiento Solicitudes. " + e.getMessage() + " Query: " + mQuery);
+            addMessage("Modificar Requisición", "Error al Validar Código de Impresión. " + e.getMessage(), 2);
+            System.out.println("Error al Validar Código de Impresión en Seguimiento Requisición. " + e.getMessage() + " Query: " + mQuery);
         }
 
         mAccesos.Desconectar();
@@ -1378,21 +1388,21 @@ public class ManSeguimiento extends Conexion implements Serializable {
         Accesos mAccesos = new Accesos();
         mAccesos.Conectar();
         try {
-            mQuery = "select count(cod_alt) from sol_mae where UPPER(cod_alt)='" + cod_alt.trim().replace("'", "").toUpperCase() + "' and cod_mae <> " + apr_cod_mae + ";";
+            mQuery = "select count(cod_alt) from req_mae where UPPER(cod_alt)='" + cod_alt.trim().replace("'", "").toUpperCase() + "' and cod_mae <> " + apr_cod_mae + ";";
             if ("0".equals(mAccesos.strQuerySQLvariable(mQuery))) {
-                mQuery = "update sol_mae set cod_alt='" + cod_alt + "' where cod_mae=" + apr_cod_mae + ";";
+                mQuery = "update req_mae set cod_alt='" + cod_alt + "' where cod_mae=" + apr_cod_mae + ";";
                 mAccesos.dmlSQLvariable(mQuery);
-                addMessage("Modificar Solicitud", "Código de Impresión Actualizado.", 1);
+                addMessage("Modificar Requisición", "Código de Impresión Actualizado.", 1);
             } else if ("".equals(cod_alt.trim())) {
                 mQuery = "update sol_mae set cod_alt='' where cod_mae=" + apr_cod_mae + ";";
                 mAccesos.dmlSQLvariable(mQuery);
-                addMessage("Modificar Solicitud", "Código de Impresión Actualizado.", 1);
+                addMessage("Modificar Requisición", "Código de Impresión Actualizado.", 1);
             } else {
-                addMessage("Modificar Solicitud", "Código de Impresión ya Existe.", 2);
+                addMessage("Modificar Requisición", "Código de Impresión ya Existe.", 2);
             }
         } catch (Exception e) {
-            addMessage("Modificar Solicitud", "Error al Actualizar Código de Impresión. " + e.getMessage(), 2);
-            System.out.println("Error al Actualizar Código de Impresión en Seguimiento Solicitudes. " + e.getMessage() + " Query: " + mQuery);
+            addMessage("Modificar Requisición", "Error al Actualizar Código de Impresión. " + e.getMessage(), 2);
+            System.out.println("Error al Actualizar Código de Impresión. " + e.getMessage() + " Query: " + mQuery);
         }
 
         mAccesos.Desconectar();
@@ -1406,10 +1416,10 @@ public class ManSeguimiento extends Conexion implements Serializable {
                 paramRepVarios();
                 verPDF();
             } else {
-                addMessage("Imprimir Solicitud", "Debe elegir un Registro.", 2);
+                addMessage("Imprimir Requisición", "Debe elegir un Registro.", 2);
             }
         } catch (Exception e) {
-            System.out.println("Error en EjecutarReporte Seguimiento Solicitudes" + e.getMessage());
+            System.out.println("Error en EjecutarReporte Seguimiento Requisición" + e.getMessage());
         }
 
     }
@@ -1418,7 +1428,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
         parametros = new HashMap<>();
         parametros.put("solicitud", apr_cod_mae);
         nombrereporte = "/reportes/solicitud.jasper";
-        nombreexportar = "Solicitud_" + apr_cod_mae;
+        nombreexportar = "Requisición" + apr_cod_mae;
 
     }
 
@@ -1437,7 +1447,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
             FacesContext.getCurrentInstance().responseComplete();
             Desconectar();
         } catch (JRException | IOException e) {
-            System.out.println("Error en verPDF en Seguimiento Solicitudes." + e.getMessage());
+            System.out.println("Error en verPDF en Seguimiento Requisición." + e.getMessage());
         }
     }
 
@@ -1446,6 +1456,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
         det_sta = ((CatSolicitudes) event.getObject()).getDet_sta();
         cod_pai = ((CatSolicitudes) event.getObject()).getCod_pai();
         cod_alt = ((CatSolicitudes) event.getObject()).getCod_alt();
+        cod_equ = ((CatSolicitudes) event.getObject()).getCod_maq();
 
         mfecha = Date.from(Instant.now());
         mfecha2 = Date.from(Instant.now());
@@ -1493,12 +1504,13 @@ public class ManSeguimiento extends Conexion implements Serializable {
     public void onCellEdit(CellEditEvent event) {
         Object oldValue = event.getOldValue();
         Object newValue = event.getNewValue();
-
+        String mQuery = "", mValor = "";
         int alteredRow = event.getRowIndex();
         String column_name = event.getColumn().getHeaderText();
 
         switch (column_name) {
             case "C.Ent.":
+
                 if (Double.valueOf(newValue.toString()) > Double.valueOf(detalles.get(alteredRow).getDet_can_pen())) {
                     detalles.set(alteredRow, new CatSolicitudesDetalle(
                             detalles.get(alteredRow).getCod_mae(),
@@ -1519,9 +1531,86 @@ public class ManSeguimiento extends Conexion implements Serializable {
                             detalles.get(alteredRow).getNombod(),
                             detalles.get(alteredRow).getNomubi()
                     ));
+                    mValor = detalles.get(alteredRow).getDet_can_sol();
                     addMessage("Modificar Cantidad Entregada", "La Cantidad Entregada no puede superar la Cantidad Pendiente Solicitada.", 2);
+
                 } else {
-                    addMessage("Modificar Cantidad Entregada", "Cantidad Entregada Modificada de " + oldValue + " a " + newValue + ".", 1);
+                    mValor = newValue.toString();
+                }
+
+                //*********************Validar Existencias ***********************************
+                try {
+                    Accesos macc = new Accesos();
+                    macc.Conectar();
+                    mQuery = "select "
+                            + "ifnull((arreglo.existencia - arreglo.reserva), 0 )- " + mValor.replace(",", "") + " as exireal "
+                            + "from ("
+                            + "select "
+                            + "exi.cod_pie, pie.cod_ref, pie.nom_pie,"
+                            + "exi.det_can as existencia, "
+                            + "ifnull(sum(res.det_can),0) as reserva "
+                            + "from tbl_existencias as exi "
+                            + "left join tbl_res as res on exi.cod_pai = res.cod_pai and exi.cod_bod = res.cod_bod and exi.cod_ubi = res.cod_ubi and exi.cod_pie = res.cod_pie "
+                            + "left join cat_pie as pie on exi.cod_pie = pie.cod_pie "
+                            + "where "
+                            + "exi.cod_pai = " + detalles.get(alteredRow).getCod_pai() + " "
+                            + "and exi.cod_bod = " + detalles.get(alteredRow).getCod_bod() + " "
+                            + "and exi.cod_ubi = " + detalles.get(alteredRow).getCod_ubi() + " "
+                            + "and exi.cod_pie = " + detalles.get(alteredRow).getCod_ite() + " "
+                            + "group by exi.cod_pie, pie.cod_ref, pie.nom_pie, exi.det_can "
+                            + ") as arreglo;";
+
+                    if (macc.doubleQuerySQLvariable(mQuery) < 0.0) {
+                        addMessage("Validar Datos", "La Cantidad de Piezas solicitada sobrepasa la Cantidad de Existencias en el Almacén. Verificar Existencias de la Pieza Solicitada.", 2);
+                        detalles.set(alteredRow, new CatSolicitudesDetalle(
+                                detalles.get(alteredRow).getCod_mae(),
+                                detalles.get(alteredRow).getCod_det(),
+                                detalles.get(alteredRow).getCod_pai(),
+                                detalles.get(alteredRow).getCod_bod(),
+                                detalles.get(alteredRow).getCod_ubi(),
+                                detalles.get(alteredRow).getCod_ite(),
+                                detalles.get(alteredRow).getDes_ite(),
+                                detalles.get(alteredRow).getDet_can_sol(),
+                                "0",
+                                detalles.get(alteredRow).getDet_can_pen(),
+                                detalles.get(alteredRow).getNon_sto(),
+                                detalles.get(alteredRow).getDet_sta(),
+                                detalles.get(alteredRow).getFec_cie(),
+                                detalles.get(alteredRow).getCos_uni(),
+                                detalles.get(alteredRow).getNompai(),
+                                detalles.get(alteredRow).getNombod(),
+                                detalles.get(alteredRow).getNomubi()
+                        ));
+                    } else {
+                        String codexistente = macc.strQuerySQLvariable("select count(cod_res) from tbl_res where cod_req=" + cod_mae
+                                + " and det_req=" + detalles.get(alteredRow).getCod_det() + ";");
+                        if ("0".equals(codexistente)) {
+                            String newcod = macc.strQuerySQLvariable("select ifnull(max(cod_res),0) + 1 from tbl_res;");
+                            mQuery = "insert into tbl_res (cod_res,cod_pie,cod_pai,cod_bod,cod_ubi,det_can,fec_res,"
+                                    + "cod_lis_pie,cod_det,cod_lis_equ,cod_man,det_man,cod_usu,cod_req,det_req) VALUES "
+                                    + "(" + newcod + "," + detalles.get(alteredRow).getCod_ite() + "," + detalles.get(alteredRow).getCod_pai()
+                                    + "," + detalles.get(alteredRow).getCod_bod() + ","
+                                    + detalles.get(alteredRow).getCod_ubi() + "," + mValor + ",str_to_date('" + det_fec_cie + "','%d/%m/%Y'),"
+                                    + "0" + "," + "0" + "," + cod_equ + ","
+                                    + "0" + "," + "0" + "," + recibidapor + "," + cod_mae
+                                    + "," + detalles.get(alteredRow).getCod_det() + ")";
+                        } else {
+                            mQuery = "update tbl_res set "
+                                    + "det_can=" + mValor + " "
+                                    + ",fec_res=str_to_date('" + det_fec_cie + "','%d/%m/%Y') "
+                                    + "where cod_req = " + cod_mae + " "
+                                    + "and det_req =" + detalles.get(alteredRow).getCod_det() + ";";
+                        }
+
+                        macc.dmlSQLvariable(mQuery);
+
+                        addMessage("Modificar Cantidad Entregada", "Cantidad Entregada Modificada de " + oldValue + " a " + newValue + ".", 1);
+
+                    }
+
+                    macc.Desconectar();
+                } catch (Exception e) {
+                    System.out.println("Error en validación Reservas y Existencias Edición Celda Requisición. " + e.getMessage() + " Query: " + mQuery);
                 }
 
                 break;
@@ -1549,13 +1638,13 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
     public void onTabChange(TabChangeEvent event) {
         switch (event.getTab().getId()) {
-            case "tabSegSol":
+            case "tabSegReq":
                 tabindex = "0";
                 break;
-            case "tabAproSol":
+            case "tabAproReq":
                 tabindex = "1";
                 break;
-            case "tabHistoSol":
+            case "tabHistoReq":
                 tabindex = "2";
                 break;
         }

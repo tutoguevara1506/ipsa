@@ -18,10 +18,9 @@ import org.primefaces.event.TabChangeEvent;
 
 @Named
 @ConversationScoped
+public class ManRequisicionNueva implements Serializable {
 
-public class ManSolicitudes implements Serializable {
-
-    private static final long serialVersionUID = 8791114786471668L;
+    private static final long serialVersionUID = 8791118726471918L;
     @Inject
     Login cbean;
     private CatSolicitudes catmaestro;
@@ -48,7 +47,7 @@ public class ManSolicitudes implements Serializable {
     private Date mfecha;
     private String tabindex, boolNS;
 
-    public ManSolicitudes() {
+    public ManRequisicionNueva() {
     }
 
     public CatSolicitudes getCatmaestro() {
@@ -527,7 +526,7 @@ public class ManSolicitudes implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Usuarios en Solicitudes. " + e.getMessage());
+            System.out.println("Error en el llenado de Usuarios en Nueva Requisición. " + e.getMessage());
         }
     }
 
@@ -588,7 +587,7 @@ public class ManSolicitudes implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Equipos en Solicitudes. " + e.getMessage() + " Query: " + mQuery);
+            System.out.println("Error en el llenado de Equipos en Nueva Requisición. " + e.getMessage() + " Query: " + mQuery);
         }
     }
 
@@ -613,7 +612,7 @@ public class ManSolicitudes implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Departamentos en Solicitudes. " + e.getMessage());
+            System.out.println("Error en el llenado de Departamentos en Nueva Requisición. " + e.getMessage());
         }
     }
 
@@ -636,10 +635,11 @@ public class ManSolicitudes implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Paises en Solicitudes. " + e.getMessage());
+            System.out.println("Error en el llenado de Paises en Nueva Requisición. " + e.getMessage());
         }
     }
 
+    
     public void llenarPiezas() {
         String mQuery = "";
         try {
@@ -680,7 +680,7 @@ public class ManSolicitudes implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Piezas en Solicitudes. " + e.getMessage() + " Query: " + mQuery);
+            System.out.println("Error en el llenado de Piezas en Nueva Requisición. " + e.getMessage() + " Query: " + mQuery);
         }
     }
 
@@ -698,7 +698,7 @@ public class ManSolicitudes implements Serializable {
                     + "date_format(mae.fec_cie,'%d/%m/%Y'), mae.flg_loc,mae.cod_pai, "
                     + "dep.nom_dep, concat(maq.nom_equ,'-',lis.num_ser) as nomequ, "
                     + "pai.nom_pai, usu.det_nom "
-                    + "FROM sol_mae as mae "
+                    + "FROM req_mae as mae "
                     + "left join cat_dep as dep on mae.cod_dep = dep.cod_dep "
                     + "left join lis_equ as lis on mae.cod_maq = lis.cod_lis_equ "
                     + "left join cat_equ as maq on lis.cod_equ = maq.cod_equ "
@@ -737,7 +737,7 @@ public class ManSolicitudes implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado Maestro en Crear Solicitud. " + e.getMessage());
+            System.out.println("Error en el llenado Maestro en Crear Nueva Requisición. " + e.getMessage());
         }
     }
 
@@ -751,7 +751,7 @@ public class ManSolicitudes implements Serializable {
                     + "det.cod_ubi, det.cod_ite, det.des_ite, det.det_can_sol, det.det_can_ent, "
                     + "det.det_can_pen, det.non_sto, det.det_sta, det.fec_cie,det.cos_uni, "
                     + "pai.nom_pai, bod.nom_bod, ubi.nom_ubi "
-                    + "from sol_det as det "
+                    + "from req_det as det "
                     + "left join cat_pai as pai on det.cod_pai = pai.cod_pai "
                     + "left join cat_bodegas as bod on det.cod_pai = bod.cod_pai and det.cod_bod = bod.id_bod "
                     + "left join cat_ubicaciones as ubi on det.cod_bod = ubi.cod_bod and det.cod_ubi = ubi.id_ubi "
@@ -784,7 +784,7 @@ public class ManSolicitudes implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado Detalles en Crear Solicitud. " + e.getMessage());
+            System.out.println("Error en el llenado Detalles en Crear Nueva Requisición. " + e.getMessage());
         }
     }
 
@@ -801,17 +801,13 @@ public class ManSolicitudes implements Serializable {
                 if (insert == 0 && detalles.size() < 17) {
                     Accesos macc = new Accesos();
                     macc.Conectar();
-                    if ("0".equals(det_non_sto)) {
-                        det_cod_ite = "0";
-                        det_cod_bod = "0";
-                        det_cod_ubi = "0";
-                    } else {
-                        det_des_ite = macc.strQuerySQLvariable("select nom_pie from cat_pie where cod_pie=" + det_cod_ite + ";");
-                    }
+
+                    det_des_ite = macc.strQuerySQLvariable("select nom_pie from cat_pie where cod_pie=" + det_cod_ite + ";");
+
                     String nompai, nombod, nomubi;
                     nompai = macc.strQuerySQLvariable("select nom_pai from cat_pai where cod_pai=" + cod_pai + ";");
-                    nombod = macc.strQuerySQLvariable("select nom_bod from cat_bodegas where cod_pai=" + cod_pai + " and id_bod = " + det_cod_bod + ";");
-                    nomubi = macc.strQuerySQLvariable("select nom_ubi from cat_ubicaciones where cod_bod=" + det_cod_bod + " and id_ubi = " + det_cod_ubi + ";");
+                    nombod = "";
+                    nomubi = "";
                     macc.Desconectar();
 
                     detalles.add(new CatSolicitudesDetalle(
@@ -847,7 +843,7 @@ public class ManSolicitudes implements Serializable {
                 }
 
             } catch (Exception e) {
-                System.out.println("Error en agregardetalle de ManSolicitudes." + e.getMessage());
+                System.out.println("Error en agregardetalle de Nueva Requisición." + e.getMessage());
             }
         }
 
@@ -856,9 +852,9 @@ public class ManSolicitudes implements Serializable {
     public boolean validardetalle() {
         boolean mvalidar = true;
 
-        if ("".equals(det_des_ite) && "0".equals(det_cod_ite)) {
+        if ("0".equals(det_cod_ite)) {
             mvalidar = false;
-            addMessage("Validar Datos", "Debe Ingresar una Descripción o Escoger un Repuesto.", 2);
+            addMessage("Validar Datos", "Debe Escoger un Item.", 2);
         }
         if ("0".equals(cod_pai)) {
             mvalidar = false;
@@ -883,15 +879,15 @@ public class ManSolicitudes implements Serializable {
                 Accesos acc = new Accesos();
                 acc.Conectar();
                 if ("".equals(cod_mae)) {
-                    mQuery = "select ifnull(max(cod_mae),0)+1 as codigo from sol_mae;";
+                    mQuery = "select ifnull(max(cod_mae),0)+1 as codigo from req_mae;";
                     cod_mae = acc.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into sol_mae (cod_mae, cod_alt, fec_sol, cod_usu_sol, cod_usu_apr, "
+                    mQuery = "insert into req_mae (cod_mae, cod_alt, fec_sol, cod_usu_sol, cod_usu_apr, "
                             + "cod_usu_rec, cod_dep, det_uso, cod_maq, det_sta, det_obs, fec_cie, flg_loc,cod_pai) "
                             + "values (" + cod_mae + ",'" + cod_alt + "',str_to_date('" + fec_sol + "','%d/%m/%Y'),"
                             + cod_usu_sol + "," + cod_usu_apr + "," + cod_usu_rec + "," + cod_dep + ",'" + det_uso.replace("'", " ") + "',"
                             + cod_maq + "," + det_sta + ",'" + det_obs.replace("'", " ") + "',null," + flg_loc + "," + cod_pai + ");";
                 } else {
-                    mQuery = "update sol_mae set "
+                    mQuery = "update req_mae set "
                             + "fec_sol=str_to_date('" + fec_sol + "','%d/%m/%Y %h:%i'),"
                             + "cod_usu_sol=" + cod_usu_sol + ","
                             + "cod_pai=" + cod_pai + ","
@@ -903,7 +899,7 @@ public class ManSolicitudes implements Serializable {
                             + "where cod_mae=" + cod_mae + ";";
                 }
                 acc.dmlSQLvariable(mQuery);
-                mQuery = "delete from sol_det where cod_mae=" + cod_mae + ";";
+                mQuery = "delete from req_det where cod_mae=" + cod_mae + ";";
                 acc.dmlSQLvariable(mQuery);
                 String mValores = "";
                 int mCorrela = 1;
@@ -927,15 +923,15 @@ public class ManSolicitudes implements Serializable {
                     mCorrela = mCorrela + 1;
                 }
                 mValores = mValores.substring(1);
-                mQuery = "insert into sol_det(cod_mae,cod_det,cod_pai,cod_bod,cod_ubi,cod_ite,des_ite,"
+                mQuery = "insert into req_det(cod_mae,cod_det,cod_pai,cod_bod,cod_ubi,cod_ite,des_ite,"
                         + "det_can_sol,det_can_ent,det_can_pen,non_sto,det_sta,fec_cie,cos_uni) values " + mValores + ";";
                 acc.dmlSQLvariable(mQuery);
                 acc.Desconectar();
                 nuevo();
-                addMessage("Guardar Solicitud", "Información almacenada con Éxito.", 1);
+                addMessage("Guardar Requisición", "Información almacenada con Éxito.", 1);
             }
         } catch (Exception e) {
-            System.out.println("Error en guardar Solicitud." + e.getMessage() + " Query: " + mQuery);
+            System.out.println("Error en guardar Nueva Requisición." + e.getMessage() + " Query: " + mQuery);
         }
     }
 
@@ -1027,9 +1023,9 @@ public class ManSolicitudes implements Serializable {
         llenarDetalles();
         catmaestro = new CatSolicitudes();
         maestro = new ArrayList<>();
-        RequestContext.getCurrentInstance().update("frmSearch");
-        RequestContext.getCurrentInstance().update("frmSol");
-        RequestContext.getCurrentInstance().execute("PF('wSearch').hide()");
+        RequestContext.getCurrentInstance().update("frmSearchReq");
+        RequestContext.getCurrentInstance().update("frmReq");
+        RequestContext.getCurrentInstance().execute("PF('wSearchReq').hide()");
 
     }
 
@@ -1041,10 +1037,10 @@ public class ManSolicitudes implements Serializable {
 
     public void onTabChange(TabChangeEvent event) {
         switch (event.getTab().getId()) {
-            case "tabgensol":
+            case "tabgenreq":
                 tabindex = "0";
                 break;
-            case "tabdetsol":
+            case "tabdetreq":
                 tabindex = "1";
                 break;
         }
@@ -1055,11 +1051,11 @@ public class ManSolicitudes implements Serializable {
     public void onChangePais() {
         llenarDepartamentos();
         llenarEquipos();
-        ubicaciones = new ArrayList<>();
+        
 
     }
 
-    
+
     public void onChangeNonStock() {
         if ("0".equals(det_non_sto)) {
             boolNS = "true";

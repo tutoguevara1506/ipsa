@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class CatMantenimientosPie implements Serializable {
 
-    private String cod_lis_equ, cod_man, det_man, fec_man, cod_pai, cod_bod, cod_ubi, det_can, cod_pie, num_ser, cod_usu, nompai, nombod, nomubi, nomusu,nompie;
+    private String cod_lis_equ, cod_man, det_man, fec_man, cod_pai, cod_bod, cod_ubi, det_can, cod_pie, num_ser, cod_usu, nompai, nombod, nomubi, nomusu, nompie, flg_sol;
 
     public CatMantenimientosPie() {
     }
 
-    public CatMantenimientosPie(String cod_lis_equ, String cod_man, String det_man, String fec_man, String cod_pai, String cod_bod, String cod_ubi, String det_can, String cod_pie, String num_ser, String cod_usu, String nompai, String nombod, String nomubi, String nomusu, String nompie) {
+    public CatMantenimientosPie(String cod_lis_equ, String cod_man, String det_man, String fec_man, String cod_pai, String cod_bod, String cod_ubi, String det_can, String cod_pie, String num_ser, String cod_usu, String nompai, String nombod, String nomubi, String nomusu, String nompie, String flg_sol) {
         this.cod_lis_equ = cod_lis_equ;
         this.cod_man = cod_man;
         this.det_man = det_man;
@@ -26,6 +26,7 @@ public class CatMantenimientosPie implements Serializable {
         this.nomubi = nomubi;
         this.nomusu = nomusu;
         this.nompie = nompie;
+        this.flg_sol = flg_sol;
     }
 
     public String getCod_lis_equ() {
@@ -156,5 +157,12 @@ public class CatMantenimientosPie implements Serializable {
         this.nompie = nompie;
     }
 
-    
+    public String getFlg_sol() {
+        return flg_sol;
+    }
+
+    public void setFlg_sol(String flg_sol) {
+        this.flg_sol = flg_sol;
+    }
+
 }

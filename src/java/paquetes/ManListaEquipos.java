@@ -901,7 +901,7 @@ public class ManListaEquipos implements Serializable {
         try {
             tipos = new ArrayList<>();
 
-            mQuery = "select cod_tip, nom_tip from cat_tip order by cod_tip;";
+            mQuery = "select cod_tip, nom_tip,flg_urg from cat_tip order by cod_tip;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -909,7 +909,8 @@ public class ManListaEquipos implements Serializable {
             while (resVariable.next()) {
                 tipos.add(new CatTipos(
                         resVariable.getString(1),
-                        resVariable.getString(2)
+                        resVariable.getString(2),
+                        resVariable.getString(3)
                 ));
             }
             mAccesos.Desconectar();

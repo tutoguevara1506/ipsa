@@ -16,7 +16,7 @@ public class Accesos extends Conexion {
             resultado = stmt.executeQuery(mQuery);
             return resultado;
         } catch (Exception e) {
-            System.err.println("Sql Consulta ResultSet Variable FI Exception:" + e.getMessage() + " Query: " + mQuery);
+            System.err.println("Sql Consulta ResultSet Variable Exception:" + e.getMessage() + " Query: " + mQuery);
             return null;
         } finally {
 
@@ -33,7 +33,7 @@ public class Accesos extends Conexion {
             }
             return miSTR;
         } catch (Exception e) {
-            System.err.println("Sql Consulta String Variable FI Exception:" + e.getMessage() + " Query: " + mQuery);
+            System.err.println("Sql Consulta String Variable Exception:" + e.getMessage() + " Query: " + mQuery);
             return null;
         } finally {
 
@@ -50,7 +50,7 @@ public class Accesos extends Conexion {
             }
             return miDBL;
         } catch (Exception e) {
-            System.err.println("Sql Consulta Double Variable FI Exception:" + e.getMessage() + " Query: " + mQuery);
+            System.err.println("Sql Consulta Double Variable Exception:" + e.getMessage() + " Query: " + mQuery);
             return null;
         } finally {
 
@@ -67,7 +67,7 @@ public class Accesos extends Conexion {
             }
             return miDate;
         } catch (Exception e) {
-            System.err.println("Sql Consulta Date Variable FI Exception:" + e.getMessage() + " Query: " + mQuery);
+            System.err.println("Sql Consulta Date Variable Exception:" + e.getMessage() + " Query: " + mQuery);
             return null;
         } finally {
 
@@ -79,7 +79,7 @@ public class Accesos extends Conexion {
             getStmt();
             stmt.executeUpdate(mQuery);
         } catch (Exception e) {
-            System.err.println("Sql Operación Variable FI Exception:" + e.getMessage() + " Query: " + mQuery);
+            System.err.println("Sql Operación Variable Exception:" + e.getMessage() + " Query: " + mQuery);
 
         } finally {
 

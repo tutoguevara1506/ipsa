@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -20,6 +21,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.UploadedFile;
 
 @Named
 @ConversationScoped
@@ -28,15 +30,35 @@ public class ManPiezas implements Serializable {
     private static final long serialVersionUID = 8797678674685238L;
     @Inject
     Login cbean;
+    private List<CatGrupos> grupos;
+    private List<CatLineas> lineas;
     private CatCategorias catcategorias;
     private List<CatCategorias> categorias;
     private CatEquipos catequipos;
     private List<CatEquipos> equipos;
     private CatPiezas catpiezas;
     private List<CatPiezas> piezas;
-    private String cod_pie, cod_ref, cod_equ, nom_pie, des_pie, cod_cat, det_ima, vid_uti;
+    private String cod_pie, cod_ref, cod_equ, nom_pie, des_pie, cod_cat, det_ima, vid_uti, cod_gru, cod_lin;
+
+    private UploadedFile file;
 
     public ManPiezas() {
+    }
+
+    public List<CatGrupos> getGrupos() {
+        return grupos;
+    }
+
+    public void setGrupos(List<CatGrupos> grupos) {
+        this.grupos = grupos;
+    }
+
+    public List<CatLineas> getLineas() {
+        return lineas;
+    }
+
+    public void setLineas(List<CatLineas> lineas) {
+        this.lineas = lineas;
     }
 
     public CatCategorias getCatcategorias() {
@@ -151,6 +173,30 @@ public class ManPiezas implements Serializable {
         this.vid_uti = vid_uti;
     }
 
+    public String getCod_gru() {
+        return cod_gru;
+    }
+
+    public void setCod_gru(String cod_gru) {
+        this.cod_gru = cod_gru;
+    }
+
+    public String getCod_lin() {
+        return cod_lin;
+    }
+
+    public void setCod_lin(String cod_lin) {
+        this.cod_lin = cod_lin;
+    }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
     public void iniciarventana() {
         cod_pie = "";
         cod_ref = "";
@@ -160,8 +206,11 @@ public class ManPiezas implements Serializable {
         cod_cat = "";
         det_ima = "";
         vid_uti = "";
+        cod_gru = "0";
+        cod_lin = "0";
         llenarCategorias();
         llenarEquipos();
+        llenarGrupos();
         llenarPiezas();
 
     }
@@ -175,9 +224,13 @@ public class ManPiezas implements Serializable {
         cod_cat = "";
         det_ima = "";
         vid_uti = "";
+        cod_gru = "0";
+        cod_lin = "0";
         equipos = new ArrayList<>();
         piezas = new ArrayList<>();
         categorias = new ArrayList<>();
+        grupos = new ArrayList<>();
+        lineas = new ArrayList<>();
     }
 
     public void llenarCategorias() {
@@ -239,6 +292,60 @@ public class ManPiezas implements Serializable {
         }
     }
 
+    public void llenarGrupos() {
+        String mQuery = "";
+        try {
+            grupos = new ArrayList<>();
+
+            mQuery = "select cod_gru,nom_gru "
+                    + "from cat_gru  "
+                    + "order by cod_gru;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                grupos.add(new CatGrupos(
+                        resVariable.getString(1),
+                        resVariable.getString(2)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Grupos en Catálogo de Piezas. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+
+    public void llenarLineas() {
+        String mQuery = "";
+        try {
+            lineas = new ArrayList<>();
+
+            mQuery = "select lin.cod_gru,lin.cod_lin,lin.nom_lin,gru.nom_gru "
+                    + "from cat_lin as lin "
+                    + "left join cat_gru as gru on lin.cod_gru = gru.cod_gru "
+                    + "where lin.cod_gru = " + cod_gru + " "
+                    + "order by lin.cod_gru,lin.cod_lin;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                lineas.add(new CatLineas(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Líneas en Catálogo de Piezas. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+
     public void llenarPiezas() {
         String mQuery = "";
         try {
@@ -247,9 +354,13 @@ public class ManPiezas implements Serializable {
 
             mQuery = "select pie.cod_pie,pie.cod_ref,pie.cod_equ,"
                     + "pie.nom_pie,pie.des_pie,equ.nom_equ,pie.cod_cat,"
-                    + "pie.det_ima,pie.vid_uti "
+                    + "pie.det_ima,pie.vid_uti,pie.cod_gru,pie.cod_lin, "
+                    + "gru.nom_gru,"
+                    + "lin.nom_lin "
                     + "from cat_pie as pie "
                     + "left join cat_equ as equ on equ.cod_equ=pie.cod_equ "
+                    + "left join cat_gru as gru on pie.cod_gru = gru.cod_gru "
+                    + "left join cat_lin as lin on pie.cod_gru = lin.cod_gru and lin.cod_lin = pie.cod_lin "
                     + "order by pie.cod_pie;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -265,7 +376,11 @@ public class ManPiezas implements Serializable {
                         resVariable.getString(6),
                         resVariable.getString(7),
                         resVariable.getString(8),
-                        resVariable.getString(9)
+                        resVariable.getString(9),
+                        resVariable.getString(10),
+                        resVariable.getString(11),
+                        resVariable.getString(12),
+                        resVariable.getString(13)
                 ));
             }
             mAccesos.Desconectar();
@@ -284,11 +399,13 @@ public class ManPiezas implements Serializable {
         cod_cat = "";
         det_ima = "";
         vid_uti = "";
+        cod_gru = "0";
+        cod_lin = "0";
         catpiezas = new CatPiezas();
     }
 
     public void guardar() {
-        String mQuery = "";
+        String mQuery = "", ntemporal = det_ima;
         if (validardatos()) {
             try {
                 Accesos mAccesos = new Accesos();
@@ -296,10 +413,12 @@ public class ManPiezas implements Serializable {
                 if ("".equals(cod_pie)) {
                     mQuery = "select ifnull(max(cod_pie),0)+1 as codigo from cat_pie;";
                     cod_pie = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into cat_pie (cod_pie,cod_ref,cod_equ,nom_pie,des_pie,cod_cat,det_ima,vid_uti) "
+                    det_ima = "/resources/images/piezas/" + "pie_" + cod_pie + ".jpg";
+                    mQuery = "insert into cat_pie (cod_pie,cod_ref,cod_equ,nom_pie,des_pie,cod_cat,det_ima,vid_uti,cod_gru,cod_lin) "
                             + "values (" + cod_pie + ",'" + cod_ref + "'," + cod_equ + ",'" + nom_pie
-                            + "','" + des_pie + "'," + cod_cat + ",'" + det_ima + "'," + vid_uti + ");";
+                            + "','" + des_pie + "'," + cod_cat + ",'" + det_ima + "'," + vid_uti + "," + cod_gru + "," + cod_lin + ");";
                 } else {
+                    det_ima = "/resources/images/piezas/" + "pie_" + cod_pie + ".jpg";
                     mQuery = "update cat_pie SET "
                             + " cod_ref = " + cod_ref + " "
                             + ",cod_equ = '" + cod_equ + "' "
@@ -308,9 +427,33 @@ public class ManPiezas implements Serializable {
                             + ",cod_cat = " + cod_cat + " "
                             + ",det_ima = '" + det_ima + "' "
                             + ",vid_uti = " + vid_uti + " "
+                            + ",cod_gru = " + cod_gru + " "
+                            + ",cod_lin = " + cod_lin + " "
                             + "WHERE cod_pie = " + cod_pie;
 
                 }
+
+                if (!"/resources/images/piezas/".equals(ntemporal.replace("pie_" + cod_pie + ".jpg", ""))) {
+                    File mIMGFile = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/temp/config.xml"));
+                    String destinationO = mIMGFile.getPath().replace("config.xml", "");
+
+                    File mIMGFile2 = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/piezas/config.xml"));
+                    String destinationD = mIMGFile2.getPath().replace("config.xml", "");
+
+                    //Verifica que no exista otro archivo con el nombre destino y si hay lo borra.
+                    File mfileDestino = new File(destinationD + "pie_" + cod_pie + ".jpg");
+                    if (mfileDestino.exists()) {
+                        mfileDestino.delete();
+                    }
+                    //Copia el nuevo archivo
+                    File mfileOrigen = new File(destinationO + ntemporal.replace("/resources/images/temp/", ""));
+                    if (mfileOrigen.exists()) {
+                        mfileOrigen.renameTo(new File(destinationD + "pie_" + cod_pie + ".jpg"));
+                        mfileOrigen.delete();
+                    }
+
+                }
+
                 mAccesos.dmlSQLvariable(mQuery);
                 mAccesos.Desconectar();
                 addMessage("Guardar Pieza", "Información Almacenada con éxito.", 1);
@@ -330,6 +473,10 @@ public class ManPiezas implements Serializable {
         mAccesos.Conectar();
         if ("".equals(cod_pie) == false) {
             try {
+                File mIMGFile = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/piezas/" + "pie_" + cod_pie + ".jpg"));
+                if (mIMGFile.exists()) {
+                    mIMGFile.delete();
+                }
                 mQuery = "delete from cat_pie where cod_pie=" + cod_pie + ";";
                 mAccesos.dmlSQLvariable(mQuery);
                 addMessage("Eliminar Pieza", "Información Eliminada con éxito.", 1);
@@ -348,16 +495,20 @@ public class ManPiezas implements Serializable {
 
     public boolean validardatos() {
         boolean mValidar = true;
-        if ("0".equals(cod_equ)) {
-            mValidar = false;
-            addMessage("Validar Datos", "Debe Escoger un Equipo para la Pieza.", 2);
-        }
-
         if ("".equals(nom_pie)) {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar un Nombre para la Pieza.", 2);
+        } else {
+            Accesos macc = new Accesos();
+            macc.Conectar();
+            String contador = macc.strQuerySQLvariable("select ifnull(count(cod_pie),0) as cont from cat_pie where upper(nom_pie) = '" + nom_pie.toUpperCase() + "' "
+                    + "and cod_pie <> " + cod_pie + ";");
+            macc.Desconectar();
+            if (!"0".equals(contador)) {
+                mValidar = false;
+                addMessage("Validar Datos", "El Nombre de la Pieza ya Existe.", 2);
+            }
         }
-
         return mValidar;
 
     }
@@ -371,25 +522,43 @@ public class ManPiezas implements Serializable {
         cod_cat = ((CatPiezas) event.getObject()).getCod_cat();
         det_ima = ((CatPiezas) event.getObject()).getDet_ima();
         vid_uti = ((CatPiezas) event.getObject()).getVid_uti();
+        cod_gru = ((CatPiezas) event.getObject()).getCod_gru();
+        cod_lin = ((CatPiezas) event.getObject()).getCod_lin();
     }
 
     public void upload(FileUploadEvent event) {
-        FacesMessage msg = new FacesMessage("Éxito! ", event.getFile().getFileName() + " ha sido cargado.");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
         try {
             //dbImage = new DefaultStreamedContent(event.getFile().getInputstream(), "image/jpeg");
-            copyFile("img_" + cod_ref + ".jpg", event.getFile().getInputstream());
+            Random rnd = new Random();
+            String prefijo = String.valueOf(((int) (rnd.nextDouble() * 100)) + ((int) (rnd.nextDouble() * 100)) * ((int) (rnd.nextDouble() * 100)));
+            copyFile("pie_temp_" + prefijo + ".jpg", event.getFile().getInputstream());
 
         } catch (Exception e) {
-            System.out.println("Error en subir archivo Lineas" + e.getMessage());
+            addMessage("Procesar Imagen", "La Imagen " + event.getFile().getFileName() + " No se ha podido Cargar. " + e.getMessage(), 2);
+            System.out.println("Error en subir archivo Imagen Equipo." + e.getMessage());
         }
 
     }
 
     public void copyFile(String fileName, InputStream in) {
         try {
-            File mIMGFile = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/piezas/config.xml"));
-            String destination = mIMGFile.getPath().replace("config.xml", "");
+            String destination = "";
+            File mIMGFile = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/temp/config.xml"));
+            det_ima = "/resources/images/temp/" + fileName;
+
+            destination = mIMGFile.getPath().replace("config.xml", "");
+
+            //Verifica que no exista otro archivo con el mismo nombre.
+            try {
+                File file = new File(destination + fileName);
+                if (file.exists()) {
+                    file.delete();
+                }
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
             // write the inputStream to a FileOutputStream
             OutputStream out = new FileOutputStream(new File(destination + fileName.toLowerCase()));
             int read = 0;
@@ -402,16 +571,10 @@ public class ManPiezas implements Serializable {
             out.flush();
             out.close();
 
-            File file = new File(destination + "pie_" + fileName);
-            file.delete();
-            copiarImagen(destination + fileName, destination + "pie_" + fileName, 320);
-            File file2 = new File(destination + fileName);
-            file2.delete();
-            //copiarImagen(destination + nFile, destination + nFile, 150);
-            det_ima = "/resources/images/piezas/pie_" + fileName;
-
         } catch (IOException e) {
+            addMessage("Copiar Imagen Pieza", "La Imagen en copyFyle" + fileName + " No se ha podido procesar. " + e.getMessage(), 2);
             System.out.println(e.getMessage());
+
         }
     }
 

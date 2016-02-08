@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -20,6 +21,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.UploadedFile;
+
 
 @Named
 @ConversationScoped
@@ -33,6 +36,8 @@ public class ManEquipos implements Serializable {
     private CatMarcas catmarcas;
     private List<CatMarcas> marcas;
     private String cod_equ, cod_mar, cod_ref, nom_equ, des_equ, det_ima;
+
+    private UploadedFile file;
 
     public ManEquipos() {
     }
@@ -116,6 +121,16 @@ public class ManEquipos implements Serializable {
     public void setDet_ima(String det_ima) {
         this.det_ima = det_ima;
     }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+    
+    
 
     public void iniciarventana() {
         cod_equ = "";
@@ -207,18 +222,22 @@ public class ManEquipos implements Serializable {
     }
 
     public void guardar() {
-        String mQuery = "";
+        String mQuery = "", ntemporal=det_ima;
         if (validardatos()) {
             try {
+
                 Accesos mAccesos = new Accesos();
                 mAccesos.Conectar();
+                
                 if ("".equals(cod_equ)) {
                     mQuery = "select ifnull(max(cod_equ),0)+1 as codigo from cat_equ;";
                     cod_equ = mAccesos.strQuerySQLvariable(mQuery);
+                    det_ima = "/resources/images/equipos/" + "equ_" + cod_equ + ".jpg";
                     mQuery = "insert into cat_equ (cod_equ, cod_mar,cod_ref, nom_equ, des_equ,det_ima) "
                             + "values (" + cod_equ + "," + cod_mar + ",'" + cod_ref + "','"
                             + nom_equ + "','" + des_equ + "','" + det_ima + "');";
                 } else {
+                    det_ima = "/resources/images/equipos/" + "equ_" + cod_equ + ".jpg";
                     mQuery = "update cat_equ SET "
                             + "cod_mar = " + cod_mar + " "
                             + ",cod_ref = '" + cod_ref + "' "
@@ -228,12 +247,39 @@ public class ManEquipos implements Serializable {
                             + "WHERE cod_equ = " + cod_equ;
 
                 }
+                
+                
+                if (!"/resources/images/equipos/".equals(ntemporal.replace("equ_" + cod_equ + ".jpg", ""))) {
+                    File mIMGFile = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/temp/config.xml"));
+                    String destinationO = mIMGFile.getPath().replace("config.xml", "");
+
+                    File mIMGFile2 = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/equipos/config.xml"));
+                    String destinationD = mIMGFile2.getPath().replace("config.xml", "");
+
+                    //Verifica que no exista otro archivo con el nombre destino y si hay lo borra.
+                    File mfileDestino = new File(destinationD + "equ_" + cod_equ + ".jpg");
+                    if (mfileDestino.exists()) {
+                        mfileDestino.delete();
+                    }
+                    //Copia el nuevo archivo
+                    File mfileOrigen = new File(destinationO + ntemporal.replace("/resources/images/temp/", ""));
+                    if (mfileOrigen.exists()) {
+                        mfileOrigen.renameTo(new File(destinationD + "equ_" + cod_equ + ".jpg"));
+                        mfileOrigen.delete();
+                    }
+
+                }
+
+               
                 mAccesos.dmlSQLvariable(mQuery);
                 mAccesos.Desconectar();
+
+                
+
                 addMessage("Guardar Equipo", "Información Almacenada con éxito.", 1);
             } catch (Exception e) {
                 addMessage("Guardar Equipo", "Error al momento de guardar la información. " + e.getMessage(), 2);
-                System.out.println("Error al Guardar Marca. " + e.getMessage() + " Query: " + mQuery);
+                System.out.println("Error al Guardar Equipo. " + e.getMessage() + " Query: " + mQuery);
             }
             llenarEquipos();
         }
@@ -247,8 +293,10 @@ public class ManEquipos implements Serializable {
         mAccesos.Conectar();
         if ("".equals(cod_equ) == false) {
             try {
-                File mIMGFile = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath(det_ima));
-                mIMGFile.delete();
+                File mIMGFile = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/equipos/"+"equ_"+cod_equ+".jpg"));
+                if (mIMGFile.exists()) {
+                    mIMGFile.delete();
+                }
                 mQuery = "delete from cat_equ where cod_equ=" + cod_equ + ";";
                 mAccesos.dmlSQLvariable(mQuery);
                 addMessage("Eliminar Equipo", "Información Eliminada con éxito.", 1);
@@ -286,23 +334,72 @@ public class ManEquipos implements Serializable {
     }
 
     public void upload(FileUploadEvent event) {
-        FacesMessage msg = new FacesMessage("Éxito! ", event.getFile().getFileName() + " ha sido cargado.");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-
         try {
             //dbImage = new DefaultStreamedContent(event.getFile().getInputstream(), "image/jpeg");
-            copyFile("img_" + cod_ref + ".jpg", event.getFile().getInputstream());
+            Random rnd = new Random();
+            String prefijo = String.valueOf(((int) (rnd.nextDouble() * 100)) + ((int) (rnd.nextDouble() * 100)) * ((int) (rnd.nextDouble() * 100)));
+            copyFile("equ_temp_" + prefijo + ".jpg", event.getFile().getInputstream());
 
         } catch (Exception e) {
-            System.out.println("Error en subir archivo Lineas" + e.getMessage());
+            addMessage("Procesar Imagen", "La Imagen " + event.getFile().getFileName() + " No se ha podido Cargar. " + e.getMessage(), 2);
+            System.out.println("Error en subir archivo Imagen Equipo." + e.getMessage());
         }
 
     }
 
+    public void handleFileUpload(FileUploadEvent event) {
+        //file = event.getFile();
+
+        //ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        //String newFileName = servletContext.getRealPath("") + File.separator + "uploaded" + File.separator + file.getFileName();
+       // try {
+            /* FileOutputStream fos = new FileOutputStream(new File(newFileName));
+            InputStream is = file.getInputstream();
+            int BUFFER_SIZE = 8192;
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int a;
+            while (true) {
+                a = is.read(buffer);
+                if (a < 0) {
+                    break;
+                }
+                fos.write(buffer, 0, a);
+                fos.flush();
+            }
+             */
+            //fos.close();
+            //  is.close();
+            //Random rnd = new Random();
+            //String prefijo = String.valueOf(((int) (rnd.nextDouble() * 100)) + ((int) (rnd.nextDouble() * 100)) * ((int) (rnd.nextDouble() * 100)));
+
+           // copyFile("equ_" + cod_equ + ".jpg", file.getInputstream(), 1);
+
+      //  } catch (IOException e) {
+            //addMessage("Procesar Imagen", "La Imagen Upload de Equipo " + event.getFile().getFileName() + " No se ha podido procesar. " + e.getMessage(), 2);
+            //System.out.println("Error en subir archivo Imagen Equipo." + e.getMessage());
+       // }
+    }
+
     public void copyFile(String fileName, InputStream in) {
         try {
-            File mIMGFile = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/equipos/config.xml"));
-            String destination = mIMGFile.getPath().replace("config.xml", "");
+            String destination = "";
+            File mIMGFile = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/temp/config.xml"));
+            det_ima = "/resources/images/temp/" + fileName;
+
+
+            destination = mIMGFile.getPath().replace("config.xml", "");
+
+            //Verifica que no exista otro archivo con el mismo nombre.
+            try {
+                File mfile = new File(destination + fileName);
+                if (mfile.exists()) {
+                    mfile.delete();
+                }
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
             // write the inputStream to a FileOutputStream
             OutputStream out = new FileOutputStream(new File(destination + fileName.toLowerCase()));
             int read = 0;
@@ -315,16 +412,16 @@ public class ManEquipos implements Serializable {
             out.flush();
             out.close();
 
-            File file = new File(destination + "equ_" + fileName);
-            file.delete();
-            copiarImagen(destination + fileName, destination + "equ_" + fileName, 320);
-            File file2 = new File(destination + fileName);
-            file2.delete();
-            //copiarImagen(destination + nFile, destination + nFile, 150);
-            det_ima = "/resources/images/equipos/equ_" + fileName;
-
+            //File file = new File(destination + "equ_" + fileName);
+            //file.delete();
+            //copiarImagen(destination + fileName, destination + "equ_" + fileName, 320);
+            //File file2 = new File(destination + fileName);
+            //file2.delete();
+            ////copiarImagen(destination + nFile, destination + nFile, 150);
         } catch (IOException e) {
+            addMessage("Copiar Imagen Equipo", "La Imagen en copyFyle" + fileName + " No se ha podido procesar. " + e.getMessage(), 2);
             System.out.println(e.getMessage());
+
         }
     }
 

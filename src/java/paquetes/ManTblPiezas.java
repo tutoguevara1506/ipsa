@@ -693,27 +693,21 @@ public class ManTblPiezas implements Serializable {
                 } else {
                     mQuery = "and exi.cod_pie=" + cod_pie + " and exi.cod_bod=" + cod_bod;
                 }
+            } else if (!"0".equals(cod_ubi)) {
+                mQuery = "and exi.cod_pie=" + cod_pie + " and exi.cod_ubi=" + cod_ubi;
             } else {
-                if (!"0".equals(cod_ubi)) {
-                    mQuery = "and exi.cod_pie=" + cod_pie + " and exi.cod_ubi=" + cod_ubi;
-                } else {
-                    mQuery = "and exi.cod_pie=" + cod_pie;
-                }
+                mQuery = "and exi.cod_pie=" + cod_pie;
             }
+        } else if (!"0".equals(cod_bod)) {
+            if (!"0".equals(cod_ubi)) {
+                mQuery = "and exi.cod_bod=" + cod_bod + " and exi.cod_ubi=" + cod_ubi;
+            } else {
+                mQuery = "and exi.cod_bod=" + cod_bod;
+            }
+        } else if (!"0".equals(cod_ubi)) {
+            mQuery = "and exi.cod_ubi=" + cod_ubi;
         } else {
-            if (!"0".equals(cod_bod)) {
-                if (!"0".equals(cod_ubi)) {
-                    mQuery = "and exi.cod_bod=" + cod_bod + " and exi.cod_ubi=" + cod_ubi;
-                } else {
-                    mQuery = "and exi.cod_bod=" + cod_bod;
-                }
-            } else {
-                if (!"0".equals(cod_ubi)) {
-                    mQuery = "and exi.cod_ubi=" + cod_ubi;
-                } else {
-                    mQuery = "";
-                }
-            }
+            mQuery = "";
         }
 
         llenarExistencias(mQuery);
@@ -897,9 +891,14 @@ public class ManTblPiezas implements Serializable {
             piezas = new ArrayList<>();
 
             mQuery = "select pie.cod_pie,pie.cod_ref,pie.cod_equ,"
-                    + "pie.nom_pie,pie.des_pie,equ.nom_equ,pie.cod_cat,pie.det_ima,pie.vid_uti "
+                    + "pie.nom_pie,pie.des_pie,equ.nom_equ,pie.cod_cat,"
+                    + "pie.det_ima,pie.vid_uti,pie.cod_gru,pie.cod_lin, "
+                    + "gru.nom_gru,"
+                    + "lin.nom_lin "
                     + "from cat_pie as pie "
                     + "left join cat_equ as equ on equ.cod_equ=pie.cod_equ "
+                    + "left join cat_gru as gru on pie.cod_gru = gru.cod_gru "
+                    + "left join cat_lin as lin on pie.cod_gru = lin.cod_gru and lin.cod_lin = pie.cod_lin "
                     + "order by pie.cod_pie;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -915,7 +914,11 @@ public class ManTblPiezas implements Serializable {
                         resVariable.getString(6),
                         resVariable.getString(7),
                         resVariable.getString(8),
-                        resVariable.getString(9)
+                        resVariable.getString(9),
+                        resVariable.getString(10),
+                        resVariable.getString(11),
+                        resVariable.getString(12),
+                        resVariable.getString(13)
                 ));
             }
             mAccesos.Desconectar();
@@ -943,7 +946,7 @@ public class ManTblPiezas implements Serializable {
                 bodegas.add(new CatBodegas(
                         resVariable.getString(1),
                         resVariable.getString(2),
-                        resVariable.getString(3),""
+                        resVariable.getString(3), ""
                 ));
             }
             mAccesos.Desconectar();
@@ -974,7 +977,7 @@ public class ManTblPiezas implements Serializable {
                         resVariable.getString(1),
                         resVariable.getString(2),
                         resVariable.getString(3),
-                        resVariable.getString(4),"",""
+                        resVariable.getString(4), "", ""
                 ));
             }
             mAccesos.Desconectar();
@@ -1015,6 +1018,13 @@ public class ManTblPiezas implements Serializable {
                         resVariable.getString(8),
                         resVariable.getString(9),
                         resVariable.getString(10),
+                        resVariable.getString(11),
+                        resVariable.getString(10),
+                        resVariable.getString(11),
+                        resVariable.getString(11),
+                        resVariable.getString(11),
+                        resVariable.getString(11),
+                        resVariable.getString(11),
                         resVariable.getString(11)
                 ));
             }
@@ -1043,6 +1053,17 @@ public class ManTblPiezas implements Serializable {
                         resVariable.getString(3),
                         resVariable.getString(4),
                         resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(6),
+                        resVariable.getString(6),
+                        resVariable.getString(6),
+                        resVariable.getString(6),
+                        resVariable.getString(6),
                         resVariable.getString(6)
                 ));
             }
@@ -1346,11 +1367,11 @@ public class ManTblPiezas implements Serializable {
                     contasiguientes = String.valueOf(
                             Integer.valueOf(contasiguientes)
                             + Integer.valueOf(mAccesos.strQuerySQLvariable("select count(cod_his) "
-                                            + "from tbl_pie_his "
-                                            + "where fec_his > STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
-                                            + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
-                                            + "and det_sta = 0 "
-                                            + ";")));
+                                    + "from tbl_pie_his "
+                                    + "where fec_his > STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                                    + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
+                                    + "and det_sta = 0 "
+                                    + ";")));
 
                     Double nuevacantidad = mNuevaExistencia;
                     if ("0".equals(contasiguientes) == false) {
@@ -1462,11 +1483,16 @@ public class ManTblPiezas implements Serializable {
                             + ")";
 
                 }
+                // ******************* Inserta Detalles*****************
                 mValues = mValues.substring(1);
                 mQuery = " insert into tbl_pie_det(cod_enc,cod_det,"
                         + "cod_pie,cod_bod,cod_ubi,det_can,det_cos,det_sta) "
                         + "values " + mValues + ";";
+                
 
+                mAccesos.dmlSQLvariable(mQuery);
+                // ******************* Borra Reservas *****************
+                mQuery = " delete from tbl_res where cod_lis_pie = " + cod_lis_pie + ";";
                 mAccesos.dmlSQLvariable(mQuery);
 
                 mAccesos.Desconectar();
@@ -1599,11 +1625,11 @@ public class ManTblPiezas implements Serializable {
                     contasiguientes = String.valueOf(
                             Integer.valueOf(contasiguientes)
                             + Integer.valueOf(mAccesos.strQuerySQLvariable("select count(cod_his) "
-                                            + "from tbl_pie_his "
-                                            + "where fec_his > STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
-                                            + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
-                                            + "and det_sta = 0 "
-                                            + ";")));
+                                    + "from tbl_pie_his "
+                                    + "where fec_his > STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                                    + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
+                                    + "and det_sta = 0 "
+                                    + ";")));
 
                     //Double nuevacantidad = mNuevaExistencia;
                     if ("0".equals(contasiguientes) == false) {
@@ -1760,25 +1786,23 @@ public class ManTblPiezas implements Serializable {
             piezasdetalle = new ArrayList<>();
             if ("0".equals(acc.strQuerySQLvariable("select count(id_bod) from cat_bodegas where id_bod=1 and cod_pai =" + cod_pai + ";"))) {
                 addMessage("Seleccionar Solicitud", "No Existe Bodega Definida Para Este País.", 1);
+            } else if ("0".equals(acc.strQuerySQLvariable("select count(id_ubi) from cat_ubicaciones where cod_bod=1 and id_ubi =1;"))) {
+                addMessage("Seleccionar Solicitud", "No Existe Ubicación Definida para Esta Bodega.", 1);
             } else {
-                if ("0".equals(acc.strQuerySQLvariable("select count(id_ubi) from cat_ubicaciones where cod_bod=1 and id_ubi =1;"))) {
-                    addMessage("Seleccionar Solicitud", "No Existe Ubicación Definida para Esta Bodega.", 1);
-                } else {
-                    for (int i = 0; i < solicitudesdetalle.size(); i++) {
-                        piezasdetalle.add(new CatTblPiezasDetalle(
-                                "",
-                                solicitudesdetalle.get(i).getId_det(),
-                                solicitudesdetalle.get(i).getCod_ite(),
-                                "1",
-                                "1",
-                                solicitudesdetalle.get(i).getDet_can(),
-                                "0.0",
-                                "0",
-                                solicitudesdetalle.get(i).getDes_ite(),
-                                acc.strQuerySQLvariable("select nom_bod from cat_bodegas where id_bod=1 and cod_pai =" + cod_pai + ";"),
-                                acc.strQuerySQLvariable("select nom_ubi from cat_ubicaciones where cod_bod=1 and id_ubi =1;")
-                        ));
-                    }
+                for (int i = 0; i < solicitudesdetalle.size(); i++) {
+                    piezasdetalle.add(new CatTblPiezasDetalle(
+                            "",
+                            solicitudesdetalle.get(i).getCod_det(),
+                            solicitudesdetalle.get(i).getCod_ite(),
+                            "1",
+                            "1",
+                            solicitudesdetalle.get(i).getDet_can_ent(),
+                            "0.0",
+                            "0",
+                            solicitudesdetalle.get(i).getDes_ite(),
+                            acc.strQuerySQLvariable("select nom_bod from cat_bodegas where id_bod=1 and cod_pai =" + cod_pai + ";"),
+                            acc.strQuerySQLvariable("select nom_ubi from cat_ubicaciones where cod_bod=1 and id_ubi =1;")
+                    ));
                 }
             }
             acc.Desconectar();

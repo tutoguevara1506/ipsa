@@ -1,3 +1,4 @@
+
 package paquetes;
 
 import java.io.Serializable;
@@ -14,10 +15,8 @@ import org.primefaces.event.UnselectEvent;
 
 @Named
 @ConversationScoped
-
-public class ManEstado implements Serializable {
-
-    private static final long serialVersionUID = 8791111234571668L;
+public class ManRequisicionEstado implements Serializable {
+    private static final long serialVersionUID = 8791111756981668L;
     @Inject
     Login cbean;
     private CatSolicitudes catmaestro;
@@ -27,9 +26,8 @@ public class ManEstado implements Serializable {
 
     private String cod_mae, det_sta, cod_usu_sol;
 
-    public ManEstado() {
+    public ManRequisicionEstado() {
     }
-
     public CatSolicitudes getCatmaestro() {
         return catmaestro;
     }
@@ -124,7 +122,7 @@ public class ManEstado implements Serializable {
                     + "date_format(mae.fec_cie,'%d/%m/%Y'), mae.flg_loc,mae.cod_pai, "
                     + "dep.nom_dep, concat(maq.nom_equ,'-',lis.num_ser) as nomequ,"
                     + "pai.nom_pai, usu.det_nom "
-                    + "FROM sol_mae as mae "
+                    + "FROM req_mae as mae "
                     + "left join cat_dep as dep on mae.cod_dep = dep.cod_dep "
                     + "left join lis_equ as lis on mae.cod_maq = lis.cod_lis_equ "
                     + "left join cat_equ as maq on lis.cod_equ = maq.cod_equ "
@@ -162,7 +160,7 @@ public class ManEstado implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado Maestro en Estado Solicitud. " + e.getMessage());
+            System.out.println("Error en el llenado Maestro en Estado Requsiciones. " + e.getMessage());
         }
     }
 
@@ -186,7 +184,7 @@ public class ManEstado implements Serializable {
                     + "det.fec_cie, "
                     + "det.cos_uni,"
                     + "pai.nom_pai, bod.nom_bod, ubi.nom_ubi "
-                    + "from sol_det as det "
+                    + "from req_det as det "
                     + "left join cat_pai as pai on det.cod_pai = pai.cod_pai "
                     + "left join cat_bodegas as bod on det.cod_pai = bod.cod_pai and det.cod_bod = bod.id_bod "
                     + "left join cat_ubicaciones as ubi on det.cod_bod = ubi.cod_bod and det.cod_ubi = ubi.id_ubi "
@@ -219,7 +217,7 @@ public class ManEstado implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado Detalles en Estado Solicitud. " + e.getMessage());
+            System.out.println("Error en el llenado Detalles en Estado Requsiciones. " + e.getMessage());
         }
     }
 
@@ -231,21 +229,21 @@ public class ManEstado implements Serializable {
         if ("".equals(cod_mae) == false) {
             if ("ESPERA APROBACIÓN".equals(det_sta)) {
                 try {
-                    String mQuery = "delete from sol_det where cod_mae=" + cod_mae + ";";
+                    String mQuery = "delete from req_det where cod_mae=" + cod_mae + ";";
                     mAccesos.dmlSQLvariable(mQuery);
-                    mQuery = "delete from sol_mae where cod_mae=" + cod_mae + " and det_sta=0;";
+                    mQuery = "delete from req_mae where cod_mae=" + cod_mae + " and det_sta=0;";
                     mAccesos.dmlSQLvariable(mQuery);
-                    addMessage("Eliminar Solicitud", "Información Eliminada con Éxito.", 1);
+                    addMessage("Eliminar Requisición", "Información Eliminada con Éxito.", 1);
                 } catch (Exception e) {
-                    addMessage("Eliminar Solicitud", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
-                    System.out.println("Error al Eliminar Solicitud. " + e.getMessage());
+                    addMessage("Eliminar Requisición", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
+                    System.out.println("Error al Eliminar Requisición. " + e.getMessage());
                 }
                 iniciarventana();
             } else {
-                addMessage("Eliminar Solicitud", "Esta Solicitud ya pasó a otra instancia y no puede eliminarse, consulte al Administrador del Sistema.", 2);
+                addMessage("Eliminar Requisición", "Esta Requisición ya pasó a otra instancia y no puede eliminarse, consulte al Administrador del Sistema.", 2);
             }
         } else {
-            addMessage("Eliminar Solicitud", "Debe elegir un Registro.", 2);
+            addMessage("Eliminar Requisición", "Debe elegir un Registro.", 2);
         }
 
         mAccesos.Desconectar();
@@ -275,5 +273,6 @@ public class ManEstado implements Serializable {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-
+    
+    
 }
