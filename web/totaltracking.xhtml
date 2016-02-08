@@ -178,8 +178,23 @@
                                 style="width: 125px;"
                                 actionListener="#{manMovimientos.iniciarventana()}"
                                 disabled="#{manSeguridad.disableOpt('menuMovimientos')}"
+                                />                        
+                        <p:menuitem value="Grupos Piezas" icon="ui-icon-wrench" 
+                                    onclick="PF('wGruPie').show()"
+                                    update=":frmGruPie"
+                                    style="width: 125px;"
+                                    actionListener="#{manGruPie.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuGruposPiezas')}"
+                                    />
+                    </p:submenu>
+                    <p:menuitem value="Inventario Piezas" icon="ui-icon-suitcase" 
+                                onclick="PF('wListaPiezas').show()"
+                                update=":frmListaPiezas"
+                                style="width: 125px;"
+                                actionListener="#{manTblPiezas.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuInventarioPiezas')}"
                                 />
-                        <p:submenu label="Requisiciones" icon="ui-icon-pencil">
+                    <p:submenu label="Requisiciones" icon="ui-icon-pencil">
                         <p:menuitem value="Nueva Requisicion" icon="ui-icon-document" 
                                     onclick="PF('wReq').show()"
                                     update=":frmReq"
@@ -203,22 +218,6 @@
                                     actionListener="#{manRequisicionSeguimiento.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuSeguimientoRequisicion')}"
                                    />
-                        
-                        <p:menuitem value="Grupos Piezas" icon="ui-icon-wrench" 
-                                    onclick="PF('wGruPie').show()"
-                                    update=":frmGruPie"
-                                    style="width: 125px;"
-                                    actionListener="#{manGruPie.iniciarventana()}"
-                                    disabled="#{manSeguridad.disableOpt('menuGruposPiezas')}"
-                                    />
-                    </p:submenu>
-                    <p:menuitem value="Inventario Piezas" icon="ui-icon-suitcase" 
-                                onclick="PF('wListaPiezas').show()"
-                                update=":frmListaPiezas"
-                                style="width: 125px;"
-                                actionListener="#{manTblPiezas.iniciarventana()}"
-                                disabled="#{manSeguridad.disableOpt('menuInventarioPiezas')}"
-                                />
                 </p:submenu>
                 <p:submenu label="Personal" icon="ui-icon-person">
                     <p:submenu label="Configuración" icon="ui-icon-folder-open">
