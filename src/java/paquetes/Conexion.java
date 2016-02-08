@@ -13,7 +13,7 @@ public class Conexion {
     protected Statement stmt;
     private String serverName = "localhost";
     private String portNumber = "3306";
-    public static String databaseName = "totalt"; //"harolda1_distasoft001";
+    public static String databaseName = "ipsa"; //"harolda1_distasoft001";
     private String url = "jdbc:mysql://localhost:3306/" + databaseName;
     private String userName = "root"; //"root"; "harolda1_root";
     private String password = ""; //"Dist@soft.."; //"W3bS0l..."; //"H@rold2015..";
