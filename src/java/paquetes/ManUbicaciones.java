@@ -133,8 +133,8 @@ public class ManUbicaciones implements Serializable {
         try {
             paises = new ArrayList<>();
 
-            String mQuery = "select cod_pai, nom_pai "
-                    + "from cat_pai order by cod_pai;";
+            String mQuery = "select cod_alm, nom_alm "
+                    + "from cat_alm order by cod_alm;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -148,7 +148,7 @@ public class ManUbicaciones implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Paises en Ubicaciones. " + e.getMessage());
+            System.out.println("Error en el llenado de Bodegas en Repisas. " + e.getMessage());
         }
     }
 
@@ -176,7 +176,7 @@ public class ManUbicaciones implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Bodegas en Catálogo Ubicaciones. " + e.getMessage() + " Query: " + mQuery);
+            System.out.println("Error en el llenado de Estantes en Catálogo Repisas. " + e.getMessage() + " Query: " + mQuery);
         }
     }
 
@@ -186,10 +186,10 @@ public class ManUbicaciones implements Serializable {
             catubicaciones = new CatUbicaciones();
             ubicaciones = new ArrayList<>();
 
-            mQuery = "select ubi.id_ubi,ubi.cod_bod,ubi.nom_ubi,bod.nom_bod, bod.cod_pai, pai.nom_pai "
+            mQuery = "select ubi.id_ubi,ubi.cod_bod,ubi.nom_ubi,bod.nom_bod, bod.cod_pai, alm.nom_alm "
                     + "from cat_ubicaciones as ubi "
                     + "left join cat_bodegas as bod on bod.id_bod = ubi.cod_bod "
-                    + "left join cat_pai as pai on bod.cod_pai = pai.cod_pai "
+                    + "left join cat_alm as alm on bod.cod_pai = alm.cod_alm "
                     + "order by ubi.cod_bod,ubi.id_ubi;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -208,7 +208,7 @@ public class ManUbicaciones implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Catálogo Ubicaciones. " + e.getMessage() + " Query: " + mQuery);
+            System.out.println("Error en el llenado de Catálogo Repisas. " + e.getMessage() + " Query: " + mQuery);
         }
     }
 
@@ -240,9 +240,9 @@ public class ManUbicaciones implements Serializable {
                 }
                 mAccesos.dmlSQLvariable(mQuery);
                 mAccesos.Desconectar();
-                addMessage("Guardar Ubicaciones", "Información Almacenada con éxito.", 1);
+                addMessage("Guardar Repisas", "Información Almacenada con éxito.", 1);
             } catch (Exception e) {
-                addMessage("Guardar Ubicaciones", "Error al momento de guardar la información. " + e.getMessage(), 2);
+                addMessage("Guardar Repisas", "Error al momento de guardar la información. " + e.getMessage(), 2);
                 System.out.println("Error al Guardar Ubicaciones. " + e.getMessage() + " Query: " + mQuery);
             }
             llenarUbicaciones();
@@ -259,15 +259,15 @@ public class ManUbicaciones implements Serializable {
             try {
                 mQuery = "delete from cat_ubicaciones where id_ubi=" + id_ubi + ";";
                 mAccesos.dmlSQLvariable(mQuery);
-                addMessage("Eliminar Ubicaciones", "Información Eliminada con éxito.", 1);
+                addMessage("Eliminar Repisa", "Información Eliminada con éxito.", 1);
             } catch (Exception e) {
-                addMessage("Eliminar Ubicaciones", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
-                System.out.println("Error al Eliminar Ubicaciones. " + e.getMessage() + " Query: " + mQuery);
+                addMessage("Eliminar Repisas", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
+                System.out.println("Error al Eliminar Repisa. " + e.getMessage() + " Query: " + mQuery);
             }
             llenarUbicaciones();
             nuevo();
         } else {
-            addMessage("Eliminar Ubicaciones", "Debe elegir un Registro.", 2);
+            addMessage("Eliminar Repisa", "Debe elegir un Registro.", 2);
         }
         mAccesos.Desconectar();
 
@@ -277,11 +277,11 @@ public class ManUbicaciones implements Serializable {
         boolean mValidar = true;
         if ("".equals(nom_ubi) == true) {
             mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un Nombre para la Ubicación.", 2);
+            addMessage("Validar Datos", "Debe Ingresar un Nombre para la Repisa.", 2);
         }
         if ("0".equals(cod_bod) == true) {
             mValidar = false;
-            addMessage("Validar Datos", "Debe Escoger una Bodega.", 2);
+            addMessage("Validar Datos", "Debe Escoger un Estante.", 2);
         }
         Accesos maccesos = new Accesos();
         maccesos.Conectar();
@@ -289,7 +289,7 @@ public class ManUbicaciones implements Serializable {
                 + "where upper(nom_ubi)='" + nom_ubi.toUpperCase() + "' and cod_bod=" + cod_bod + ";")) == false
                 && "".equals(id_ubi)) {
             mValidar = false;
-            addMessage("Validar Datos", "El Nombre de la Plataforma ya existe.", 2);
+            addMessage("Validar Datos", "El Nombre de la Repisa ya existe.", 2);
         }
         maccesos.Desconectar();
         return mValidar;

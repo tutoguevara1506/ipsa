@@ -30,7 +30,7 @@ public class ManPiezas implements Serializable {
     private static final long serialVersionUID = 8797678674685238L;
     @Inject
     Login cbean;
-    private List<CatGrupos> grupos;
+    private List<CatGruposPiezas> grupos;
     private List<CatLineas> lineas;
     private CatCategorias catcategorias;
     private List<CatCategorias> categorias;
@@ -45,11 +45,11 @@ public class ManPiezas implements Serializable {
     public ManPiezas() {
     }
 
-    public List<CatGrupos> getGrupos() {
+    public List<CatGruposPiezas> getGrupos() {
         return grupos;
     }
 
-    public void setGrupos(List<CatGrupos> grupos) {
+    public void setGrupos(List<CatGruposPiezas> grupos) {
         this.grupos = grupos;
     }
 
@@ -305,7 +305,7 @@ public class ManPiezas implements Serializable {
             mAccesos.Conectar();
             resVariable = mAccesos.querySQLvariable(mQuery);
             while (resVariable.next()) {
-                grupos.add(new CatGrupos(
+                grupos.add(new CatGruposPiezas(
                         resVariable.getString(1),
                         resVariable.getString(2)
                 ));

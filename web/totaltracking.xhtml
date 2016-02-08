@@ -32,13 +32,7 @@
                                 disabled="#{manSeguridad.disableOpt('menuDeptos')}"
                                 />
                     
-                     <p:menuitem value="Movimientos" icon="ui-icon-arrowthick-2-n-s" 
-                                onclick="PF('wMov').show()"
-                                update=":frmMov"
-                                style="width: 125px;"
-                                actionListener="#{manMovimientos.iniciarventana()}"
-                                disabled="#{manSeguridad.disableOpt('menuMovimientos')}"
-                                />
+                     
                      <p:menuitem value="Procesos" icon="ui-icon-transferthick-e-w" 
                                 onclick="PF('wPaises').show()"
                                 update=":frmPaises"
@@ -178,6 +172,13 @@
                                     actionListener="#{manUniMed.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuUnidades')}"
                                     />
+                        <p:menuitem value="Movimientos" icon="ui-icon-arrowthick-2-n-s" 
+                                onclick="PF('wMov').show()"
+                                update=":frmMov"
+                                style="width: 125px;"
+                                actionListener="#{manMovimientos.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuMovimientos')}"
+                                />
                         <p:submenu label="Requisiciones" icon="ui-icon-pencil">
                         <p:menuitem value="Nueva Requisicion" icon="ui-icon-document" 
                                     onclick="PF('wReq').show()"
@@ -220,13 +221,22 @@
                                 />
                 </p:submenu>
                 <p:submenu label="Personal" icon="ui-icon-person">
-                    <p:menuitem value="Cargos Personal" icon="ui-icon-contact" 
-                                onclick="PF('wCargo').show()"
-                                style="width: 125px;"
-                                action="#{manCargos.iniciarventana()}" 
-                                update=":frmCargo"
-                                disabled="#{manSeguridad.disableOpt('menuCargos')}"
-                                />
+                    <p:submenu label="Configuración" icon="ui-icon-folder-open">
+                        <p:menuitem value="Cargos Personal" icon="ui-icon-contact" 
+                                    onclick="PF('wCargo').show()"
+                                    style="width: 125px;"
+                                    action="#{manCargos.iniciarventana()}" 
+                                    update=":frmCargo"
+                                    disabled="#{manSeguridad.disableOpt('menuCargos')}"
+                                    />
+                        <p:menuitem value="Evaluaciones" icon="ui-icon-home" 
+                                    onclick="PF('wEval').show()"
+                                    update=":frmEval"
+                                    style="width: 125px;"
+                                    actionListener="#{manEvaluaciones.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuEvaluaciones')}"
+                                    />
+                    </p:submenu>
                     <p:menuitem value="Personal" icon="ui-icon-person" 
                                 onclick="PF('wPersonal').show()"
                                 style="width: 125px;"
@@ -6393,24 +6403,24 @@
                 <div style=" background-color: #ebf8fe;">
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Evaluacion" style="font-weight:bold;" />
-                        <p:inputText maxlength="20" size="60" value="#{manEvaluaciones.nom_eva}" 
+                        <p:inputText maxlength="200" size="60" value="#{manEvaluaciones.nom_eva}" 
                                      onfocus="this.select()"/>
                     </h:panelGrid>
                     <p:dataTable id="dtEval" var="vEva" 
                                  value="#{manEvaluaciones.evaluaciones}" 
                                  emptyMessage="No se encontraron resultados" 
                                  selectionMode="single" selection="#{manEvaluaciones.catevaluaciones}" 
-                                 rowKey="#{vEva.cod_eva}"
+                                 rowKey="#{vEva.id_eva}"
                                  editable="false" 
                                  style="width:475px"
                                  scrollable="true"
                                  scrollHeight="190"
                                  >
                         <p:ajax event="rowSelect" listener="#{manEvaluaciones.onRowSelect}" 
-                                update=":frmEva" />
+                                update=":frmEval" />
 
-                        <p:column style="width:50px" headerText="Nombre Bodega">
-                            <h:outputText value="#{vAlm.nom_alm}" />
+                        <p:column style="width:50px" headerText="Nombre Evaluacion">
+                            <h:outputText value="#{vEva.nom_eva}" />
                         </p:column>
                     </p:dataTable>
                 </div>
