@@ -386,7 +386,7 @@ public class ManRequisicionNueva implements Serializable {
         det_sta = "0";
         det_obs = "";
         fec_cie = "";
-        cod_pai = cbean.getCod_pai();
+        cod_pai = "0";
         flg_loc = "0";
         det_cod_det = "";
         det_cod_pai = "";
@@ -425,7 +425,7 @@ public class ManRequisicionNueva implements Serializable {
         det_sta = "0";
         det_obs = "";
         fec_cie = "";
-        cod_pai = cbean.getCod_pai();
+        cod_pai = "0";
         flg_loc = "0";
         det_cod_det = "";
         det_cod_pai = "";
@@ -463,7 +463,7 @@ public class ManRequisicionNueva implements Serializable {
         det_sta = "0";
         det_obs = "";
         fec_cie = "";
-        cod_pai = cbean.getCod_pai();
+        cod_pai = "0";
         flg_loc = "0";
         det_cod_det = "";
         det_cod_pai = "";
@@ -620,8 +620,8 @@ public class ManRequisicionNueva implements Serializable {
         try {
             paises = new ArrayList<>();
 
-            String mQuery = "select cod_pai, nom_pai "
-                    + "from cat_pai order by cod_pai;";
+            String mQuery = "select cod_alm, nom_alm "
+                    + "from cat_alm order by cod_alm;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -697,12 +697,12 @@ public class ManRequisicionNueva implements Serializable {
                     + "mae.det_sta, mae.det_obs, "
                     + "date_format(mae.fec_cie,'%d/%m/%Y'), mae.flg_loc,mae.cod_pai, "
                     + "dep.nom_dep, concat(maq.nom_equ,'-',lis.num_ser) as nomequ, "
-                    + "pai.nom_pai, usu.det_nom "
+                    + "pai.nom_alm, usu.det_nom "
                     + "FROM req_mae as mae "
                     + "left join cat_dep as dep on mae.cod_dep = dep.cod_dep "
                     + "left join lis_equ as lis on mae.cod_maq = lis.cod_lis_equ "
                     + "left join cat_equ as maq on lis.cod_equ = maq.cod_equ "
-                    + "left join cat_pai as pai on mae.cod_pai = pai.cod_pai "
+                    + "left join cat_alm as pai on mae.cod_pai = pai.cod_alm "
                     + "left join cat_usu as usu on mae.cod_usu_sol = usu.cod_usu "
                     + "where "
                     + "mae.cod_usu_sol = " + cod_usu_sol + " "
@@ -750,9 +750,9 @@ public class ManRequisicionNueva implements Serializable {
                     + "det.cod_mae, det.cod_det, det.cod_pai, det.cod_bod, "
                     + "det.cod_ubi, det.cod_ite, det.des_ite, det.det_can_sol, det.det_can_ent, "
                     + "det.det_can_pen, det.non_sto, det.det_sta, det.fec_cie,det.cos_uni, "
-                    + "pai.nom_pai, bod.nom_bod, ubi.nom_ubi "
+                    + "pai.nom_alm, bod.nom_bod, ubi.nom_ubi "
                     + "from req_det as det "
-                    + "left join cat_pai as pai on det.cod_pai = pai.cod_pai "
+                    + "left join cat_alm as pai on det.cod_pai = pai.cod_alm "
                     + "left join cat_bodegas as bod on det.cod_pai = bod.cod_pai and det.cod_bod = bod.id_bod "
                     + "left join cat_ubicaciones as ubi on det.cod_bod = ubi.cod_bod and det.cod_ubi = ubi.id_ubi "
                     + "where det.cod_mae = " + cod_mae + " order by det.cod_det asc;";
@@ -805,7 +805,7 @@ public class ManRequisicionNueva implements Serializable {
                     det_des_ite = macc.strQuerySQLvariable("select nom_pie from cat_pie where cod_pie=" + det_cod_ite + ";");
 
                     String nompai, nombod, nomubi;
-                    nompai = macc.strQuerySQLvariable("select nom_pai from cat_pai where cod_pai=" + cod_pai + ";");
+                    nompai = macc.strQuerySQLvariable("select nom_alm from cat_alm where cod_alm=" + cod_pai + ";");
                     nombod = "";
                     nomubi = "";
                     macc.Desconectar();

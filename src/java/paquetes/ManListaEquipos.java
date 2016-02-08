@@ -981,7 +981,7 @@ public class ManListaEquipos implements Serializable {
             proveedores = new ArrayList<>();
 
             mQuery = "select cod_pro,cod_pai,nom_pro,per_con,tel_con,det_mai  "
-                    + "from cat_pro where cod_pai = " + cod_pai + " order by cod_pro;";
+                    + "from cat_pro order by cod_pro;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -1009,7 +1009,7 @@ public class ManListaEquipos implements Serializable {
             clientes = new ArrayList<>();
 
             mQuery = "select cod_cli,cod_pai, nom_cli,per_con,tel_con,det_mai  "
-                    + "from cat_cli where cod_pai = " + cod_pai + " order by cod_cli;";
+                    + "from cat_cli order by cod_cli;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();

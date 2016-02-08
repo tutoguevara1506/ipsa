@@ -91,7 +91,7 @@ public class ManProveedores implements Serializable {
 
     public void iniciarventana() {
         cod_pro = "";
-        cod_pai = cbean.getCod_pai();
+        cod_pai = "0";
         nom_pro = "";
         per_con = "";
         tel_con = "";
@@ -140,7 +140,7 @@ public class ManProveedores implements Serializable {
 
     public void nuevo() {
         cod_pro = "";
-        cod_pai = cbean.getCod_pai();
+        cod_pai = "0";
         nom_pro = "";
         per_con = "";
         tel_con = "";

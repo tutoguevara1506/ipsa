@@ -909,7 +909,7 @@ public class ManMaestroMan implements Serializable {
         gen_cod_usu = cbean.getCod_usu();
         pie_det_man = "";
         pie_fec_man = "";
-        pie_cod_pai = cbean.getCod_pai();
+        pie_cod_pai = "0";
         pie_cod_bod = "0";
         pie_cod_ubi = "0";
         pie_det_can = "";
@@ -923,7 +923,7 @@ public class ManMaestroMan implements Serializable {
         ane_cod_usu = cbean.getCod_usu();
         acc_det_man = "";
         acc_fec_man = "";
-        acc_cod_pai = cbean.getCod_pai();
+        acc_cod_pai = "0";
         acc_det_can = "";
         acc_des_ite = "";
         acc_cod_usu = cbean.getCod_usu();
@@ -975,7 +975,7 @@ public class ManMaestroMan implements Serializable {
         existencias = new ArrayList<>();
         Accesos acc = new Accesos();
         acc.Conectar();
-        nompai = acc.strQuerySQLvariable("select nom_pai from cat_pai where cod_pai=" + pie_cod_pai + ";");
+        nompai = acc.strQuerySQLvariable("select nom_alm from cat_alm where cod_pai=" + pie_cod_pai + ";");
         nombod = acc.strQuerySQLvariable("select nom_bod from cat_bodegas where cod_pai=" + pie_cod_pai + " and id_bod = " + pie_cod_bod + ";");
         nomubi = acc.strQuerySQLvariable("select nom_ubi from cat_ubicaciones where cod_bod = " + pie_cod_bod + " and id_ubi=" + pie_cod_ubi + ";");
         acc.Desconectar();
@@ -1012,10 +1012,10 @@ public class ManMaestroMan implements Serializable {
                     + "and res.cod_pai = exi.cod_pai "
                     + "and res.cod_bod = exi.cod_bod "
                     + "and res.cod_ubi = exi.cod_ubi ) as reserva,"
-                    + "exi.det_can, pie.nom_pie, pai.nom_pai, bod.nom_bod, ubi.nom_ubi "
+                    + "exi.det_can, pie.nom_pie, pai.nom_alm, bod.nom_bod, ubi.nom_ubi "
                     + "from tbl_existencias as exi "
                     + "left join cat_pie as pie on exi.cod_pie = pie.cod_pie "
-                    + "left join cat_pai as pai on exi.cod_pai = pai.cod_pai "
+                    + "left join cat_alm as pai on exi.cod_pai = pai.cod_alm "
                     + "left join cat_bodegas as bod on exi.cod_pai = bod.cod_pai and exi.cod_bod = bod.id_bod "
                     + "left join cat_ubicaciones as ubi on exi.cod_bod = ubi.cod_bod and exi.cod_ubi = ubi.id_ubi "
                     + "where exi.cod_pai=" + pie_cod_pai + " and exi.cod_bod=" + pie_cod_bod + " and exi.cod_ubi=" + pie_cod_ubi + " "
@@ -1212,8 +1212,8 @@ public class ManMaestroMan implements Serializable {
         try {
             paises = new ArrayList<>();
 
-            String mQuery = "select cod_pai, nom_pai "
-                    + "from cat_pai order by cod_pai;";
+            String mQuery = "select cod_alm, nom_alm "
+                    + "from cat_alm order by cod_alm;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -1464,12 +1464,12 @@ public class ManMaestroMan implements Serializable {
                     + "gen.cod_lis_equ,gen.cod_man,gen.det_man,"
                     + "date_format(gen.fec_man,'%d/%m/%Y %H:%i'), "
                     + "gen.cod_pai, gen.cod_bod, gen.cod_ubi, gen.det_can, "
-                    + "gen.cod_pie, gen.num_ser, gen.cod_usu,pai.nom_pai as nompai, "
+                    + "gen.cod_pie, gen.num_ser, gen.cod_usu,pai.nom_alm as nompai, "
                     + "bod.nom_bod as nombod, ubi.nom_ubi as nomubi,"
                     + "usu.det_nom as nomusu, pie.nom_pie as nompie,"
                     + "gen.flg_sol "
                     + "from tbl_det_man_pie as gen "
-                    + "left join cat_pai as pai on gen.cod_pai = pai.cod_pai "
+                    + "left join cat_alm as pai on gen.cod_pai = pai.cod_alm "
                     + "left join cat_bodegas as bod on gen.cod_pai = bod.cod_pai and gen.cod_bod = bod.id_bod "
                     + "left join cat_ubicaciones as ubi on gen.cod_bod = ubi.cod_bod and gen.cod_ubi = ubi.id_ubi "
                     + "left join cat_usu as usu on gen.cod_usu = usu.cod_usu "
@@ -1518,9 +1518,9 @@ public class ManMaestroMan implements Serializable {
             mQuery = "select "
                     + "acc.cod_lis_equ, acc.cod_man, acc.det_man, acc.fec_man, "
                     + "acc.cod_pai, acc.det_can, acc.des_ite, acc.cod_usu, acc.flg_sol,"
-                    + "pai.nom_pai, usu.det_nom "
+                    + "pai.nom_alm, usu.det_nom "
                     + "FROM tbl_det_man_acc as acc "
-                    + "left join cat_pai as pai on acc.cod_pai = pai.cod_pai "
+                    + "left join cat_alm as pai on acc.cod_pai = pai.cod_alm "
                     + "left join cat_usu as usu on acc.cod_usu = usu.cod_usu "
                     + "where acc.cod_lis_equ= " + cod_lis_equ + " "
                     + "and acc.cod_man=" + cod_man + " "
@@ -1827,7 +1827,7 @@ public class ManMaestroMan implements Serializable {
 
                 Accesos macc = new Accesos();
                 macc.Conectar();
-                String nompaipie = macc.strQuerySQLvariable("select ifnull(nom_pai,'') from cat_pai where cod_pai =" + pie_cod_pai + ";");
+                String nompaipie = macc.strQuerySQLvariable("select ifnull(nom_alm,'') from cat_alm where cod_alm =" + pie_cod_pai + ";");
                 String nombodpie = macc.strQuerySQLvariable("select ifnull(det_nom,'') from cat_bodegas where cod_pai=" + pie_cod_pai + " and id_bod =" + pie_cod_bod + ";");
                 String nomubipie = macc.strQuerySQLvariable("select ifnull(nom_ubi,'') from cat_ubicaciones where cod_bod=" + pie_cod_bod + " and id_ubi =" + pie_cod_ubi + ";");
                 String nomusupie = macc.strQuerySQLvariable("select ifnull(det_nom,'') from cat_usu where cod_usu =" + pie_cod_usu + ";");
@@ -1952,7 +1952,7 @@ public class ManMaestroMan implements Serializable {
 
                 Accesos macc = new Accesos();
                 macc.Conectar();
-                String nompaipie = macc.strQuerySQLvariable("select ifnull(nom_pai,'') from cat_pai where cod_pai =" + acc_cod_pai + ";");
+                String nompaipie = macc.strQuerySQLvariable("select ifnull(nom_alm,'') from cat_alm where cod_alm =" + acc_cod_pai + ";");
 
                 macc.Desconectar();
 
