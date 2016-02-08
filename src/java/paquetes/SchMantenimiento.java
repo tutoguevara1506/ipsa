@@ -77,9 +77,13 @@ public class SchMantenimiento implements Serializable {
             cmt.setEndDate(cm.getFec_fin());
             
             if("1".equals(cm.getDet_sta())){
-                cmt.setStyleClass("emp1");
+                cmt.setStyleClass("mtto1");
             } else if ("2".equals(cm.getDet_sta())){
-                cmt.setStyleClass("emp2");
+                cmt.setStyleClass("mtto2");
+            } else if ("3".equals(cm.getDet_sta())){
+                cmt.setStyleClass("mtto3");
+            } else {
+                cmt.setStyleClass("mtto4");
             }
                         
             mttoModel.addEvent(cmt);
@@ -230,11 +234,10 @@ public class SchMantenimiento implements Serializable {
              if (cm.getCod_man() == mttoMove.getScheduleEvent().getData()){
                  catcalendario = cm; 
                  actualizar();
-                 init();
                  break;
              }         
          }    
-        //addMessage("Calendario", "Se ha movido el mantenimiento de fecha. ", 1);
+        
     }
      
     public void onEventResize(ScheduleEntryResizeEvent mttoResize) {
@@ -242,7 +245,6 @@ public class SchMantenimiento implements Serializable {
              if (cm.getCod_man() == mttoResize.getScheduleEvent().getData()){
                  catcalendario = cm; 
                  actualizar();
-                 init();
                  break;
              }         
          }   

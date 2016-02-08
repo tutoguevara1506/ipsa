@@ -94,10 +94,19 @@ tr.jsfcrud_even_row {
     height: 15px!important; 
 }
 
- .emp1 .fc-event-inner{
-    background: #006600;
+ .mtto1 {
+    background: #008000 !important;
  }
  
- .emp2 .fc-event-inner{
-    background: #003399;
+ .mtto2 {
+    background: #FFFF00 !important;
+    color: black !important;
+ }
+ 
+ .mtto3 {
+    background: #FF0000 !important;
+ }
+ 
+ .mtto4 {
+    background: #003399 !important;
  }

@@ -98,24 +98,8 @@
                                 />
                     
                 </p:submenu>
-                    <p:submenu label="Solicitar Piezas" icon="ui-icon-pencil">
-                        <p:menuitem value="Nueva Solicitud" icon="ui-icon-document" 
-                                    onclick="PF('wSol').show()"
-                                    update=":frmSol"
-                                    style="width: 125px;"
-                                    actionListener="#{manSolicitudes.iniciarventana()}"
-                                    disabled="#{manSeguridad.disableOpt('menuNuevaSolicitud')}"
-                                    />
-
-                        <p:menuitem value="Estado Solicitud" icon="ui-icon-help" 
-                                    onclick="PF('wEstado').show()"
-                                    update=":frmEstado"
-                                    style="width: 125px;"
-                                    actionListener="#{manEstado.iniciarventana()}"
-                                    disabled="#{manSeguridad.disableOpt('menuEstadoSolicitud')}"
-                                    />
-                    </p:submenu>
-                    <p:menuitem value="Detalle Equipo" icon="ui-icon-gear" 
+                    
+                    <p:menuitem value="Registro Equipo" icon="ui-icon-gear" 
                                 onclick="PF('wListaEquipos').show()"
                                 style="width: 125px;"
                                 update=":frmListaEquipos"
@@ -138,8 +122,24 @@
                                 disabled="#{manSeguridad.disableOpt('menuCalendMtto')}"
                                 />
                 </p:submenu>
-
                 <p:submenu label="Compras" icon="ui-icon-cart">
+                    <p:submenu label="Solicitar Piezas" icon="ui-icon-pencil">
+                        <p:menuitem value="Nueva Solicitud" icon="ui-icon-document" 
+                                    onclick="PF('wSol').show()"
+                                    update=":frmSol"
+                                    style="width: 125px;"
+                                    actionListener="#{manSolicitudes.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuNuevaSolicitud')}"
+                                    />
+
+                        <p:menuitem value="Estado Solicitud" icon="ui-icon-help" 
+                                    onclick="PF('wEstado').show()"
+                                    update=":frmEstado"
+                                    style="width: 125px;"
+                                    actionListener="#{manEstado.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuEstadoSolicitud')}"
+                                    />
+                    </p:submenu>
                     <p:menuitem value="Aprobaciones" icon="ui-icon-check" 
                                 onclick="PF('wAprobado').show()"
                                 update=":frmAprobado"
