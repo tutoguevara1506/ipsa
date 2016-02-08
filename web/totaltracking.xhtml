@@ -123,7 +123,7 @@
                                 />
                 </p:submenu>
                 <p:submenu label="Compras" icon="ui-icon-cart">
-                    <p:submenu label="Solicitar Piezas" icon="ui-icon-pencil">
+                    <p:submenu label="Solicitudes" icon="ui-icon-pencil">
                         <p:menuitem value="Nueva Solicitud" icon="ui-icon-document" 
                                     onclick="PF('wSol').show()"
                                     update=":frmSol"
@@ -139,37 +139,13 @@
                                     actionListener="#{manEstado.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuEstadoSolicitud')}"
                                     />
-                    </p:submenu>
-                    <p:menuitem value="Aprobaciones" icon="ui-icon-check" 
-                                onclick="PF('wAprobado').show()"
-                                update=":frmAprobado"
-                                style="width: 125px;"
-                                actionListener="#{manAprobacion.iniciarventana()}"
-                                disabled="#{manSeguridad.disableOpt('menuAprovaciones')}"
-                                />
-
-                    <p:menuitem value="Modificaciones" icon="ui-icon-wrench" 
-                                onclick="PF('wModificaciones').show()"
-                                update=":frmModificaciones"
-                                style="width: 125px;"
-                                actionListener="#{manModificaciones.iniciarventana()}"
-                                disabled="#{manSeguridad.disableOpt('menuModificaciones')}"
-                                />
-
-                    <p:menuitem value="Dar Seguimiento" icon="ui-icon-search" 
+                    </p:submenu>  
+                    <p:menuitem value="Seguimiento" icon="ui-icon-search" 
                                 onclick="PF('wSeguimiento').show()"
                                 update=":frmSeguimiento"
                                 style="width: 125px;"
                                 actionListener="#{manSeguimiento.iniciarventana()}"
                                 disabled="#{manSeguridad.disableOpt('menuSeguimiento')}"
-                                />
-
-                    <p:menuitem value="Histórico" icon="ui-icon-clock" 
-                                onclick="PF('wHistorico').show()"
-                                update=":frmHistorico"
-                                style="width: 125px;"
-                                actionListener="#{manHistorico.iniciarventana()}"
-                                disabled="#{manSeguridad.disableOpt('menuHistorico')}"
                                 />
                 </p:submenu>
 
@@ -202,6 +178,31 @@
                                     actionListener="#{manUniMed.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuUnidades')}"
                                     />
+                        <p:submenu label="Requisiciones" icon="ui-icon-pencil">
+                        <p:menuitem value="Nueva Requisicion" icon="ui-icon-document" 
+                                    onclick="PF('wReq').show()"
+                                    update=":frmReq"
+                                    style="width: 125px;"
+                                    actionListener="#{manRequisicionesNueva.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuNuevaRequisicion')}"
+                                    />
+
+                        <p:menuitem value="Estado Requisicion" icon="ui-icon-help" 
+                                    onclick="PF('wEstadoReq').show()"
+                                    update=":frmEstadoReq"
+                                    style="width: 125px;"
+                                    actionListener="#{manRequisicionEstado.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuEstadoRequisicion')}"
+                                    />
+                        </p:submenu>  
+                        <p:menuitem value="Seguimiento" icon="ui-icon-search" 
+                                    onclick="PF('wSeguimientoReq').show()"
+                                    update=":frmSeguimientoReq"
+                                    style="width: 125px;"
+                                    actionListener="#{manRequisicionSeguimiento.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuSeguimientoRequisicion')}"
+                                   />
+                        
                         <p:menuitem value="Grupos Piezas" icon="ui-icon-wrench" 
                                     onclick="PF('wGruPie').show()"
                                     update=":frmGruPie"
@@ -5260,21 +5261,21 @@
                 <div style=" background-color: #ebf8fe;">
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Evaluacion" style="font-weight:bold;" />
-                        <p:inputText maxlength="20" size="60" value="#{manEvaluaciones.nom_alm}" 
+                        <p:inputText maxlength="20" size="60" value="#{manEvaluaciones.nom_eva}" 
                                      onfocus="this.select()"/>
                     </h:panelGrid>
-                    <p:dataTable id="dtAlmacenes" var="vAlm" 
-                                 value="#{manAlmacenes.almacenes}" 
+                    <p:dataTable id="dtEval" var="vEva" 
+                                 value="#{manEvaluaciones.evaluaciones}" 
                                  emptyMessage="No se encontraron resultados" 
-                                 selectionMode="single" selection="#{manAlmacenes.catalmacenes}" 
-                                 rowKey="#{vAlm.cod_alm}"
+                                 selectionMode="single" selection="#{manEvaluaciones.catevaluaciones}" 
+                                 rowKey="#{vEva.cod_eva}"
                                  editable="false" 
                                  style="width:475px"
                                  scrollable="true"
                                  scrollHeight="190"
                                  >
-                        <p:ajax event="rowSelect" listener="#{manAlmacenes.onRowSelect}" 
-                                update=":frmAlmacenes" />
+                        <p:ajax event="rowSelect" listener="#{manEvaluaciones.onRowSelect}" 
+                                update=":frmEva" />
 
                         <p:column style="width:50px" headerText="Nombre Bodega">
                             <h:outputText value="#{vAlm.nom_alm}" />
