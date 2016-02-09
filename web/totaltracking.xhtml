@@ -24,16 +24,7 @@
             <p:menubar id="menumadre">
                 <p:submenu label="Mantenimiento" icon="ui-icon-wrench">
                     <p:submenu label="Configuración" icon="ui-icon-folder-open">
-                    <p:menuitem value="Departamentos" icon="ui-icon-home" 
-                                onclick="PF('wDepartamentos').show()"
-                                update=":frmDepartamentos"
-                                style="width: 125px;"
-                                actionListener="#{manDepartamentos.iniciarventana()}"
-                                disabled="#{manSeguridad.disableOpt('menuDeptos')}"
-                                />
-                    
-                     
-                     <p:menuitem value="Procesos" icon="ui-icon-transferthick-e-w" 
+                    <p:menuitem value="Procesos" icon="ui-icon-transferthick-e-w" 
                                 onclick="PF('wPaises').show()"
                                 update=":frmPaises"
                                 style="width: 125px;"
@@ -264,6 +255,13 @@
                                 actionListener="#{manUsuarios.iniciarventana()}"
                                 style="width: 190px;"
                                 disabled="#{manSeguridad.disableOpt('menuUsuarios')}"
+                                />
+                    <p:menuitem value="Departamentos" icon="ui-icon-home" 
+                                onclick="PF('wDepartamentos').show()"
+                                update=":frmDepartamentos"
+                                style="width: 125px;"
+                                actionListener="#{manDepartamentos.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuDeptos')}"
                                 />
                     <p:menuitem value="Grupos de seguridad" icon="ui-icon-suitcase" 
                                 id="menuGruposSeg"
