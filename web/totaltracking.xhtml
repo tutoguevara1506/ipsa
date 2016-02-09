@@ -228,12 +228,19 @@
                                     update=":frmCargo"
                                     disabled="#{manSeguridad.disableOpt('menuCargos')}"
                                     />
-                        <p:menuitem value="Evaluaciones" icon="ui-icon-home" 
+                        <p:menuitem value="Evaluaciones" icon="ui-icon-arrowreturnthick-1-s" 
                                     onclick="PF('wEval').show()"
                                     update=":frmEval"
                                     style="width: 125px;"
                                     actionListener="#{manEvaluaciones.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuEvaluaciones')}"
+                                    />
+                        <p:menuitem value="Factores" icon="ui-icon-pin-s" 
+                                    onclick="PF('wFacEval').show()"
+                                    update=":frmFacEval"
+                                    style="width: 125px;"
+                                    actionListener="#{manFactores.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuFactores')}"
                                     />
                     </p:submenu>
                     <p:menuitem value="Personal" icon="ui-icon-person" 
@@ -6161,8 +6168,7 @@
         <h:form id="frmCalend">
             <p:growl id="messages" showDetail="true" />
                <p:schedule id="schedule" value="#{schMantenimiento.mttoModel}" widgetVar="myschedule" timeZone="GMT+2" locale="es">
-                   <!--p:ajax event="dateSelect" listener="#{schMantenimiento.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" /-->
-                    <p:ajax event="eventSelect" listener="#{schMantenimiento.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                    <p:ajax event="eventSelect" listener="#{schMantenimiento.onEventSelect}" update="eventDetails" oncomplete="PF('dlgMaestraMan').show();" />
                     <p:ajax event="eventMove" listener="#{schMantenimiento.onEventMove}" update="messages" />
                     <p:ajax event="eventResize" listener="#{schMantenimiento.onEventResize}" update="messages" />
              </p:schedule>
@@ -6173,18 +6179,18 @@
                 <p:inputText value="#{schMantenimiento.catcalendario.des_equ}" disabled="true"/>
                 <p:outputLabel  value="Desde:" />
                 <p:calendar value="#{schMantenimiento.catcalendario.fec_ini}" locale="es" 
-                            readonlyInput="true" showOn="button" 
-                            size="25" pattern="dd/MM/yyyy HH:mm" onfocus="this.select()" />
+                            showOn="button" 
+                            size="25" pattern="dd/MM/yyyy HH:mm"/>
  
                 <p:outputLabel value="Hasta:" />
                 <p:calendar value="#{schMantenimiento.catcalendario.fec_fin}" locale="es" 
-                            readonlyInput="true" showOn="button" 
-                            size="25" pattern="dd/MM/yyyy HH:mm" onfocus="this.select()"/>
+                            showOn="button" 
+                            size="25" pattern="dd/MM/yyyy HH:mm"/>
                 
                 <p:outputLabel value="Observaciones:" />
                 <p:inputTextarea value="#{schMantenimiento.catcalendario.det_obs}" 
-                                 rows="3" cols="30" counter="display" maxlength="200"
-                                 counterTemplate="{0} characters remaining." autoResize="false" onfocus="this.select()"/>
+                                 rows="3" cols="30" counter="display" maxlength="200" 
+                                 counterTemplate="{0} characters remaining." autoResize="false"/>
                 
                 <p:commandButton id="addButton" value="Guardar" 
                                  actionListener="#{schMantenimiento.actualizar()}" 
@@ -6426,10 +6432,87 @@
             </h:form>
         </p:dialog> 
     
+    <!-- *******************************************************************
+        **************** Pantalla mantenimiento de Factores Evaluacion **************
+        *********************************************************************-->
+
+        <p:dialog  id="dlgFacEval" widgetVar="wFacEval" modal="true" 
+                   width="500" height="300" closable="false" resizable="false" 
+                   header="Mantenimiento de Factores de Evaluacion" rendered="true" 
+                   dynamic="true" visible="false" 
+                   >
+
+            <h:form id="frmFacEval"> 
+                <p:growl id="msgFacEval" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manFactores.nuevo()}"
+                                         update=":frmFacEval"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         action="#{manFactores.guardar()}"
+                                         update=":frmFacEval"
+                                         icon="ui-icon-disk"
+                                         />
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         actionListener="#{manFactores.eliminar()}"
+                                         update=":frmFacEval"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wFacEval').hide()"
+                                         action="#{manFactores.cerrarventana()}" 
+                                         update=":frmFacEval"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+                <div style=" background-color: #ebf8fe;">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Factor" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="60" value="#{manFactores.nom_fac}" 
+                                     onfocus="this.select()"/>
+                    </h:panelGrid>
+                    <p:dataTable id="dtFacEval" var="vFacEva" 
+                                 value="#{manFactores.factores}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manFactores.catfactores}" 
+                                 rowKey="#{vFacEva.id_fac}"
+                                 editable="false" 
+                                 style="width:475px"
+                                 scrollable="true"
+                                 scrollHeight="190"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manFactores.onRowSelect}" 
+                                update=":frmFacEval" />
+
+                        <p:column style="width:50px" headerText="Nombre Factor">
+                            <h:outputText value="#{vFacEva.nom_fac}" />
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+            </h:form>
+        </p:dialog> 
+    
     <script type="text/javascript">
         PrimeFaces.locales['es'] = {
             closeText: 'Cerrar',
-            prevText: 'Pervio',
+            prevText: 'Previo',
             nextText: 'Siguiente',
             currentText: 'Actual',
             monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
