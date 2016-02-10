@@ -233,6 +233,14 @@
                                     actionListener="#{manFactores.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuFactores')}"
                                     />
+                        <p:menuitem value="Criterios" icon="ui-icon-pin-s" 
+                                    onclick="PF('wCriEval').show()"
+                                    update=":frmCriEval"
+                                    style="width: 125px;"
+                                    actionListener="#{manCriterios.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuCriterios')}"
+                                    />
+                       
                     </p:submenu>
                     <p:menuitem value="Personal" icon="ui-icon-person" 
                                 onclick="PF('wPersonal').show()"
@@ -6435,7 +6443,7 @@
         *********************************************************************-->
 
         <p:dialog  id="dlgFacEval" widgetVar="wFacEval" modal="true" 
-                   width="500" height="300" closable="false" resizable="false" 
+                   width="500" height="350" closable="false" resizable="false" 
                    header="Mantenimiento de Factores de Evaluacion" rendered="true" 
                    dynamic="true" visible="false" 
                    >
@@ -6500,6 +6508,93 @@
 
                         <p:column style="width:50px" headerText="Nombre Factor">
                             <h:outputText value="#{vFacEva.nom_fac}" />
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+            </h:form>
+        </p:dialog> 
+    
+    <!-- *******************************************************************
+        **************** Pantalla mantenimiento de Criterios Evaluacion **************
+        *********************************************************************-->
+
+        <p:dialog  id="dlgCriEval" widgetVar="wCriEval" modal="true" 
+                   width="580" height="300" closable="false" resizable="false" 
+                   header="Mantenimiento de Criterios de Evaluacion" rendered="true" 
+                   dynamic="true" visible="false" 
+                   >
+
+            <h:form id="frmCriEval"> 
+                <p:growl id="msgCriEval" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manCriterios.nuevo()}"
+                                         update=":frmCriEval"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         action="#{manCriterios.guardar()}"
+                                         update=":frmCriEval"
+                                         icon="ui-icon-disk"
+                                         />
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         actionListener="#{manCriterios.eliminar()}"
+                                         update=":frmCriEval"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wCriEval').hide()"
+                                         action="#{manCriterios.cerrarventana()}" 
+                                         update=":frmCriEval"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+                <div style=" background-color: #ebf8fe;">
+                    <h:panelGrid columns="2" cellpadding="5">
+                         <h:outputText value="Factor" style="font-weight:bold;"/>
+                            <p:selectOneMenu value="#{manCriterios.id_fac}" 
+                                style="width:200px;text-align:right;"
+                                immediate="false">  
+                                    <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                                    <f:selectItems value="#{manCriterios.factores}" var="mfaccri"
+                                     itemLabel="#{mfaccri.nom_fac}" itemValue="#{mfaccri.id_fac}"/>
+                            </p:selectOneMenu>
+                       <h:outputText value="Criterio" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="60" value="#{manCriterios.nom_cri}" 
+                                     onfocus="this.select()"/>
+                    </h:panelGrid>
+                    <p:dataTable id="dtCriEval" var="vCriEva" 
+                                 value="#{manCriterios.criterios}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manCriterios.catcriterios}" 
+                                 rowKey="#{vCriEva.id_cri}"
+                                 editable="false" 
+                                 style="width:540px"
+                                 scrollable="true"
+                                 scrollHeight="190"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manCriterios.onRowSelect}" 
+                                update=":frmCriEval" />
+                       <p:column style="width:30px" headerText="Factor">
+                           <h:outputText value="#{vCriEva.nomfac}" />
+                        </p:column>                    
+                        <p:column style="width:80px" headerText="Nombre Criterio">
+                            <h:outputText value="#{vCriEva.nom_cri}" />
                         </p:column>
                     </p:dataTable>
                 </div>

@@ -23,7 +23,7 @@ public class ManCriterios implements Serializable {
     private List<CatFactores> factores;
     private CatCriterios catcriterios;
     private List<CatCriterios> criterios;
-    private String id_cri, nom_cri, id_fac;
+    private String id_cri, nom_cri, id_fac, nomfac;
 
     public ManCriterios() {
     }
@@ -84,6 +84,14 @@ public class ManCriterios implements Serializable {
         this.id_fac = id_fac;
     }
 
+    public String getNomfac() {
+        return nomfac;
+    }
+
+    public void setNomfac(String nomfac) {
+        this.nomfac = nomfac;
+    }   
+
     public void iniciarventana() {
         id_cri = "";
         nom_cri = "";
@@ -97,14 +105,20 @@ public class ManCriterios implements Serializable {
         nom_cri = "";
         id_fac = "";
         criterios = new ArrayList<>();
+        factores = new ArrayList<>();
     }
 
      public void llenarFactores() {
-        try {
+         String mQuery = "";
+        
+         try {
+           
+            catfactores = new CatFactores();
             factores = new ArrayList<>();
 
-            String mQuery = "select id_fac, nom_alm "
+            mQuery = "select id_fac, nom_fac "
                     + "from cat_fac order by id_fac;";
+            
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -129,7 +143,7 @@ public class ManCriterios implements Serializable {
             criterios = new ArrayList<>();
 
             mQuery = "select cri.id_cri, cri.nom_cri, cri.id_fac, fac.nom_fac "
-                    + "from cat_criterios as cri "
+                    + "from cat_cri as cri "
                     + "inner join cat_fac as fac on cri.id_fac = fac.id_fac "
                     + "order by id_cri;";
             
@@ -141,7 +155,8 @@ public class ManCriterios implements Serializable {
                 criterios.add(new CatCriterios(
                         resVariable.getString(1),
                         resVariable.getString(2),
-                        resVariable.getString(3)
+                        resVariable.getString(3),
+                        resVariable.getString(4)
                 ));
             }
             mAccesos.Desconectar();
@@ -165,12 +180,12 @@ public class ManCriterios implements Serializable {
                 Accesos mAccesos = new Accesos();
                 mAccesos.Conectar();
                 if ("".equals(id_cri)) {
-                    mQuery = "select ifnull(max(id_cri),0)+1 as codigo from cat_criterios;";
+                    mQuery = "select ifnull(max(id_cri),0)+1 as codigo from cat_cri;";
                     id_cri = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into cat_criterios (id_cri, nom_cri, id_fac) "
+                    mQuery = "insert into cat_cri (id_cri, nom_cri, id_fac) "
                             + "values (" + id_cri + ",'" + nom_cri + "'," + id_fac + ");";
                 } else {
-                    mQuery = "update cat_criterios SET "
+                    mQuery = "update cat_cri SET "
                             + " nom_cri = '" + nom_cri + "', "
                             + " id_fac = " + id_fac + " "
                             + "WHERE id_cri = " + id_cri + ";";
@@ -195,7 +210,7 @@ public class ManCriterios implements Serializable {
         mAccesos.Conectar();
         if ("".equals(id_cri) == false) {
             try {
-                mQuery = "delete from cat_criterios where id_cri=" + id_cri + ";";
+                mQuery = "delete from cat_cri where id_cri=" + id_cri + ";";
                 mAccesos.dmlSQLvariable(mQuery);
                 addMessage("Eliminar Criterios", "Información Eliminada con éxito.", 1);
             } catch (Exception e) {
@@ -223,7 +238,7 @@ public class ManCriterios implements Serializable {
         }
         Accesos maccesos = new Accesos();
         maccesos.Conectar();
-        if ("0".equals(maccesos.strQuerySQLvariable("select count(id_cri) from cat_criterios "
+        if ("0".equals(maccesos.strQuerySQLvariable("select count(id_cri) from cat_cri "
                 + "where upper(nom_cri)='" + nom_cri.toUpperCase() + "' and id_fac ="
                 + getId_fac() + ";")) == false
                 && "".equals(id_cri)) {
