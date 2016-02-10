@@ -6689,7 +6689,7 @@
         *********************************************************************-->
 
         <p:dialog  id="dlgCriEval" widgetVar="wCriEval" modal="true" 
-                   width="580" height="300" closable="false" resizable="false" 
+                   width="580" height="350" closable="false" resizable="false" 
                    header="Mantenimiento de Criterios de Evaluacion" rendered="true" 
                    dynamic="true" visible="false" 
                    >
@@ -6737,14 +6737,14 @@
                     <h:panelGrid columns="2" cellpadding="5">
                          <h:outputText value="Factor" style="font-weight:bold;"/>
                             <p:selectOneMenu value="#{manCriterios.id_fac}" 
-                                style="width:200px;text-align:right;"
+                                style="width:455px;text-align:right;"
                                 immediate="false">  
                                     <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                                     <f:selectItems value="#{manCriterios.factores}" var="mfaccri"
                                      itemLabel="#{mfaccri.nom_fac}" itemValue="#{mfaccri.id_fac}"/>
                             </p:selectOneMenu>
                        <h:outputText value="Criterio" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="60" value="#{manCriterios.nom_cri}" 
+                        <p:inputText maxlength="200" size="95" value="#{manCriterios.nom_cri}" 
                                      onfocus="this.select()"/>
                     </h:panelGrid>
                     <p:dataTable id="dtCriEval" var="vCriEva" 
