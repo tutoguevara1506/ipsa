@@ -988,41 +988,42 @@ public class ManRequisicionSeguimiento extends Conexion implements Serializable 
                         acc.Desconectar();
                     }
 
-                    //******************* Fin Registro de Recibido *********************************
-                    if ("1".equals(detalles.get(i).getNon_sto())) {
-                        if ("ENTREGADO".equals(detalles.get(i).getDet_sta()) || "ENTREGA PARCIAL".equals(detalles.get(i).getDet_sta())) {
-                            acc.Conectar();
-                            mNonStock = acc.strQuerySQLvariable("select count(cod_det) as count from sol_det where cod_mae = " + cod_mae + " and non_sto=1;");
-
-                            // *************** Creación Encabezado Requisión  *******************
-                            if ("0".equals(acc.strQuerySQLvariable("select count(cod_lis_pie) as count from tbl_pie where cod_sol = " + cod_mae
-                                    + " and por_qbo='" + cod_alt + "' and flg_ing = 1 and det_sta= 0;"))) {
-                                mQuery = "select ifnull(max(cod_lis_pie),0)+1 as codigo from tbl_pie;";
-                                cod_lis_pie = acc.strQuerySQLvariable(mQuery);
-                                mQuery = "insert into tbl_pie (cod_lis_pie,por_qbo,cod_pai,cod_pro,cod_mov,"
-                                        + "doc_tra,cod_sol,fec_tra,det_obs,flg_ing,det_sta) "
-                                        + "values (" + cod_lis_pie + ",'" + cod_alt + "'," + cod_pai + ",0,"
-                                        + "5" + ",'Requisición Automática'," + cod_mae + ","
-                                        + "STR_TO_DATE('" + fec_cie + "','%d/%m/%Y')" + ",'Requisición Automatizada',1,0);";
-                                acc.dmlSQLvariable(mQuery);
-                            } else {
-                                cod_lis_pie = acc.strQuerySQLvariable("select cod_lis_pie from tbl_pie where cod_sol = " + cod_mae
-                                        + " and por_qbo='" + cod_alt + "' and flg_ing = 1 and det_sta= 0;");
-                            }
-
-                            int newDetalle = Integer.valueOf(acc.strQuerySQLvariable("select ifnull(max(cod_det),0) as codigo from tbl_pie_det where cod_enc = " + cod_lis_pie + ";"));
-                            acc.Desconectar();
-                            // *************** Ingreso Detalle Requisión  *******************
-                            salidaalmacen(cod_lis_pie, det_fec_cie, detalles.get(i).getCod_bod(), detalles.get(i).getCod_ubi(), detalles.get(i).getDet_can_ent(),
-                                    detalles.get(i).getCod_ite(), detalles.get(i).getCos_uni(), newDetalle, recibidapor);
-                            // *************** Fin Ingreso Detalle Requisión  *******************
-
-                            // ******************* Borrar Reservas*****************
-                            mQuery = "delete from tbl_res where cod_req =" + cod_mae + "and det_req=" + i + 1 + ";";
-                            acc.dmlSQLvariable(mQuery);
-
-                        }
+                    //********************* Registro de Recibido ***********************************
+                    if ("ENTREGADO".equals(detalles.get(i).getDet_sta()) || "ENTREGA PARCIAL".equals(detalles.get(i).getDet_sta())) {
+                        acc.Conectar();
+                        String mnewCod = acc.strQuerySQLvariable("select ifnull(max(cod_rec),0)+1 as newcod from sol_req_det_rec;");
+                        mQuery = "insert into sol_req_det_rec ( cod_rec,cod_mae,det_mae,cod_usu_rec,fec_rec,flg_sol_req,det_can) VALUES "
+                                + "( " + mnewCod + "," + cod_mae + "," + detalles.get(i).getCod_det() + "," + recibidapor
+                                + ",str_to_date('" + det_fec_cie + "','%d/%m/%Y'),'REQ'," + detalles.get(i).getDet_can_ent() + ");";
+                        acc.dmlSQLvariable(mQuery);
+                        acc.Desconectar();
                     }
+
+                    //******************* Fin Registro de Recibido *********************************
+                    acc.Conectar();
+                    //******************* Insertar Existencias globales *********************************
+                    if ("0".equals(acc.strQuerySQLvariable("select count(cod_pai) as count from bol_exi_pai where cod_pai = " + cod_pai
+                            + " and cod_pie=" + detalles.get(i).getCod_ite() + " and ing_sal = 1;"))) {
+                        mQuery = "insert into bol_exi_pai (cod_pai,cod_pie,ing_sal,det_exi) "
+                                + "values (" + cod_pai + "," + detalles.get(i).getCod_ite() + ",1,"
+                                + detalles.get(i).getDet_can_ent() + ");";
+
+                    } else {
+                        mQuery = "update into bol_exi_pai set det_exi = (det_exi + " + detalles.get(i).getDet_can_ent() + ") where "
+                                + "cod_pai = " + cod_pai + " "
+                                + "and cod_pie = " + detalles.get(i).getCod_ite() + " "
+                                + "and ing_sal = 1;";
+                    }
+                    acc.dmlSQLvariable(mQuery);
+                    //******************* Insertar Pendientes por desalojar *********************************
+                    String mnewpen = acc.strQuerySQLvariable("select ifnull(max(cod_pen),0)+1 as newcod from tbl_pen_ubi;");
+                    mQuery = "insert into tbl_pen_ubi(cod_pen, cod_sol_req, cod_ite, det_can, flg_ing_sal) VALUES( "
+                            + mnewpen + "," + cod_mae + "," + detalles.get(i).getCod_ite() + "," + detalles.get(i).getDet_can_ent() + ",1);";
+                    acc.dmlSQLvariable(mQuery);
+                    // ******************* Borrar Reservas*****************
+                    mQuery = "delete from tbl_res where cod_req =" + cod_mae + "and det_req=" + (i + 1) + ";";
+                    acc.dmlSQLvariable(mQuery);
+                    acc.Desconectar();
 
                     if ("ENTREGADO".equals(detalles.get(i).getDet_sta()) || "CANCELADO".equals(detalles.get(i).getDet_sta())) {
                         contador = contador + 1;

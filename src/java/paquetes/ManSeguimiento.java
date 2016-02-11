@@ -55,7 +55,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
     private String apr_cod_mae, his_cod_mae;
     private String tabindex;
     private Date mfecha, mfecha2;
-    private String aprobador, recibidapor, cod_pai, cod_alt, idbuscar;
+    private String aprobador, recibidapor, cod_pai, cod_alt, idbuscar, destino;
 
     private String nombrereporte, nombreexportar;
     private Map<String, Object> parametros;
@@ -319,6 +319,14 @@ public class ManSeguimiento extends Conexion implements Serializable {
         this.idbuscar = idbuscar;
     }
 
+    public String getDestino() {
+        return destino;
+    }
+
+    public void setDestino(String destino) {
+        this.destino = destino;
+    }
+
     public String getNombrereporte() {
         return nombrereporte;
     }
@@ -364,6 +372,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
         cod_pai = "";
         cod_alt = "";
         idbuscar = "";
+        destino = "0";
         maestrohistoria = new ArrayList<>();
         detalles = new ArrayList<>();
         detallesaprobar = new ArrayList<>();
@@ -412,6 +421,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
         cod_pai = "";
         cod_alt = "";
         idbuscar = "";
+        destino = "0";
         maestrohistoria = new ArrayList<>();
         detalles = new ArrayList<>();
         detallesaprobar = new ArrayList<>();
@@ -987,7 +997,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     }
 
                     //******************* Fin Registro de Recibido *********************************
-                    if ("1".equals(detalles.get(i).getNon_sto())) {
+                    if ("1".equals(detalles.get(i).getNon_sto()) && "1".equals(destino)) {
                         if ("ENTREGADO".equals(detalles.get(i).getDet_sta()) || "ENTREGA PARCIAL".equals(detalles.get(i).getDet_sta())) {
                             acc.Conectar();
                             mNonStock = acc.strQuerySQLvariable("select count(cod_det) as count from sol_det where cod_mae = " + cod_mae + " and non_sto=1;");
@@ -1006,8 +1016,13 @@ public class ManSeguimiento extends Conexion implements Serializable {
                                             + "and cod_pie = " + detalles.get(i).getCod_ite() + " "
                                             + "and ing_sal = 0;";
                                 }
+                                acc.dmlSQLvariable(mQuery);
+                                //******************* Insertar Pendientes por Ubicar *********************************
+                                String mnewpen = acc.strQuerySQLvariable("select ifnull(max(cod_pen),0)+1 as newcod from tbl_pen_ubi;");
+                                mQuery = "insert into tbl_pen_ubi(cod_pen, cod_sol_req, cod_ite, det_can, flg_ing_sal) VALUES( "
+                                        + mnewpen + "," + cod_mae + "," + detalles.get(i).getCod_ite() + "," + detalles.get(i).getDet_can_ent() + ",0);";
+                                acc.dmlSQLvariable(mQuery);
                             }
-                            acc.dmlSQLvariable(mQuery);
 
                             acc.Desconectar();
 

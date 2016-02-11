@@ -1535,19 +1535,24 @@ public class ManListaEquipos implements Serializable {
             mantenimientos = new ArrayList<>();
 
             mQuery = "select mm.cod_lis_equ, mm.cod_man, mm.cod_tip, mm.det_obs, "
-                    + "date_format(mm.fec_ini,'%d/%m/%Y'), "
-                    + "date_format(mm.fec_fin,'%d/%m/%Y'), "
+                    + "date_format(mm.fec_ini,'%d/%m/%Y %H:%i'), "
+                    + "date_format(mm.fec_fin,'%d/%m/%Y %H:%i'), "
                     + "mm.det_sta, mm.cod_usu,tip.nom_tip,"
                     + "case mm.det_sta "
                     + "when 1 then 'PENDIENTE' "
                     + "when 2 then 'CANCELADO' "
                     + "when 3 then 'EN PROCESO' "
                     + "when 4 then 'FINALIZADO' "
-                    + "end as status  "
+                    + "end as status,"
+                    + "'' as dr,"
+                    + "'' as color,"
+                    + "mm.cod_per, per.nom_per,mm.flg_ext "
                     + "from tbl_mae_man as mm "
                     + "left join cat_tip as tip on mm.cod_tip = tip.cod_tip "
-                    + "where mm.det_sta IN (2,4) "
-                    + "and mm.cod_usu = " + cbean.getCod_usu() + " "
+                    + "left join lis_equ as lis on mm.cod_lis_equ = lis.cod_lis_equ "
+                    + "left join cat_per as per on mm.cod_per = per.cod_per "
+                    + "where "
+                    + "mm.det_sta IN (2,4) "
                     + "and mm.cod_lis_equ=" + cod_lis_equ + " "
                     + "order by mm.cod_man;";
             ResultSet resVariable;
@@ -1565,7 +1570,7 @@ public class ManListaEquipos implements Serializable {
                         resVariable.getString(7),
                         resVariable.getString(8),
                         resVariable.getString(9),
-                        resVariable.getString(10),"","","",""
+                        resVariable.getString(10),"","","","",""
                 ));
             }
             mAccesos.Desconectar();

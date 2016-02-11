@@ -4,12 +4,13 @@ import java.io.Serializable;
 
 public class CatMantenimientosGen implements Serializable {
 
-    private String cod_lis_equ, cod_man, det_man, fec_man, cod_ope, det_obs, cod_usu, nomope, nomusu;
+    private String cod_lis_equ, cod_man, det_man, fec_man, cod_ope, det_obs, cod_usu, nomope, nomusu, det_min;
 
     public CatMantenimientosGen() {
     }
 
-    public CatMantenimientosGen(String cod_lis_equ, String cod_man, String det_man, String fec_man, String cod_ope, String det_obs, String cod_usu, String nomope, String nomusu) {
+    public CatMantenimientosGen(String cod_lis_equ, String cod_man, String det_man, String fec_man, 
+            String cod_ope, String det_obs, String cod_usu, String nomope, String nomusu, String det_min) {
         this.cod_lis_equ = cod_lis_equ;
         this.cod_man = cod_man;
         this.det_man = det_man;
@@ -19,6 +20,7 @@ public class CatMantenimientosGen implements Serializable {
         this.cod_usu = cod_usu;
         this.nomope = nomope;
         this.nomusu = nomusu;
+        this.det_min = det_min;
     }
 
     public String getCod_lis_equ() {
@@ -92,5 +94,15 @@ public class CatMantenimientosGen implements Serializable {
     public void setNomusu(String nomusu) {
         this.nomusu = nomusu;
     }
+
+    public String getDet_min() {
+        return det_min;
+    }
+
+    public void setDet_min(String det_min) {
+        this.det_min = det_min;
+    }
+    
+    
 
 }

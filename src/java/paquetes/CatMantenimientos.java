@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class CatMantenimientos implements Serializable {
 
-    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, nomtip, status, datraso, color, cod_per, periodo;
+    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, nomtip, status, datraso, color, cod_per, periodo, flg_ext;
 
     public CatMantenimientos() {
     }
 
-    public CatMantenimientos(String cod_lis_equ, String cod_man, String cod_tip, String det_obs, String fec_ini, String fec_fin, String det_sta, String cod_usu, String nomtip, String status, String datraso, String color, String cod_per, String periodo) {
+    public CatMantenimientos(String cod_lis_equ, String cod_man, String cod_tip, String det_obs, String fec_ini, String fec_fin, String det_sta, String cod_usu, String nomtip, String status, String datraso, String color, String cod_per, String periodo, String flg_ext) {
         this.cod_lis_equ = cod_lis_equ;
         this.cod_man = cod_man;
         this.cod_tip = cod_tip;
@@ -24,6 +24,7 @@ public class CatMantenimientos implements Serializable {
         this.color = color;
         this.cod_per = cod_per;
         this.periodo = periodo;
+        this.flg_ext = flg_ext;
     }
 
     public String getCod_lis_equ() {
@@ -137,5 +138,14 @@ public class CatMantenimientos implements Serializable {
     public void setPeriodo(String periodo) {
         this.periodo = periodo;
     }
+
+    public String getFlg_ext() {
+        return flg_ext;
+    }
+
+    public void setFlg_ext(String flg_ext) {
+        this.flg_ext = flg_ext;
+    }
+    
 
 }
