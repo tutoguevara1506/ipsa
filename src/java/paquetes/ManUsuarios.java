@@ -341,7 +341,7 @@ public class ManUsuarios implements Serializable {
             addMessage("Validar Datos", "Debe Ingresar una Clave.", 2);
         }
         if ("1".equals(cod_usu)) {
-            nom_usu = "ADMIN";
+            nom_usu = "admin";
         } else {
             if ("ADMIN".equals(nom_usu.toUpperCase())) {
                 mValidar = false;

@@ -420,12 +420,6 @@
                         <h:outputText value="Correo" style="font-weight:bold;" />
                         <p:inputText maxlength="50" size="45" value="#{manUsuarios.det_mai}" 
                                      onfocus="this.select()"/>
-                        <h:outputText value="País" style="font-weight:bold;" />
-                        <p:selectOneMenu value="#{manUsuarios.cod_pai}" style=" width: 150px;">
-                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                            <f:selectItems value="#{manUsuarios.paises}" var="mpaiusu"
-                                           itemLabel="#{mpaiusu.nom_pai}" itemValue="#{mpaiusu.cod_pai}"/> 
-                        </p:selectOneMenu>
                         <h:outputText value="Departamento" style="font-weight:bold;" />
                         <p:selectOneMenu value="#{manUsuarios.cod_dep}" style=" width: 150px;">
                             <f:selectItem itemLabel="Ninguno" itemValue="0"/>
@@ -4101,7 +4095,7 @@
                 <p:panel>
                     <h:panelGrid columns="4" cellpadding="5">
                         <h:outputText value="Número Serie" style="font-weight:bold;"/>
-                        <h:outputText value="País" style="font-weight:bold;"/>
+                        <h:outputText value="Proceso" style="font-weight:bold;"/>
                         <h:outputText value="Equipo" style="font-weight:bold;"/>
                         <h:outputText value="Cliente" style="font-weight:bold;"/>
                         <p:inputText size="20"
@@ -4142,7 +4136,7 @@
                                  >
                         <p:ajax event="rowSelect" listener="#{manListaEquipos.onRowSelect}" 
                                 update=":frmSearchLE"/>
-                        <p:column style="width:30px;" headerText="País">
+                        <p:column style="width:30px;" headerText="Proceso">
                             <h:outputText value="#{vSLE.nompai}" />
                         </p:column>
                         <p:column style="width:30px;" headerText="Equipo">
@@ -4745,7 +4739,7 @@
                                 <p:panel>
                                     <h:panelGrid columns="3" cellpadding="5">
                                         <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
-                                        <h:outputText value="Operación" style="font-weight:bold;"/>
+                                        <h:outputText value="Acción" style="font-weight:bold;"/>
                                         <h:outputText value="Realizó" style="font-weight:bold;"/>
                                         <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                                      readonlyInput="true" 
@@ -4813,7 +4807,7 @@
                                     <h:panelGrid columns="3" cellpadding="5">
                                         <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
                                         <h:outputText value="Responsable" style="font-weight:bold;"/>
-                                        <h:outputText value="País" style="font-weight:bold;"/>
+                                        <h:outputText value="Almacén" style="font-weight:bold;"/>
 
                                         <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                                      readonlyInput="true" showOn="button" size="16"

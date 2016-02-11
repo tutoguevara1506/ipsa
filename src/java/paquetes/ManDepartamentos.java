@@ -116,7 +116,7 @@ public class ManDepartamentos implements Serializable {
             departamentos = new ArrayList<>();
 
             String mQuery = "select cod_dep, cod_pai, nom_dep "
-                    + "from cat_dep where cod_pai = " + cod_pai + " order by cod_dep;";
+                    + "from cat_dep order by cod_dep;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();

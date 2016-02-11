@@ -329,7 +329,10 @@ public class ManPersonas implements Serializable {
             catpersonas = new CatPersonas();
             personas = new ArrayList<>();
 
-            mQuery = "select id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, codigo, cod_dep, id_jef, fingreso, id_car, cod_usu from cat_persona order by id_per;";
+            mQuery = "select id_per, nombres, apellidos, direccion, "
+                    + "telefono, celular, email, dui, nit, isss, codigo, "
+                    + "cod_dep, id_jef, fingreso, id_car, cod_usu "
+                    + "from cat_persona order by id_per;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
