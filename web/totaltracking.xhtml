@@ -3743,7 +3743,7 @@
                                     </p:selectOneMenu>
                                     <p:selectOneMenu value="#{manListaEquipos.cod_pai}" 
                                                      style=" width: 150px;">
-                                        <p:ajax event="change" listener="#{manListaEquipos.onPaisChange()}" update="somproequ,somcliequ" />
+                                        <p:ajax event="change" listener="#{manListaEquipos.onPaisChange()}" update="somproequ" />
                                         <f:selectItem itemLabel="Ninguno" itemValue="0"/>
                                         <f:selectItems value="#{manListaEquipos.paises}" var="lstequpai"
                                                        itemLabel="#{lstequpai.nom_pai}" itemValue="#{lstequpai.cod_pai}"/> 
@@ -3758,7 +3758,7 @@
 
                                     <h:outputText value="Modelo" style="font-weight:bold;"/>
                                     <h:outputText value="Serie" style="font-weight:bold;"/>
-                                    <h:outputText value="Descripción" style="font-weight:bold;"/>
+                                    <h:outputText value="Nombre Clave" style="font-weight:bold;"/>
                                     <h:outputText value="Ubicación" style="font-weight:bold;"/>
                                     <p:inputText size="25"
                                                  maxlength="25"

@@ -1130,7 +1130,7 @@ public class ManMaestroMan implements Serializable {
             //-------- Llenar Nodo Paises
             ResultSet resVariable;
 
-            mQuery = "select lis.cod_pai, pai.nom_pai,lis.cod_equ,equ.nom_equ, lis.num_ser "
+            mQuery = "select lis.cod_pai, pai.nom_pai,lis.cod_equ,equ.nom_equ, lis.des_equ "
                     + "FROM lis_equ as lis "
                     + "left join cat_pai as pai on lis.cod_pai = pai.cod_pai "
                     + "left join cat_equ as equ on lis.cod_equ = equ.cod_equ "
@@ -1177,7 +1177,7 @@ public class ManMaestroMan implements Serializable {
                 mQuery = "select cod_lis_equ "
                         + "from lis_equ "
                         + "where "
-                        + "num_ser = " + buscar_serie + ";";
+                        + "des_equ = '" + buscar_serie + "';";
                 cod_lis_equ = mAccesos.strQuerySQLvariable(mQuery);
                 mQuery = "select mm.cod_lis_equ, mm.cod_man, mm.cod_tip, mm.det_obs, "
                         + "date_format(mm.fec_ini,'%d/%m/%Y %H:%i'), "
@@ -1198,7 +1198,7 @@ public class ManMaestroMan implements Serializable {
                         + "left join cat_per as per on mm.cod_per = per.cod_per "
                         + "where "
                         + "mm.det_sta IN (1,3) "
-                        + "and lis.num_ser =" + buscar_serie + " "
+                        + "and lis.des_equ ='" + buscar_serie + "' "
                         + "order by mm.cod_man;";
 
                 ResultSet resVariable;
