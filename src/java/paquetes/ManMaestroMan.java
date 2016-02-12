@@ -30,7 +30,10 @@ import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.UnselectEvent;
+import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.ScheduleEvent;
+import org.primefaces.model.ScheduleModel;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.UploadedFile;
 
@@ -82,7 +85,11 @@ public class ManMaestroMan implements Serializable {
     private List<CatMantenimientosAcc> accesorios;
     private List<CatSolicitudesDetalle> solicitudes;
     private List<CatSolicitudesDetalle> requisiciones;
-
+    private CatCalendario catcalendario;
+    private List<CatCalendario> listaMttos;
+    private ScheduleModel mttoModel;
+    private ScheduleEvent mtto = new DefaultScheduleEvent();
+  
     private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext;
     private String gen_det_man, gen_fec_man, gen_cod_ope, gen_det_obs, gen_cod_usu, gen_det_min;
     private String pie_det_man, pie_fec_man, pie_cod_pai, pie_cod_bod, pie_cod_ubi,
@@ -93,7 +100,7 @@ public class ManMaestroMan implements Serializable {
     private String tabindex, buscar_serie, nompai, nombod, nomubi, cod_gru_fal, cod_fal, mmensaje;
     private Date dfecha1, dfecha2, dfecha3, dfecfinF, dfecini;
     private TreeNode root, selectednode;
-
+    
     private UploadedFile file;
 
     public ManMaestroMan() {
@@ -835,9 +842,42 @@ public class ManMaestroMan implements Serializable {
         this.mmensaje = mmensaje;
     }
 
+    public CatCalendario getCatcalendario() {
+        return catcalendario;
+    }
+
+    public void setCatcalendario(CatCalendario catcalendario) {
+        this.catcalendario = catcalendario;
+    }
+
+    public List<CatCalendario> getListaMttos() {
+        return listaMttos;
+    }
+
+    public void setListaMttos(List<CatCalendario> listaMttos) {
+        this.listaMttos = listaMttos;
+    }
+
+    public ScheduleModel getMttoModel() {
+        return mttoModel;
+    }
+
+    public void setMttoModel(ScheduleModel mttoModel) {
+        this.mttoModel = mttoModel;
+    }
+
+    public ScheduleEvent getMtto() {
+        return mtto;
+    }
+
+    public void setMtto(ScheduleEvent mtto) {
+        this.mtto = mtto;
+    }
+     
+
     public void iniciarventana() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
+        
         dfecha1 = Date.from(Instant.now());
         dfecha2 = Date.from(Instant.now());
         dfecha3 = Date.from(Instant.now());
@@ -1170,8 +1210,8 @@ public class ManMaestroMan implements Serializable {
             anexos = new ArrayList<>();
             catmantenimientos = new CatMantenimientos();
             mantenimientos = new ArrayList<>();
-
-            if (!"".equals(buscar_serie)) {
+                           
+            if (!"".equals(buscar_serie)) {                   
                 Accesos mAccesos = new Accesos();
                 mAccesos.Conectar();
                 mQuery = "select cod_lis_equ "
@@ -1230,7 +1270,7 @@ public class ManMaestroMan implements Serializable {
             System.out.println("Error en el llenado de Mantenimientos Pendientes en ManMaestroMan. " + e.getMessage() + " Query: " + mQuery);
         }
     }
-
+    
     public void llenarGrupoFallas() {
         try {
             grupofallas = new ArrayList<>();
@@ -1489,9 +1529,8 @@ public class ManMaestroMan implements Serializable {
     public void llenarGeneral() {
         String mQuery = "";
         try {
-            catmantenimientosgen = new CatMantenimientosGen();
-            general = new ArrayList<>();
-
+           catmantenimientosgen = new CatMantenimientosGen();
+            general = new ArrayList<>();            
             mQuery = "select gen.cod_lis_equ,gen.cod_man,gen.det_man,"
                     + "date_format(gen.fec_man,'%d/%m/%Y %H:%i'),"
                     + "gen.cod_ope,gen.det_obs,"
@@ -3527,6 +3566,19 @@ public class ManMaestroMan implements Serializable {
 
     public void onRowUnselect(UnselectEvent event) {
         detalles = new ArrayList<>();
+    }
+    
+    public void onEventSelect(SelectEvent selectEvent) {
+       
+        ScheduleEvent smtto = (ScheduleEvent) selectEvent.getObject();
+               
+         for (CatCalendario cm : listaMttos){
+             if (cm.getCod_man() == smtto.getData()){
+                 catcalendario = cm;
+                 buscar_serie = catcalendario.getNum_ser();
+                 break;
+             }         
+         }        
     }
 
 }

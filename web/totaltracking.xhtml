@@ -6343,7 +6343,7 @@
         <h:form id="frmCalend">
             <p:growl id="messages" showDetail="true" />
                <p:schedule id="schedule" value="#{schMantenimiento.mttoModel}" widgetVar="myschedule" timeZone="GMT+2" locale="es">
-                    <p:ajax event="eventSelect" listener="#{schMantenimiento.onEventSelect}" update="eventDetails" oncomplete="PF('dlgMaestraMan').show();" />
+                   <p:ajax event="eventSelect" listener="#{manMaestroMan.onEventSelect}" update="frmMaestra" oncomplete="PF('wMaestra').show();" />
                     <p:ajax event="eventMove" listener="#{schMantenimiento.onEventMove}" update="messages" />
                     <p:ajax event="eventResize" listener="#{schMantenimiento.onEventResize}" update="messages" />
              </p:schedule>

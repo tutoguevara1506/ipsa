@@ -29,6 +29,7 @@ public class SchMantenimiento implements Serializable {
     private List<CatCalendario> listaMttos;
     private ScheduleModel mttoModel;
     private ScheduleEvent mtto = new DefaultScheduleEvent();
+    public String buscar_serie;
  
     public CatCalendario getCatcalendario() {
         return catcalendario;
@@ -53,11 +54,20 @@ public class SchMantenimiento implements Serializable {
     public void setMttoModel(ScheduleModel mttoModel) {
         this.mttoModel = mttoModel;
     }
+
+    public String getBuscar_serie() {
+        return buscar_serie;
+    }
+
+    public void setBuscar_serie(String buscar_serie) {
+        this.buscar_serie = buscar_serie;
+    }
+    
     
     @PostConstruct
     public void init() {
         catcalendario = new CatCalendario();
-        mttoModel = new DefaultScheduleModel();
+        mttoModel = new DefaultScheduleModel();       
         llenarMantenimientos();
         	      
         for (CatCalendario cm : listaMttos){
@@ -96,7 +106,7 @@ public class SchMantenimiento implements Serializable {
             listaMttos = new ArrayList<>();
 
             mQuery = "select tbl_mae_man.cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, "
-                    + "det_sta, cod_usu, des_equ from tbl_mae_man inner join lis_equ on "
+                    + "det_sta, cod_usu, des_equ, num_ser from tbl_mae_man inner join lis_equ on "
                     + "tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ " 
                     + "order by cod_man;";
             
@@ -114,7 +124,8 @@ public class SchMantenimiento implements Serializable {
                         resVariable.getDate(6),
                         resVariable.getString(7),
                         resVariable.getString(8),
-                        resVariable.getString(9)
+                        resVariable.getString(9),
+                        resVariable.getString(10)
                 ));
             }
             mAccesos.Desconectar();
@@ -216,7 +227,8 @@ public class SchMantenimiento implements Serializable {
                
          for (CatCalendario cm : listaMttos){
              if (cm.getCod_man() == smtto.getData()){
-                 catcalendario = cm;                
+                 catcalendario = cm;
+                 buscar_serie = catcalendario.getNum_ser();
                  break;
              }         
          }        
