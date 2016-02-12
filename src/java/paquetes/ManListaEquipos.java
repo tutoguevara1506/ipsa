@@ -1188,7 +1188,7 @@ public class ManListaEquipos implements Serializable {
                 mAccesos.dmlSQLvariable(mQuery);
                 for (int i = 0; i < sistemas.size(); i++) {
                     mvalores = mvalores + "," + "("
-                            + sistemas.get(i).getCod_lis_equ() + ","
+                            + cod_lis_equ + ","
                             + (i + 1) + ",'"
                             + sistemas.get(i).getDet_obs() + "','"
                             + sistemas.get(i).getVer_ant() + "','"
@@ -1196,9 +1196,11 @@ public class ManListaEquipos implements Serializable {
                             + sistemas.get(i).getFec_act() + "','%d/%m/%Y')"
                             + ")";
                 }
-                mvalores = mvalores.substring(1);
-                mQuery = " insert into tbl_sys (cod_lis_equ,cod_sys,det_obs,ver_ant,ver_act,fec_act) values " + mvalores + ";";
-                mAccesos.dmlSQLvariable(mQuery);
+                if (!"".equals(mvalores)) {
+                    mvalores = mvalores.substring(1);
+                    mQuery = " insert into tbl_sys (cod_lis_equ,cod_sys,det_obs,ver_ant,ver_act,fec_act) values " + mvalores + ";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                }
 
                 // ********************** Contratos ****************************************
                 mQuery = "delete from tbl_con where cod_lis_equ=" + cod_lis_equ + ";";
@@ -1207,7 +1209,7 @@ public class ManListaEquipos implements Serializable {
                 mvalores = "";
                 for (int i = 0; i < contratos.size(); i++) {
                     mvalores = mvalores + "," + "("
-                            + contratos.get(i).getCod_lis_equ() + ","
+                            + cod_lis_equ + ","
                             + (i + 1) + ",'"
                             + contratos.get(i).getCod_ref() + "','"
                             + contratos.get(i).getDes_inf() + "', str_to_date('"
@@ -1215,9 +1217,11 @@ public class ManListaEquipos implements Serializable {
                             + contratos.get(i).getFec_exp() + "','%d/%m/%Y')"
                             + ")";
                 }
-                mvalores = mvalores.substring(1);
-                mQuery = " insert into tbl_con (cod_lis_equ,cod_con,cod_ref,des_inf,fec_con,fec_exp) values " + mvalores + ";";
-                mAccesos.dmlSQLvariable(mQuery);
+                if (!"".equals(mvalores)) {
+                    mvalores = mvalores.substring(1);
+                    mQuery = " insert into tbl_con (cod_lis_equ,cod_con,cod_ref,des_inf,fec_con,fec_exp) values " + mvalores + ";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                }
 
                 mAccesos.Desconectar();
                 addMessage("Guardar Lista Equipos", "Información Almacenada con éxito.", 1);
@@ -1570,7 +1574,7 @@ public class ManListaEquipos implements Serializable {
                         resVariable.getString(7),
                         resVariable.getString(8),
                         resVariable.getString(9),
-                        resVariable.getString(10),"","","","",""
+                        resVariable.getString(10), "", "", "", "", ""
                 ));
             }
             mAccesos.Desconectar();
