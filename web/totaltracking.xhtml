@@ -102,7 +102,7 @@
                                 id="menuControlMtto"
                                 onclick="PF('wCalend').show()"
                                 update=":frmCalend"
-                                actionListener="#{manUsuarios.iniciarventana()}"
+                                actionListener="#{manMaestroMan.iniciarventana()}"
                                 style="width: 190px;"
                                 disabled="#{manSeguridad.disableOpt('menuCalendMtto')}"
                                 />
@@ -6342,38 +6342,11 @@
 
         <h:form id="frmCalend">
             <p:growl id="messages" showDetail="true" />
-               <p:schedule id="schedule" value="#{schMantenimiento.mttoModel}" widgetVar="myschedule" timeZone="GMT+2" locale="es">
+               <p:schedule id="schedule" value="#{manMaestroMan.mttoModel}" widgetVar="myschedule" timeZone="GMT+2" locale="es">
                    <p:ajax event="eventSelect" listener="#{manMaestroMan.onEventSelect}" update="frmMaestra" oncomplete="PF('wMaestra').show();" />
-                    <p:ajax event="eventMove" listener="#{schMantenimiento.onEventMove}" update="messages" />
-                    <p:ajax event="eventResize" listener="#{schMantenimiento.onEventResize}" update="messages" />
+                    <p:ajax event="eventMove" listener="#{manMaestroMan.onEventMove}" update="messages" />
+                    <p:ajax event="eventResize" listener="#{manMaestroMan.onEventResize}" update="messages" />
              </p:schedule>
- 
-            <p:dialog widgetVar="eventDialog" header="Detalle de mantenimiento" showEffect="clip" hideEffect="clip">
-            <h:panelGrid id="eventDetails" columns="2">
-                <p:outputLabel  value="Titulo:" />
-                <p:inputText value="#{schMantenimiento.catcalendario.des_equ}" disabled="true"/>
-                <p:outputLabel  value="Desde:" />
-                <p:calendar value="#{schMantenimiento.catcalendario.fec_ini}" locale="es" 
-                            showOn="button" 
-                            size="25" pattern="dd/MM/yyyy HH:mm"/>
- 
-                <p:outputLabel value="Hasta:" />
-                <p:calendar value="#{schMantenimiento.catcalendario.fec_fin}" locale="es" 
-                            showOn="button" 
-                            size="25" pattern="dd/MM/yyyy HH:mm"/>
-                
-                <p:outputLabel value="Observaciones:" />
-                <p:inputTextarea value="#{schMantenimiento.catcalendario.det_obs}" 
-                                 rows="3" cols="30" counter="display" maxlength="200" 
-                                 counterTemplate="{0} characters remaining." autoResize="false"/>
-                
-                <p:commandButton id="addButton" value="Guardar" 
-                                 actionListener="#{schMantenimiento.actualizar()}" 
-                                 oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
-                <h:outputText id="display" />
-            </h:panelGrid>
-            
-        </p:dialog>    
         </h:form>
     </p:dialog>
            

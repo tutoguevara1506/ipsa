@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -27,10 +28,13 @@ import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.NodeSelectEvent;
+import org.primefaces.event.ScheduleEntryMoveEvent;
+import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
+import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
@@ -105,6 +109,41 @@ public class ManMaestroMan implements Serializable {
 
     public ManMaestroMan() {
     }
+    
+    @PostConstruct
+    public void init() {
+        catcalendario = new CatCalendario();
+        mttoModel = new DefaultScheduleModel();       
+        llenarMttosCalendario();
+        	      
+        for (CatCalendario cm : listaMttos){
+            DefaultScheduleEvent cmt = new DefaultScheduleEvent();
+            cmt.setId(cm.getCod_man());
+            cmt.setDescription(cm.getDet_obs());
+            cmt.setTitle(cm.getDes_equ());
+            cmt.setData(cm.getCod_man());
+            cmt.setAllDay(true);
+            cmt.setEditable(true);
+            cmt.setStartDate(cm.getFec_ini());
+            if (cm.getFec_fin()== null)
+                cm.setFec_fin(cm.getFec_ini());
+            
+            cmt.setEndDate(cm.getFec_fin());
+            
+            if("1".equals(cm.getDet_sta())){
+                cmt.setStyleClass("mtto1");
+            } else if ("2".equals(cm.getDet_sta())){
+                cmt.setStyleClass("mtto2");
+            } else if ("3".equals(cm.getDet_sta())){
+                cmt.setStyleClass("mtto3");
+            } else {
+                cmt.setStyleClass("mtto4");
+            }
+                        
+            mttoModel.addEvent(cmt);
+  
+        }
+    }    
 
     public List<CatGrupoFallas> getGrupofallas() {
         return grupofallas;
@@ -3576,9 +3615,86 @@ public class ManMaestroMan implements Serializable {
              if (cm.getCod_man() == smtto.getData()){
                  catcalendario = cm;
                  buscar_serie = catcalendario.getNum_ser();
+                 llenarMantenimientos();
                  break;
              }         
          }        
+    }
+    
+     public void llenarMttosCalendario() {
+        String mQuery = "";
+        try {
+            catcalendario = new CatCalendario();
+            listaMttos = new ArrayList<>();
+
+            mQuery = "select tbl_mae_man.cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, "
+                    + "det_sta, cod_usu, des_equ, num_ser from tbl_mae_man inner join lis_equ on "
+                    + "tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ " 
+                    + "order by cod_man;";
+            
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                listaMttos.add(new CatCalendario(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getDate(5),
+                        resVariable.getDate(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Calendarización. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+    
+    public void actualizar() {
+        String mQuery = "";
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        
+        Accesos mAccesos = new Accesos();
+        mAccesos.Conectar();
+
+        mQuery = "update tbl_mae_man SET "
+                + " fec_ini = '" + fmt.format(catcalendario.getFec_ini()) + "', "
+                + " fec_fin = '" + fmt.format(catcalendario.getFec_fin()) + "' "
+                + "WHERE cod_man = " + catcalendario.getCod_man() + " AND cod_lis_equ = '"+ catcalendario.getCod_lis_equ() +"';";
+                        
+        mAccesos.dmlSQLvariable(mQuery);
+        mAccesos.Desconectar();
+        addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);
+        init();
+    }
+    
+    public void onEventMove(ScheduleEntryMoveEvent mttoMove) {
+              
+        for (CatCalendario cm : listaMttos){
+             if (cm.getCod_man() == mttoMove.getScheduleEvent().getData()){
+                 catcalendario = cm; 
+                 actualizar();
+                 break;
+             }         
+         }    
+        
+    }
+     
+    public void onEventResize(ScheduleEntryResizeEvent mttoResize) {
+        for (CatCalendario cm : listaMttos){
+             if (cm.getCod_man() == mttoResize.getScheduleEvent().getData()){
+                 catcalendario = cm; 
+                 actualizar();
+                 break;
+             }         
+         }   
     }
 
 }
