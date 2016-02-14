@@ -19,7 +19,7 @@ public class AlertSchedule {
 
     private final Logger log = Logger.getLogger(getClass().getName());
 
-    @Schedule(hour = "9", dayOfWeek = "*", persistent=false , info = "Todos los dias a las 9:00")
+    @Schedule(hour = "*", dayOfWeek = "*", persistent=false , info = "Todos los dias a las 9:00")
     //@Schedule(second = "*", minute = "*/5", hour = "*", info = "cada 5 minutos")
 
     public void performTask() throws EmailException {
