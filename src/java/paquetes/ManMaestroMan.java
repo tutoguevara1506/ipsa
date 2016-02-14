@@ -1245,6 +1245,8 @@ public class ManMaestroMan implements Serializable {
             general = new ArrayList<>();
             catmantenimientospie = new CatMantenimientosPie();
             piezas = new ArrayList<>();
+            catmantenimientosacc = new CatMantenimientosAcc();
+            accesorios = new ArrayList<>();
             catmantenimientosane = new CatMantenimientosAne();
             anexos = new ArrayList<>();
             catmantenimientos = new CatMantenimientos();

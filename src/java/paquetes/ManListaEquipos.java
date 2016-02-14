@@ -1599,7 +1599,7 @@ public class ManListaEquipos implements Serializable {
                 mAnexo = mAnexo + " and lequ.cod_pai =" + cod_pai_b;
             }
             if (!"".equals(num_ser_b)) {
-                mAnexo = mAnexo + " and lequ.num_ser =" + num_ser_b;
+                mAnexo = mAnexo + " and lequ.num_ser ='" + num_ser_b+ "'";
             }
 
             String mQuery = "select lequ.cod_lis_equ, lequ.cod_pai, lequ.cod_equ, lequ.cod_pro, "
