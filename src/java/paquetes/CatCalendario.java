@@ -5,13 +5,13 @@ import java.util.Date;
 
 public class CatCalendario implements Serializable {
 
-    private String cod_lis_equ, cod_man, cod_tip, det_obs, det_sta, cod_usu, des_equ, num_ser;
+    private String cod_lis_equ, cod_man, cod_tip, det_obs, det_sta, cod_usu, des_equ;
     private Date fec_ini, fec_fin;
 
     public CatCalendario() {
     }
 
-    public CatCalendario(String cod_lis_equ, String cod_man, String cod_tip, String det_obs, Date fec_ini, Date fec_fin, String det_sta, String cod_usu, String des_equ, String num_ser) {
+    public CatCalendario(String cod_lis_equ, String cod_man, String cod_tip, String det_obs, Date fec_ini, Date fec_fin, String det_sta, String cod_usu, String des_equ) {
         this.cod_lis_equ = cod_lis_equ;
         this.cod_man = cod_man;
         this.cod_tip = cod_tip;
@@ -21,7 +21,6 @@ public class CatCalendario implements Serializable {
         this.det_sta = det_sta;
         this.cod_usu = cod_usu;
         this.des_equ = des_equ;
-        this.num_ser = num_ser;
     }
 
     public String getCod_lis_equ() {
@@ -95,12 +94,4 @@ public class CatCalendario implements Serializable {
     public void setDes_equ(String des_equ) {
         this.des_equ = des_equ;
     }    
-
-    public String getNum_ser() {
-        return num_ser;
-    }
-
-    public void setNum_ser(String num_ser) {
-        this.num_ser = num_ser;
-    }
 }

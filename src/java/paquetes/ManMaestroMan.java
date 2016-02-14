@@ -3614,7 +3614,7 @@ public class ManMaestroMan implements Serializable {
          for (CatCalendario cm : listaMttos){
              if (cm.getCod_man() == smtto.getData()){
                  catcalendario = cm;
-                 buscar_serie = catcalendario.getNum_ser();
+                 buscar_serie = catcalendario.getDes_equ();
                  llenarMantenimientos();
                  break;
              }         
@@ -3628,7 +3628,7 @@ public class ManMaestroMan implements Serializable {
             listaMttos = new ArrayList<>();
 
             mQuery = "select tbl_mae_man.cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, "
-                    + "det_sta, cod_usu, des_equ, num_ser from tbl_mae_man inner join lis_equ on "
+                    + "det_sta, cod_usu, des_equ from tbl_mae_man inner join lis_equ on "
                     + "tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ " 
                     + "order by cod_man;";
             
@@ -3646,8 +3646,7 @@ public class ManMaestroMan implements Serializable {
                         resVariable.getDate(6),
                         resVariable.getString(7),
                         resVariable.getString(8),
-                        resVariable.getString(9),
-                        resVariable.getString(10)
+                        resVariable.getString(9)
                 ));
             }
             mAccesos.Desconectar();
