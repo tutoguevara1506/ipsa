@@ -18,8 +18,17 @@ import org.jboss.logging.Logger;
 public class AlertSchedule {
 
     private final Logger log = Logger.getLogger(getClass().getName());
+    String correos = "rramirezech@hotmail.com, tutoguevara1506@gmail.com";
 
-    @Schedule(hour = "*", dayOfWeek = "*", persistent=false , info = "Todos los dias a las 9:00")
+    public String getCorreos() {
+        return correos;
+    }
+
+    public void setCorreos(String correos) {
+        this.correos = correos;
+    }
+    
+    @Schedule(hour = "*", dayOfWeek = "*", persistent=false , info = "Todos los dias cada hora")
     //@Schedule(second = "*", minute = "*/5", hour = "*", info = "cada 5 minutos")
 
     public void performTask() throws EmailException {
@@ -35,8 +44,8 @@ public class AlertSchedule {
         email.setSSLOnConnect(true);
         email.setFrom("rramirezech@gmail.com");
         email.setSubject("Correo de Prueba");
-        email.setMsg("Este es un correo de prueba");
-        email.addTo("rramirezech@hotmail.com");
+        email.setMsg("Este es un correo de prueba desde el servidor Web, lo he puesto frecuente para probarlo bien, en un par de dias lo pondre para que funcione solo una vez al dia");
+        email.addTo(correos);
         email.send();
 
         try {
