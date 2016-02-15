@@ -26,7 +26,7 @@ public class ManUsuarios implements Serializable {
     private CatPaises catpaises;
     private List<CatPaises> paises;
 
-    private String cod_usu, nom_usu, des_pas, tip_usu, cod_pai, cod_dep, det_nom, det_mai;
+    private String cod_usu, nom_usu, des_pas, tip_usu, cod_dep, det_nom, det_mai, nomdep;
 
     public ManUsuarios() {
     }
@@ -111,14 +111,6 @@ public class ManUsuarios implements Serializable {
         this.tip_usu = tip_usu;
     }
 
-    public String getCod_pai() {
-        return cod_pai;
-    }
-
-    public void setCod_pai(String cod_pai) {
-        this.cod_pai = cod_pai;
-    }
-
     public String getCod_dep() {
         return cod_dep;
     }
@@ -143,18 +135,25 @@ public class ManUsuarios implements Serializable {
         this.det_mai = det_mai;
     }
 
+    public String getNomdep() {
+        return nomdep;
+    }
+
+    public void setNomdep(String nomdep) {
+        this.nomdep = nomdep;
+    }
+    
     public void iniciarventana() {
         cod_usu = "";
         nom_usu = "";
         des_pas = "";
         tip_usu = "";
-        cod_pai = "";
         cod_dep = "";
         det_nom = "";
         det_mai = "";
+        nomdep = "";
         llenarUsuarios();
         llenarDepartamentos();
-        llenarPaises();
         if (Integer.valueOf(mbMain.getPerfil()) < 5) {
             RequestContext.getCurrentInstance().execute("PF('wUsuarios').hide()");
             addMessage("Error de Validación", "Usuario sin Privilegios de Administración.", 2);
@@ -166,10 +165,10 @@ public class ManUsuarios implements Serializable {
         nom_usu = "";
         des_pas = "";
         tip_usu = "";
-        cod_pai = "";
         cod_dep = "";
         det_nom = "";
         det_mai = "";
+        nomdep = "";
         usuarios = new ArrayList<>();
     }
 
@@ -197,39 +196,15 @@ public class ManUsuarios implements Serializable {
         }
     }
 
-    public void llenarPaises() {
-        try {
-            paises = new ArrayList<>();
-
-            String mQuery = "select cod_pai, nom_pai "
-                    + "from cat_pai order by cod_pai;";
-            ResultSet resVariable;
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            resVariable = mAccesos.querySQLvariable(mQuery);
-            while (resVariable.next()) {
-                paises.add(new CatPaises(
-                        resVariable.getString(1),
-                        resVariable.getString(2)
-                ));
-            }
-            mAccesos.Desconectar();
-
-        } catch (Exception e) {
-            System.out.println("Error en el llenado Paises en Catálogo de Usuarios. " + e.getMessage());
-        }
-    }
-
     public void llenarUsuarios() {
         try {
             catusuarios = new CatUsuarios();
             usuarios = new ArrayList<>();
 
             String mQuery = "select usu.cod_usu, usu.nom_usu, usu.des_pas, usu.tip_usu, usu.cod_pai, "
-                    + "usu.cod_dep, usu.det_nom, usu.det_mai,ifnull(pai.nom_pai,'') as nom_pai, ifnull(dep.nom_dep,'') as nom_dep "
+                    + "usu.cod_dep, usu.det_nom, usu.det_mai, ifnull(usu.cod_pai,'') as cod_pai, ifnull(dep.nom_dep,'') as nomdep "
                     + "from cat_usu as usu "
-                    + "left join cat_dep as dep on usu.cod_dep = dep.cod_dep and usu.cod_pai = dep.cod_pai "
-                    + "left join cat_pai as pai on usu.cod_pai = pai.cod_pai order by cod_usu;";
+                    + "left join cat_dep as dep on usu.cod_dep = dep.cod_dep order by cod_usu;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -245,7 +220,7 @@ public class ManUsuarios implements Serializable {
                         resVariable.getString(7),
                         resVariable.getString(8),
                         resVariable.getString(9),
-                        resVariable.getString(10)
+                        resVariable.getString(10)                         
                 ));
             }
             mAccesos.Desconectar();
@@ -260,10 +235,10 @@ public class ManUsuarios implements Serializable {
         nom_usu = "";
         des_pas = "";
         tip_usu = "";
-        cod_pai = "";
         cod_dep = "";
         det_nom = "";
         det_mai = "";
+        nomdep ="";
     }
 
     public void guardar() {
@@ -275,15 +250,14 @@ public class ManUsuarios implements Serializable {
                 if ("".equals(cod_usu)) {
                     mQuery = "select ifnull(max(cod_usu),0)+1 as codigo from cat_usu;";
                     cod_usu = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into cat_usu (cod_usu, nom_usu, des_pas, tip_usu, cod_pai, cod_dep, det_nom,det_mai) "
+                    mQuery = "insert into cat_usu (cod_usu, nom_usu, des_pas, tip_usu, cod_dep, det_nom,det_mai) "
                             + "values (" + cod_usu + ",'" + nom_usu + "','" + des_pas + "'," + tip_usu
-                            + "," + cod_pai + "," + cod_dep + ",'" + det_nom + "','" + det_mai + "');";
+                            + "," + cod_dep + ",'" + det_nom + "','" + det_mai + "');";
                 } else {
                     mQuery = "update cat_usu SET "
                             + " nom_usu = '" + nom_usu + "' "
                             + ",des_pas = '" + des_pas + "' "
                             + ",tip_usu = '" + tip_usu + "' "
-                            + ",cod_pai = " + cod_pai + " "
                             + ",cod_dep = " + cod_dep + " "
                             + ",det_nom = '" + det_nom + "' "
                             + ",det_mai = '" + det_mai + "' "
@@ -357,7 +331,6 @@ public class ManUsuarios implements Serializable {
         nom_usu = ((CatUsuarios) event.getObject()).getNom_usu();
         des_pas = ((CatUsuarios) event.getObject()).getDes_pas();
         tip_usu = ((CatUsuarios) event.getObject()).getTip_usu();
-        cod_pai = ((CatUsuarios) event.getObject()).getCod_pai();
         cod_dep = ((CatUsuarios) event.getObject()).getCod_dep();
         det_nom = ((CatUsuarios) event.getObject()).getDet_nom();
         det_mai = ((CatUsuarios) event.getObject()).getDet_mai();
