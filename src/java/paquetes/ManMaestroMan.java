@@ -3673,7 +3673,6 @@ public class ManMaestroMan implements Serializable {
         mAccesos.dmlSQLvariable(mQuery);
         mAccesos.Desconectar();
         addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);
-        init();
     }
     
     public void onEventMove(ScheduleEntryMoveEvent mttoMove) {
