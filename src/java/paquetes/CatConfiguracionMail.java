@@ -5,19 +5,19 @@ import java.io.Serializable;
 
 public class CatConfiguracionMail implements Serializable{
     
-    private String id_conf_mail, des_conf_mail, hostname, smtp_port, user, pass,  mailfrom;
+    private String id_conf_mail, des_conf_mail, hostname, smtp_port, user, pass,  remitente;
 
     public CatConfiguracionMail() {
     }
 
-    public CatConfiguracionMail(String id_conf_mail, String des_conf_mail, String hostname, String smtp_port, String user, String pass, String mailfrom) {
+    public CatConfiguracionMail(String id_conf_mail, String des_conf_mail, String hostname, String smtp_port, String user, String pass, String remitente) {
         this.id_conf_mail = id_conf_mail;
         this.des_conf_mail = des_conf_mail;
         this.hostname = hostname;
         this.smtp_port = smtp_port;
         this.user = user;
         this.pass = pass;
-        this.mailfrom = mailfrom;
+        this.remitente = remitente;
     }
 
     public String getId_conf_mail() {
@@ -68,12 +68,12 @@ public class CatConfiguracionMail implements Serializable{
         this.pass = pass;
     }
 
-    public String getMailfrom() {
-        return mailfrom;
+    public String getRemitente() {
+        return remitente;
     }
 
-    public void setMailfrom(String mailfrom) {
-        this.mailfrom = mailfrom;
+    public void setRemitente(String remitente) {
+        this.remitente = remitente;
     }
    
 }
