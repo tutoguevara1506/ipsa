@@ -1301,7 +1301,10 @@ public class ManMaestroMan implements Serializable {
                             resVariable.getString(12),
                             resVariable.getString(13),
                             resVariable.getString(14),
-                            resVariable.getString(15)
+                            resVariable.getString(15),
+                            resVariable.getString(16),
+                            resVariable.getString(17),
+                            resVariable.getString(18)
                     ));
 
                 }

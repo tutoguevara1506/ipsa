@@ -4702,12 +4702,14 @@
 
                             <f:facet name="header">
                                 <p:outputPanel style=" text-align: right;">
-
-                                    <h:outputText value="Filtrar:&nbsp;&nbsp;" />
-                                    <p:inputText id="globalFilter" 
-                                                 onkeyup="PF('wvEncMan').filter()" 
-                                                 style="width:80px;" 
-                                                 placeholder="Id"/>
+                                    <h:panelGroup>
+                                        <h:outputText value="F-MAN-004 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
+                                        <h:outputText value="Filtrar:&nbsp;&nbsp;" />
+                                        <p:inputText id="globalFilter" 
+                                                     onkeyup="PF('wvEncMan').filter()" 
+                                                     style="width:80px;" 
+                                                     placeholder="Id"/>
+                                    </h:panelGroup>
 
                                 </p:outputPanel>
                             </f:facet>
@@ -5042,7 +5044,7 @@
 
         <p:dialog  id="dlgMaestraNew" widgetVar="wMaestraNew" modal="true" 
                    width="760" height="480" closable="false" resizable="false" 
-                   header="Datos Generales del Mantenimiento" rendered="true" 
+                   header="Datos Generales del Mantenimiento          F-MAN-004" rendered="true" 
                    dynamic="false" visible="false" 
                    >
             <h:form id="frmMaestraNew" >
@@ -5113,7 +5115,7 @@
                         </p:selectOneMenu>
                     </h:panelGrid>
                     <h:panelGrid columns="1" cellpadding="5">
-                        <h:outputText value="Observaciones" style="font-weight:bold;"/>
+                        <h:outputText value="Detalle de falla" style="font-weight:bold;"/>
                         <p:inputTextarea cols="102" rows="2"
                                          maxlength="200"
                                          value="#{manMaestroMan.det_obs}"
