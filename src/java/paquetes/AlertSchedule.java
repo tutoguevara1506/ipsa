@@ -21,8 +21,8 @@ public class AlertSchedule {
     private final Logger log = Logger.getLogger(getClass().getName());
     private String hostname, smtp_port, user, pass, remitente;
         
-    @Schedule(hour = "*", dayOfWeek = "*", persistent= false, info = "Todos los dias cada hora server")
-    //@Schedule(second = "*", minute = "*/2", hour = "*", info = "cada 2 minutos")
+    @Schedule(hour = "*", dayOfWeek = "*", info = "Todos los dias cada hora server")
+    //@Schedule(second = "*", minute = "*/10", hour = "*", persistent= true, info = "cada 2 minutos")
 
     public void performTask() throws EmailException {
 
@@ -40,7 +40,7 @@ public class AlertSchedule {
         email.setSubject("Correo de Prueba");
         email.setMsg("Este es un correo de prueba desde mi entorno con variables");
         
-        String[] recipients = {"rramirezech@hotmail.com", "tutoguevara1506@gmail.com"};
+        String[] recipients = {"rramirezech@hotmail.com"};
 
         for (int i = 0; i < recipients.length; i++)
         {
