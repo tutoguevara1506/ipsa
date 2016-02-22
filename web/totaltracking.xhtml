@@ -5066,23 +5066,22 @@
                 </p:toolbar>
                 <p:panel>
                     <h:panelGrid columns="4" cellpadding="5">
-                        <h:outputText value="Fecha " style="font-weight:bold;"/>
+                        <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
                         <h:outputText value="Departamento" style="font-weight:bold;"/>
                         <h:outputText value="Externo" style="font-weight:bold;"/>
                         <h:outputText value="Tipo" style="font-weight:bold;"/>
-                        <h:outputText value="Fecha Fin" style="font-weight:bold;"/>
                         <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                      readonlyInput="true" showOn="button" 
                                      size="16"
                                      value="#{manMaestroMan.dfecini}"
                                      >
                             <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezado}" />
-                        </p:calendar
-                        <p:selectOneMenu value="#{manMaestroMan.cod_tip}" 
-                                         style=" width: 120px;">
+                        </p:calendar>
+                        <p:selectOneMenu value="#{manMaestroMan.cod_dep}" 
+                                         style=" width: 160px;">
                             <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                            <f:selectItems value="#{manMaestroMan.tipos}" var="tipmanman"
-                                           itemLabel="#{tipmanman.nom_tip}" itemValue="#{tipmanman.cod_tip}"/> 
+                            <f:selectItems value="#{manMaestroMan.departamentos}" var="depmaeman"
+                                           itemLabel="#{depmaeman.nom_dep}" itemValue="#{depmaeman.cod_dep}"/> 
                         </p:selectOneMenu>
                         <p:selectOneMenu value="#{manMaestroMan.flg_ext}" 
                                          style=" width: 120px;">
@@ -5097,18 +5096,12 @@
                                            itemLabel="#{tipmanman.nom_tip}" itemValue="#{tipmanman.cod_tip}"/> 
                         </p:selectOneMenu>
                         
-                        <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
-                                     readonlyInput="true" showOn="button" 
-                                     size="16"
-                                     value="#{manMaestroMan.dfecfinF}"
-                                     >
-                            <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezadoFin}" />
-                        </p:calendar>
                     </h:panelGrid>
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputText value="Responsable" style="font-weight:bold;"/>
+                    <h:panelGrid columns="4" cellpadding="5">
+                        <h:outputText value="Supervisor" style="font-weight:bold;"/>
                         <h:outputText value="Periodicidad" style="font-weight:bold;"/>
-
+                        <h:outputText value="Turno" style="font-weight:bold;"/>
+                        <h:outputText value="Prioridad" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manMaestroMan.cod_usu}" 
                                          style=" width: 200px;">
                             <f:selectItem itemLabel="Ninguno" itemValue="0"/>
@@ -5121,6 +5114,13 @@
                             <f:selectItems value="#{manMaestroMan.periodos}" var="permanman"
                                            itemLabel="#{permanman.nom_per}" itemValue="#{permanman.cod_per}"/> 
                         </p:selectOneMenu>
+                        <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
+                                     readonlyInput="true" showOn="button" 
+                                     size="16"
+                                     value="#{manMaestroMan.dfecfinF}"
+                                     >
+                            <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezadoFin}" />
+                        </p:calendar>
                     </h:panelGrid>
                     <h:panelGrid columns="1" cellpadding="5">
                         <h:outputText value="Detalle de falla" style="font-weight:bold;"/>
