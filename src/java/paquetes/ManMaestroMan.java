@@ -96,7 +96,7 @@ public class ManMaestroMan implements Serializable {
     private ScheduleModel mttoModel;
     private ScheduleEvent mtto = new DefaultScheduleEvent();
   
-    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_sup, turno, prioridad, cod_dep;;
+    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_sup, turno, cod_pri, cod_dep;;
     private String gen_det_man, gen_fec_man, gen_cod_ope, gen_det_obs, gen_cod_usu, gen_det_min;
     private String pie_det_man, pie_fec_man, pie_cod_pai, pie_cod_bod, pie_cod_ubi,
             pie_det_can, pie_cod_pie, pie_num_ser, pie_cod_usu;
@@ -947,12 +947,12 @@ public class ManMaestroMan implements Serializable {
         this.turno = turno;
     }
 
-    public String getPrioridad() {
-        return prioridad;
+    public String getCod_pri() {
+        return cod_pri;
     }
 
-    public void setPrioridad(String prioridad) {
-        this.prioridad = prioridad;
+    public void setCodPri(String cod_pri) {
+        this.cod_pri = cod_pri;
     }
 
     public String getCod_dep() {
@@ -979,12 +979,12 @@ public class ManMaestroMan implements Serializable {
         fec_ini = format.format(dfecha1);
         fec_fin = format.format(dfecha1);
         det_sta = "";
-        cod_usu = cbean.getCod_usu();
+        cod_usu = "0";
         cod_per = "0";
         flg_ext = "0";
-        cod_sup = "0";
+        cod_sup = cbean.getCod_usu();
         turno = "0";
-        prioridad = "0";
+        cod_pri = "0";
         cod_dep = "0";
         gen_det_man = "";
         gen_fec_man = format.format(dfecha1);
@@ -1051,7 +1051,7 @@ public class ManMaestroMan implements Serializable {
         flg_ext = "0";
         cod_sup = "0";
         turno = "0";
-        prioridad = "0";
+        cod_pri = "0";
         cod_dep = "0";
         gen_det_man = "";
         gen_fec_man = "";
@@ -1102,12 +1102,12 @@ public class ManMaestroMan implements Serializable {
         fec_ini = "";
         fec_fin = "";
         det_sta = "";
-        cod_usu = cbean.getCod_usu();
+        cod_usu = "0";
         cod_per = "0";
         flg_ext = "0";
-        cod_sup = "0";
+        cod_sup = cbean.getCod_usu();
         turno = "0";
-        prioridad = "0";
+        cod_pri = "0";
         cod_dep = "0";
         gen_det_man = "";
         gen_fec_man = "";
@@ -1157,12 +1157,12 @@ public class ManMaestroMan implements Serializable {
             fec_ini = format.format(dfecini);
             fec_fin = format.format(dfecfinF);
             det_sta = "0";
-            cod_usu = cbean.getCod_usu();
+            cod_usu = "0";
             cod_per = "0";
             flg_ext = "0";
-            cod_sup = "0";
+            cod_sup = cbean.getCod_usu();
             turno = "0";
-            prioridad = "0";
+            cod_pri = "0";
             cod_dep = "0";
             cod_gru_fal = "0";
             cod_fal = "0";
@@ -1341,7 +1341,7 @@ public class ManMaestroMan implements Serializable {
                         + "end as status,"
                         + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<2,0,(TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))) as dr,"
                         + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=2,'yellow','red')) as color,"
-                        + "mm.cod_per, per.nom_per,mm.flg_ext "
+                        + "mm.cod_per, per.nom_per,mm.flg_ext"
                         + "from tbl_mae_man as mm "
                         + "left join cat_tip as tip on mm.cod_tip = tip.cod_tip "
                         + "left join lis_equ as lis on mm.cod_lis_equ = lis.cod_lis_equ "
@@ -1899,10 +1899,10 @@ public class ManMaestroMan implements Serializable {
                 if ("".equals(cod_man)) {
                     mQuery = "select ifnull(max(cod_man),0)+1 as codigo from tbl_mae_man where cod_lis_equ = " + cod_lis_equ + ";";
                     cod_man = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into tbl_mae_man (cod_lis_equ,cod_man,cod_tip,det_obs,fec_ini,fec_fin,det_sta,cod_usu,cod_per,flg_ext,cod_sup,turno,prioridad,cod_dep) "
+                    mQuery = "insert into tbl_mae_man (cod_lis_equ,cod_man,cod_tip,det_obs,fec_ini,fec_fin,det_sta,cod_usu,cod_per,flg_ext,cod_sup,turno,cod_pri,cod_dep) "
                             + "VALUES (" + cod_lis_equ + "," + cod_man + "," + cod_tip + ",'" + det_obs.replace("'", " ") + "',"
                             + "str_to_date('" + fec_ini + "','%d/%m/%Y %H:%i'),str_to_date('" + fec_fin + "','%d/%m/%Y %H:%i'),1,"
-                            + cod_usu + "," + cod_per + "," + flg_ext + "," + cod_sup + "," + turno + "," + prioridad + "," + cod_dep + ");";
+                            + cod_usu + "," + cod_per + "," + flg_ext + "," + cod_sup + "," + turno + "," + cod_pri + "," + cod_dep + ");";
                 } else {
                     mQuery = "delete from tbl_det_man_fal where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
                     mAccesos.dmlSQLvariable(mQuery);
@@ -1914,7 +1914,7 @@ public class ManMaestroMan implements Serializable {
                             + "flg_ext= " + flg_ext + ","
                             + "cod_sup = " + cod_sup + ","
                             + "turno= " + turno + ","
-                            + "prioridad= " + prioridad + ","
+                            + "cod_pri= " + cod_pri + ","
                             + "cod_dep= " + cod_dep + " "
                             + "where cod_lis_equ = " + cod_lis_equ + " "
                             + "and cod_man = " + cod_man + ";";
