@@ -95,8 +95,9 @@ public class ManMaestroMan implements Serializable {
     private List<CatDepartamentos> departamentos;
     private ScheduleModel mttoModel;
     private ScheduleEvent mtto = new DefaultScheduleEvent();
-  
-    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_sup, turno, cod_pri, cod_dep;;
+
+    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_sup, turno, cod_pri, cod_dep;
+    ;
     private String gen_det_man, gen_fec_man, gen_cod_ope, gen_det_obs, gen_cod_usu, gen_det_min;
     private String pie_det_man, pie_fec_man, pie_cod_pai, pie_cod_bod, pie_cod_ubi,
             pie_det_can, pie_cod_pie, pie_num_ser, pie_cod_usu;
@@ -106,19 +107,19 @@ public class ManMaestroMan implements Serializable {
     private String tabindex, buscar_serie, nompai, nombod, nomubi, cod_gru_fal, cod_fal, mmensaje;
     private Date dfecha1, dfecha2, dfecha3, dfecfinF, dfecini;
     private TreeNode root, selectednode;
-    
+
     private UploadedFile file;
 
     public ManMaestroMan() {
     }
-    
+
     @PostConstruct
     public void init() {
         catcalendario = new CatCalendario();
-        mttoModel = new DefaultScheduleModel();       
+        mttoModel = new DefaultScheduleModel();
         llenarMttosCalendario();
-        	      
-        for (CatCalendario cm : listaMttos){
+
+        for (CatCalendario cm : listaMttos) {
             DefaultScheduleEvent cmt = new DefaultScheduleEvent();
             cmt.setId(cm.getCod_man());
             cmt.setDescription(cm.getDet_obs());
@@ -127,25 +128,26 @@ public class ManMaestroMan implements Serializable {
             cmt.setAllDay(true);
             cmt.setEditable(true);
             cmt.setStartDate(cm.getFec_ini());
-            if (cm.getFec_fin()== null)
+            if (cm.getFec_fin() == null) {
                 cm.setFec_fin(cm.getFec_ini());
-            
+            }
+
             cmt.setEndDate(cm.getFec_fin());
-            
-            if("1".equals(cm.getDet_sta())){
+
+            if ("1".equals(cm.getDet_sta())) {
                 cmt.setStyleClass("mtto1");
-            } else if ("2".equals(cm.getDet_sta())){
+            } else if ("2".equals(cm.getDet_sta())) {
                 cmt.setStyleClass("mtto2");
-            } else if ("3".equals(cm.getDet_sta())){
+            } else if ("3".equals(cm.getDet_sta())) {
                 cmt.setStyleClass("mtto3");
             } else {
                 cmt.setStyleClass("mtto4");
             }
-                        
+
             mttoModel.addEvent(cmt);
-  
+
         }
-    }    
+    }
 
     public List<CatGrupoFallas> getGrupofallas() {
         return grupofallas;
@@ -929,7 +931,7 @@ public class ManMaestroMan implements Serializable {
 
     public void setDepartamentos(List<CatDepartamentos> departamentos) {
         this.departamentos = departamentos;
-    }   
+    }
 
     public String getCod_sup() {
         return cod_sup;
@@ -962,10 +964,10 @@ public class ManMaestroMan implements Serializable {
     public void setCod_dep(String cod_dep) {
         this.cod_dep = cod_dep;
     }
-    
+
     public void iniciarventana() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        
+
         dfecha1 = Date.from(Instant.now());
         dfecha2 = Date.from(Instant.now());
         dfecha3 = Date.from(Instant.now());
@@ -1030,6 +1032,7 @@ public class ManMaestroMan implements Serializable {
         llenarTipos();
         llenarPeriodos();
         llenarDepartamentos();
+        llenarListaEquipos();
 
     }
 
@@ -1320,19 +1323,21 @@ public class ManMaestroMan implements Serializable {
             anexos = new ArrayList<>();
             catmantenimientos = new CatMantenimientos();
             mantenimientos = new ArrayList<>();
-                           
-            if (!"".equals(buscar_serie)) {                   
+
+            if (!"".equals(buscar_serie)) {
                 Accesos mAccesos = new Accesos();
                 mAccesos.Conectar();
-                mQuery = "select cod_lis_equ "
-                        + "from lis_equ "
-                        + "where "
-                        + "des_equ = '" + buscar_serie + "';";
-                cod_lis_equ = mAccesos.strQuerySQLvariable(mQuery);
-                mQuery = "select mm.cod_lis_equ, mm.cod_man, mm.cod_tip, mm.det_obs, "
+                cod_lis_equ = buscar_serie;
+                mQuery = "select "
+                        + "mm.cod_lis_equ, "
+                        + "mm.cod_man, "
+                        + "mm.cod_tip, "
+                        + "mm.det_obs, "
                         + "date_format(mm.fec_ini,'%d/%m/%Y %H:%i'), "
                         + "date_format(mm.fec_fin,'%d/%m/%Y %H:%i'), "
-                        + "mm.det_sta, mm.cod_usu,tip.nom_tip,"
+                        + "mm.det_sta, "
+                        + "mm.cod_usu,"
+                        + "tip.nom_tip,"
                         + "case mm.det_sta "
                         + "when 1 then 'PENDIENTE' "
                         + "when 2 then 'CANCELADO' "
@@ -1341,14 +1346,15 @@ public class ManMaestroMan implements Serializable {
                         + "end as status,"
                         + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<2,0,(TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))) as dr,"
                         + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=2,'yellow','red')) as color,"
-                        + "mm.cod_per, per.nom_per,mm.flg_ext"
+                        + "mm.cod_per, "
+                        + "per.nom_per,"
+                        + "mm.flg_ext,mm.cod_sup, mm.turno, mm.cod_pri, mm.cod_dep "
                         + "from tbl_mae_man as mm "
                         + "left join cat_tip as tip on mm.cod_tip = tip.cod_tip "
-                        + "left join lis_equ as lis on mm.cod_lis_equ = lis.cod_lis_equ "
                         + "left join cat_per as per on mm.cod_per = per.cod_per "
                         + "where "
                         + "mm.det_sta IN (1,3) "
-                        + "and lis.des_equ ='" + buscar_serie + "' "
+                        + "and mm.cod_lis_equ =" + buscar_serie + " "
                         + "order by mm.cod_man;";
 
                 ResultSet resVariable;
@@ -1381,10 +1387,10 @@ public class ManMaestroMan implements Serializable {
                 mAccesos.Desconectar();
             }
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Mantenimientos Pendientes en ManMaestroMan. " + e.getMessage() + " Query: " + mQuery);
+            System.out.println("Error en el llenado de Mantenimientos en ManMaestroMan. " + e.getMessage() + " Query: " + mQuery);
         }
     }
-    
+
     public void llenarGrupoFallas() {
         try {
             grupofallas = new ArrayList<>();
@@ -1643,8 +1649,8 @@ public class ManMaestroMan implements Serializable {
     public void llenarGeneral() {
         String mQuery = "";
         try {
-           catmantenimientosgen = new CatMantenimientosGen();
-            general = new ArrayList<>();            
+            catmantenimientosgen = new CatMantenimientosGen();
+            general = new ArrayList<>();
             mQuery = "select gen.cod_lis_equ,gen.cod_man,gen.det_man,"
                     + "date_format(gen.fec_man,'%d/%m/%Y %H:%i'),"
                     + "gen.cod_ope,gen.det_obs,"
@@ -1863,7 +1869,7 @@ public class ManMaestroMan implements Serializable {
             System.out.println("Error en el llenado Detalle Fallas en ManMaestroMan." + e.getMessage() + " Query: " + mQuery);
         }
     }
-    
+
     public void llenarDepartamentos() {
         try {
             catdepartamentos = new CatDepartamentos();
@@ -1885,10 +1891,9 @@ public class ManMaestroMan implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Catálogo de Departamentos. " + e.getMessage());
+            System.out.println("Error en el llenado de Departamentos en ManMaestroMan. " + e.getMessage());
         }
     }
-
 
     public void guardarencabezado() {
         String mQuery = "";
@@ -3171,13 +3176,39 @@ public class ManMaestroMan implements Serializable {
     }
 
     public void onclickbuscar() {
-        selectednode = null;
-        if ("".equals(buscar_serie)) {
-            llenarNodos();
-        } else {
-            limpiarventana();
-        }
 
+        limpiarventana();
+
+    }
+
+    public void llenarListaEquipos() {
+        try {
+            lequipos = new ArrayList<>();
+
+            String mQuery = "select cod_lis_equ,'','','','','','',des_equ "
+                    + "from lis_equ order by des_equ;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                lequipos.add(new CatListaEquipos(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        "", "", "", "", "", "", "", "", "", "", "", ""
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Equipos MaestroMan. " + e.getMessage());
+        }
     }
 
     public void onRowSelectEnc(SelectEvent event) {
@@ -3711,22 +3742,22 @@ public class ManMaestroMan implements Serializable {
     public void onRowUnselect(UnselectEvent event) {
         detalles = new ArrayList<>();
     }
-    
+
     public void onEventSelect(SelectEvent selectEvent) {
-       
+
         ScheduleEvent smtto = (ScheduleEvent) selectEvent.getObject();
-               
-         for (CatCalendario cm : listaMttos){
-             if (cm.getCod_man() == smtto.getData()){
-                 catcalendario = cm;
-                 buscar_serie = catcalendario.getDes_equ();
-                 llenarMantenimientos();
-                 break;
-             }         
-         }        
+
+        for (CatCalendario cm : listaMttos) {
+            if (cm.getCod_man() == smtto.getData()) {
+                catcalendario = cm;
+                buscar_serie = catcalendario.getCod_lis_equ();
+                llenarMantenimientos();
+                break;
+            }
+        }
     }
-    
-     public void llenarMttosCalendario() {
+
+    public void llenarMttosCalendario() {
         String mQuery = "";
         try {
             catcalendario = new CatCalendario();
@@ -3734,9 +3765,9 @@ public class ManMaestroMan implements Serializable {
 
             mQuery = "select tbl_mae_man.cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, "
                     + "det_sta, cod_usu, des_equ from tbl_mae_man inner join lis_equ on "
-                    + "tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ " 
+                    + "tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ "
                     + "order by cod_man;";
-            
+
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -3760,44 +3791,44 @@ public class ManMaestroMan implements Serializable {
             System.out.println("Error en el llenado de Calendarización. " + e.getMessage() + " Query: " + mQuery);
         }
     }
-    
+
     public void actualizar() {
-        String mQuery = "";
+        String mQuery;
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-        
+
         Accesos mAccesos = new Accesos();
         mAccesos.Conectar();
 
         mQuery = "update tbl_mae_man SET "
                 + " fec_ini = '" + fmt.format(catcalendario.getFec_ini()) + "', "
                 + " fec_fin = '" + fmt.format(catcalendario.getFec_fin()) + "' "
-                + "WHERE cod_man = " + catcalendario.getCod_man() + " AND cod_lis_equ = '"+ catcalendario.getCod_lis_equ() +"';";
-                        
+                + "WHERE cod_man = " + catcalendario.getCod_man() + " AND cod_lis_equ = '" + catcalendario.getCod_lis_equ() + "';";
+
         mAccesos.dmlSQLvariable(mQuery);
         mAccesos.Desconectar();
         addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);
     }
-    
+
     public void onEventMove(ScheduleEntryMoveEvent mttoMove) {
-              
-        for (CatCalendario cm : listaMttos){
-             if (cm.getCod_man() == mttoMove.getScheduleEvent().getData()){
-                 catcalendario = cm; 
-                 actualizar();
-                 break;
-             }         
-         }    
-        
+
+        for (CatCalendario cm : listaMttos) {
+            if (cm.getCod_man() == mttoMove.getScheduleEvent().getData()) {
+                catcalendario = cm;
+                actualizar();
+                break;
+            }
+        }
+
     }
-     
+
     public void onEventResize(ScheduleEntryResizeEvent mttoResize) {
-        for (CatCalendario cm : listaMttos){
-             if (cm.getCod_man() == mttoResize.getScheduleEvent().getData()){
-                 catcalendario = cm; 
-                 actualizar();
-                 break;
-             }         
-         }   
+        for (CatCalendario cm : listaMttos) {
+            if (cm.getCod_man() == mttoResize.getScheduleEvent().getData()) {
+                catcalendario = cm;
+                actualizar();
+                break;
+            }
+        }
     }
 
 }
