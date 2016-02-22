@@ -5055,8 +5055,14 @@
                                          update=":frmMaestra"
                                          icon="ui-icon-disk" 
                                          actionListener="#{manMaestroMan.guardarencabezado()}"
-
                                          />
+                        <p:commandButton value="Imprimir" icon="ui-icon-print" 
+                                         onclick="this.form.target = '_blank';" 
+                                         action="#{manMaestroMan.printFman004}" 
+                                         ajax="false" 
+                                         update="growl pnlProductos mbar pnlLstProductos">
+                        </p:commandButton>
+                        
                         <p:commandButton value="Cancelar" style=" width: 100px;"
                                          update=":frmMaestra"
                                          icon="ui-icon-close" 
@@ -5162,7 +5168,7 @@
                         </p:selectOneMenu>
                         </h:panelGrid>
                         <h:panelGrid columns="4" cellpadding="5">
-                            <h:outputText value="Detalle Falla" style="font-weight:bold;"/>
+                            <h:outputText value="Diagnostico Falla" style="font-weight:bold;"/>
                             <p:selectOneMenu value="#{manMaestroMan.cod_fal}" 
                                          style=" width: 500px;"
                                          id="somfallasnewman"
@@ -6771,7 +6777,7 @@
 
             </h:form>
         </p:dialog> 
-    
+        
     <script type="text/javascript">
         PrimeFaces.locales['es'] = {
             closeText: 'Cerrar',
