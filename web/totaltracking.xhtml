@@ -5044,7 +5044,7 @@
 
         <p:dialog  id="dlgMaestraNew" widgetVar="wMaestraNew" modal="true" 
                    width="760" height="480" closable="false" resizable="false" 
-                   header="Datos Generales del Mantenimiento          F-MAN-004" rendered="true" 
+                   header="ORDEN DE TRABAJO PARA MANTENIMIENTO F-MAN-004" rendered="true" 
                    dynamic="false" visible="false" 
                    >
             <h:form id="frmMaestraNew" >
@@ -5066,10 +5066,17 @@
                 </p:toolbar>
                 <p:panel>
                     <h:panelGrid columns="4" cellpadding="5">
+                        <h:outputText value="Fecha " style="font-weight:bold;"/>
                         <h:outputText value="Externo" style="font-weight:bold;"/>
                         <h:outputText value="Tipo" style="font-weight:bold;"/>
-                        <h:outputText value="Fecha Inicio" style="font-weight:bold;"/>
                         <h:outputText value="Fecha Fin" style="font-weight:bold;"/>
+                        <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
+                                     readonlyInput="true" showOn="button" 
+                                     size="16"
+                                     value="#{manMaestroMan.dfecini}"
+                                     >
+                            <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezado}" />
+                        </p:calendar>
                         <p:selectOneMenu value="#{manMaestroMan.flg_ext}" 
                                          style=" width: 120px;">
                             <f:selectItem itemLabel="No" itemValue="0"/>
@@ -5082,13 +5089,7 @@
                             <f:selectItems value="#{manMaestroMan.tipos}" var="tipmanman"
                                            itemLabel="#{tipmanman.nom_tip}" itemValue="#{tipmanman.cod_tip}"/> 
                         </p:selectOneMenu>
-                        <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
-                                     readonlyInput="true" showOn="button" 
-                                     size="16"
-                                     value="#{manMaestroMan.dfecini}"
-                                     >
-                            <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezado}" />
-                        </p:calendar>
+                        
                         <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                      readonlyInput="true" showOn="button" 
                                      size="16"

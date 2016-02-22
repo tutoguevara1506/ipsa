@@ -27,31 +27,29 @@ public class AlertSchedule {
     public void performTask() throws EmailException {
 
         long timeInit = System.currentTimeMillis();
-        ConfiguracionMail();
+        //ConfiguracionMail();
               
         log.info(":. Inicio TareaProgramada cada 5 minutos");
                 
-        Email email = new SimpleEmail();
-        email.setHostName(hostname);
-        email.setSmtpPort(Integer.parseInt(smtp_port));
-        email.setAuthenticator(new DefaultAuthenticator(user, pass));
-        email.setSSLOnConnect(true);
-        email.setFrom(remitente);
-        email.setSubject("Correo de Prueba");
-        email.setMsg("Este es un correo de prueba desde mi entorno con variables");
-        
-        String[] recipients = {"rramirezech@hotmail.com"};
-
-        for (int i = 0; i < recipients.length; i++)
-        {
-             email.addTo(recipients[i]);
-        }
-        
-        email.send();
-
         try {
             timeInit = System.currentTimeMillis();
-            // TODO Hacer la logica de la tarea programada
+            Email email = new SimpleEmail();
+            email.setHostName(hostname);
+            email.setSmtpPort(Integer.parseInt(smtp_port));
+            email.setAuthenticator(new DefaultAuthenticator(user, pass));
+            email.setSSLOnConnect(true);
+            email.setFrom(remitente);
+            email.setSubject("Correo de Prueba");
+            email.setMsg("Este es un correo de prueba desde mi entorno con variables");
+        
+            String[] recipients = {"rramirezech@hotmail.com"};
+
+            for (int i = 0; i < recipients.length; i++)
+            {
+                email.addTo(recipients[i]);
+            }
+        
+            email.send();
 
         } 
         catch (Exception e) {

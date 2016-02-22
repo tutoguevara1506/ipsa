@@ -91,6 +91,8 @@ public class ManMaestroMan implements Serializable {
     private List<CatSolicitudesDetalle> requisiciones;
     private CatCalendario catcalendario;
     private List<CatCalendario> listaMttos;
+    private CatDepartamentos catdepartamentos;
+    private List<CatDepartamentos> departamentos;
     private ScheduleModel mttoModel;
     private ScheduleEvent mtto = new DefaultScheduleEvent();
   
@@ -912,7 +914,22 @@ public class ManMaestroMan implements Serializable {
     public void setMtto(ScheduleEvent mtto) {
         this.mtto = mtto;
     }
-     
+
+    public CatDepartamentos getCatdepartamentos() {
+        return catdepartamentos;
+    }
+
+    public void setCatdepartamentos(CatDepartamentos catdepartamentos) {
+        this.catdepartamentos = catdepartamentos;
+    }
+
+    public List<CatDepartamentos> getDepartamentos() {
+        return departamentos;
+    }
+
+    public void setDepartamentos(List<CatDepartamentos> departamentos) {
+        this.departamentos = departamentos;
+    }        
 
     public void iniciarventana() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -974,6 +991,7 @@ public class ManMaestroMan implements Serializable {
         llenarOperaciones();
         llenarPaises();
         llenarCatalogoPiezas();
+        llenarTipos();
 
     }
 
@@ -1793,6 +1811,32 @@ public class ManMaestroMan implements Serializable {
             System.out.println("Error en el llenado Detalle Fallas en ManMaestroMan." + e.getMessage() + " Query: " + mQuery);
         }
     }
+    
+    public void llenarDepartamentos() {
+        try {
+            catdepartamentos = new CatDepartamentos();
+            departamentos = new ArrayList<>();
+
+            String mQuery = "select cod_dep, cod_pai, nom_dep "
+                    + "from cat_dep order by cod_dep;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                departamentos.add(new CatDepartamentos(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Catálogo de Departamentos. " + e.getMessage());
+        }
+    }
+
 
     public void guardarencabezado() {
         String mQuery = "";
