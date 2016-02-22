@@ -4600,24 +4600,20 @@
                 <p:layout style="width:1075px;height:480px;" id="luman">
                     <p:layoutUnit position="west" size="200">
                         <h:panelGrid columns="1" styleClass="noBorders">
-                            <h:outputText value="Número de Serie" style="font-weight:bold;"/>
-                            <p:inputText id="txtbusns" maxlength="30" size="28" value="#{manMaestroMan.buscar_serie}"/>
+                            <h:outputText value="Equipo" style="font-weight:bold;"/>
+                            <p:selectOneMenu id="txtbusns" style=" width: 160px;" value="#{manMaestroMan.buscar_serie}"
+                                                         filter="true" filterMatchMode="contains" 
+                                                         >
+                                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.lequipos}" var="lequman"
+                                                           itemLabel="#{lequman.des_equ}" itemValue="#{lequman.cod_lis_equ}"/> 
+                                        </p:selectOneMenu>
                             <p:commandButton value="Buscar" icon="ui-icon-search" 
                                              style="width: 185px;" 
                                              actionListener="#{manMaestroMan.onclickbuscar()}"
                                              update=":frmMaestra"
                                              />
-                            <p:tree value="#{manMaestroMan.root}" var="node" dynamic="true" style=" width: 182px;" 
-                                    selectionMode="single" 
-                                    selection="#{manMaestroMan.selectednode}"
-                                    >
-                                <p:ajax event="select" update=":frmMaestra" 
-                                        listener="#{manMaestroMan.onNodeSelect}" />
-                                <p:treeNode collapsedIcon="ui-icon ui-icon-folder-collapsed" 
-                                            expandedIcon="ui-icon ui-icon-folder-open">
-                                    <h:outputText value="#{node}"  />
-                                </p:treeNode>
-                            </p:tree>
+                            
                         </h:panelGrid>
 
                     </p:layoutUnit>
@@ -4626,7 +4622,6 @@
                             <f:facet name="left">
                                 <p:commandButton value="Nuevo" style=" width: 90px;"
                                                  actionListener="#{manMaestroMan.iniciarventananew()}"
-                                                 onclick="PF('wMaestraNew').show()"
                                                  update=":frmMaestraNew"
                                                  icon="ui-icon-document"
                                                  /> 
