@@ -5043,7 +5043,7 @@
         </p:dialog>
 
         <p:dialog  id="dlgMaestraNew" widgetVar="wMaestraNew" modal="true" 
-                   width="760" height="480" closable="false" resizable="false" 
+                   width="760" height="525" closable="false" resizable="false" 
                    header="ORDEN DE TRABAJO PARA MANTENIMIENTO F-MAN-004" rendered="true" 
                    dynamic="false" visible="false" 
                    >
@@ -5102,7 +5102,7 @@
                         <h:outputText value="Periodicidad" style="font-weight:bold;"/>
                         <h:outputText value="Turno" style="font-weight:bold;"/>
                         <h:outputText value="Prioridad" style="font-weight:bold;"/>
-                        <p:selectOneMenu value="#{manMaestroMan.cod_usu}" 
+                        <p:selectOneMenu value="#{manMaestroMan.cod_sup}" 
                                          style=" width: 200px;">
                             <f:selectItem itemLabel="Ninguno" itemValue="0"/>
                             <f:selectItems value="#{manMaestroMan.usuarios}" var="usumanman"
@@ -5114,6 +5114,28 @@
                             <f:selectItems value="#{manMaestroMan.periodos}" var="permanman"
                                            itemLabel="#{permanman.nom_per}" itemValue="#{permanman.cod_per}"/> 
                         </p:selectOneMenu>
+                        <p:selectOneMenu value="#{manMaestroMan.turno}" 
+                                         style=" width: 120px;">
+                            <f:selectItem itemLabel="Diurno" itemValue="0"/>
+                            <f:selectItem itemLabel="Nocturno" itemValue="1"/>
+                        </p:selectOneMenu>
+                         <p:selectOneMenu value="#{manMaestroMan.turno}" 
+                                         style=" width: 120px;">
+                            <f:selectItem itemLabel="Normal" itemValue="0"/>
+                            <f:selectItem itemLabel="Urgente" itemValue="1"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <h:outputText value="Detalle de falla" style="font-weight:bold;"/>
+                        <p:inputTextarea cols="135" rows="2"
+                                         maxlength="200"
+                                         value="#{manMaestroMan.det_obs}"
+                                         onfocus="this.select()"
+                                         />
+                    </h:panelGrid>
+                    <p:separator />
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="ESPACIO RESERVADO PARA MANTENIMIENTO &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; Fecha entrega" style="font-weight:bold;"/>
                         <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                      readonlyInput="true" showOn="button" 
                                      size="16"
@@ -5122,46 +5144,42 @@
                             <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezadoFin}" />
                         </p:calendar>
                     </h:panelGrid>
-                    <h:panelGrid columns="1" cellpadding="5">
-                        <h:outputText value="Detalle de falla" style="font-weight:bold;"/>
-                        <p:inputTextarea cols="102" rows="2"
-                                         maxlength="200"
-                                         value="#{manMaestroMan.det_obs}"
-                                         onfocus="this.select()"
-                                         />
-                    </h:panelGrid>
-                    <h:panelGrid columns="1" cellpadding="5">
-                        <h:outputText value="Fallas Observadas" style="font-weight:bold;"/>
-                    </h:panelGrid>
                     <h:panelGrid columns="4" cellpadding="5">
+                        <h:outputText value="Técnico" style="font-weight:bold;"/>
+                        <p:selectOneMenu value="#{manMaestroMan.cod_usu}" 
+                                         style=" width: 200px;">
+                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                            <f:selectItems value="#{manMaestroMan.usuarios}" var="usumanman"
+                                           itemLabel="#{usumanman.det_nom}" itemValue="#{usumanman.cod_usu}"/> 
+                        </p:selectOneMenu>
                         <h:outputText value="Grupo Falla" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manMaestroMan.cod_gru_fal}" 
-                                         style=" width: 500px;">
+                                         style=" width: 300px;">
                             <p:ajax event="change" listener="#{manMaestroMan.llenarListaFallas()}" update="somfallasnewman" />
                             <f:selectItem itemLabel="Ninguno" itemValue="0"/>
                             <f:selectItems value="#{manMaestroMan.grupofallas}" var="somgrufalnewman"
                                            itemLabel="#{somgrufalnewman.nom_gru_fal}" itemValue="#{somgrufalnewman.cod_gru_fal}"/> 
                         </p:selectOneMenu>
-                        <h:outputText value="" style="font-weight:bold;"/>
-                        <h:outputText value="" style="font-weight:bold;"/>
-                        <h:outputText value="Detalle Falla" style="font-weight:bold;"/>
-                        <p:selectOneMenu value="#{manMaestroMan.cod_fal}" 
+                        </h:panelGrid>
+                        <h:panelGrid columns="4" cellpadding="5">
+                            <h:outputText value="Detalle Falla" style="font-weight:bold;"/>
+                            <p:selectOneMenu value="#{manMaestroMan.cod_fal}" 
                                          style=" width: 500px;"
                                          id="somfallasnewman"
                                          >
-                            <f:selectItem itemLabel="Ninguna" itemValue="0"/>
-                            <f:selectItems value="#{manMaestroMan.listafallas}" var="somfalnewman"
+                                <f:selectItem itemLabel="Ninguna" itemValue="0"/>
+                                <f:selectItems value="#{manMaestroMan.listafallas}" var="somfalnewman"
                                            itemLabel="#{somfalnewman.nom_fal}" itemValue="#{somfalnewman.cod_fal}"/> 
-                        </p:selectOneMenu>
-                        <p:commandButton title="Agregar" icon="ui-icon-plus" style="width:30px;" 
+                            </p:selectOneMenu>
+                            <p:commandButton title="Agregar" icon="ui-icon-plus" style="width:30px;" 
                                          actionListener="#{manMaestroMan.agregarfalla()}"
                                          update=":frmMaestraNew"
                                          />
-                        <p:commandButton title="Eliminar" icon="ui-icon-minus" style="width:30px;" 
+                            <p:commandButton title="Eliminar" icon="ui-icon-minus" style="width:30px;" 
                                          actionListener="#{manMaestroMan.eliminarfalla()}"
                                          update=":frmMaestraNew"
                                          />
-                    </h:panelGrid>
+                        </h:panelGrid>
                 </p:panel>
                 <p:dataTable id="dtFallMan" var="vFallMan" 
                              value="#{manMaestroMan.fallas}" 

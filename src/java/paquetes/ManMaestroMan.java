@@ -1028,6 +1028,7 @@ public class ManMaestroMan implements Serializable {
         llenarPaises();
         llenarCatalogoPiezas();
         llenarTipos();
+        llenarPeriodos();
         llenarDepartamentos();
 
     }
@@ -1898,10 +1899,10 @@ public class ManMaestroMan implements Serializable {
                 if ("".equals(cod_man)) {
                     mQuery = "select ifnull(max(cod_man),0)+1 as codigo from tbl_mae_man where cod_lis_equ = " + cod_lis_equ + ";";
                     cod_man = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into tbl_mae_man (cod_lis_equ,cod_man,cod_tip,det_obs,fec_ini,fec_fin,det_sta,cod_usu,cod_per,flg_ext) "
+                    mQuery = "insert into tbl_mae_man (cod_lis_equ,cod_man,cod_tip,det_obs,fec_ini,fec_fin,det_sta,cod_usu,cod_per,flg_ext,cod_sup,turno,prioridad,cod_dep) "
                             + "VALUES (" + cod_lis_equ + "," + cod_man + "," + cod_tip + ",'" + det_obs.replace("'", " ") + "',"
                             + "str_to_date('" + fec_ini + "','%d/%m/%Y %H:%i'),str_to_date('" + fec_fin + "','%d/%m/%Y %H:%i'),1,"
-                            + cod_usu + "," + cod_per + "," + flg_ext + ");";
+                            + cod_usu + "," + cod_per + "," + flg_ext + "," + cod_sup + "," + turno + "," + prioridad + "," + cod_dep + ");";
                 } else {
                     mQuery = "delete from tbl_det_man_fal where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
                     mAccesos.dmlSQLvariable(mQuery);
@@ -1910,7 +1911,11 @@ public class ManMaestroMan implements Serializable {
                             + "det_obs= '" + det_obs.replace("'", " ") + "',"
                             + "cod_usu = " + cod_usu + ","
                             + "cod_per= " + cod_per + ","
-                            + "flg_ext= " + flg_ext + " "
+                            + "flg_ext= " + flg_ext + ","
+                            + "cod_sup = " + cod_sup + ","
+                            + "turno= " + turno + ","
+                            + "prioridad= " + prioridad + ","
+                            + "cod_dep= " + cod_dep + " "
                             + "where cod_lis_equ = " + cod_lis_equ + " "
                             + "and cod_man = " + cod_man + ";";
                 }
