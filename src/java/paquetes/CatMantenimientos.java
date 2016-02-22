@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class CatMantenimientos implements Serializable {
 
-    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, nomtip, status, datraso, color, cod_per, periodo, flg_ext, cod_sup, turno, prioridad;
+    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, nomtip, status, datraso, color, cod_per, periodo, flg_ext, cod_sup, turno, prioridad, cod_dep;
 
     public CatMantenimientos() {
     }
 
-    public CatMantenimientos(String cod_lis_equ, String cod_man, String cod_tip, String det_obs, String fec_ini, String fec_fin, String det_sta, String cod_usu, String nomtip, String status, String datraso, String color, String cod_per, String periodo, String flg_ext, String cod_sup, String turno, String prioridad) {
+    public CatMantenimientos(String cod_lis_equ, String cod_man, String cod_tip, String det_obs, String fec_ini, String fec_fin, String det_sta, String cod_usu, String nomtip, String status, String datraso, String color, String cod_per, String periodo, String flg_ext, String cod_sup, String turno, String prioridad, String cod_dep) {
         this.cod_lis_equ = cod_lis_equ;
         this.cod_man = cod_man;
         this.cod_tip = cod_tip;
@@ -28,6 +28,7 @@ public class CatMantenimientos implements Serializable {
         this.cod_sup = cod_sup;
         this.turno = turno;
         this.prioridad = prioridad;
+        this.cod_dep = cod_dep;
     }
 
     public String getCod_lis_equ() {
@@ -173,6 +174,13 @@ public class CatMantenimientos implements Serializable {
     public void setPrioridad(String prioridad) {
         this.prioridad = prioridad;
     }
-    
 
+    public String getCod_dep() {
+        return cod_dep;
+    }
+
+    public void setCod_dep(String cod_dep) {
+        this.cod_dep = cod_dep;
+    }
+    
 }

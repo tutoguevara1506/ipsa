@@ -5067,6 +5067,7 @@
                 <p:panel>
                     <h:panelGrid columns="4" cellpadding="5">
                         <h:outputText value="Fecha " style="font-weight:bold;"/>
+                        <h:outputText value="Departamento" style="font-weight:bold;"/>
                         <h:outputText value="Externo" style="font-weight:bold;"/>
                         <h:outputText value="Tipo" style="font-weight:bold;"/>
                         <h:outputText value="Fecha Fin" style="font-weight:bold;"/>
@@ -5076,7 +5077,13 @@
                                      value="#{manMaestroMan.dfecini}"
                                      >
                             <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezado}" />
-                        </p:calendar>
+                        </p:calendar
+                        <p:selectOneMenu value="#{manMaestroMan.cod_tip}" 
+                                         style=" width: 120px;">
+                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                            <f:selectItems value="#{manMaestroMan.tipos}" var="tipmanman"
+                                           itemLabel="#{tipmanman.nom_tip}" itemValue="#{tipmanman.cod_tip}"/> 
+                        </p:selectOneMenu>
                         <p:selectOneMenu value="#{manMaestroMan.flg_ext}" 
                                          style=" width: 120px;">
                             <f:selectItem itemLabel="No" itemValue="0"/>

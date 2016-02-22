@@ -27,7 +27,7 @@ public class AlertSchedule {
     public void performTask() throws EmailException {
 
         long timeInit = System.currentTimeMillis();
-        //ConfiguracionMail();
+        ConfiguracionMail();
               
         log.info(":. Inicio TareaProgramada cada 5 minutos");
                 

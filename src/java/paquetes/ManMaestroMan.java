@@ -96,7 +96,7 @@ public class ManMaestroMan implements Serializable {
     private ScheduleModel mttoModel;
     private ScheduleEvent mtto = new DefaultScheduleEvent();
   
-    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext;
+    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_sup, turno, prioridad, cod_dep;;
     private String gen_det_man, gen_fec_man, gen_cod_ope, gen_det_obs, gen_cod_usu, gen_det_min;
     private String pie_det_man, pie_fec_man, pie_cod_pai, pie_cod_bod, pie_cod_ubi,
             pie_det_can, pie_cod_pie, pie_num_ser, pie_cod_usu;
@@ -929,8 +929,40 @@ public class ManMaestroMan implements Serializable {
 
     public void setDepartamentos(List<CatDepartamentos> departamentos) {
         this.departamentos = departamentos;
-    }        
+    }   
 
+    public String getCod_sup() {
+        return cod_sup;
+    }
+
+    public void setCod_sup(String cod_sup) {
+        this.cod_sup = cod_sup;
+    }
+
+    public String getTurno() {
+        return turno;
+    }
+
+    public void setTurno(String turno) {
+        this.turno = turno;
+    }
+
+    public String getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(String prioridad) {
+        this.prioridad = prioridad;
+    }
+
+    public String getCod_dep() {
+        return cod_dep;
+    }
+
+    public void setCod_dep(String cod_dep) {
+        this.cod_dep = cod_dep;
+    }
+    
     public void iniciarventana() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         
@@ -950,6 +982,10 @@ public class ManMaestroMan implements Serializable {
         cod_usu = cbean.getCod_usu();
         cod_per = "0";
         flg_ext = "0";
+        cod_sup = "0";
+        turno = "0";
+        prioridad = "0";
+        cod_dep = "0";
         gen_det_man = "";
         gen_fec_man = format.format(dfecha1);
         gen_cod_ope = "";
@@ -992,6 +1028,7 @@ public class ManMaestroMan implements Serializable {
         llenarPaises();
         llenarCatalogoPiezas();
         llenarTipos();
+        llenarDepartamentos();
 
     }
 
@@ -1011,6 +1048,10 @@ public class ManMaestroMan implements Serializable {
         cod_usu = "";
         cod_per = "0";
         flg_ext = "0";
+        cod_sup = "0";
+        turno = "0";
+        prioridad = "0";
+        cod_dep = "0";
         gen_det_man = "";
         gen_fec_man = "";
         gen_cod_ope = "";
@@ -1063,6 +1104,10 @@ public class ManMaestroMan implements Serializable {
         cod_usu = cbean.getCod_usu();
         cod_per = "0";
         flg_ext = "0";
+        cod_sup = "0";
+        turno = "0";
+        prioridad = "0";
+        cod_dep = "0";
         gen_det_man = "";
         gen_fec_man = "";
         gen_cod_ope = "";
@@ -1114,11 +1159,16 @@ public class ManMaestroMan implements Serializable {
             cod_usu = cbean.getCod_usu();
             cod_per = "0";
             flg_ext = "0";
+            cod_sup = "0";
+            turno = "0";
+            prioridad = "0";
+            cod_dep = "0";
             cod_gru_fal = "0";
             cod_fal = "0";
             llenarTipos();
             llenarPeriodos();
             llenarGrupoFallas();
+            llenarDepartamentos();
             catmantenimientosfal = new CatMantenimientosFal();
             fallas = new ArrayList<>();
             RequestContext.getCurrentInstance().execute("PF('wMaestraNew').show()");
@@ -1322,7 +1372,8 @@ public class ManMaestroMan implements Serializable {
                             resVariable.getString(15),
                             resVariable.getString(16),
                             resVariable.getString(17),
-                            resVariable.getString(18)
+                            resVariable.getString(18),
+                            resVariable.getString(19)
                     ));
 
                 }
