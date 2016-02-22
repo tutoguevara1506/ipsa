@@ -126,7 +126,8 @@ public class ManMovimientos implements Serializable {
                             + "values (" + id_mov + ",'" + nom_mov + "', " + flg_tip + ");";
                 } else {
                     mQuery = "update cat_mov SET "
-                            + " nom_mov = '" + nom_mov + "' "
+                            + " nom_mov = '" + nom_mov + "', "
+                            + " flg_tip = " + flg_tip + " "
                             + "WHERE id_mov = " + id_mov + ";";
 
                 }
