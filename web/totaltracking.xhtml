@@ -5893,7 +5893,6 @@
             </h:form>
         </p:dialog>
         
-
         <!--******************************************************************** 
         **********   Pantalla de Registro de derechos de seguridad  ************
         *********************************************************************-->
@@ -6357,14 +6356,14 @@
         *********************************************************************-->
 
         <p:dialog  id="dlgCalend" widgetVar="wCalend" modal="true" 
-                   width="800" height="600" closable="true" resizable="false" 
+                   width="800" height="540" closable="true" resizable="false" 
                    header="Calendario de Mantenimientos" rendered="true" 
                    dynamic="false" visible="false" 
                    >
 
         <h:form id="frmCalend">
             <p:growl id="messages" showDetail="true" />
-               <p:schedule id="schedule" value="#{manMaestroMan.mttoModel}" widgetVar="myschedule" timeZone="GMT+2" locale="es">
+            <p:schedule id="schedule" value="#{manMaestroMan.mttoModel}" widgetVar="myschedule" timeZone="GMT+2" locale="es" aspectRatio="1.7">
                    <p:ajax event="eventSelect" listener="#{manMaestroMan.onEventSelect}" update="frmMaestra" oncomplete="PF('wMaestra').show();" />
                     <p:ajax event="eventMove" listener="#{manMaestroMan.onEventMove}" update="messages" />
                     <p:ajax event="eventResize" listener="#{manMaestroMan.onEventResize}" update="messages" />

@@ -3750,7 +3750,7 @@ public class ManMaestroMan implements Serializable {
         for (CatCalendario cm : listaMttos) {
             if (cm.getCod_man() == smtto.getData()) {
                 catcalendario = cm;
-                buscar_serie = catcalendario.getDes_equ();
+                buscar_serie = catcalendario.getCod_lis_equ();
                 llenarMantenimientos();
                 break;
             }
