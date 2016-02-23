@@ -11,20 +11,28 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.NodeSelectEvent;
@@ -40,6 +48,7 @@ import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.UploadedFile;
+
 
 @Named
 @ConversationScoped
@@ -3829,6 +3838,36 @@ public class ManMaestroMan implements Serializable {
                 break;
             }
         }
+    }
+    
+     public void imprimir_f_man_004() {
+        try {
+            byte[] content;
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            content = imprimirFicha();
+            response.setContentType("application/pdf");
+            response.setContentLength(content == null ? 0 : content.length);
+            response.getOutputStream().write(content);
+            response.getOutputStream().flush();
+            FacesContext.getCurrentInstance().responseComplete();
+        } catch (SQLException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     
+     public byte[] imprimirFicha() throws SQLException, JRException {
+        ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String reportPath = ctx.getRealPath(File.separator + "reportes" + File.separator);
+        HashMap param = new HashMap();
+        param.put("cod_lis_equ", cod_lis_equ);
+        param.put("cod_man", cod_man);
+        
+        Accesos racc = new Accesos();      
+         return JasperRunManager.runReportToPdf(reportPath + File.separator + "FMAN004.jasper", param, racc.Conectar());
     }
 
 }

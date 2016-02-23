@@ -5050,12 +5050,11 @@
                                          update=":frmMaestra"
                                          icon="ui-icon-disk" 
                                          actionListener="#{manMaestroMan.guardarencabezado()}"
-                                         />
-                        <p:commandButton value="Imprimir" icon="ui-icon-print" 
-                                         onclick="this.form.target = '_blank';" 
-                                         action="#{manMaestroMan.printFman004}" 
-                                         ajax="false" 
-                                         update="growl pnlProductos mbar pnlLstProductos">
+                                         />                       
+                        <p:commandButton value="Imprimir" icon="ui-icon-print"
+                                         onclick="this.form.target='_blank';" 
+                                         action="#{manMaestroMan.imprimir_f_man_004}" 
+                                         ajax="false">
                         </p:commandButton>
                         
                         <p:commandButton value="Cancelar" style=" width: 100px;"
