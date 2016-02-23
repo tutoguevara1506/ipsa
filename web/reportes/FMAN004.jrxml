@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f7c2357c-b9d5-40fb-ba83-1d6aef871cee">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="132"/>
+	<property name="ireport.y" value="48"/>
 	<parameter name="cod_man" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -47,28 +47,28 @@ on lis_equ.cod_pai = cat_pai.cod_pai inner join cat_persona on tbl_mae_man.cod_u
 		<band height="261" splitType="Stretch">
 			<elementGroup>
 				<textField>
-					<reportElement x="51" y="132" width="444" height="28" uuid="417ef6bd-d3e2-4847-9726-7c8bc87885f0"/>
+					<reportElement x="51" y="123" width="444" height="24" uuid="417ef6bd-d3e2-4847-9726-7c8bc87885f0"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{IFNULL(obtener_fallas_mantto(tbl_mae_man.cod_man, tbl_mae_man.cod_lis_equ),'')}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="115" y="48" width="20" height="12" uuid="75ad6b6c-1629-44da-8def-17eaab3e9f92"/>
+					<reportElement x="145" y="42" width="20" height="12" uuid="75ad6b6c-1629-44da-8def-17eaab3e9f92"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{turno}.equals(0) ? "X" : ""]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="141" y="65" width="45" height="12" uuid="a1dbe19e-55d9-42a0-ac59-60e5ed4010cb"/>
+					<reportElement x="100" y="56" width="45" height="12" uuid="a1dbe19e-55d9-42a0-ac59-60e5ed4010cb"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{time(tbl_mae_man.fec_ini)}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="255" y="64" width="177" height="13" uuid="58565162-09f3-4e89-825c-503fcd6453cf"/>
+					<reportElement x="283" y="56" width="212" height="13" uuid="58565162-09f3-4e89-825c-503fcd6453cf"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
@@ -89,14 +89,14 @@ on lis_equ.cod_pai = cat_pai.cod_pai inner join cat_persona on tbl_mae_man.cod_u
 					<textFieldExpression><![CDATA[$F{fec_ini}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="51" y="92" width="444" height="30" uuid="7287ee5c-1fc2-42bb-8f48-8413e3fa7371"/>
+					<reportElement x="51" y="86" width="444" height="26" uuid="7287ee5c-1fc2-42bb-8f48-8413e3fa7371"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{falla_reportada}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="168" y="48" width="18" height="13" uuid="a1462978-7175-46d5-99b3-9f9e2b9f97ae"/>
+					<reportElement x="198" y="41" width="18" height="13" uuid="a1462978-7175-46d5-99b3-9f9e2b9f97ae"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
@@ -110,14 +110,14 @@ on lis_equ.cod_pai = cat_pai.cod_pai inner join cat_persona on tbl_mae_man.cod_u
 					<textFieldExpression><![CDATA[$F{cod_pri}.equals("B") ? "X" : ""]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="255" y="28" width="177" height="13" uuid="2419cfcb-cc26-4820-ad63-7a6cdddf907f"/>
+					<reportElement x="279" y="28" width="177" height="13" uuid="2419cfcb-cc26-4820-ad63-7a6cdddf907f"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nom_dep}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="255" y="45" width="177" height="13" uuid="f3bee198-c4b3-4a23-96ea-0d3f67194f8a"/>
+					<reportElement x="279" y="42" width="177" height="13" uuid="f3bee198-c4b3-4a23-96ea-0d3f67194f8a"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
@@ -125,7 +125,7 @@ on lis_equ.cod_pai = cat_pai.cod_pai inner join cat_persona on tbl_mae_man.cod_u
 				</textField>
 			</elementGroup>
 			<textField>
-				<reportElement x="135" y="191" width="360" height="14" uuid="5d345a6f-de69-40ba-b967-137869968caa"/>
+				<reportElement x="107" y="191" width="388" height="14" uuid="5d345a6f-de69-40ba-b967-137869968caa"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
