@@ -6168,12 +6168,12 @@
                             </h:panelGroup>
                             <h:outputText value="Area" style="font-weight:bold;"/>
                             <h:panelGroup>
-                                <p:inputText id="txtareaper" 
-                                         size="28"
-                                         maxlength="30"
-                                         value="#{manPersonas.cod_dep}"
-                                         onfocus="this.select()"
-                                         />
+                                <p:selectOneMenu value="#{manPersonas.cod_dep}" 
+                                        style=" width: 160px;">
+                                        <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                        <f:selectItems value="#{manPersonas.departamentos}" var="depmanper"
+                                        itemLabel="#{depmanper.nom_dep}" itemValue="#{depmanper.cod_dep}"/> 
+                                </p:selectOneMenu>
                                 <p:spacer width="20"/>
                                 <h:outputText value="Codigo" style="font-weight:bold;"/>
                                 <p:spacer width="10"/>

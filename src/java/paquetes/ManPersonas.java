@@ -27,6 +27,8 @@ public class ManPersonas implements Serializable {
     private List<CatCargos> cargos;
     private CatUsuarios catusuarios;
     private List<CatUsuarios> usuarios;
+    private CatDepartamentos catdepartamentos;
+    private List<CatDepartamentos> departamentos;
     private String id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, cod_dep, id_jef, fingreso, codigo, id_car, usuario;
     private Date dfingreso;
     
@@ -218,6 +220,22 @@ public class ManPersonas implements Serializable {
         this.usuario = usuario;
     }
 
+    public CatDepartamentos getCatdepartamentos() {
+        return catdepartamentos;
+    }
+
+    public void setCatdepartamentos(CatDepartamentos catdepartamentos) {
+        this.catdepartamentos = catdepartamentos;
+    }
+
+    public List<CatDepartamentos> getDepartamentos() {
+        return departamentos;
+    }
+
+    public void setDepartamentos(List<CatDepartamentos> departamentos) {
+        this.departamentos = departamentos;
+    }
+
     
     public void iniciarventana() {
         
@@ -242,6 +260,7 @@ public class ManPersonas implements Serializable {
         llenarCargos();
         llenarUsuarios();
         llenarPersonas();
+        llenarDepartamentos();
     }
 
     public void cerrarventana() {
@@ -364,6 +383,31 @@ public class ManPersonas implements Serializable {
         }
     }
 
+    public void llenarDepartamentos() {
+        try {
+            catdepartamentos = new CatDepartamentos();
+            departamentos = new ArrayList<>();
+
+            String mQuery = "select cod_dep, cod_pai, nom_dep "
+                    + "from cat_dep order by cod_dep;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                departamentos.add(new CatDepartamentos(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Departamentos en ManMaestroMan. " + e.getMessage());
+        }
+    }
+    
     public void nuevo() {
         id_per = "";
         nombres = "";
