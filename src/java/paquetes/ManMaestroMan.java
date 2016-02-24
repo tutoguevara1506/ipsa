@@ -106,7 +106,6 @@ public class ManMaestroMan implements Serializable {
     private ScheduleEvent mtto = new DefaultScheduleEvent();
 
     private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_sup, turno, cod_pri, cod_dep;
-    ;
     private String gen_det_man, gen_fec_man, gen_cod_ope, gen_det_obs, gen_cod_usu, gen_det_min;
     private String pie_det_man, pie_fec_man, pie_cod_pai, pie_cod_bod, pie_cod_ubi,
             pie_det_can, pie_cod_pie, pie_num_ser, pie_cod_usu;
@@ -962,7 +961,7 @@ public class ManMaestroMan implements Serializable {
         return cod_pri;
     }
 
-    public void setCodPri(String cod_pri) {
+    public void setCod_pri(String cod_pri) {
         this.cod_pri = cod_pri;
     }
 
@@ -995,7 +994,7 @@ public class ManMaestroMan implements Serializable {
         flg_ext = "0";
         cod_sup = cbean.getCod_usu();
         turno = "0";
-        cod_pri = "0";
+        cod_pri = "";
         cod_dep = "0";
         gen_det_man = "";
         gen_fec_man = format.format(dfecha1);
@@ -1063,7 +1062,7 @@ public class ManMaestroMan implements Serializable {
         flg_ext = "0";
         cod_sup = "0";
         turno = "0";
-        cod_pri = "0";
+        cod_pri = "";
         cod_dep = "0";
         gen_det_man = "";
         gen_fec_man = "";
@@ -1119,7 +1118,7 @@ public class ManMaestroMan implements Serializable {
         flg_ext = "0";
         cod_sup = cbean.getCod_usu();
         turno = "0";
-        cod_pri = "0";
+        cod_pri = "";
         cod_dep = "0";
         gen_det_man = "";
         gen_fec_man = "";
@@ -1174,7 +1173,7 @@ public class ManMaestroMan implements Serializable {
             flg_ext = "0";
             cod_sup = cbean.getCod_usu();
             turno = "0";
-            cod_pri = "0";
+            cod_pri = "";
             cod_dep = "0";
             cod_gru_fal = "0";
             cod_fal = "0";
@@ -1923,25 +1922,35 @@ public class ManMaestroMan implements Serializable {
                     mQuery = "update tbl_mae_man set "
                             + "cod_tip= " + cod_tip + ","
                             + "det_obs= '" + det_obs.replace("'", " ") + "',"
+                            + "fec_ini = str_to_date('" + fec_ini + "','%d/%m/%Y %H:%i'),"
+                            + "fec_fin = str_to_date('" + fec_fin + "','%d/%m/%Y %H:%i'),"
                             + "cod_usu = " + cod_usu + ","
                             + "cod_per= " + cod_per + ","
                             + "flg_ext= " + flg_ext + ","
                             + "cod_sup = " + cod_sup + ","
                             + "turno= " + turno + ","
-                            + "cod_pri= " + cod_pri + ","
+                            + "cod_pri= '" + cod_pri + "',"
                             + "cod_dep= " + cod_dep + " "
                             + "where cod_lis_equ = " + cod_lis_equ + " "
                             + "and cod_man = " + cod_man + ";";
                 }
                 mAccesos.dmlSQLvariable(mQuery);
                 String mValues = "";
+                mQuery = "";
+                
                 for (int i = 0; i < fallas.size(); i++) {
                     mValues = mValues + ",(" + cod_lis_equ + "," + cod_man + ","
                             + (i + 1) + "," + fallas.get(i).getCod_gru_fal() + "," + fallas.get(i).getCod_fal() + ",'')";
                 }
-                mQuery = "insert into tbl_det_man_fal (cod_lis_equ,cod_man,det_man,cod_gru_fal,cod_fal,det_obs) VALUES" + mValues.substring(1) + ";";
-                mAccesos.dmlSQLvariable(mQuery);
+                
+                if (!"".equals(mValues))
+                    {
+                        mQuery = "insert into tbl_det_man_fal (cod_lis_equ,cod_man,det_man,cod_gru_fal,cod_fal,det_obs) VALUES" + mValues.substring(1) + ";";
+                        mAccesos.dmlSQLvariable(mQuery);
+                    }
+                
                 mAccesos.Desconectar();
+                
                 addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);
             } catch (Exception e) {
                 addMessage("Guardar Mantenimiento", "Error al momento de guardar la información. " + e.getMessage(), 2);

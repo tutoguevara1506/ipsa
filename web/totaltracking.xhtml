@@ -5119,7 +5119,7 @@
                             <f:selectItem itemLabel="Diurno" itemValue="0"/>
                             <f:selectItem itemLabel="Nocturno" itemValue="1"/>
                         </p:selectOneMenu>
-                         <p:selectOneMenu value="#{manMaestroMan.turno}" 
+                        <p:selectOneMenu value="#{manMaestroMan.cod_pri}" 
                                          style=" width: 120px;">
                             <f:selectItem itemLabel="Normal" itemValue="B"/>
                             <f:selectItem itemLabel="Urgente" itemValue="A"/>
@@ -5127,8 +5127,8 @@
                     </h:panelGrid>
                     <h:panelGrid columns="1" cellpadding="5">
                         <h:outputText value="Detalle de falla" style="font-weight:bold;"/>
-                        <p:inputTextarea cols="135" rows="2"
-                                         maxlength="200"
+                        <p:inputTextarea cols="90" rows="2"
+                                         maxlength="180"
                                          value="#{manMaestroMan.det_obs}"
                                          onfocus="this.select()"
                                          />
