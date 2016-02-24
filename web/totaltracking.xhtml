@@ -81,6 +81,20 @@
                                 update=":frmPiezas"
                                 disabled="#{manSeguridad.disableOpt('menuPiezas')}"
                                 />
+                    <p:menuitem value="Grupo Fallas" icon="ui-icon-tag" 
+                                onclick="PF('wGruFal').show()"
+                                style="width: 125px;"
+                                action="#{manGruposFallas.iniciarventana()}" 
+                                update=":frmGruFal"
+                                disabled="#{manSeguridad.disableOpt('menuGrupoFallas')}"
+                                />
+                    <p:menuitem value="Fallas" icon="ui-icon-tag" 
+                                onclick="PF('wFallas').show()"
+                                style="width: 125px;"
+                                action="#{manFallas.iniciarventana()}" 
+                                update=":frmFallas"
+                                disabled="#{manSeguridad.disableOpt('menuFallas')}"
+                                />
                     
                 </p:submenu>
                     
@@ -6766,6 +6780,189 @@
 
             </h:form>
         </p:dialog> 
+        
+        <!--******************************************************************** 
+        **************** Pantalla mantenimiento de Grupos Fallas  *****************
+        *********************************************************************-->
+
+        <p:dialog  id="dlgGruFal" widgetVar="wGruFal" modal="true" 
+                   width="460" height="290" closable="false" resizable="false" 
+                   header="Mantenimiento de Grupos de Fallas" rendered="true" 
+                   dynamic="false" visible="false" 
+                   >
+
+            <h:form id="frmGruFal"> 
+                <p:growl id="msgGruFal" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manGruposFallas.nuevo()}"
+                                         update=":frmGruFal"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         actionListener="#{manGruposFallas.guardar()}"
+                                         update=":frmGruFal"
+                                         icon="ui-icon-disk"
+                                         > 
+                            <p:confirm header="Guardar Registro" 
+                                       message="¿Realmente desea Guardar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         actionListener="#{manGruposFallas.eliminar()}"
+                                         update=":frmGruFal"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wGruFal').hide()"
+                                         actionListener="#{manGruposFallas.cerrarventana()}"
+                                         update=":frmGruFal"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+
+                <p:panel>
+                    <div style=" background-color:  #ebf8fe;">
+                        <p:focus for="txtnombregrufal" />
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value="Nombre" style="font-weight:bold;"/>
+                            <p:inputText id="txtnombregrufal" 
+                                         size="50"
+                                         maxlength="50"
+                                         value="#{manGruposFallas.nom_gru_fal}"
+                                         onfocus="this.select()"
+                                         />
+                        </h:panelGrid>
+                    </div>
+                </p:panel>
+
+                <p:panel>
+                    <p:dataTable id="dtGruFal" var="vGruFal" 
+                                 value="#{manGruposFallas.grupofallas}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manGruposFallas.catgrupofallas}" 
+                                 rowKey="#{vGruFal.cod_gru_fal}"
+                                 editable="false" 
+                                 scrollable="true"
+                                 scrollHeight="120"
+                                 style="width:400px"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manGruposFallas.onRowSelect}" 
+                                update=":frmGruFal"/>
+                        <p:ajax event="rowUnselect"/>
+
+                        <p:column style="width:30px" headerText="Id">
+                            <h:outputText value="#{vGruFal.cod_gru_fal}" />
+                        </p:column>
+                        <p:column style="width:300px" headerText="Nombre">
+                            <h:outputText value="#{vGruFal.nom_gru_fal}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </p:dialog>
+
+        <!-- *******************************************************************
+        **************** Pantalla mantenimiento de Fallas              ********
+        *********************************************************************-->
+
+        <p:dialog  id="dlgFallas" widgetVar="wFallas" modal="true" 
+                   width="580" height="350" closable="false" resizable="false" 
+                   header="Mantenimiento de Fallas" rendered="true" 
+                   dynamic="true" visible="false" 
+                   >
+
+            <h:form id="frmFallas"> 
+                <p:growl id="msgFallas" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manFallas.nuevo()}"
+                                         update=":frmFallas"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         action="#{manFallas.guardar()}"
+                                         update=":frmFallas"
+                                         icon="ui-icon-disk"
+                                         />
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         actionListener="#{manFallas.eliminar()}"
+                                         update=":frmFallas"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wFallas').hide()"
+                                         action="#{manFallas.cerrarventana()}" 
+                                         update=":frmFallas"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+                <div style=" background-color: #ebf8fe;">
+                    <h:panelGrid columns="2" cellpadding="5">
+                         <h:outputText value="Grupo Falla" style="font-weight:bold;"/>
+                            <p:selectOneMenu value="#{manFallas.cod_gru_fal}" 
+                                style="width:455px;text-align:right;"
+                                immediate="false">  
+                                    <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                                    <f:selectItems value="#{manFallas.grupofallas}" var="mgrufal"
+                                     itemLabel="#{mgrufal.nom_gru_fal}" itemValue="#{mgrufal.cod_gru_fal}"/>
+                            </p:selectOneMenu>
+                       <h:outputText value="Falla" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="95" value="#{manFallas.nom_fal}" 
+                                     onfocus="this.select()"/>
+                    </h:panelGrid>
+                    <p:dataTable id="dtFallas" var="vFallas" 
+                                 value="#{manFallas.fallas}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manFallas.catfallas}" 
+                                 rowKey="#{vFallas.cod_fal}"
+                                 editable="false" 
+                                 style="width:540px"
+                                 scrollable="true"
+                                 scrollHeight="190"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manFallas.onRowSelect}" 
+                                update=":frmFallas" />
+                       <p:column style="width:30px" headerText="Grupo Falla">
+                           <h:outputText value="#{vFallas.nomgrupo}" />
+                        </p:column>                    
+                        <p:column style="width:80px" headerText="Nombre Falla">
+                            <h:outputText value="#{vFallas.nom_fal}" />
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+            </h:form>
+        </p:dialog>  
+        
         
     <script type="text/javascript">
         PrimeFaces.locales['es'] = {
