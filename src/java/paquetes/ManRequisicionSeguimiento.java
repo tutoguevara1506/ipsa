@@ -864,14 +864,17 @@ public class ManRequisicionSeguimiento extends Conexion implements Serializable 
     }
 
     public void aprobar() {
-
+        String mQuery;
         Accesos mAccesos = new Accesos();
         mAccesos.Conectar();
 
         if (!"".equals(apr_cod_mae) && !"0".equals(aprobador)) {
 
             try {
-                String mQuery = "update req_mae set det_sta=2, cod_usu_apr=" + aprobador
+                mQuery = "update tbl_rel_man_sol_req set det_sta_sol_req=2 "
+                        + "where cod_sol_req= " + apr_cod_mae + " and flg_sol_req='REQ'";
+                mAccesos.dmlSQLvariable(mQuery);
+                mQuery = "update req_mae set det_sta=2, cod_usu_apr=" + aprobador
                         + " where cod_mae=" + apr_cod_mae + ";";
                 mAccesos.dmlSQLvariable(mQuery);
                 addMessage("Aprobar Requisición", "La Requisición ha sido Aprobada.", 1);
@@ -895,14 +898,17 @@ public class ManRequisicionSeguimiento extends Conexion implements Serializable 
     }
 
     public void rechazar() {
-
+        String mQuery;
         Accesos mAccesos = new Accesos();
         mAccesos.Conectar();
 
         if ("".equals(cod_mae) == false) {
 
             try {
-                String mQuery = "update req_mae set det_sta=3 where cod_mae=" + apr_cod_mae + ";";
+                mQuery = "update tbl_rel_man_sol_req set det_sta_sol_req=3 "
+                        + "where cod_sol_req= " + apr_cod_mae + " and flg_sol_req='REQ'";
+                mAccesos.dmlSQLvariable(mQuery);
+                mQuery = "update req_mae set det_sta=3 where cod_mae=" + apr_cod_mae + ";";
                 mAccesos.dmlSQLvariable(mQuery);
                 addMessage("Cancelar Requisición", "La Requisición ha sido denegada.", 1);
             } catch (Exception e) {
@@ -1044,11 +1050,17 @@ public class ManRequisicionSeguimiento extends Conexion implements Serializable 
 
                 if (detalles.size() == contador2) {
                     acc.Conectar();
+                    mQuery = "update tbl_rel_man_sol_req set det_sta_sol_req=1 "
+                            + "where cod_sol_req= " + cod_mae + " and flg_sol_req='REQ';";
+                    acc.dmlSQLvariable(mQuery);
                     mQuery = "update req_mae set det_sta = 1 where cod_ma = " + cod_mae + ";";
                     acc.dmlSQLvariable(mQuery);
                     acc.Desconectar();
                 } else if (detalles.size() == contador) {
                     acc.Conectar();
+                    mQuery = "update tbl_rel_man_sol_req set det_sta_sol_req=5 "
+                            + "where cod_sol_req= " + cod_mae + " and flg_sol_req='REQ';";
+                    acc.dmlSQLvariable(mQuery);
                     mQuery = "update req_mae set "
                             + "det_sta = 5, "
                             + "fec_cie = str_to_date('" + fec_cie + "','%d/%m/%Y') "
