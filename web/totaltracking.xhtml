@@ -4698,7 +4698,6 @@
                             <f:facet name="header">
                                 <p:outputPanel style=" text-align: right;">
                                     <h:panelGroup>
-                                        <h:outputText value="F-MAN-004 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
                                         <h:outputText value="Filtrar:&nbsp;&nbsp;" />
                                         <p:inputText id="globalFilter" 
                                                      onkeyup="PF('wvEncMan').filter()" 
@@ -5127,7 +5126,7 @@
                     </h:panelGrid>
                     <h:panelGrid columns="1" cellpadding="5">
                         <h:outputText value="Detalle de falla" style="font-weight:bold;"/>
-                        <p:inputTextarea cols="110" rows="2"
+                        <p:inputTextarea cols="100" rows="2"
                                          maxlength="180"
                                          value="#{manMaestroMan.det_obs}"
                                          onfocus="this.select()"

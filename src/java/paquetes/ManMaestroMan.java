@@ -3240,6 +3240,10 @@ public class ManMaestroMan implements Serializable {
         cod_usu = ((CatMantenimientos) event.getObject()).getCod_usu();
         cod_per = ((CatMantenimientos) event.getObject()).getCod_per();
         flg_ext = ((CatMantenimientos) event.getObject()).getFlg_ext();
+        cod_sup = ((CatMantenimientos) event.getObject()).getCod_sup();
+        cod_dep = ((CatMantenimientos) event.getObject()).getCod_dep();
+        turno = ((CatMantenimientos) event.getObject()).getTurno();
+        cod_pri = ((CatMantenimientos) event.getObject()).getCod_pri();
         if ("00/00/0000".equals(fec_ini)) {
             fec_ini = "";
         }
