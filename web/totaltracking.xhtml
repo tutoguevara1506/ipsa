@@ -4146,15 +4146,13 @@
                         <p:column style="width:30px;" headerText="Equipo">
                             <h:outputText value="#{vSLE.nomequ}" />
                         </p:column>
-                        <p:column style="width:40px" headerText="Serie">
+                        <p:column style="width:70px" headerText="Nombre Equipo">
+                            <h:outputText value="#{vSLE.des_equ}" />
+                        </p:column>
+                        <p:column style="width:70px" headerText="Serie">
                             <h:outputText value="#{vSLE.num_ser}" />
                         </p:column>
-                        <p:column style="width:60px" headerText="Cliente">
-                            <h:outputText value="#{vSLE.nomcli}" />
-                        </p:column>
-                        <p:column style="width:80px" headerText="Ubicación">
-                            <h:outputText value="#{vSLE.des_ubi}" />
-                        </p:column>
+                        
                     </p:dataTable>
                 </p:panel>
             </h:form>
