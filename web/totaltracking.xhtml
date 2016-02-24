@@ -5173,12 +5173,13 @@
                         </p:selectOneMenu>
                         </h:panelGrid>
                         <h:panelGrid columns="4" cellpadding="5">
-                            <h:outputText value="Diagnostico Falla" style="font-weight:bold;"/>
+                            <h:outputText value="Diagnóstico Falla" style="font-weight:bold;"/>
                             <p:selectOneMenu value="#{manMaestroMan.cod_fal}" 
                                          style=" width: 500px;"
                                          id="somfallasnewman"
+                                         editable="true"
                                          >
-                                <f:selectItem itemLabel="Ninguna" itemValue="0"/>
+                                <f:selectItem itemLabel="Personalizada" itemValue="0"/>
                                 <f:selectItems value="#{manMaestroMan.listafallas}" var="somfalnewman"
                                            itemLabel="#{somfalnewman.nom_fal}" itemValue="#{somfalnewman.cod_fal}"/> 
                             </p:selectOneMenu>
