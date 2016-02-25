@@ -49,7 +49,6 @@ import org.primefaces.model.ScheduleModel;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.UploadedFile;
 
-
 @Named
 @ConversationScoped
 
@@ -1158,6 +1157,7 @@ public class ManMaestroMan implements Serializable {
         if ("".equals(cod_lis_equ) || "0".equals(cod_lis_equ)) {
             addMessage("Nuevo Mantenimiento", "Debe Seleccionar un Equipo.", 2);
         } else {
+            
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             dfecini = Date.from(Instant.now());
             dfecfinF = Date.from(Instant.now());
@@ -1184,11 +1184,12 @@ public class ManMaestroMan implements Serializable {
             catmantenimientosfal = new CatMantenimientosFal();
             fallas = new ArrayList<>();
             RequestContext.getCurrentInstance().execute("PF('wMaestraNew').show()");
+            
         }
 
     }
-    
-    public void cerrarventananew(){
+
+    public void cerrarventananew() {
         llenarMantenimientos();
     }
 
@@ -1941,20 +1942,19 @@ public class ManMaestroMan implements Serializable {
                 mAccesos.dmlSQLvariable(mQuery);
                 String mValues = "";
                 mQuery = "";
-                
+
                 for (int i = 0; i < fallas.size(); i++) {
                     mValues = mValues + ",(" + cod_lis_equ + "," + cod_man + ","
                             + (i + 1) + "," + fallas.get(i).getCod_gru_fal() + "," + fallas.get(i).getCod_fal() + ",'')";
                 }
-                
-                if (!"".equals(mValues))
-                    {
-                        mQuery = "insert into tbl_det_man_fal (cod_lis_equ,cod_man,det_man,cod_gru_fal,cod_fal,det_obs) VALUES" + mValues.substring(1) + ";";
-                        mAccesos.dmlSQLvariable(mQuery);
-                    }
-                
+
+                if (!"".equals(mValues)) {
+                    mQuery = "insert into tbl_det_man_fal (cod_lis_equ,cod_man,det_man,cod_gru_fal,cod_fal,det_obs) VALUES" + mValues.substring(1) + ";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                }
+
                 mAccesos.Desconectar();
-                
+
                 addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);
             } catch (Exception e) {
                 addMessage("Guardar Mantenimiento", "Error al momento de guardar la información. " + e.getMessage(), 2);
@@ -3856,8 +3856,8 @@ public class ManMaestroMan implements Serializable {
             }
         }
     }
-    
-     public void imprimir_f_man_004() {
+
+    public void imprimir_f_man_004() {
         try {
             byte[] content;
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -3875,15 +3875,15 @@ public class ManMaestroMan implements Serializable {
             Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     
-     public byte[] imprimirFicha() throws SQLException, JRException {
+
+    public byte[] imprimirFicha() throws SQLException, JRException {
         ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         String reportPath = ctx.getRealPath(File.separator + "reportes" + File.separator);
         HashMap param = new HashMap();
         param.put("cod_lis_equ", cod_lis_equ);
         param.put("cod_man", cod_man);
-        
-        Accesos racc = new Accesos();      
+
+        Accesos racc = new Accesos();
         return JasperRunManager.runReportToPdf(reportPath + File.separator + "FMAN004.jasper", param, racc.Conectar());
     }
 
