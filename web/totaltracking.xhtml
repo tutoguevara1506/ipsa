@@ -6196,12 +6196,15 @@
                             </h:panelGroup>
                             <h:outputText value="Jefe Inmediato" style="font-weight:bold;"/>
                             <h:panelGroup>
-                                <p:inputText id="txtjefeper" 
-                                         size="28"
-                                         maxlength="30"
-                                         value="#{manPersonas.id_jef}"
-                                         onfocus="this.select()"
-                                         />
+                                <p:selectOneMenu value="#{manFallas.cod_gru_fal}" 
+                                                 id="txtjefeper" 
+                                                 style="width:225px;text-align:right;"
+                                                 immediate="false">
+                                    
+                                    <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                                    <f:selectItems value="#{manPersonas.personas}" var="mjefeper"
+                                     itemLabel="#{mjefeper.nombres} #{mjefeper.apellidos}" itemValue="#{mjefeper.id_per}"/>
+                                </p:selectOneMenu>
                                 <p:spacer width="20"/>
                                 <h:outputText value="Fecha Ingreso" style="font-weight:bold;"/>
                                 <p:spacer width="10"/>
