@@ -440,10 +440,15 @@ public class ManPersonas implements Serializable {
             try {
                 Accesos mAccesos = new Accesos();
                 mAccesos.Conectar();
+                if ("00/00/0000".equals(fingreso)) {
+                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                    Date dfecha = Date.from(Instant.now());
+                    fingreso = format.format(dfecha);
+                }                    
                 if ("".equals(id_per)) {
                     mQuery = "select ifnull(max(id_per),0)+1 as codigo from cat_persona;";
                     id_per = mAccesos.strQuerySQLvariable(mQuery);
-                                            
+                                                        
                     mQuery = "insert into cat_persona (id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, codigo, cod_dep, id_jef, fingreso, id_car, cod_usu) "
                             + "values (" + id_per + ",'" + nombres + "','" + apellidos + "','" + direccion + "','" + telefono 
                             + "','" + celular + "','" + email + "','" + dui + "','" + nit + "','" + isss + "','" + codigo + "'," + cod_dep + "," + id_jef + ", " + "str_to_date('" + fingreso + "','%d/%m/%Y')" + "," + id_car + ",'" + usuario + "');";
