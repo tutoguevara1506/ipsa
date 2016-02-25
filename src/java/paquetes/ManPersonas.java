@@ -423,7 +423,6 @@ public class ManPersonas implements Serializable {
         codigo = "";
         cod_dep = "";
         id_jef = "";
-        fingreso = "";
         id_car = "";
         id_car = "";
         usuario = "";
