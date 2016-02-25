@@ -24,6 +24,8 @@ public class ManPersonas implements Serializable {
     Login cbean;
     private CatPersonas catpersonas;
     private List<CatPersonas> personas;
+    private CatPersonas catjefes;
+    private List<CatPersonas> jefes;
     private CatCargos catcargos;
     private List<CatCargos> cargos;
     private CatUsuarios catusuarios;
@@ -237,6 +239,22 @@ public class ManPersonas implements Serializable {
         this.departamentos = departamentos;
     }
 
+    public List<CatPersonas> getJefes() {
+        return jefes;
+    }
+
+    public void setJefes(List<CatPersonas> jefes) {
+        this.jefes = jefes;
+    }
+
+    public CatPersonas getCatjefes() {
+        return catjefes;
+    }
+
+    public void setCatjefes(CatPersonas catjefes) {
+        this.catjefes = catjefes;
+    }
+
     
     public void iniciarventana() {
         
@@ -261,6 +279,7 @@ public class ManPersonas implements Serializable {
         llenarCargos();
         llenarUsuarios();
         llenarPersonas();
+        llenarJefes();
         llenarDepartamentos();
     }
 
@@ -284,6 +303,7 @@ public class ManPersonas implements Serializable {
         id_car = "";
         usuario = "";
         personas = new ArrayList<>();
+        jefes = new ArrayList<>();
     }
 
     public void llenarCargos() {
@@ -386,6 +406,47 @@ public class ManPersonas implements Serializable {
         }
     }
 
+    public void llenarJefes() {
+        String mQuery = "";
+        try {
+            catjefes = new CatPersonas();
+            jefes = new ArrayList<>();
+
+            mQuery = "select id_per, nombres, apellidos, direccion, "
+                    + "telefono, celular, email, dui, nit, isss, codigo, "
+                    + "cod_dep, id_jef, fingreso, id_car, cod_usu "
+                    + "from cat_persona order by id_per;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                jefes.add(new CatPersonas(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10),
+                        resVariable.getString(11),
+                        resVariable.getString(12),
+                        resVariable.getString(13),
+                        resVariable.getString(14),
+                        resVariable.getString(15),
+                        resVariable.getString(16)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Registro de Jefes. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+    
     public void llenarDepartamentos() {
         try {
             catdepartamentos = new CatDepartamentos();

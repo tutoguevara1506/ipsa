@@ -6225,8 +6225,8 @@
                                                  immediate="false">
                                     
                                     <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
-                                    <f:selectItems value="#{manPersonas.personas}" var="mjefeper"
-                                     itemLabel="#{mjefeper.nombres} #{mjefeper.apellidos}" itemValue="#{mjefeper.id_per}"/>
+                                    <f:selectItems value="#{manPersonas.jefes}" var="mjefeper"
+                                     itemLabel="#{mjefeper.nombres} #{mjefeper.apellidos}" itemValue="#{mjefeper.id_jef}"/>
                                 </p:selectOneMenu>
                                 <p:spacer width="20"/>
                                 <h:outputText value="Fecha Ingreso" style="font-weight:bold;"/>
