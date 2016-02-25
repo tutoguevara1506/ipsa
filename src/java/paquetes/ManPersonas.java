@@ -2,6 +2,7 @@ package paquetes;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -438,6 +439,13 @@ public class ManPersonas implements Serializable {
                 if ("".equals(id_per)) {
                     mQuery = "select ifnull(max(id_per),0)+1 as codigo from cat_persona;";
                     id_per = mAccesos.strQuerySQLvariable(mQuery);
+                    
+                    if ("".equals(fingreso)){
+                        Format formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date dt = new Date();
+                        fingreso = formato.format(dt);                        
+                    }
+                        
                     mQuery = "insert into cat_persona (id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, codigo, cod_dep, id_jef, fingreso, id_car, cod_usu) "
                             + "values (" + id_per + ",'" + nombres + "','" + apellidos + "','" + direccion + "','" + telefono 
                             + "','" + celular + "','" + email + "','" + dui + "','" + nit + "','" + isss + "','" + codigo + "'," + cod_dep + "," + id_jef + ", " + "str_to_date('" + fingreso + "','%d/%m/%Y')" + "," + id_car + ",'" + usuario + "');";
