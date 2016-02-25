@@ -24,80 +24,80 @@
             <p:menubar id="menumadre">
                 <p:submenu label="Mantenimiento" icon="ui-icon-wrench" >
                     <p:submenu label="Configuración" icon="ui-icon-folder-open">
-                    <p:menuitem value="Procesos" icon="ui-icon-transferthick-e-w" 
-                                onclick="PF('wPaises').show()"
-                                update=":frmPaises"
-                                style="width: 125px;"
-                                actionListener="#{manPaises.iniciarventana()}"
-                                disabled="#{manSeguridad.disableOpt('menuProcesos')}"
-                                />
-                    
-                    <p:menuitem value="Fabricantes" icon="ui-icon-person" 
-                                onclick="PF('wPro').show()"
-                                style="width: 125px;"
-                                action="#{manProveedores.iniciarventana()}" 
-                                disabled="#{manSeguridad.disableOpt('menuProveedores')}"
-                                update=":frmPro"
-                                />
-                    <p:menuitem value="Marcas" icon="ui-icon-tag" 
-                                onclick="PF('wMarca').show()"
-                                style="width: 125px;"
-                                action="#{manMarcas.iniciarventana()}" 
-                                update=":frmMarca"
-                                disabled="#{manSeguridad.disableOpt('menuMarcas')}"
-                                />
-                    <p:menuitem value="Tipología Mant." icon="ui-icon-wrench" 
-                                onclick="PF('wTipMan').show()"
-                                style="width: 125px;"
-                                action="#{manTipos.iniciarventana()}" 
-                                update=":frmTipMan"
-                                disabled="#{manSeguridad.disableOpt('menuTipoMtto')}"
-                                />
-                    <p:menuitem value="Categorías Piezas" icon="ui-icon-note" 
-                                onclick="PF('wCatPie').show()"
-                                style="width: 125px;"
-                                action="#{manCategorias.iniciarventana()}" 
-                                update=":frmCatPie"
-                                disabled="#{manSeguridad.disableOpt('menuCategoriaPiezas')}"
-                                />
-                    <p:menuitem value="Acciones" icon="ui-icon-wrench" 
-                                onclick="PF('wOpe').show()"
-                                style="width: 125px;"
-                                action="#{manOperaciones.iniciarventana()}" 
-                                update=":frmOpe"
-                                disabled="#{manSeguridad.disableOpt('menuOperaciones')}"
-                                />
-                    <p:menuitem value="Equipos" icon="ui-icon-gear" 
-                                onclick="PF('wEquipos').show()"
-                                style="width: 125px;"
-                                action="#{manEquipos.iniciarventana()}" 
-                                update=":frmEquipos"
-                                disabled="#{manSeguridad.disableOpt('menuEquipos')}"
-                                />
-                    <p:menuitem value="Piezas" icon="ui-icon-pin-s" 
-                                onclick="PF('wPiezas').show()"
-                                style="width: 125px;"
-                                action="#{manPiezas.iniciarventana()}" 
-                                update=":frmPiezas"
-                                disabled="#{manSeguridad.disableOpt('menuPiezas')}"
-                                />
-                    <p:menuitem value="Grupo Fallas" icon="ui-icon-tag" 
-                                onclick="PF('wGruFal').show()"
-                                style="width: 125px;"
-                                action="#{manGruposFallas.iniciarventana()}" 
-                                update=":frmGruFal"
-                                disabled="#{manSeguridad.disableOpt('menuGrupoFallas')}"
-                                />
-                    <p:menuitem value="Fallas" icon="ui-icon-wrench" 
-                                onclick="PF('wFallas').show()"
-                                style="width: 125px;"
-                                action="#{manFallas.iniciarventana()}" 
-                                update=":frmFallas"
-                                disabled="#{manSeguridad.disableOpt('menuFallas')}"
-                                />
-                    
-                </p:submenu>
-                    
+                        <p:menuitem value="Procesos" icon="ui-icon-transferthick-e-w" 
+                                    onclick="PF('wPaises').show()"
+                                    update=":frmPaises"
+                                    style="width: 125px;"
+                                    actionListener="#{manPaises.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuProcesos')}"
+                                    />
+
+                        <p:menuitem value="Fabricantes" icon="ui-icon-person" 
+                                    onclick="PF('wPro').show()"
+                                    style="width: 125px;"
+                                    action="#{manProveedores.iniciarventana()}" 
+                                    disabled="#{manSeguridad.disableOpt('menuProveedores')}"
+                                    update=":frmPro"
+                                    />
+                        <p:menuitem value="Marcas" icon="ui-icon-tag" 
+                                    onclick="PF('wMarca').show()"
+                                    style="width: 125px;"
+                                    action="#{manMarcas.iniciarventana()}" 
+                                    update=":frmMarca"
+                                    disabled="#{manSeguridad.disableOpt('menuMarcas')}"
+                                    />
+                        <p:menuitem value="Tipología Mant." icon="ui-icon-wrench" 
+                                    onclick="PF('wTipMan').show()"
+                                    style="width: 125px;"
+                                    action="#{manTipos.iniciarventana()}" 
+                                    update=":frmTipMan"
+                                    disabled="#{manSeguridad.disableOpt('menuTipoMtto')}"
+                                    />
+                        <p:menuitem value="Categorías Piezas" icon="ui-icon-note" 
+                                    onclick="PF('wCatPie').show()"
+                                    style="width: 125px;"
+                                    action="#{manCategorias.iniciarventana()}" 
+                                    update=":frmCatPie"
+                                    disabled="#{manSeguridad.disableOpt('menuCategoriaPiezas')}"
+                                    />
+                        <p:menuitem value="Acciones" icon="ui-icon-wrench" 
+                                    onclick="PF('wOpe').show()"
+                                    style="width: 125px;"
+                                    action="#{manOperaciones.iniciarventana()}" 
+                                    update=":frmOpe"
+                                    disabled="#{manSeguridad.disableOpt('menuOperaciones')}"
+                                    />
+                        <p:menuitem value="Equipos" icon="ui-icon-gear" 
+                                    onclick="PF('wEquipos').show()"
+                                    style="width: 125px;"
+                                    action="#{manEquipos.iniciarventana()}" 
+                                    update=":frmEquipos"
+                                    disabled="#{manSeguridad.disableOpt('menuEquipos')}"
+                                    />
+                        <p:menuitem value="Piezas" icon="ui-icon-pin-s" 
+                                    onclick="PF('wPiezas').show()"
+                                    style="width: 125px;"
+                                    action="#{manPiezas.iniciarventana()}" 
+                                    update=":frmPiezas"
+                                    disabled="#{manSeguridad.disableOpt('menuPiezas')}"
+                                    />
+                        <p:menuitem value="Grupo Fallas" icon="ui-icon-tag" 
+                                    onclick="PF('wGruFal').show()"
+                                    style="width: 125px;"
+                                    action="#{manGruposFallas.iniciarventana()}" 
+                                    update=":frmGruFal"
+                                    disabled="#{manSeguridad.disableOpt('menuGrupoFallas')}"
+                                    />
+                        <p:menuitem value="Fallas" icon="ui-icon-wrench" 
+                                    onclick="PF('wFallas').show()"
+                                    style="width: 125px;"
+                                    action="#{manFallas.iniciarventana()}" 
+                                    update=":frmFallas"
+                                    disabled="#{manSeguridad.disableOpt('menuFallas')}"
+                                    />
+
+                    </p:submenu>
+
                     <p:menuitem value="Registro Equipo" icon="ui-icon-gear" 
                                 onclick="PF('wListaEquipos').show()"
                                 style="width: 125px;"
@@ -178,12 +178,12 @@
                                     disabled="#{manSeguridad.disableOpt('menuUnidades')}"
                                     />
                         <p:menuitem value="Movimientos" icon="ui-icon-arrowthick-2-n-s" 
-                                onclick="PF('wMov').show()"
-                                update=":frmMov"
-                                style="width: 125px;"
-                                actionListener="#{manMovimientos.iniciarventana()}"
-                                disabled="#{manSeguridad.disableOpt('menuMovimientos')}"
-                                />                        
+                                    onclick="PF('wMov').show()"
+                                    update=":frmMov"
+                                    style="width: 125px;"
+                                    actionListener="#{manMovimientos.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuMovimientos')}"
+                                    />                        
                         <p:menuitem value="Grupos Piezas" icon="ui-icon-wrench" 
                                     onclick="PF('wGruPie').show()"
                                     update=":frmGruPie"
@@ -215,14 +215,14 @@
                                     actionListener="#{manRequisicionEstado.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuEstadoRequisicion')}"
                                     />
-                        </p:submenu>  
-                        <p:menuitem value="Seguimiento" icon="ui-icon-search" 
-                                    onclick="PF('wSeguimientoReq').show()"
-                                    update=":frmSeguimientoReq"
-                                    style="width: 125px;"
-                                    actionListener="#{manRequisicionSeguimiento.iniciarventana()}"
-                                    disabled="#{manSeguridad.disableOpt('menuSeguimientoRequisicion')}"
-                                   />
+                    </p:submenu>  
+                    <p:menuitem value="Seguimiento" icon="ui-icon-search" 
+                                onclick="PF('wSeguimientoReq').show()"
+                                update=":frmSeguimientoReq"
+                                style="width: 125px;"
+                                actionListener="#{manRequisicionSeguimiento.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuSeguimientoRequisicion')}"
+                                />
                 </p:submenu>
                 <p:submenu label="Personal" icon="ui-icon-person">
                     <p:submenu label="Configuración" icon="ui-icon-folder-open">
@@ -254,7 +254,7 @@
                                     actionListener="#{manCriterios.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuCriterios')}"
                                     />
-                       
+
                     </p:submenu>
                     <p:menuitem value="Personal" icon="ui-icon-person" 
                                 onclick="PF('wPersonal').show()"
@@ -301,7 +301,7 @@
                                 style="width: 190px;"
                                 disabled="#{manSeguridad.disableOpt('menuCatCtrl')}"
                                 />
-                         
+
                     <p:menuitem value="Asignación Usuarios-Grupos" icon="ui-icon-pin-s" 
                                 id="menuAsigUsrGrp"
                                 onclick="PF('wUsrGrp').show()"
@@ -2484,7 +2484,7 @@
                                              >
                                     <p:ajax event="dateSelect" listener="#{manSeguimiento.dateCieSelected}" />
                                 </p:calendar>
-                                
+
                             </h:panelGrid>
                         </p:panel>
                         <p:panel>
@@ -2825,8 +2825,8 @@
                 </p:panel>
             </h:form>
         </p:dialog>
-        
-        
+
+
         <!--******************************************************************** 
         ********************* Pantalla Nueva Requisición ***********************
         *********************************************************************-->
@@ -3671,9 +3671,9 @@
             </h:form>
         </p:dialog>
 
-       <!--******************************************************************** 
-        ************************* Pantalla Lista Equipos ***********************
-        *********************************************************************-->
+        <!--******************************************************************** 
+         ************************* Pantalla Lista Equipos ***********************
+         *********************************************************************-->
 
         <p:dialog  id="dlgListaEquipos" widgetVar="wListaEquipos" modal="true" 
                    width="850" height="500" closable="false" resizable="false" 
@@ -4166,7 +4166,7 @@
                         <p:column style="width:70px" headerText="Serie">
                             <h:outputText value="#{vSLE.num_ser}" />
                         </p:column>
-                        
+
                     </p:dataTable>
                 </p:panel>
             </h:form>
@@ -4481,7 +4481,7 @@
                              style="width:823px"
                              >
 
-                  
+
                     <p:column style="width:50px;" headerText="Pieza">
                         <h:outputText value="#{vExistencias.nompie}" />
                     </p:column>
@@ -4614,18 +4614,15 @@
                         <h:panelGrid columns="1" styleClass="noBorders">
                             <h:outputText value="Equipo" style="font-weight:bold;"/>
                             <p:selectOneMenu id="txtbusns" style=" width: 160px;" value="#{manMaestroMan.buscar_serie}"
-                                                         filter="true" filterMatchMode="contains" 
-                                                         >
-                                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0"/>
-                                            <f:selectItems value="#{manMaestroMan.lequipos}" var="lequman"
-                                                           itemLabel="#{lequman.des_equ}" itemValue="#{lequman.cod_lis_equ}"/> 
-                                        </p:selectOneMenu>
-                            <p:commandButton value="Buscar" icon="ui-icon-search" 
-                                             style="width: 185px;" 
-                                             actionListener="#{manMaestroMan.onclickbuscar()}"
-                                             update=":frmMaestra"
-                                             />
-                            
+                                             filter="true" filterMatchMode="contains" 
+                                             >
+                                <p:ajax event="change" listener="#{manMaestroMan.onclickbuscar()}" update=":frmMaestra" />
+                                <f:selectItem itemLabel="Seleccione Uno" itemValue="0"/>
+                                <f:selectItems value="#{manMaestroMan.lequipos}" var="lequman"
+                                               itemLabel="#{lequman.des_equ}" itemValue="#{lequman.cod_lis_equ}"/> 
+                            </p:selectOneMenu>
+
+
                         </h:panelGrid>
 
                     </p:layoutUnit>
@@ -5030,7 +5027,7 @@
                                              style="width:800px"
                                              >
                                     <p:ajax event="rowSelect" listener="#{manMaestroMan.onRowSelectAne}" update=":frmMaestra"/>
-                                    
+
                                     <p:column style="width:10px;" headerText="Tipo">
                                         <p:link href="#{vDetAne.rut_ane}" value="#{vDetAne.nomtip}" target="_blank"/>
                                     </p:column>
@@ -5049,7 +5046,7 @@
         </p:dialog>
 
         <p:dialog  id="dlgMaestraNew" widgetVar="wMaestraNew" modal="true" 
-                   width="760" height="525" closable="false" resizable="false" 
+                   width="760" height="545" closable="false" resizable="false" 
                    header="ORDEN DE TRABAJO PARA MANTENIMIENTO F-MAN-004" rendered="true" 
                    dynamic="false" visible="false" 
                    >
@@ -5063,15 +5060,16 @@
                                          actionListener="#{manMaestroMan.guardarencabezado()}"
                                          />                       
                         <p:commandButton value="Imprimir" icon="ui-icon-print"
-                                         onclick="this.form.target='_blank';" 
+                                         onclick="this.form.target = '_blank';" 
                                          action="#{manMaestroMan.imprimir_f_man_004}" 
                                          ajax="false">
                         </p:commandButton>
-                        
+
                         <p:commandButton value="Cancelar" style=" width: 100px;"
-                                         update=":frmMaestra"
                                          icon="ui-icon-close" 
+                                         actionListener="#{manMaestroMan.cerrarventananew()}"
                                          onclick="PF('wMaestraNew').hide()"
+                                         update=":frmMaestra"
                                          />
                     </f:facet>
                 </p:toolbar>
@@ -5106,7 +5104,7 @@
                             <f:selectItems value="#{manMaestroMan.tipos}" var="tipmanman"
                                            itemLabel="#{tipmanman.nom_tip}" itemValue="#{tipmanman.cod_tip}"/> 
                         </p:selectOneMenu>
-                        
+
                     </h:panelGrid>
                     <h:panelGrid columns="4" cellpadding="5">
                         <h:outputText value="Supervisor" style="font-weight:bold;"/>
@@ -5155,71 +5153,94 @@
                             <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezadoFin}" />
                         </p:calendar>
                     </h:panelGrid>
-                    <h:panelGrid columns="4" cellpadding="5">
-                        <h:outputText value="Técnico" style="font-weight:bold;"/>
-                        <p:selectOneMenu value="#{manMaestroMan.cod_usu}" 
-                                         style=" width: 200px;">
-                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                            <f:selectItems value="#{manMaestroMan.usuarios}" var="usumanman"
-                                           itemLabel="#{usumanman.det_nom}" itemValue="#{usumanman.cod_usu}"/> 
-                        </p:selectOneMenu>
-                        <h:outputText value="Grupo Falla" style="font-weight:bold;"/>
-                        <p:selectOneMenu value="#{manMaestroMan.cod_gru_fal}" 
-                                         style=" width: 300px;">
-                            <p:ajax event="change" listener="#{manMaestroMan.llenarListaFallas()}" update="somfallasnewman" />
-                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                            <f:selectItems value="#{manMaestroMan.grupofallas}" var="somgrufalnewman"
-                                           itemLabel="#{somgrufalnewman.nom_gru_fal}" itemValue="#{somgrufalnewman.cod_gru_fal}"/> 
-                        </p:selectOneMenu>
-                        </h:panelGrid>
-                        <h:panelGrid columns="4" cellpadding="5">
-                            <h:outputText value="Diagnostico Falla" style="font-weight:bold;"/>
-                            <p:selectOneMenu value="#{manMaestroMan.cod_fal}" 
-                                         style=" width: 500px;"
-                                         id="somfallasnewman"
+                    <p:tabView>
+                        <p:tab title="Observaciones Técnicas">
+                            <h:panelGrid columns="4" cellpadding="5">
+                                <h:outputText value="Responsable" style="font-weight:bold;"/>
+                                <p:selectOneMenu value="#{manMaestroMan.cod_usu}" 
+                                                 style=" width: 210px;">
+                                    <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                    <f:selectItems value="#{manMaestroMan.usuarios}" var="usumanman"
+                                                   itemLabel="#{usumanman.det_nom}" itemValue="#{usumanman.cod_usu}"/> 
+                                </p:selectOneMenu>
+                                <h:outputText value="Otro Personal" style="font-weight:bold;"/>
+                                <p:inputText value="valor" size="38" maxlength="" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputText value="Diagnóstico" style="font-weight:bold;"/>
+                                <p:inputTextarea cols="87" rows="2" value="valor"/>
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="Fallas">
+                            <h:panelGrid columns="4" cellpadding="5">
+                                <h:outputText value="Grupo Falla" style="font-weight:bold;"/>
+                                <p:selectOneMenu value="#{manMaestroMan.cod_gru_fal}" 
+                                                 style=" width: 140px;">
+                                    <p:ajax event="change" listener="#{manMaestroMan.llenarListaFallas()}" update="somfallasnewman" />
+                                    <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                    <f:selectItems value="#{manMaestroMan.grupofallas}" var="somgrufalnewman"
+                                                   itemLabel="#{somgrufalnewman.nom_gru_fal}" itemValue="#{somgrufalnewman.cod_gru_fal}"/> 
+                                </p:selectOneMenu>
+                           
+                                <h:outputText value="Diagnóstico Falla" style="font-weight:bold;"/>
+                                <p:selectOneMenu value="#{manMaestroMan.cod_fal}" 
+                                                 style=" width: 200px;"
+                                                 id="somfallasnewman"
+                                                 filter="true"
+                                                 filterMatchMode="contains"
+                                                 >
+                                    <f:selectItem itemLabel="Otra" itemValue="0"/>
+                                    <f:selectItems value="#{manMaestroMan.listafallas}" var="somfalnewman"
+                                                   itemLabel="#{somfalnewman.nom_fal}" itemValue="#{somfalnewman.cod_fal}"/> 
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                            <h:panelGrid columns="4" cellpadding="5">
+                                <h:outputText value="Otra Falla" style="font-weight:bold;"/>
+                                <p:inputText value="valor" size="78" maxlength="300"/>
+                                <p:commandButton title="Agregar" icon="ui-icon-plus" style="width:30px;" 
+                                                 actionListener="#{manMaestroMan.agregarfalla()}"
+                                                 update=":frmMaestraNew"
+                                                 />
+                                <p:commandButton title="Eliminar" icon="ui-icon-minus" style="width:30px;" 
+                                                 actionListener="#{manMaestroMan.eliminarfalla()}"
+                                                 update=":frmMaestraNew"
+                                                 />
+                            </h:panelGrid>
+
+                            <p:dataTable id="dtFallMan" var="vFallMan" 
+                                         value="#{manMaestroMan.fallas}" 
+                                         emptyMessage="No se encontraron resultados" 
+                                         selection="#{manMaestroMan.catmantenimientosfal}" 
+                                         selectionMode="single"
+                                         rowKey="#{vFallMan.det_man}"
+                                         editable="false"
+                                         scrollable="true"
+                                         scrollHeight="80"
+                                         style="width:670px;"
                                          >
-                                <f:selectItem itemLabel="Ninguna" itemValue="0"/>
-                                <f:selectItems value="#{manMaestroMan.listafallas}" var="somfalnewman"
-                                           itemLabel="#{somfalnewman.nom_fal}" itemValue="#{somfalnewman.cod_fal}"/> 
-                            </p:selectOneMenu>
-                            <p:commandButton title="Agregar" icon="ui-icon-plus" style="width:30px;" 
-                                         actionListener="#{manMaestroMan.agregarfalla()}"
-                                         update=":frmMaestraNew"
-                                         />
-                            <p:commandButton title="Eliminar" icon="ui-icon-minus" style="width:30px;" 
-                                         actionListener="#{manMaestroMan.eliminarfalla()}"
-                                         update=":frmMaestraNew"
-                                         />
-                        </h:panelGrid>
+
+                                <p:ajax event="rowSelect" listener="#{manMaestroMan.onRowSelectFal}" 
+                                        update=":frmMaestraNew"/>
+
+                                <p:column style="width:50px;" headerText="Item">
+                                    <h:outputText value="#{vFallMan.det_man}" />
+                                </p:column>
+                                <p:column style="width:100px;" headerText="Grupo">
+                                    <h:outputText value="#{vFallMan.nomgrup}" />
+                                </p:column>
+                                <p:column style="width:250px;" headerText="Falla">
+                                    <h:outputText value="#{vFallMan.nomfal}" />
+                                </p:column>
+
+
+
+                            </p:dataTable>
+                        </p:tab>
+                    </p:tabView>
+
+
                 </p:panel>
-                <p:dataTable id="dtFallMan" var="vFallMan" 
-                             value="#{manMaestroMan.fallas}" 
-                             emptyMessage="No se encontraron resultados" 
-                             selection="#{manMaestroMan.catmantenimientosfal}" 
-                             selectionMode="single"
-                             rowKey="#{vFallMan.det_man}"
-                             editable="false"
-                             scrollable="true"
-                             scrollHeight="80"
-                             style="width:700px;"
-                             >
 
-                    <p:ajax event="rowSelect" listener="#{manMaestroMan.onRowSelectFal}" 
-                            update=":frmMaestraNew"/>
-
-                    <p:column style="width:50px;" headerText="Item">
-                        <h:outputText value="#{vFallMan.det_man}" />
-                    </p:column>
-                    <p:column style="width:100px;" headerText="Grupo">
-                        <h:outputText value="#{vFallMan.nomgrup}" />
-                    </p:column>
-                    <p:column style="width:250px;" headerText="Falla">
-                        <h:outputText value="#{vFallMan.nomfal}" />
-                    </p:column>
-
-
-
-                </p:dataTable>
             </h:form>
         </p:dialog>
 
@@ -5238,7 +5259,7 @@
                                          icon="ui-icon-disk"
                                          onclick="PF('wMaestraFin').hide()"
                                          >
-                        <p:confirm header="Finalizar Mantenimiento" 
+                            <p:confirm header="Finalizar Mantenimiento" 
                                        message="¿Realmente desea Finalizar este Mantenimiento?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
@@ -5387,7 +5408,7 @@
                                          update=":frmSolReqMan"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
 
                 </p:toolbar>
@@ -5688,7 +5709,7 @@
                 </p:panel>
             </h:form>
         </p:dialog>
-         
+
         <!--******************************************************************** 
         ****** Pantalla mantenimiento de Controles de aplicacion ***************
         *********************************************************************-->
@@ -5751,7 +5772,7 @@
                             <p:selectOneMenu id="ommodulocontrol" value="#{manControles.id_mod}" style=" width: 150px;">
                                 <f:selectItem itemLabel="Ninguno" itemValue="0"/>
                                 <f:selectItems value="#{manControles.modulos}" var="modusu"
-                                           itemLabel="#{modusu.des_mod}" itemValue="#{modusu.id_mod}"/> 
+                                               itemLabel="#{modusu.des_mod}" itemValue="#{modusu.id_mod}"/> 
                             </p:selectOneMenu>
                             <h:outputText value="Identificador" style="font-weight:bold;"/>
                             <p:inputText id="txtsidcontrol" 
@@ -5802,7 +5823,7 @@
                 </p:panel>
             </h:form>
         </p:dialog>
-         
+
         <!--******************************************************************** 
         ****** Pantalla de Asignación de usuarios a grupos *********
         *********************************************************************-->
@@ -5867,14 +5888,14 @@
                                 <f:selectItems value="#{manUserGroup.grupos}" var="manusrgrpgroup"
                                                itemLabel="#{manusrgrpgroup.des_grp}" itemValue="#{manusrgrpgroup.id_grp}"/> 
                             </p:selectOneMenu>
-                            
+
                             <h:outputText value="Usuario" style="font-weight:bold;" />
                             <p:selectOneMenu id="omusuariousrgrp" value="#{manUserGroup.cod_usu}" style=" width: 125px;">
                                 <f:selectItem itemLabel="Ninguno" itemValue="0"/>
                                 <f:selectItems value="#{manUserGroup.usuarios}" var="manusrgrpuser"
                                                itemLabel="#{manusrgrpuser.nom_usu}" itemValue="#{manusrgrpuser.cod_usu}"/> 
                             </p:selectOneMenu>
-                            
+
                         </h:panelGrid>
                     </div>
                 </p:panel>
@@ -5903,12 +5924,12 @@
                         <p:column style="width:100px" headerText="Usuario">
                             <h:outputText value="#{vUsrGrp.usuario}" />
                         </p:column>
-                        
+
                     </p:dataTable>
                 </p:panel>
             </h:form>
         </p:dialog>
-        
+
         <!--******************************************************************** 
         **********   Pantalla de Registro de derechos de seguridad  ************
         *********************************************************************-->
@@ -5973,14 +5994,14 @@
                                 <f:selectItems value="#{manSeguridad.modulos}" var="manmodsecurity"
                                                itemLabel="#{manmodsecurity.des_mod}" itemValue="#{manmodsecurity.id_mod}"/> 
                             </p:selectOneMenu>
-                            
+
                             <h:outputText value="Control" style="font-weight:bold;" />
                             <p:selectOneMenu id="omctrlsecurity" value="#{manSeguridad.cod_ctrl}" style=" width: 250px;">
                                 <f:selectItem itemLabel="Ninguno" itemValue="0"/>
                                 <f:selectItems value="#{manSeguridad.controles}" var="manctrlsecurity"
                                                itemLabel="#{manctrlsecurity.ctrl_desc}" itemValue="#{manctrlsecurity.cod_ctrl}"/> 
                             </p:selectOneMenu>
-                                                        
+
                             <h:outputText value="Grupo" style="font-weight:bold;" />
                             <p:selectOneMenu id="omgrpsecurity" value="#{manSeguridad.id_grp}" style=" width: 150px;">
                                 <f:selectItem itemLabel="Ninguno" itemValue="0"/>
@@ -5994,12 +6015,12 @@
                                     <f:selectItems value="#{manSeguridad.usuarios}" var="manususecurity"
                                                    itemLabel="#{manususecurity.nom_usu}" itemValue="#{manususecurity.cod_usu}"/> 
                                 </p:selectOneMenu>
-                                 <p:spacer width="20"/>
+                                <p:spacer width="20"/>
                                 <h:outputLabel value="Activo: " style="font-weight:bold;" />
                                 <p:spacer width="10"/>
                                 <p:selectBooleanButton value="#{manSeguridad.activo}" onLabel="Si" offLabel="No" style="width:30px" />
                             </h:panelGroup>
-                            
+
                         </h:panelGrid>
                     </div>
                 </p:panel>
@@ -6100,20 +6121,20 @@
                             <h:outputText value="Nombres" style="font-weight:bold;"/>
                             <h:panelGroup>
                                 <p:inputText id="txtnombreper" 
-                                         size="28"
-                                         maxlength="30"
-                                         value="#{manPersonas.nombres}"
-                                         onfocus="this.select()"
-                                         />
+                                             size="28"
+                                             maxlength="30"
+                                             value="#{manPersonas.nombres}"
+                                             onfocus="this.select()"
+                                             />
                                 <p:spacer width="20"/>
                                 <h:outputText value="Apellidos" style="font-weight:bold;"/>
                                 <p:spacer width="10"/>
                                 <p:inputText id="txtapellidosper" 
-                                         size="28"
-                                         maxlength="30"
-                                         value="#{manPersonas.apellidos}"
-                                         onfocus="this.select()"
-                                         />
+                                             size="28"
+                                             maxlength="30"
+                                             value="#{manPersonas.apellidos}"
+                                             onfocus="this.select()"
+                                             />
                             </h:panelGroup>
                             <h:outputText value="Dirección" style="font-weight:bold;"/>
                             <p:inputText id="txtdireccionper" 
@@ -6179,20 +6200,20 @@
                             <h:outputText value="Area" style="font-weight:bold;"/>
                             <h:panelGroup>
                                 <p:selectOneMenu value="#{manPersonas.cod_dep}" 
-                                        style=" width: 160px;">
-                                        <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                                        <f:selectItems value="#{manPersonas.departamentos}" var="depmanper"
-                                        itemLabel="#{depmanper.nom_dep}" itemValue="#{depmanper.cod_dep}"/> 
+                                                 style=" width: 160px;">
+                                    <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                    <f:selectItems value="#{manPersonas.departamentos}" var="depmanper"
+                                                   itemLabel="#{depmanper.nom_dep}" itemValue="#{depmanper.cod_dep}"/> 
                                 </p:selectOneMenu>
                                 <p:spacer width="20"/>
                                 <h:outputText value="Codigo" style="font-weight:bold;"/>
                                 <p:spacer width="10"/>
                                 <p:inputText id="txtcodigoper" 
-                                         size="28"
-                                         maxlength="30"
-                                         value="#{manPersonas.codigo}"
-                                         onfocus="this.select()"
-                                         />
+                                             size="28"
+                                             maxlength="30"
+                                             value="#{manPersonas.codigo}"
+                                             onfocus="this.select()"
+                                             />
                             </h:panelGroup>
                             <h:outputText value="Jefe Inmediato" style="font-weight:bold;"/>
                             <h:panelGroup>
@@ -6209,33 +6230,33 @@
                                 <h:outputText value="Fecha Ingreso" style="font-weight:bold;"/>
                                 <p:spacer width="10"/>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" 
-                                            readonlyInput="true" showOn="button" size="10"
-                                            style="width: 10px"
-                                            value="#{manPersonas.dfingreso}" 
-                                            >
-                                <p:ajax event="dateSelect" listener="#{manPersonas.dateSelectedFingreso}" />
+                                             readonlyInput="true" showOn="button" size="10"
+                                             style="width: 10px"
+                                             value="#{manPersonas.dfingreso}" 
+                                             >
+                                    <p:ajax event="dateSelect" listener="#{manPersonas.dateSelectedFingreso}" />
                                 </p:calendar> 
                             </h:panelGroup> 
                             <h:outputText value="Cargo" style="font-weight:bold;"/>
                             <h:panelGroup>
                                 <p:selectOneMenu value="#{manPersonas.id_car}" 
-                                    style="width:180px;text-align:right;"
-                                    immediate="false"
-                                    >  
+                                                 style="width:180px;text-align:right;"
+                                                 immediate="false"
+                                                 >  
                                     <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                                     <f:selectItems value="#{manPersonas.cargos}" var="mpercar"
-                                        itemLabel="#{mpercar.des_car}" itemValue="#{mpercar.id_car}"/>
+                                                   itemLabel="#{mpercar.des_car}" itemValue="#{mpercar.id_car}"/>
                                 </p:selectOneMenu>
                                 <p:spacer width="20"/>
                                 <h:outputText value="Usuario" style="font-weight:bold;"/>
                                 <p:spacer width="10"/>
                                 <p:selectOneMenu value="#{manPersonas.usuario}" 
-                                    style="width:150px;text-align:right;"
-                                    immediate="false"
-                                    >  
+                                                 style="width:150px;text-align:right;"
+                                                 immediate="false"
+                                                 >  
                                     <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                                     <f:selectItems value="#{manPersonas.usuarios}" var="mperusu"
-                                        itemLabel="#{mperusu.nom_usu}" itemValue="#{mperusu.cod_usu}"/>
+                                                   itemLabel="#{mperusu.nom_usu}" itemValue="#{mperusu.cod_usu}"/>
                                 </p:selectOneMenu>                           
                             </h:panelGroup>
                         </h:panelGrid>
@@ -6269,12 +6290,12 @@
                         <p:column style="width:150px" headerText="E-Mail">
                             <h:outputText value="#{vPersonal.email}" />
                         </p:column>
-                        
+
                     </p:dataTable>
                 </p:panel>
             </h:form>
         </p:dialog>
-          
+
         <!--******************************************************************** 
         **************** Pantalla mantenimiento de Cargos **********************
         *********************************************************************-->
@@ -6380,16 +6401,16 @@
                    dynamic="false" visible="false" 
                    >
 
-        <h:form id="frmCalend">
-            <p:growl id="messages" showDetail="true" />
-            <p:schedule id="schedule" value="#{manMaestroMan.mttoModel}" widgetVar="myschedule" timeZone="GMT+2" locale="es" aspectRatio="1.7">
-                   <p:ajax event="eventSelect" listener="#{manMaestroMan.onEventSelect}" update="frmMaestra" oncomplete="PF('wMaestra').show();" />
+            <h:form id="frmCalend">
+                <p:growl id="messages" showDetail="true" />
+                <p:schedule id="schedule" value="#{manMaestroMan.mttoModel}" widgetVar="myschedule" timeZone="GMT+2" locale="es" aspectRatio="1.7">
+                    <p:ajax event="eventSelect" listener="#{manMaestroMan.onEventSelect}" update="frmMaestra" oncomplete="PF('wMaestra').show();" />
                     <p:ajax event="eventMove" listener="#{manMaestroMan.onEventMove}" update="messages" />
                     <p:ajax event="eventResize" listener="#{manMaestroMan.onEventResize}" update="messages" />
-             </p:schedule>
-        </h:form>
-    </p:dialog>
-           
+                </p:schedule>
+            </h:form>
+        </p:dialog>
+
         <!-- *******************************************************************
         **************** Pantalla mantenimiento de Almacenes *******************
         *********************************************************************-->
@@ -6542,7 +6563,7 @@
                 </div>
             </h:form>
         </p:dialog> 
-    
+
         <!-- *******************************************************************
         **************** Pantalla mantenimiento de Evaluaciones ****************
         *********************************************************************-->
@@ -6619,7 +6640,7 @@
 
             </h:form>
         </p:dialog> 
-    
+
         <!-- *******************************************************************
         **************** Pantalla mantenimiento de Factores Evaluacion *********
         *********************************************************************-->
@@ -6696,7 +6717,7 @@
 
             </h:form>
         </p:dialog> 
-    
+
         <!-- *******************************************************************
         **************** Pantalla mantenimiento de Criterios Evaluacion ********
         *********************************************************************-->
@@ -6748,15 +6769,15 @@
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
                     <h:panelGrid columns="2" cellpadding="5">
-                         <h:outputText value="Factor" style="font-weight:bold;"/>
-                            <p:selectOneMenu value="#{manCriterios.id_fac}" 
-                                style="width:455px;text-align:right;"
-                                immediate="false">  
-                                    <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
-                                    <f:selectItems value="#{manCriterios.factores}" var="mfaccri"
-                                     itemLabel="#{mfaccri.nom_fac}" itemValue="#{mfaccri.id_fac}"/>
-                            </p:selectOneMenu>
-                       <h:outputText value="Criterio" style="font-weight:bold;" />
+                        <h:outputText value="Factor" style="font-weight:bold;"/>
+                        <p:selectOneMenu value="#{manCriterios.id_fac}" 
+                                         style="width:455px;text-align:right;"
+                                         immediate="false">  
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                            <f:selectItems value="#{manCriterios.factores}" var="mfaccri"
+                                           itemLabel="#{mfaccri.nom_fac}" itemValue="#{mfaccri.id_fac}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="Criterio" style="font-weight:bold;" />
                         <p:inputText maxlength="200" size="95" value="#{manCriterios.nom_cri}" 
                                      onfocus="this.select()"/>
                     </h:panelGrid>
@@ -6772,8 +6793,8 @@
                                  >
                         <p:ajax event="rowSelect" listener="#{manCriterios.onRowSelect}" 
                                 update=":frmCriEval" />
-                       <p:column style="width:30px" headerText="Factor">
-                           <h:outputText value="#{vCriEva.nomfac}" />
+                        <p:column style="width:30px" headerText="Factor">
+                            <h:outputText value="#{vCriEva.nomfac}" />
                         </p:column>                    
                         <p:column style="width:80px" headerText="Nombre Criterio">
                             <h:outputText value="#{vCriEva.nom_cri}" />
@@ -6783,7 +6804,7 @@
 
             </h:form>
         </p:dialog> 
-        
+
         <!--******************************************************************** 
         **************** Pantalla mantenimiento de Grupos Fallas  *****************
         *********************************************************************-->
@@ -6930,15 +6951,15 @@
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
                     <h:panelGrid columns="2" cellpadding="5">
-                         <h:outputText value="Grupo Falla" style="font-weight:bold;"/>
-                            <p:selectOneMenu value="#{manFallas.cod_gru_fal}" 
-                                style="width:455px;text-align:right;"
-                                immediate="false">  
-                                    <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
-                                    <f:selectItems value="#{manFallas.grupofallas}" var="mgrufal"
-                                     itemLabel="#{mgrufal.nom_gru_fal}" itemValue="#{mgrufal.cod_gru_fal}"/>
-                            </p:selectOneMenu>
-                       <h:outputText value="Falla" style="font-weight:bold;" />
+                        <h:outputText value="Grupo Falla" style="font-weight:bold;"/>
+                        <p:selectOneMenu value="#{manFallas.cod_gru_fal}" 
+                                         style="width:455px;text-align:right;"
+                                         immediate="false">  
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                            <f:selectItems value="#{manFallas.grupofallas}" var="mgrufal"
+                                           itemLabel="#{mgrufal.nom_gru_fal}" itemValue="#{mgrufal.cod_gru_fal}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="Falla" style="font-weight:bold;" />
                         <p:inputText maxlength="200" size="95" value="#{manFallas.nom_fal}" 
                                      onfocus="this.select()"/>
                     </h:panelGrid>
@@ -6954,8 +6975,8 @@
                                  >
                         <p:ajax event="rowSelect" listener="#{manFallas.onRowSelect}" 
                                 update=":frmFallas" />
-                       <p:column style="width:30px" headerText="Grupo Falla">
-                           <h:outputText value="#{vFallas.nomgrupo}" />
+                        <p:column style="width:30px" headerText="Grupo Falla">
+                            <h:outputText value="#{vFallas.nomgrupo}" />
                         </p:column>                    
                         <p:column style="width:80px" headerText="Nombre Falla">
                             <h:outputText value="#{vFallas.nom_fal}" />
@@ -6965,32 +6986,32 @@
 
             </h:form>
         </p:dialog>  
-        
-        
-    <script type="text/javascript">
-        PrimeFaces.locales['es'] = {
-            closeText: 'Cerrar',
-            prevText: 'Previo',
-            nextText: 'Siguiente',
-            currentText: 'Actual',
-            monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
-                'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
-            monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
-                'Jul','Ago','Sep','Oct','Nov','Dic'],
-            dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
-            dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
-            dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
-            weekHeader: 'Hf',
-            firstDay: 1,
-            isRTL: false,
-            showMonthAfterYear: false,
-            yearSuffix: '',
-            month: 'Mes',
-            week: 'Semana',
-            day: 'Dia',
-            allDayText : 'Todo el dia'
-    };
-</script>
+
+
+        <script type="text/javascript">
+            PrimeFaces.locales['es'] = {
+                closeText: 'Cerrar',
+                prevText: 'Previo',
+                nextText: 'Siguiente',
+                currentText: 'Actual',
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                    'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                weekHeader: 'Hf',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Dia',
+                allDayText: 'Todo el dia'
+            };
+        </script>
 
     </h:body>
 
