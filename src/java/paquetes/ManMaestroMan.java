@@ -1187,6 +1187,10 @@ public class ManMaestroMan implements Serializable {
         }
 
     }
+    
+    public void cerrarventananew(){
+        llenarMantenimientos();
+    }
 
     public void iniciarventanaedit() {
 
