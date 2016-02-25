@@ -1085,16 +1085,18 @@
                                  emptyMessage="No se encontraron resultados" 
                                  selectionMode="single" selection="#{manOperaciones.catoperaciones}" 
                                  rowKey="#{vOpe.cod_ope}"
-                                 editable="false"
-                                 scrollable="true"
-                                 scrollHeight="150"
+                                 editable="false"                        
                                  style="width:480px"
+                                 paginator="true"
+                                 rows ="6"
+                                 paginatorPosition="top"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  >
                         <p:ajax event="rowSelect" listener="#{manOperaciones.onRowSelect}" 
                                 update=":frmOpe"/>
                         <p:ajax event="rowUnselect"/>
 
-                        <p:column style="width:300px" headerText="Acción">
+                        <p:column style="width:300px" headerText="Acción" sortBy="#{vOpe.nom_ope}">
                             <h:outputText value="#{vOpe.nom_ope}" />
                         </p:column>
                     </p:dataTable>
@@ -6065,7 +6067,7 @@
         *********************************************************************-->
 
         <p:dialog  id="dlgPersonal" widgetVar="wPersonal" modal="true" 
-                   width="625" height="470" closable="false" resizable="false" 
+                   width="625" height="560" closable="false" resizable="false" 
                    header="Control de Personal" rendered="true" 
                    dynamic="false" visible="false" 
                    >
@@ -6271,17 +6273,21 @@
                                  rowKey="#{vPersonal.id_per}"
                                  editable="false"
                                  scrollable="true"
-                                 scrollHeight="110"
-                                 style="width:530px"
+                                 scrollHeight="120"
+                                 style="width:565px"
+                                 paginator="true"
+                                 rows ="5"
+                                 paginatorPosition="top"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  >
                         <p:ajax event="rowSelect" listener="#{manPersonas.onRowSelect}" 
                                 update=":frmPersonal"/>
                         <p:ajax event="rowUnselect"/>
 
-                        <p:column style="width:110px" headerText="Nombres">
+                        <p:column style="width:110px" headerText="Nombres" sortBy="#{vPersonal.nombres}" filterBy="#{vPersonal.nombres}">
                             <h:outputText value="#{vPersonal.nombres}" />
                         </p:column>
-                        <p:column style="width:110px" headerText="Apellidos">
+                        <p:column style="width:110px" headerText="Apellidos" sortBy="#{vPersonal.apellidos}" filterBy="#{vPersonal.apellidos}">
                             <h:outputText value="#{vPersonal.apellidos}" />
                         </p:column>
                         <p:column style="width:60px" headerText="Teléfono">
