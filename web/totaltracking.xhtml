@@ -6729,7 +6729,7 @@
         *********************************************************************-->
 
         <p:dialog  id="dlgCriEval" widgetVar="wCriEval" modal="true" 
-                   width="580" height="350" closable="false" resizable="false" 
+                   width="580" height="400" closable="false" resizable="false" 
                    header="Mantenimiento de Criterios de Evaluacion" rendered="true" 
                    dynamic="true" visible="false" 
                    >
@@ -6784,7 +6784,7 @@
                                            itemLabel="#{mfaccri.nom_fac}" itemValue="#{mfaccri.id_fac}"/>
                         </p:selectOneMenu>
                         <h:outputText value="Criterio" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="95" value="#{manCriterios.nom_cri}" 
+                        <p:inputText maxlength="200" size="73" value="#{manCriterios.nom_cri}" 
                                      onfocus="this.select()"/>
                     </h:panelGrid>
                     <p:dataTable id="dtCriEval" var="vCriEva" 
@@ -6795,14 +6795,18 @@
                                  editable="false" 
                                  style="width:540px"
                                  scrollable="true"
-                                 scrollHeight="190"
+                                 scrollHeight="200"
+                                 paginator="true"
+                                 rows ="5"
+                                 paginatorPosition="top"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  >
                         <p:ajax event="rowSelect" listener="#{manCriterios.onRowSelect}" 
                                 update=":frmCriEval" />
-                        <p:column style="width:30px" headerText="Factor">
+                        <p:column style="width:30px" headerText="Factor" filterStyle="width: 180px;" sortBy="#{vCriEva.nomfac}" filterBy="#{vCriEva.nomfac}">
                             <h:outputText value="#{vCriEva.nomfac}" />
                         </p:column>                    
-                        <p:column style="width:80px" headerText="Nombre Criterio">
+                        <p:column style="width:80px" headerText="Nombre Criterio" filterStyle="width: 180px;" sortBy="#{vCriEva.nom_cri}" filterBy="#{vCriEva.nom_cri}">
                             <h:outputText value="#{vCriEva.nom_cri}" />
                         </p:column>
                     </p:dataTable>
