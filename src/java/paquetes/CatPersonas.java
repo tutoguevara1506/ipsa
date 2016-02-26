@@ -2,16 +2,15 @@
 package paquetes;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class CatPersonas implements Serializable{
     
-    private String id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, cod_dep, codigo, fingreso, id_jef, id_car, usuario;
+    private String id_per, nombres, apellidos, direccion, telefono, celular, email, dui, nit, isss, fingreso, codigo, cod_dep, id_jef, id_car, usuario;
         
     public CatPersonas() {
     }
 
-    public CatPersonas(String id_per, String nombres, String apellidos, String direccion, String telefono, String celular, String email, String dui, String nit, String isss, String cod_dep, String codigo, String fingreso, String id_jef, String id_car, String usuario) {
+    public CatPersonas(String id_per, String nombres, String apellidos, String direccion, String telefono, String celular, String email, String dui, String nit, String isss, String fingreso, String codigo, String cod_dep, String id_jef, String id_car, String usuario) {
         this.id_per = id_per;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -22,9 +21,9 @@ public class CatPersonas implements Serializable{
         this.dui = dui;
         this.nit = nit;
         this.isss = isss;
-        this.cod_dep = cod_dep;
-        this.codigo = codigo;
         this.fingreso = fingreso;
+        this.codigo = codigo;
+        this.cod_dep = cod_dep;       
         this.id_jef = id_jef;        
         this.id_car = id_car;
         this.usuario = usuario;

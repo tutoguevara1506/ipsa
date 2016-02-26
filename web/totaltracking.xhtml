@@ -6226,14 +6226,14 @@
                                     
                                     <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                                     <f:selectItems value="#{manPersonas.jefes}" var="mjefeper"
-                                     itemLabel="#{mjefeper.nombres} #{mjefeper.apellidos}" itemValue="#{mjefeper.id_jef}"/>
+                                     itemLabel="#{mjefeper.nombres} #{mjefeper.apellidos}" itemValue="#{mjefeper.id_per}"/>
                                 </p:selectOneMenu>
                                 <p:spacer width="20"/>
                                 <h:outputText value="Fecha Ingreso" style="font-weight:bold;"/>
                                 <p:spacer width="10"/>
-                                <p:calendar  pattern="dd/MM/yyyy" locale="es" 
+                                <p:calendar  pattern="dd/MM/yyyy " locale="es" 
                                              readonlyInput="true" showOn="button" size="10"
-                                             style="width: 10px"
+                                             style="width: 20px"
                                              value="#{manPersonas.dfingreso}" 
                                              >
                                     <p:ajax event="dateSelect" listener="#{manPersonas.dateSelectedFingreso}" />

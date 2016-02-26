@@ -2,7 +2,6 @@ package paquetes;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -372,8 +371,8 @@ public class ManPersonas implements Serializable {
             personas = new ArrayList<>();
 
             mQuery = "select id_per, nombres, apellidos, direccion, "
-                    + "telefono, celular, email, dui, nit, isss, codigo, "
-                    + "cod_dep, id_jef, fingreso, id_car, cod_usu "
+                    + "telefono, celular, email, dui, nit, isss, fingreso, codigo, "
+                    + "cod_dep, id_jef, id_car, cod_usu "
                     + "from cat_persona order by id_per;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -413,8 +412,8 @@ public class ManPersonas implements Serializable {
             jefes = new ArrayList<>();
 
             mQuery = "select id_per, nombres, apellidos, direccion, "
-                    + "telefono, celular, email, dui, nit, isss, codigo, "
-                    + "cod_dep, id_jef, fingreso, id_car, cod_usu "
+                    + "telefono, celular, email, dui, nit, isss, fingreso, codigo, "
+                    + "cod_dep, id_jef,  id_car, cod_usu "
                     + "from cat_persona order by id_per;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -502,7 +501,7 @@ public class ManPersonas implements Serializable {
                 Accesos mAccesos = new Accesos();
                 mAccesos.Conectar();
                 if ("00/00/0000".equals(fingreso)) {
-                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                     Date dfecha = Date.from(Instant.now());
                     fingreso = format.format(dfecha);
                 }                    
@@ -613,6 +612,8 @@ public class ManPersonas implements Serializable {
     }
 
     public void onRowSelect(SelectEvent event) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        
         id_per = ((CatPersonas) event.getObject()).getId_per();
         nombres = ((CatPersonas) event.getObject()).getNombres();
         apellidos = ((CatPersonas) event.getObject()).getApellidos();
@@ -629,6 +630,12 @@ public class ManPersonas implements Serializable {
         id_jef = ((CatPersonas) event.getObject()).getId_jef();
         id_car = ((CatPersonas) event.getObject()).getId_car();
         usuario = ((CatPersonas) event.getObject()).getUsuario();
+        
+        try {
+            dfingreso = format.parse(fingreso);
+        } catch (Exception ex) {
+            System.out.println("Error en convertir fecha ingreso" + ex.getMessage() + " fIngreso: " + fingreso);
+        }
     }
 
     public void addMessage(String summary, String detail, int tipo) {
