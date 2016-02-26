@@ -37,10 +37,12 @@ public class AlertSchedule {
             email.setHostName(hostname);
             email.setSmtpPort(Integer.parseInt(smtp_port));
             email.setAuthenticator(new DefaultAuthenticator(user, pass));
-            email.setSSLOnConnect(true);
+            //email.setSSLOnConnect(true);
+            email.setStartTLSEnabled(true);
+            email.setStartTLSRequired(true);
             email.setFrom(remitente);
             email.setSubject("Correo de Prueba");
-            email.setMsg("Este es un correo de prueba desde mi entorno con variables");
+            email.setMsg("Este es un correo de prueba desde server de prueba con seguridad TLS");
         
             String[] recipients = {"rramirezech@hotmail.com"};
 
