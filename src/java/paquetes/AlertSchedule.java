@@ -38,6 +38,8 @@ public class AlertSchedule {
             email.setSmtpPort(Integer.parseInt(smtp_port));
             email.setAuthenticator(new DefaultAuthenticator(user, pass));
             //email.setSSLOnConnect(true);
+            
+            // TLS agregado para server AWS
             email.setStartTLSEnabled(true);
             email.setStartTLSRequired(true);
             email.setFrom(remitente);
