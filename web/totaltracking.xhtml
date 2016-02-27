@@ -254,6 +254,13 @@
                                     actionListener="#{manCriterios.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuCriterios')}"
                                     />
+                        <p:menuitem value="Configuracion Evaluacion" icon="ui-icon-pin-s" 
+                                    onclick="PF('wDetEva').show()"
+                                    update=":frmDetEva"
+                                    style="width: 125px;"
+                                    actionListener="#{manEvaluacionDetalle.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuConfiguraEvaluacion')}"
+                                    />
 
                     </p:submenu>
                     <p:menuitem value="Personal" icon="ui-icon-person" 
@@ -6997,7 +7004,108 @@
             </h:form>
         </p:dialog>  
 
+ <!-- *******************************************************************
+        **************** Pantalla Detalle de evaluacion             ********
+        *********************************************************************-->
 
+        <p:dialog  id="dlgDetEva" widgetVar="wDetEva" modal="true" 
+                   width="580" height="350" closable="false" resizable="false" 
+                   header="Registro de detalle de evaluaciones" rendered="true" 
+                   dynamic="true" visible="false" 
+                   >
+
+            <h:form id="frmDetEva"> 
+                <p:growl id="msgDetEva" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manEvaluacionDetalle.nuevo()}"
+                                         update=":frmDetEva"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         action="#{manEvaluacionDetalle.guardar()}"
+                                         update=":frmDetEva"
+                                         icon="ui-icon-disk"
+                                         />
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         actionListener="#{manEvaluacionDetalle.eliminar()}"
+                                         update=":frmDetEva"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wDetEva').hide()"
+                                         action="#{manEvaluacionDetalle.cerrarventana()}" 
+                                         update=":frmDetEva"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+                <div style=" background-color: #ebf8fe;">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Numero pregunta" style="font-weight:bold;" />
+                        <p:inputText maxlength="5" size="5" value="#{manEvaluacionDetalle.num_preg}" 
+                                     onfocus="this.select()"/>
+                        <h:outputText value="Factor" style="font-weight:bold;"/>
+                        <p:selectOneMenu value="#{manEvaluacionDetalle.id_fac}" 
+                                         style="width:455px;text-align:right;"
+                                         immediate="false">  
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                            <f:selectItems value="#{manEvaluacionDetalle.factores}" var="mfacdet"
+                                           itemLabel="#{mfacdet.nom_fac}" itemValue="#{mfacdet.id_fac}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="Criterio" style="font-weight:bold;"/>
+                        <p:selectOneMenu value="#{manEvaluacionDetalle.id_cri}" 
+                                         style="width:455px;text-align:right;"
+                                         immediate="false">  
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                            <f:selectItems value="#{manEvaluacionDetalle.criterios}" var="mcridet"
+                                           itemLabel="#{mcridet.nom_cri}" itemValue="#{mcridet.id_cri}"/>
+                        </p:selectOneMenu>
+                        
+                    </h:panelGrid>
+                    <p:dataTable id="dtDetEva" var="vDetEva" 
+                                 value="#{manEvaluacionDetalle.evaluaciondetalle}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manEvaluacionDetalle.catevaluaciondetalle}" 
+                                 rowKey="#{vDetEva.id_eva_det}"
+                                 editable="false" 
+                                 style="width:540px"
+                                 scrollable="true"
+                                 scrollHeight="190"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manEvaluacionDetalle.onRowSelect}" 
+                                update=":frmDetEva" />
+                        <p:column style="width:10px" headerText="ID">
+                            <h:outputText value="#{vDetEva.id_eva_det}" />
+                        </p:column>
+                        <p:column style="width:10px" headerText="No. Pregunta">
+                            <h:outputText value="#{vDetEva.num_preg}" />
+                        </p:column>
+                        <p:column style="width:80px" headerText="Factor">
+                            <h:outputText value="#{vDetEva.nomfac}" />
+                        </p:column>  
+                        <p:column style="width:15px" headerText="Criterio">
+                            <h:outputText value="#{vDetEva.nomcri}" />
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+            </h:form>
+        </p:dialog>  
+ 
         <script type="text/javascript">
             PrimeFaces.locales['es'] = {
                 closeText: 'Cerrar',

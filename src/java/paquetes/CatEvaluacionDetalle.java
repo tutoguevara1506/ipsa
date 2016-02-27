@@ -5,20 +5,20 @@ import java.io.Serializable;
 
 public class CatEvaluacionDetalle implements Serializable{
     
-    private String id_eva_det, id_eva, num_preg, id_cri, id_cal, nomeva, nomcri, nomcal;
+    private String id_eva_det, id_eva, num_preg, id_cri, id_fac, nomeva, nomcri, nomfac;
 
     public CatEvaluacionDetalle() {
     }
 
-    public CatEvaluacionDetalle(String id_eva_det, String id_eva, String num_preg, String id_cri, String id_cal, String nomeva, String nomcri, String nomcal) {
+    public CatEvaluacionDetalle(String id_eva_det, String id_eva, String num_preg, String id_fac, String id_cri, String nomeva, String nomfac, String nomcri) {
         this.id_eva_det = id_eva_det;
         this.id_eva = id_eva;
         this.num_preg = num_preg;
+        this.id_fac = id_fac;
         this.id_cri = id_cri;
-        this.id_cal = id_cal;
         this.nomeva = nomeva;
-        this.nomcri = nomcri;
-        this.nomcal = nomcal;
+        this.nomfac = nomfac;
+        this.nomcri = nomcri;        
     }
 
     public String getId_eva_det() {
@@ -53,14 +53,6 @@ public class CatEvaluacionDetalle implements Serializable{
         this.id_cri = id_cri;
     }
 
-    public String getId_cal() {
-        return id_cal;
-    }
-
-    public void setId_cal(String id_cal) {
-        this.id_cal = id_cal;
-    }
-
     public String getNomeva() {
         return nomeva;
     }
@@ -77,12 +69,22 @@ public class CatEvaluacionDetalle implements Serializable{
         this.nomcri = nomcri;
     }
 
-    public String getNomcal() {
-        return nomcal;
+    public String getId_fac() {
+        return id_fac;
     }
 
-    public void setNomcal(String nomcal) {
-        this.nomcal = nomcal;
+    public void setId_fac(String id_fac) {
+        this.id_fac = id_fac;
     }
+
+    public String getNomfac() {
+        return nomfac;
+    }
+
+    public void setNomfac(String nomfac) {
+        this.nomfac = nomfac;
+    }
+
+   
     
 }

@@ -28,7 +28,7 @@ public class ManEvaluacionDetalle implements Serializable {
     private CatEvaluacionDetalle catevaluaciondetalle;
     private List<CatEvaluacionDetalle> evaluaciondetalle;
     
-    private String id_eva_det, id_eva, num_preg, id_cri, nomeva, nomcri;
+    private String id_eva_det, id_eva, num_preg, id_cri, nomeva, nomcri, id_fac, factor;
         
          
     public ManEvaluacionDetalle() {
@@ -149,9 +149,25 @@ public class ManEvaluacionDetalle implements Serializable {
         this.nomcri = nomcri;
     }
 
-    
+    public String getId_fac() {
+        return id_fac;
+    }
+
+    public void setId_fac(String id_fac) {
+        this.id_fac = id_fac;
+    }
+
+    public String getFactor() {
+        return factor;
+    }
+
+    public void setFactor(String factor) {
+        this.factor = factor;
+    }
+       
     public void iniciarventana() {
         id_eva_det ="";
+        id_fac ="";
         id_eva = "";
         num_preg = "";
         id_cri = "";
@@ -163,6 +179,7 @@ public class ManEvaluacionDetalle implements Serializable {
 
     public void cerrarventana() {
         id_eva_det ="";
+        id_fac= "";
         id_eva = "";
         num_preg = "";
         id_cri = "";
@@ -227,7 +244,6 @@ public class ManEvaluacionDetalle implements Serializable {
 
             mQuery = "select id_cri, nom_cri, id_fac from cat_cri order by id_cri;";
             
-            
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -236,8 +252,7 @@ public class ManEvaluacionDetalle implements Serializable {
                 criterios.add(new CatCriterios(
                         resVariable.getString(1),
                         resVariable.getString(2),
-                        resVariable.getString(3),
-                        resVariable.getString(4)
+                        resVariable.getString(3), ""
                 ));
             }
             mAccesos.Desconectar();
@@ -253,7 +268,11 @@ public class ManEvaluacionDetalle implements Serializable {
             catevaluaciondetalle = new CatEvaluacionDetalle();
             evaluaciondetalle = new ArrayList<>();
 
-            mQuery = "select id_eva_det, id_eva, num_preg, id_cri order by cat_eva_det;";
+            mQuery = "select det.id_eva_det, det.id_eva, det.num_preg, det.id_fac, det.id_cri, eva.nom_eva, fac.nomfac, cri.nomcri from "
+                    + " cat_eva_det det inner join cat_fac fac on fac.id_fac = det.id_fac inner join "
+                    + " cat_eva  eva on det.id_eva = eva.id_eva inner join "
+                    + " cat_cri cri on det.id_cri = cri.id_cri order by cat_eva_det;";
+            
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -281,6 +300,7 @@ public class ManEvaluacionDetalle implements Serializable {
     public void nuevo() {
         id_eva_det ="";
         id_eva = "";
+        id_fac = "";
         num_preg = "";
         id_cri = "";
         catevaluaciondetalle = new CatEvaluacionDetalle();
