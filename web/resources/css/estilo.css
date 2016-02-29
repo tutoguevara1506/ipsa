@@ -7,6 +7,11 @@ body {
     color: #3a4f54;
     background-color: #eff5fa;
     font-size: x-small;
+    background-image: url("../logo.png");
+    background-size: 60% 50%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
 }
 
 a {
@@ -79,6 +84,7 @@ tr.jsfcrud_even_row {
     left: 50%;
     top: 50%;
 }
+
 
 .ui-selectonemenu-filter-container {
     width: 98% !important;
