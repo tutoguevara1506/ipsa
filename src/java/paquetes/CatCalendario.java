@@ -5,13 +5,13 @@ import java.util.Date;
 
 public class CatCalendario implements Serializable {
 
-    private String cod_lis_equ, cod_man, cod_tip, det_obs, det_sta, cod_usu, des_equ;
+    private String cod_lis_equ, cod_man, cod_tip, det_obs, det_sta, cod_usu, des_equ, color, semana;
     private Date fec_ini, fec_fin;
 
     public CatCalendario() {
     }
 
-    public CatCalendario(String cod_lis_equ, String cod_man, String cod_tip, String det_obs, Date fec_ini, Date fec_fin, String det_sta, String cod_usu, String des_equ) {
+    public CatCalendario(String cod_lis_equ, String cod_man, String cod_tip, String det_obs, Date fec_ini, Date fec_fin, String det_sta, String cod_usu, String des_equ, String color, String semana) {
         this.cod_lis_equ = cod_lis_equ;
         this.cod_man = cod_man;
         this.cod_tip = cod_tip;
@@ -21,6 +21,8 @@ public class CatCalendario implements Serializable {
         this.det_sta = det_sta;
         this.cod_usu = cod_usu;
         this.des_equ = des_equ;
+        this.color = color;
+        this.semana = semana;
     }
 
     public String getCod_lis_equ() {
@@ -93,5 +95,23 @@ public class CatCalendario implements Serializable {
 
     public void setDes_equ(String des_equ) {
         this.des_equ = des_equ;
+    } 
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }    
+
+    public String getSemana() {
+        return semana;
+    }
+
+    public void setSemana(String semana) {
+        this.semana = semana;
+    }
+    
+    
 }

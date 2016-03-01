@@ -368,52 +368,35 @@
                                                  selectionMode="single" selection="#{manMaestroMan.catmantenimientos}" 
                                                  rowKey="#{vGraMtto.cod_man} #{vGraMtto.cod_lis_equ}"
                                                  editable="false" 
-                                                 style="width:540px"
+                                                 style="width:560px"
                                                  scrollable="true"
                                                  scrollHeight="190"
                                                  >
-                                        <p:ajax event="rowSelect" listener="#{manMaestroMan.onRowSelect}" 
-                                                update=":frmGraMtto" />
-                                        <p:column style="width:50px" headerText="Equipo">
+                                        <p:columnGroup type="header">
+                                        <p:row>
+                                            <p:column rowspan="1" headerText="Equipos" style="width:80px"/>
+                                            <p:column colspan="4" headerText="Ene" />
+                                            <p:column colspan="4" headerText="Feb" />
+                                            <p:column colspan="4" headerText="Mar" />
+                                            <p:column colspan="4" headerText="Abr" />
+                                            <p:column colspan="4" headerText="May" />
+                                            <p:column colspan="4" headerText="Jun" />
+                                            <p:column colspan="4" headerText="Jul" />
+                                            <p:column colspan="4" headerText="Ago" />
+                                            <p:column colspan="4" headerText="Sep" />
+                                            <p:column colspan="4" headerText="Oct" />
+                                            <p:column colspan="4" headerText="Nov" />
+                                            <p:column colspan="4" headerText="Dic" />
+                                        </p:row>
+                                    </p:columnGroup>
+                                        <p:column style="width:80px">
                                             <h:outputText value="#{vGraMtto.des_equ}" />
                                         </p:column>
-                                        <p:column style="width:10px" headerText="Ene">
-                                            <h:outputText value="#{vGraMtto.fec_ini}" />
-                                        </p:column>
-                                        <p:column style="width:10px" headerText="Feb">
-                                            <h:outputText value="#{vGraMtto.fec_ini}" />
-                                        </p:column>  
-                                        <p:column style="width:10px" headerText="Mar">
-                                            <h:outputText value="#{vGraMtto.fec_ini}" />
-                                        </p:column>
-                                        <p:column style="width:10px" headerText="Abr">
-                                            <h:outputText value="#{vGraMtto.fec_ini}" />
-                                        </p:column>
-                                        <p:column style="width:10px" headerText="May">
-                                            <h:outputText value="#{vGraMtto.fec_ini}" />
-                                        </p:column>  
-                                        <p:column style="width:10px" headerText="Jun">
-                                            <h:outputText value="#{vGraMtto.fec_ini}" />
-                                        </p:column>
-                                        <p:column style="width:10px" headerText="Jul">
-                                            <h:outputText value="#{vGraMtto.fec_ini}" />
-                                        </p:column>
-                                        <p:column style="width:10px" headerText="Ago">
-                                            <h:outputText value="#{vGraMtto.fec_ini}" />
-                                        </p:column>  
-                                        <p:column style="width:10px" headerText="Sep">
-                                            <h:outputText value="#{vGraMtto.fec_ini}" />
-                                        </p:column>
-                                        <p:column style="width:10px" headerText="Oct">
-                                            <h:outputText value="#{vGraMtto.fec_ini}" />
-                                        </p:column>
-                                        <p:column style="width:10px" headerText="Nov">
-                                            <h:outputText value="#{vGraMtto.fec_ini}" />
-                                        </p:column>  
-                                        <p:column style="width:10px" headerText="Dic">
-                                            <h:outputText value="#{vGraMtto.fec_ini}" />
-                                        </p:column>
-                                        
+                                        <p:columns  value="53" var="opcol" style="width:1px">
+                                            <p:commandButton update="frmMaestra" oncomplete="PF('wMaestra').show()" icon="ui-icon-pin-s">
+                                                <f:setPropertyActionListener value="#{manMaestroMan.cod_lis_equ} #{manMaestroMan.cod_man}" target="#{manMaestroMan.onEventSelect}" />
+                                            </p:commandButton>
+                                        </p:columns>
                                     </p:dataTable>
                             </h:form>
                         </p:panel>

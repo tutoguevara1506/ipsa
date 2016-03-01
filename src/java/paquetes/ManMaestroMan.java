@@ -103,7 +103,7 @@ public class ManMaestroMan implements Serializable {
     private List<CatDepartamentos> departamentos;
     private ScheduleModel mttoModel;
     private ScheduleEvent mtto = new DefaultScheduleEvent();
-
+    
     private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_sup, turno, cod_pri, cod_dep;
     private String gen_det_man, gen_fec_man, gen_cod_ope, gen_det_obs, gen_cod_usu, gen_det_min;
     private String pie_det_man, pie_fec_man, pie_cod_pai, pie_cod_bod, pie_cod_ubi,
@@ -3782,6 +3782,11 @@ public class ManMaestroMan implements Serializable {
             }
         }
     }
+    
+    public void onMttoSelect(String cod_lis_equ) {
+                buscar_serie = cod_lis_equ;
+                llenarMantenimientos();            
+    }
 
     public void llenarMttosCalendario() {
         String mQuery = "";
@@ -3789,10 +3794,12 @@ public class ManMaestroMan implements Serializable {
             catcalendario = new CatCalendario();
             listaMttos = new ArrayList<>();
 
-            mQuery = "select tbl_mae_man.cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, "
-                    + "det_sta, cod_usu, des_equ from tbl_mae_man inner join lis_equ on "
-                    + "tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ "
-                    + "order by cod_man;";
+            mQuery = " select tbl_mae_man.cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, des_equ, "
+                    + "(TIMESTAMPDIFF(MONTH, fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=2,'yellow','red') as color,"
+                    + " week(fec_ini,2) as semana "
+                    + " from tbl_mae_man inner join lis_equ on "
+                    + " tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ "
+                    + " order by cod_man;";
 
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -3808,7 +3815,9 @@ public class ManMaestroMan implements Serializable {
                         resVariable.getDate(6),
                         resVariable.getString(7),
                         resVariable.getString(8),
-                        resVariable.getString(9)
+                        resVariable.getString(9),
+                        resVariable.getString(10),
+                        resVariable.getString(11)
                 ));
             }
             mAccesos.Desconectar();
@@ -3875,7 +3884,7 @@ public class ManMaestroMan implements Serializable {
             Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public byte[] imprimirFicha() throws SQLException, JRException {
         ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         String reportPath = ctx.getRealPath(File.separator + "reportes" + File.separator);
