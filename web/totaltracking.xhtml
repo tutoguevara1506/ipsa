@@ -363,7 +363,7 @@
                             <h:form id="frmGraMtto"> 
                                 <p:growl id="msgDetEva" showDetail="true" life="4500"/>
                                     <p:dataTable id="dtGraMtto" var="vGraMtto" 
-                                                 value="#{manMaestroMan.mantenimientos}" 
+                                                 value="#{manMaestroMan.listaMttos}" 
                                                  emptyMessage="No se encontraron resultados" 
                                                  selectionMode="single" selection="#{manMaestroMan.catmantenimientos}" 
                                                  rowKey="#{vGraMtto.cod_man} #{vGraMtto.cod_lis_equ}"
@@ -374,44 +374,44 @@
                                                  >
                                         <p:ajax event="rowSelect" listener="#{manMaestroMan.onRowSelect}" 
                                                 update=":frmGraMtto" />
-                                        <p:column style="width:20px" headerText="Equipo">
-                                            <h:outputText value="#{vGraMtto.nomtip}" />
+                                        <p:column style="width:50px" headerText="Equipo">
+                                            <h:outputText value="#{vGraMtto.des_equ}" />
                                         </p:column>
                                         <p:column style="width:10px" headerText="Ene">
-                                            <h:outputText value="#{vGraMtto.nomtip}" />
+                                            <h:outputText value="#{vGraMtto.fec_ini}" />
                                         </p:column>
                                         <p:column style="width:10px" headerText="Feb">
-                                            <h:outputText value="#{vGraMtto.nomtip}" />
+                                            <h:outputText value="#{vGraMtto.fec_ini}" />
                                         </p:column>  
                                         <p:column style="width:10px" headerText="Mar">
-                                            <h:outputText value="#{vGraMtto.nomtip}" />
+                                            <h:outputText value="#{vGraMtto.fec_ini}" />
                                         </p:column>
                                         <p:column style="width:10px" headerText="Abr">
-                                            <h:outputText value="#{vGraMtto.nomtip}" />
+                                            <h:outputText value="#{vGraMtto.fec_ini}" />
                                         </p:column>
                                         <p:column style="width:10px" headerText="May">
-                                            <h:outputText value="#{vGraMtto.nomtip}" />
+                                            <h:outputText value="#{vGraMtto.fec_ini}" />
                                         </p:column>  
                                         <p:column style="width:10px" headerText="Jun">
-                                            <h:outputText value="#{vGraMtto.nomtip}" />
+                                            <h:outputText value="#{vGraMtto.fec_ini}" />
                                         </p:column>
                                         <p:column style="width:10px" headerText="Jul">
-                                            <h:outputText value="#{vGraMtto.nomtip}" />
+                                            <h:outputText value="#{vGraMtto.fec_ini}" />
                                         </p:column>
                                         <p:column style="width:10px" headerText="Ago">
-                                            <h:outputText value="#{vGraMtto.nomtip}" />
+                                            <h:outputText value="#{vGraMtto.fec_ini}" />
                                         </p:column>  
                                         <p:column style="width:10px" headerText="Sep">
-                                            <h:outputText value="#{vGraMtto.nomtip}" />
+                                            <h:outputText value="#{vGraMtto.fec_ini}" />
                                         </p:column>
                                         <p:column style="width:10px" headerText="Oct">
-                                            <h:outputText value="#{vGraMtto.nomtip}" />
+                                            <h:outputText value="#{vGraMtto.fec_ini}" />
                                         </p:column>
                                         <p:column style="width:10px" headerText="Nov">
-                                            <h:outputText value="#{vGraMtto.nomtip}" />
+                                            <h:outputText value="#{vGraMtto.fec_ini}" />
                                         </p:column>  
                                         <p:column style="width:10px" headerText="Dic">
-                                            <h:outputText value="#{vGraMtto.nomtip}" />
+                                            <h:outputText value="#{vGraMtto.fec_ini}" />
                                         </p:column>
                                         
                                     </p:dataTable>
