@@ -355,7 +355,7 @@
                     <p:dashboard id="board" model="#{dashboardView.model}">
                         <p:ajax event="reorder" listener="#{dashboardView.handleReorder}" update="msgs" />
 
-                        <p:panel id="listadoMantenimientos" header="Mantenimientos">
+                        <p:panel id="listadoMantenimientos" header="Mantenimientos" closable="true">
                             <h:outputText value="Informacion de Mttos" />
                         </p:panel>
 
@@ -418,15 +418,15 @@
                             </h:form>
                         </p:panel>
 
-                        <p:panel id="solicitudesPendientes" header="Solicitudes">
+                        <p:panel id="solicitudesPendientes" header="Solicitudes" closable="true">
                             <h:outputText value="Solicitudes pendientes"  />
                         </p:panel>
 
-                        <p:panel id="cargaPersonal" header="Carga del personal">
+                        <p:panel id="cargaPersonal" header="Carga del personal" closable="true">
                             <h:outputText value="Informacion de actividad del personal" />
                         </p:panel>
 
-                        <p:panel id="otraCosa" header="Otra cosa que se quiera poner">
+                        <p:panel id="otraCosa" header="Otra cosa que se quiera poner" closable="true">
                             <h:outputText value="Informacion" />
                         </p:panel>
                     </p:dashboard>
