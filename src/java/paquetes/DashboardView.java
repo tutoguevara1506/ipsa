@@ -28,13 +28,13 @@ public class DashboardView implements Serializable {
         DashboardColumn column2 = new DefaultDashboardColumn();
         DashboardColumn column3 = new DefaultDashboardColumn();
          
-        column1.addWidget("Listado de mantenimientos");
-        column1.addWidget("Grafica de Mantenimientos");
+        column1.addWidget("listadoMantenimientos");
+        column1.addWidget("graficaMantenimientos");
          
-        column2.addWidget("Solicitudes pendientes");
-        column2.addWidget("Carga de personal");
+        column2.addWidget("solicitudesPendientes");
+        column2.addWidget("cargaPersonal");
          
-        column3.addWidget("Otra cosa");
+        column3.addWidget("otraCosa");
  
         model.addColumn(column1);
         model.addColumn(column2);
