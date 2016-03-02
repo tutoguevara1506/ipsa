@@ -21,7 +21,7 @@ public class AlertSchedule {
     private final Logger log = Logger.getLogger(getClass().getName());
     private String hostname, smtp_port, user, pass, remitente;
         
-    @Schedule(hour = "*", dayOfWeek = "*", info = "Todos los dias cada hora server")
+    @Schedule(hour = "8", dayOfWeek = "*", info = "Todos los dias a las 8:00 a.m.")
     //@Schedule(second = "*", minute = "*/10", hour = "*", persistent= true, info = "cada 2 minutos")
 
     public void performTask() throws EmailException {
@@ -29,7 +29,7 @@ public class AlertSchedule {
         long timeInit = System.currentTimeMillis();
         ConfiguracionMail();
               
-        log.info(":. Inicio TareaProgramada cada 5 minutos");
+        log.info(":. Inicio TareaProgramada cada dia");
                 
         try {
             timeInit = System.currentTimeMillis();
@@ -46,7 +46,7 @@ public class AlertSchedule {
             email.setSubject("Correo de Prueba");
             email.setMsg("Este es un correo de prueba desde server de prueba con seguridad TLS");
         
-            String[] recipients = {"rramirezech@hotmail.com"};
+            String[] recipients = {"rramirezech@hotmail.com", "rramirezech@outlook.com", "rramirezech@gmail.com"};
 
             for (int i = 0; i < recipients.length; i++)
             {
