@@ -368,7 +368,7 @@
                                                  selectionMode="single" selection="#{manMaestroMan.catmantenimientos}" 
                                                  rowKey="#{vGraMtto.cod_man} #{vGraMtto.cod_lis_equ}"
                                                  editable="false" 
-                                                 style="width:560px"
+                                                 style="width:1200px"
                                                  scrollable="true"
                                                  scrollHeight="190"
                                                  >
@@ -392,10 +392,8 @@
                                         <p:column style="width:80px">
                                             <h:outputText value="#{vGraMtto.des_equ}" />
                                         </p:column>
-                                        <p:columns  value="53" var="opcol" style="width:1px">
-                                            <p:commandButton update="frmMaestra" oncomplete="PF('wMaestra').show()" icon="ui-icon-pin-s">
-                                                <f:setPropertyActionListener value="#{manMaestroMan.cod_lis_equ} #{manMaestroMan.cod_man}" target="#{manMaestroMan.onEventSelect}" />
-                                            </p:commandButton>
+                                        <p:columns value="#{manMaestroMan.columnas}" var="column" style="border: 5px;">
+                                            <h:outputText value="i" />				       
                                         </p:columns>
                                     </p:dataTable>
                             </h:form>

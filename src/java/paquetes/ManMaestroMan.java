@@ -114,6 +114,7 @@ public class ManMaestroMan implements Serializable {
     private String tabindex, buscar_serie, nompai, nombod, nomubi, cod_gru_fal, cod_fal, mmensaje;
     private Date dfecha1, dfecha2, dfecha3, dfecfinF, dfecini;
     private TreeNode root, selectednode;
+    private List<String> columnas = new ArrayList<String>();
 
     private UploadedFile file;
 
@@ -125,6 +126,7 @@ public class ManMaestroMan implements Serializable {
         catcalendario = new CatCalendario();
         mttoModel = new DefaultScheduleModel();
         llenarMttosCalendario();
+        llenarColumnas();
 
         for (CatCalendario cm : listaMttos) {
             DefaultScheduleEvent cmt = new DefaultScheduleEvent();
@@ -972,6 +974,14 @@ public class ManMaestroMan implements Serializable {
         this.cod_dep = cod_dep;
     }
 
+    public List<String> getColumnas() {
+        return columnas;
+    }
+
+    public void setColumnas(List<String> columnas) {
+        this.columnas = columnas;
+    }
+    
     public void iniciarventana() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
@@ -1905,6 +1915,20 @@ public class ManMaestroMan implements Serializable {
 
         } catch (Exception e) {
             System.out.println("Error en el llenado de Departamentos en ManMaestroMan. " + e.getMessage());
+        }
+    }
+    
+    public void llenarColumnas() {
+        try {
+            columnas = new ArrayList<>();
+
+            for(int x=1;x<41;x++) {
+                columnas.add("c"+x);
+                System.out.println("c"+x);
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Columnas. " + e.getMessage());
         }
     }
 
@@ -3895,5 +3919,5 @@ public class ManMaestroMan implements Serializable {
         Accesos racc = new Accesos();
         return JasperRunManager.runReportToPdf(reportPath + File.separator + "FMAN004.jasper", param, racc.Conectar());
     }
-
+    
 }
