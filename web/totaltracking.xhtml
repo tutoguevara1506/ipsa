@@ -4,7 +4,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
 
     <h:head>
         <title>IPSA</title>
@@ -355,50 +356,27 @@
                     <p:dashboard id="board" model="#{dashboardView.model}">
                         <p:ajax event="reorder" listener="#{dashboardView.handleReorder}" update="msgs" />
 
-                        <p:panel id="listadoMantenimientos" header="Mantenimientos" closable="true">
-                            <h:outputText value="Informacion de Mttos" />
-                        </p:panel>
-
                         <p:panel id="graficaMantenimientos" header="Grafico de Mantenimientos" closable="true">
                             <h:form id="frmGraMtto"> 
                                 <p:growl id="msgDetEva" showDetail="true" life="4500"/>
-                                    <p:dataTable id="dtGraMtto" var="vGraMtto" 
-                                                 value="#{manMaestroMan.listaMttos}" 
-                                                 emptyMessage="No se encontraron resultados" 
-                                                 selectionMode="single" selection="#{manMaestroMan.catmantenimientos}" 
-                                                 rowKey="#{vGraMtto.cod_man} #{vGraMtto.cod_lis_equ}"
-                                                 editable="false" 
-                                                 style="width:1200px"
-                                                 scrollable="true"
-                                                 scrollHeight="190"
-                                                 >
-                                        <p:columnGroup type="header">
-                                        <p:row>
-                                            <p:column rowspan="1" headerText="Equipos" style="width:80px"/>
-                                            <p:column colspan="4" headerText="Ene" />
-                                            <p:column colspan="4" headerText="Feb" />
-                                            <p:column colspan="4" headerText="Mar" />
-                                            <p:column colspan="4" headerText="Abr" />
-                                            <p:column colspan="4" headerText="May" />
-                                            <p:column colspan="4" headerText="Jun" />
-                                            <p:column colspan="4" headerText="Jul" />
-                                            <p:column colspan="4" headerText="Ago" />
-                                            <p:column colspan="4" headerText="Sep" />
-                                            <p:column colspan="4" headerText="Oct" />
-                                            <p:column colspan="4" headerText="Nov" />
-                                            <p:column colspan="4" headerText="Dic" />
-                                        </p:row>
-                                    </p:columnGroup>
-                                        <p:column style="width:80px">
-                                            <h:outputText value="#{vGraMtto.des_equ}" />
-                                        </p:column>
-                                        <p:columns value="#{manMaestroMan.columnas}" var="column" columnIndexVar="colIndex" style="border: 5px;">
-                                            <h:outputText value="#{manMaestroMan.ifmtto}" />	
-                                        </p:columns>
-                                    </p:dataTable>
+                                    <pe:timeline id="timeline" value="#{basicTimelineController.model}" height="250px"  
+                                                axisOnTop="false"               
+                                                eventStyle="box"
+                                       <p:ajax event="select" listener="#{basicTimelineController.onSelect}"/>  
+                                   </pe:timeline>  
+
+                                   <h:outputStylesheet id="timelineCSS">  
+                                       table .formColumn {  
+                                           padding: 0 5px 0 20px;  
+                                           text-align: right;  
+                                           white-space: nowrap;  
+                                       }         
+                                   </h:outputStylesheet>  
                             </h:form>
                         </p:panel>
-
+                        <p:panel id="listadoMantenimientos" header="Mantenimientos" closable="true">
+                            <h:outputText value="Informacion de Mttos" />
+                        </p:panel>
                         <p:panel id="solicitudesPendientes" header="Solicitudes" closable="true">
                             <h:outputText value="Solicitudes pendientes"  />
                         </p:panel>
