@@ -1939,20 +1939,25 @@ public class ManMaestroMan implements Serializable {
     public void llenarColumnas() {
         try {
             columnas = new ArrayList<>();
+                        
+            Iterator i = listaMttos.iterator();
+            int s=1;
+            while(i.hasNext())
+            {
+                s++; 
+                semana = Integer.parseInt(listaMttos.get(s).getSemana());
+                for(int x=0;x<48;x++) {
+                    columnas.add("c"+x);
+                    if (semana == x){
+                        ifmtto="1";
+                    }
+                    else
+                    {
+                        ifmtto="2";
+                    }
 
-            for(int x=1;x<48;x++) {
-                columnas.add("c"+x);
-                semana = Integer.parseInt(listaMttos.get(x-1).getColor());
-                if (semana == x){
-                    ifmtto="1";
                 }
-                else
-                {
-                    ifmtto="";
-                }
-                
             }
-            
         } catch (Exception e) {
             System.out.println("Error en el llenado de Columnas. " + e.getMessage());
         }
@@ -3845,8 +3850,8 @@ public class ManMaestroMan implements Serializable {
             listaMttos = new ArrayList<>();
 
             mQuery = " select tbl_mae_man.cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, des_equ, "
-                    + "(TIMESTAMPDIFF(MONTH, fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=2,'yellow','red') as color,"
-                    + " week(fec_ini,2) as semana "
+                    + "if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=2,'yellow','red')) as color,"
+                    + " week(fec_ini,1) as semana "
                     + " from tbl_mae_man inner join lis_equ on "
                     + " tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ "
                     + " order by cod_man;";
