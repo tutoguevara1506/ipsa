@@ -116,7 +116,7 @@ public class ManMaestroMan implements Serializable {
     private TreeNode root, selectednode;
     private List<String> columnas = new ArrayList<String>();
     private int semana;
-    private String ifmtto;
+    private String ifmtto, deseq;
 
     private UploadedFile file;
 
@@ -160,6 +160,15 @@ public class ManMaestroMan implements Serializable {
         }
     }
 
+    public String getDeseq() {
+        return deseq;
+    }
+
+    public void setDeseq(String deseq) {
+        this.deseq = deseq;
+    }
+
+    
     public List<CatGrupoFallas> getGrupofallas() {
         return grupofallas;
     }
@@ -1941,13 +1950,16 @@ public class ManMaestroMan implements Serializable {
             columnas = new ArrayList<>();
                         
             Iterator i = listaMttos.iterator();
-            int s=1;
+            int s=0;
             while(i.hasNext())
             {
-                s++; 
                 semana = Integer.parseInt(listaMttos.get(s).getSemana());
+                deseq = listaMttos.get(s).getDes_equ();
+                s++;
+                
                 for(int x=0;x<48;x++) {
-                    columnas.add("c"+x);
+                    ifmtto="";
+                    
                     if (semana == x){
                         ifmtto="1";
                     }
@@ -1955,7 +1967,7 @@ public class ManMaestroMan implements Serializable {
                     {
                         ifmtto="2";
                     }
-
+                    columnas.add(ifmtto);
                 }
             }
         } catch (Exception e) {
