@@ -115,6 +115,8 @@ public class ManMaestroMan implements Serializable {
     private Date dfecha1, dfecha2, dfecha3, dfecfinF, dfecini;
     private TreeNode root, selectednode;
     private List<String> columnas = new ArrayList<String>();
+    private int semana;
+    private String ifmtto;
 
     private UploadedFile file;
 
@@ -974,6 +976,22 @@ public class ManMaestroMan implements Serializable {
         this.cod_dep = cod_dep;
     }
 
+    public int getSemana() {
+        return semana;
+    }
+
+    public void setSemana(int semana) {
+        this.semana = semana;
+    }
+
+    public String getIfmtto() {
+        return ifmtto;
+    }
+
+    public void setIfmtto(String ifmtto) {
+        this.ifmtto = ifmtto;
+    }
+        
     public List<String> getColumnas() {
         return columnas;
     }
@@ -1922,9 +1940,17 @@ public class ManMaestroMan implements Serializable {
         try {
             columnas = new ArrayList<>();
 
-            for(int x=1;x<41;x++) {
+            for(int x=1;x<48;x++) {
                 columnas.add("c"+x);
-                System.out.println("c"+x);
+                semana = Integer.parseInt(listaMttos.get(x-1).getColor());
+                if (semana == x){
+                    ifmtto="1";
+                }
+                else
+                {
+                    ifmtto="";
+                }
+                
             }
             
         } catch (Exception e) {
