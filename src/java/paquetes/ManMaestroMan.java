@@ -148,7 +148,7 @@ public class ManMaestroMan implements Serializable {
             TimelineEvent tle = new TimelineEvent();
             tle.setData(cm.getDes_equ());
             tle.setStartDate(cm.getFec_ini());
-            tle.setEndDate(cm.getFec_fin());
+            //tle.setEndDate(cm.getFec_fin());
             cmt.setId(cm.getCod_man());
             cmt.setDescription(cm.getDet_obs());
             cmt.setTitle(cm.getDes_equ());
