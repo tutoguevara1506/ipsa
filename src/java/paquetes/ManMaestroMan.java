@@ -41,6 +41,9 @@ import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.UnselectEvent;
+import org.primefaces.extensions.event.timeline.TimelineSelectEvent;
+import org.primefaces.extensions.model.timeline.TimelineEvent;
+import org.primefaces.extensions.model.timeline.TimelineModel;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.DefaultTreeNode;
@@ -114,10 +117,19 @@ public class ManMaestroMan implements Serializable {
     private String tabindex, buscar_serie, nompai, nombod, nomubi, cod_gru_fal, cod_fal, mmensaje;
     private Date dfecha1, dfecha2, dfecha3, dfecfinF, dfecini;
     private TreeNode root, selectednode;
-    private List<String> columnas = new ArrayList<String>();
-    private int semana;
-    private String ifmtto, deseq;
-
+    
+    // Variables para timeline
+    private TimelineModel modelTimeLine;  
+  
+    private boolean selectable = true;  
+    private boolean zoomable = true;  
+    private boolean moveable = true;  
+    private boolean stackEvents = true;  
+    private String eventStyle = "box";  
+    private boolean axisOnTop = false;  
+    private boolean showCurrentTime = true;  
+    private boolean showNavigation = false;  
+    
     private UploadedFile file;
 
     public ManMaestroMan() {
@@ -127,11 +139,16 @@ public class ManMaestroMan implements Serializable {
     public void init() {
         catcalendario = new CatCalendario();
         mttoModel = new DefaultScheduleModel();
+        modelTimeLine = new TimelineModel();  
+        
         llenarMttosCalendario();
-        llenarColumnas();
-
+        
         for (CatCalendario cm : listaMttos) {
             DefaultScheduleEvent cmt = new DefaultScheduleEvent();
+            TimelineEvent tle = new TimelineEvent();
+            tle.setData(cm.getDes_equ());
+            tle.setStartDate(cm.getFec_ini());
+            tle.setEndDate(cm.getFec_fin());
             cmt.setId(cm.getCod_man());
             cmt.setDescription(cm.getDet_obs());
             cmt.setTitle(cm.getDes_equ());
@@ -156,19 +173,12 @@ public class ManMaestroMan implements Serializable {
             }
 
             mttoModel.addEvent(cmt);
+            modelTimeLine.add(tle); 
 
         }
     }
 
-    public String getDeseq() {
-        return deseq;
-    }
-
-    public void setDeseq(String deseq) {
-        this.deseq = deseq;
-    }
-
-    
+       
     public List<CatGrupoFallas> getGrupofallas() {
         return grupofallas;
     }
@@ -929,6 +939,78 @@ public class ManMaestroMan implements Serializable {
         this.mttoModel = mttoModel;
     }
 
+    public TimelineModel getModelTimeLine() {
+        return modelTimeLine;
+    }
+
+    public void setModelTimeLine(TimelineModel modelTimeLine) {
+        this.modelTimeLine = modelTimeLine;
+    }
+
+    public boolean isSelectable() {
+        return selectable;
+    }
+
+    public void setSelectable(boolean selectable) {
+        this.selectable = selectable;
+    }
+
+    public boolean isZoomable() {
+        return zoomable;
+    }
+
+    public void setZoomable(boolean zoomable) {
+        this.zoomable = zoomable;
+    }
+
+    public boolean isMoveable() {
+        return moveable;
+    }
+
+    public void setMoveable(boolean moveable) {
+        this.moveable = moveable;
+    }
+
+    public boolean isStackEvents() {
+        return stackEvents;
+    }
+
+    public void setStackEvents(boolean stackEvents) {
+        this.stackEvents = stackEvents;
+    }
+
+    public String getEventStyle() {
+        return eventStyle;
+    }
+
+    public void setEventStyle(String eventStyle) {
+        this.eventStyle = eventStyle;
+    }
+
+    public boolean isAxisOnTop() {
+        return axisOnTop;
+    }
+
+    public void setAxisOnTop(boolean axisOnTop) {
+        this.axisOnTop = axisOnTop;
+    }
+
+    public boolean isShowCurrentTime() {
+        return showCurrentTime;
+    }
+
+    public void setShowCurrentTime(boolean showCurrentTime) {
+        this.showCurrentTime = showCurrentTime;
+    }
+
+    public boolean isShowNavigation() {
+        return showNavigation;
+    }
+
+    public void setShowNavigation(boolean showNavigation) {
+        this.showNavigation = showNavigation;
+    }
+
     public ScheduleEvent getMtto() {
         return mtto;
     }
@@ -983,30 +1065,6 @@ public class ManMaestroMan implements Serializable {
 
     public void setCod_dep(String cod_dep) {
         this.cod_dep = cod_dep;
-    }
-
-    public int getSemana() {
-        return semana;
-    }
-
-    public void setSemana(int semana) {
-        this.semana = semana;
-    }
-
-    public String getIfmtto() {
-        return ifmtto;
-    }
-
-    public void setIfmtto(String ifmtto) {
-        this.ifmtto = ifmtto;
-    }
-        
-    public List<String> getColumnas() {
-        return columnas;
-    }
-
-    public void setColumnas(List<String> columnas) {
-        this.columnas = columnas;
     }
     
     public void iniciarventana() {
@@ -1945,36 +2003,7 @@ public class ManMaestroMan implements Serializable {
         }
     }
     
-    public void llenarColumnas() {
-        try {
-            columnas = new ArrayList<>();
-                        
-            Iterator i = listaMttos.iterator();
-            int s=0;
-            while(i.hasNext())
-            {
-                semana = Integer.parseInt(listaMttos.get(s).getSemana());
-                deseq = listaMttos.get(s).getDes_equ();
-                s++;
-                
-                for(int x=0;x<48;x++) {
-                    ifmtto="";
-                    
-                    if (semana == x){
-                        ifmtto="1";
-                    }
-                    else
-                    {
-                        ifmtto="2";
-                    }
-                    columnas.add(ifmtto);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error en el llenado de Columnas. " + e.getMessage());
-        }
-    }
-
+    
     public void guardarencabezado() {
         String mQuery = "";
         if (validarencabezado()) {
@@ -3951,6 +3980,14 @@ public class ManMaestroMan implements Serializable {
             Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void onSelect(TimelineSelectEvent e) {  
+        TimelineEvent timelineEvent = e.getTimelineEvent();  
+  
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected event:", timelineEvent.getData().toString());  
+        FacesContext.getCurrentInstance().addMessage(null, msg);  
+    }  
+     
     
     public byte[] imprimirFicha() throws SQLException, JRException {
         ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
