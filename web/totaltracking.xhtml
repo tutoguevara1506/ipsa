@@ -352,16 +352,13 @@
             <div style="height:500px">
                 <h:form>
                     <p:growl id="msgs" showDetail="true" />
-
-                    <p:dashboard id="board" model="#{dashboardView.model}">
-                        <p:ajax event="reorder" listener="#{dashboardView.handleReorder}" update="msgs" />
-
-                        <p:panel id="graficaMantenimientos" header="Grafico de Mantenimientos" closable="true">
+                    
+                    <p:panel id="graficaMantenimientos" header="Grafico de Mantenimientos" closable="true">
                             <h:form id="frmGraMtto"> 
                                 <p:growl id="msgDetEva" showDetail="true" life="4500"/>
                                 
                                 <p:fieldset style="white-space:nowrap;">  
-                                    <h:panelGrid columns="8" columnClasses="formColumn,,formColumn,,formColumn,,formColumn,,">  
+                                    <h:panelGrid columns="16" columnClasses="formColumn,,formColumn,,formColumn,,formColumn,,formColumn,,formColumn,,formColumn,,formColumn,,">  
                                         <h:outputText value="Seleccionable"/>  
                                         <p:selectBooleanButton id="selectable" onLabel="Yes" offLabel="No"  
                                                                value="#{manMaestroMan.selectable}">  
@@ -414,9 +411,9 @@
                                     </h:panelGrid>  
                                 </p:fieldset>  
 
-                                <p:spacer width="100%" height="10"/>  
+                                <p:spacer width="100%" height="5"/>  
 
-                                <pe:timeline id="timeline" value="#{manMaestroMan.modelTimeLine}" height="250px" 
+                                <pe:timeline id="timeline" value="#{manMaestroMan.modelTimeLine}" height="200px" 
                                                 selectable="#{manMaestroMan.selectable}"  
                                                 zoomable="#{manMaestroMan.zoomable}"  
                                                 moveable="#{manMaestroMan.moveable}"  
@@ -437,6 +434,9 @@
                                    </h:outputStylesheet>  
                             </h:form>
                         </p:panel>
+
+                    <p:dashboard id="board" model="#{dashboardView.model}">
+                        <p:ajax event="reorder" listener="#{dashboardView.handleReorder}" update="msgs" />
                         <p:panel id="listadoMantenimientos" header="Mantenimientos" closable="true">
                             <h:outputText value="Informacion de Mttos" />
                         </p:panel>
@@ -447,10 +447,7 @@
                         <p:panel id="cargaPersonal" header="Carga del personal" closable="true">
                             <h:outputText value="Informacion de actividad del personal" />
                         </p:panel>
-
-                        <p:panel id="otraCosa" header="Otra cosa que se quiera poner" closable="true">
-                            <h:outputText value="Informacion" />
-                        </p:panel>
+                        
                     </p:dashboard>
 
                     <div style="clear:both" />
