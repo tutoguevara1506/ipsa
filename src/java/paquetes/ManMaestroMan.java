@@ -139,7 +139,8 @@ public class ManMaestroMan implements Serializable {
     public void init() {
         catcalendario = new CatCalendario();
         mttoModel = new DefaultScheduleModel();
-        modelTimeLine = new TimelineModel();  
+        modelTimeLine = new TimelineModel(); 
+        Date now = new Date();
         
         llenarMttosCalendario();
         
@@ -149,10 +150,28 @@ public class ManMaestroMan implements Serializable {
             tle.setData(cm.getDes_equ());
             tle.setStartDate(cm.getFec_ini());
             //tle.setEndDate(cm.getFec_fin());
+            //tle.setGroup(cm.getDes_equ());
+            
+            //Verifica condicion del mantenimiento
+            now = new Date();
+            
+            long r = (cm.getFec_ini().getTime())- now.getTime();
+            double dias = Math.floor(r / (1000 * 60 * 60 * 24)); 
+            String estado = cm.getDet_sta();
+            String color ="";
+            
+            if ("1".equals(estado) && dias > 1){
+                color= "entiempo";
+            } else if ("1".equals(estado) && dias < 30){
+                color= "atrasoleve";
+            } else {
+                color= "atrazado";
+            }
+            tle.setStyleClass(color);
             cmt.setId(cm.getCod_man());
             cmt.setDescription(cm.getDet_obs());
             cmt.setTitle(cm.getDes_equ());
-            cmt.setData(cm.getCod_man());
+            //cmt.setData(cm.getCod_man());
             cmt.setAllDay(true);
             cmt.setEditable(true);
             cmt.setStartDate(cm.getFec_ini());
@@ -3868,6 +3887,7 @@ public class ManMaestroMan implements Serializable {
     public void onEventSelect(SelectEvent selectEvent) {
 
         ScheduleEvent smtto = (ScheduleEvent) selectEvent.getObject();
+        TimelineEvent tlmtto = (TimelineEvent) selectEvent.getObject();
 
         for (CatCalendario cm : listaMttos) {
             if (cm.getCod_man() == smtto.getData()) {
@@ -3981,14 +4001,20 @@ public class ManMaestroMan implements Serializable {
         }
     }
     
-    public void onSelect(TimelineSelectEvent e) {  
-        TimelineEvent timelineEvent = e.getTimelineEvent();  
-  
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected event:", timelineEvent.getData().toString());  
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
-    }  
-     
-    
+    public void onSelect(TimelineSelectEvent e) {
+
+        TimelineEvent tlmtto = (TimelineEvent) e.getTimelineEvent();
+
+        for (CatCalendario cm : listaMttos) {
+            if (cm.getCod_man() == tlmtto.getData()) {
+                catcalendario = cm;
+                buscar_serie = catcalendario.getCod_lis_equ();
+                llenarMantenimientos();
+                break;
+            }
+        }
+    }
+        
     public byte[] imprimirFicha() throws SQLException, JRException {
         ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         String reportPath = ctx.getRealPath(File.separator + "reportes" + File.separator);

@@ -356,78 +356,22 @@
                     <p:panel id="graficaMantenimientos" header="Grafico de Mantenimientos" closable="true">
                             <h:form id="frmGraMtto"> 
                                 <p:growl id="msgDetEva" showDetail="true" life="4500"/>
-                                
-                                <p:fieldset style="white-space:nowrap;">  
-                                    <h:panelGrid columns="16" columnClasses="formColumn,,formColumn,,formColumn,,formColumn,,formColumn,,formColumn,,formColumn,,formColumn,,">  
-                                        <h:outputText value="Seleccionable"/>  
-                                        <p:selectBooleanButton id="selectable" onLabel="Yes" offLabel="No"  
-                                                               value="#{manMaestroMan.selectable}">  
-                                            <p:ajax event="change" process="@this" update="timeline"/>  
-                                        </p:selectBooleanButton>  
-
-                                        <h:outputText value="Zoom"/>  
-                                        <p:selectBooleanButton id="zoomable" onLabel="Yes" offLabel="No"  
-                                                               value="#{manMaestroMan.zoomable}">  
-                                            <p:ajax event="change" process="@this" update="timeline"/>  
-                                        </p:selectBooleanButton>  
-
-                                        <h:outputText value="Movible"/>  
-                                        <p:selectBooleanButton id="moveable" onLabel="Yes" offLabel="No"  
-                                                               value="#{manMaestroMan.moveable}">  
-                                            <p:ajax event="change" process="@this" update="timeline"/>  
-                                        </p:selectBooleanButton>  
-
-                                        <h:outputText value="Stack Eventos"/>  
-                                        <p:selectBooleanButton id="stackEvents" onLabel="Yes" offLabel="No"  
-                                                               value="#{manMaestroMan.stackEvents}">  
-                                            <p:ajax event="change" process="@this" update="timeline"/>  
-                                        </p:selectBooleanButton>  
-
-                                        <h:outputText value="Estilo"/>  
-                                        <p:selectOneButton id="eventStyle"  
-                                                           value="#{manMaestroMan.eventStyle}">  
-                                            <f:selectItem itemLabel="Punto" itemValue="dot"/>  
-                                            <f:selectItem itemLabel="Caja" itemValue="box"/>  
-                                            <p:ajax event="change" process="@this" update="timeline"/>  
-                                        </p:selectOneButton>  
-
-                                        <h:outputText value="Eje Arriba"/>  
-                                        <p:selectBooleanButton id="axisOnTop" onLabel="Yes" offLabel="No"  
-                                                               value="#{manMaestroMan.axisOnTop}">  
-                                            <p:ajax event="change" process="@this" update="timeline"/>  
-                                        </p:selectBooleanButton>  
-
-                                        <h:outputText value="Show Mostrar Hora"/>  
-                                        <p:selectBooleanButton id="currentTime" onLabel="Yes" offLabel="No"  
-                                                               value="#{manMaestroMan.showCurrentTime}">  
-                                            <p:ajax event="change" process="@this" update="timeline"/>  
-                                        </p:selectBooleanButton>  
-
-                                        <h:outputText value="Mostrar Navegacion"/>  
-                                        <p:selectBooleanButton id="navigation" onLabel="Yes" offLabel="No"  
-                                                               value="#{manMaestroMan.showNavigation}">  
-                                            <p:ajax event="change" process="@this" update="timeline"/>  
-                                        </p:selectBooleanButton>  
-                                    </h:panelGrid>  
-                                </p:fieldset>  
-
-                                <p:spacer width="100%" height="5"/>  
-
-                                <pe:timeline id="timeline" value="#{manMaestroMan.modelTimeLine}" height="200px" 
-                                                selectable="#{manMaestroMan.selectable}"  
-                                                zoomable="#{manMaestroMan.zoomable}"  
-                                                moveable="#{manMaestroMan.moveable}"  
-                                                stackEvents="#{manMaestroMan.stackEvents}"  
-                                                axisOnTop="#{manMaestroMan.axisOnTop}"               
-                                                eventStyle="#{manMaestroMan.eventStyle}"  
-                                                showCurrentTime="#{manMaestroMan.showCurrentTime}"  
-                                                showNavigation="#{manMaestroMan.showNavigation}">    
-                                       <p:ajax event="select" listener="#{manMaestroMan.onEventSelect}"/>  
+                                <pe:timeline id="timeline" value="#{manMaestroMan.modelTimeLine}" height="320px" 
+                                                selectable="true"  
+                                                zoomable="true"  
+                                                moveable="true"  
+                                                stackEvents="true"  
+                                                axisOnTop="false"
+                                                eventStyle="dot"
+                                                showCurrentTime="true"  
+                                                showNavigation="true"
+                                                locale="es"> 
+                                       <p:ajax event="select" listener="#{manMaestroMan.onSelect}" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
                                    </pe:timeline>  
 
                                    <h:outputStylesheet id="timelineCSS">  
                                        table .formColumn {  
-                                           padding: 0 5px 0 20px;  
+                                           padding: 0 5px 0 5px;  
                                            text-align: right;  
                                            white-space: nowrap;  
                                        }         
@@ -437,9 +381,6 @@
 
                     <p:dashboard id="board" model="#{dashboardView.model}">
                         <p:ajax event="reorder" listener="#{dashboardView.handleReorder}" update="msgs" />
-                        <p:panel id="listadoMantenimientos" header="Mantenimientos" closable="true">
-                            <h:outputText value="Informacion de Mttos" />
-                        </p:panel>
                         <p:panel id="solicitudesPendientes" header="Solicitudes" closable="true">
                             <h:outputText value="Solicitudes pendientes"  />
                         </p:panel>
@@ -461,16 +402,19 @@
 
         <h:form id="frmNB"> 
             <p:notificationBar id="nbMadre" position="bottom" effect="slide"
-                               widgetVar="bar" >
+                               widgetVar="bar" style="height: 40px;">
 
-                <h:panelGrid  columns="3" cellpadding="5">
+                <h:panelGrid  columns="1" cellpadding="1">
                     <h:outputText value="Usuario: &lt;font color='red'&gt; #{login.det_nom} &lt;/font&gt;&lt;br /&gt;Departamento: &lt;font color='red'&gt; #{login.nomdep} &lt;/font&gt;"
                                   escape="false"
-                                  style="font-size:20px;position: absolute; top:15%;right:45%;bottom:0;margin: auto; "
+                                  style="font-size:14px; position: absolute; top:5%;right:45%;bottom:0;margin: auto; "
                                   />
 
-                    <h:graphicImage  id="cclogo" value="/nube.gif" width="130" height="120" 
+                    <h:graphicImage  id="cclogo" value="/nube.gif" width="60" height="55" 
                                      style=" position: absolute; top:0;right:10%;bottom:0;margin: auto; "/>
+                    
+                    <h:graphicImage  id="ipsalogo" value="/logo.png" width="170" height="55" 
+                                     style=" position: absolute; top:0;right:80%;bottom:0;margin: auto; "/>
                 </h:panelGrid>
             </p:notificationBar>
         </h:form>

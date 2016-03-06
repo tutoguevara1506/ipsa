@@ -149,27 +149,32 @@ div.timeline-axis-text {
   
 div.timeline-event {  
     color: white !important;  
-    border-radius: 5px !important;  
+    border-radius: 5px !important; 
 }  
   
 div.timeline-event-content {  
-    padding: 5px;  
+    padding: 2px;
+    height: 6px !important;
     text-shadow: none;  
 }  
   
-div.atrazado {  
-    background: #F03030 none !important;  /* red */  
-    border-color: #bd2828 !important;     /* red */  
+div.atrazado {
+    font-size: xx-small;
+    /* background: #F03030 none !important;   red */  
+     border-color: #bd2828 !important;      /* red */  
 }  
   
 div.entiempo {  
-    background: #1AA11A none !important;  /* green */  
-    border-color: #136e13 !important;     /* green */  
+    font-size: smaller;
+    /*background: #1AA11A none !important;   green */  
+    border-color: #136e13 !important;      /* green */  
 }  
   
 div.atrasoleve {  
-    background: #FFA500 none !important;  /* orange */  
-    border-color: #cc8100 !important;     /* orange */  
+    font-size: xx-small;
+    /* background: #FFA500 none !important;   orange */  
+    /*border-color: #cc8100 !important;       orange */ 
+    border-color: #FFFF00 !important;
 }  
   
 div.timeline-event-selected {  
