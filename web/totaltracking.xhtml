@@ -354,8 +354,8 @@
                     <p:growl id="msgs" showDetail="true" />
                     
                     <p:panel id="graficaMantenimientos" header="Grafico de Mantenimientos" closable="true">
-                            <h:form id="frmGraMtto"> 
-                                <p:growl id="msgDetEva" showDetail="true" life="4500"/>
+                            <h:form id="frmTimeLine"> 
+                                <p:growl id="msgTimeLine" showDetail="true" life="4500"/>
                                 <pe:timeline id="timeline" value="#{manMaestroMan.modelTimeLine}" height="320px" 
                                                 selectable="true"  
                                                 zoomable="true"  
@@ -364,9 +364,8 @@
                                                 axisOnTop="false"
                                                 eventStyle="dot"
                                                 showCurrentTime="true"  
-                                                showNavigation="true"
-                                                locale="es"> 
-                                       <p:ajax  process="@this" event="select" listener="#{manMaestroMan.onSelect}" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
+                                                showNavigation="true">
+                                    <p:ajax  event="select" listener="#{manMaestroMan.onSelect}" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
                                    </pe:timeline>  
 
                                    <h:outputStylesheet id="timelineCSS">  

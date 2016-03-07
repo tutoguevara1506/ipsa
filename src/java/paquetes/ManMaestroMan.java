@@ -120,16 +120,7 @@ public class ManMaestroMan implements Serializable {
     
     // Variables para timeline
     private TimelineModel modelTimeLine;  
-  
-    private boolean selectable = true;  
-    private boolean zoomable = true;  
-    private boolean moveable = true;  
-    private boolean stackEvents = true;  
-    private String eventStyle = "box";  
-    private boolean axisOnTop = false;  
-    private boolean showCurrentTime = true;  
-    private boolean showNavigation = false;  
-    
+      
     private UploadedFile file;
 
     public ManMaestroMan() {
@@ -143,12 +134,13 @@ public class ManMaestroMan implements Serializable {
         Date now = new Date();
         
         llenarMttosCalendario();
-        
+               
         for (CatCalendario cm : listaMttos) {
             DefaultScheduleEvent cmt = new DefaultScheduleEvent();
             TimelineEvent tle = new TimelineEvent();
             tle.setData(cm.getDes_equ());
             tle.setStartDate(cm.getFec_ini());
+            tle.setEditable(Boolean.TRUE);
             //tle.setEndDate(cm.getFec_fin());
             //tle.setGroup(cm.getDes_equ());
             
@@ -193,7 +185,6 @@ public class ManMaestroMan implements Serializable {
 
             mttoModel.addEvent(cmt);
             modelTimeLine.add(tle); 
-
         }
     }
 
@@ -966,70 +957,7 @@ public class ManMaestroMan implements Serializable {
         this.modelTimeLine = modelTimeLine;
     }
 
-    public boolean isSelectable() {
-        return selectable;
-    }
-
-    public void setSelectable(boolean selectable) {
-        this.selectable = selectable;
-    }
-
-    public boolean isZoomable() {
-        return zoomable;
-    }
-
-    public void setZoomable(boolean zoomable) {
-        this.zoomable = zoomable;
-    }
-
-    public boolean isMoveable() {
-        return moveable;
-    }
-
-    public void setMoveable(boolean moveable) {
-        this.moveable = moveable;
-    }
-
-    public boolean isStackEvents() {
-        return stackEvents;
-    }
-
-    public void setStackEvents(boolean stackEvents) {
-        this.stackEvents = stackEvents;
-    }
-
-    public String getEventStyle() {
-        return eventStyle;
-    }
-
-    public void setEventStyle(String eventStyle) {
-        this.eventStyle = eventStyle;
-    }
-
-    public boolean isAxisOnTop() {
-        return axisOnTop;
-    }
-
-    public void setAxisOnTop(boolean axisOnTop) {
-        this.axisOnTop = axisOnTop;
-    }
-
-    public boolean isShowCurrentTime() {
-        return showCurrentTime;
-    }
-
-    public void setShowCurrentTime(boolean showCurrentTime) {
-        this.showCurrentTime = showCurrentTime;
-    }
-
-    public boolean isShowNavigation() {
-        return showNavigation;
-    }
-
-    public void setShowNavigation(boolean showNavigation) {
-        this.showNavigation = showNavigation;
-    }
-
+   
     public ScheduleEvent getMtto() {
         return mtto;
     }
@@ -4000,9 +3928,9 @@ public class ManMaestroMan implements Serializable {
         }
     }
     
-    public void onSelect(TimelineSelectEvent e) {
+    public void onSelect(TimelineSelectEvent tle) {
 
-        TimelineEvent tlmtto = (TimelineEvent) e.getTimelineEvent();
+        TimelineEvent tlmtto = (TimelineEvent) tle.getTimelineEvent();
 
         for (CatCalendario cm : listaMttos) {
             if (cm.getCod_man() == tlmtto.getData()) {
