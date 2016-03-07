@@ -366,7 +366,7 @@
                                                 showCurrentTime="true"  
                                                 showNavigation="true"
                                                 locale="es"> 
-                                       <p:ajax event="select" listener="#{manMaestroMan.onSelect}" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
+                                       <p:ajax  process="@this" event="select" listener="#{manMaestroMan.onSelect}" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
                                    </pe:timeline>  
 
                                    <h:outputStylesheet id="timelineCSS">  

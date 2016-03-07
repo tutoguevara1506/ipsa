@@ -158,7 +158,7 @@ public class ManMaestroMan implements Serializable {
             long r = (cm.getFec_ini().getTime())- now.getTime();
             double dias = Math.floor(r / (1000 * 60 * 60 * 24)); 
             String estado = cm.getDet_sta();
-            String color ="";
+            String color;
             
             if ("1".equals(estado) && dias > 1){
                 color= "entiempo";
