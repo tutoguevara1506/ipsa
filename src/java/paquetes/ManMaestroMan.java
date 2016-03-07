@@ -171,7 +171,7 @@ public class ManMaestroMan implements Serializable {
             cmt.setId(cm.getCod_man());
             cmt.setDescription(cm.getDet_obs());
             cmt.setTitle(cm.getDes_equ());
-            //cmt.setData(cm.getCod_man());
+            cmt.setData(cm.getCod_man());
             cmt.setAllDay(true);
             cmt.setEditable(true);
             cmt.setStartDate(cm.getFec_ini());
@@ -3887,7 +3887,6 @@ public class ManMaestroMan implements Serializable {
     public void onEventSelect(SelectEvent selectEvent) {
 
         ScheduleEvent smtto = (ScheduleEvent) selectEvent.getObject();
-        TimelineEvent tlmtto = (TimelineEvent) selectEvent.getObject();
 
         for (CatCalendario cm : listaMttos) {
             if (cm.getCod_man() == smtto.getData()) {
