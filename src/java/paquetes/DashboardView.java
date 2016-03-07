@@ -20,7 +20,7 @@ import org.primefaces.model.DefaultDashboardModel;
 public class DashboardView implements Serializable {
      
     private DashboardModel model;
-     
+        
     @PostConstruct
     public void init() {
         model = new DefaultDashboardModel();

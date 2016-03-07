@@ -140,7 +140,6 @@ public class ManMaestroMan implements Serializable {
             TimelineEvent tle = new TimelineEvent();
             tle.setData(cm.getDes_equ());
             tle.setStartDate(cm.getFec_ini());
-            tle.setEditable(Boolean.TRUE);
             //tle.setEndDate(cm.getFec_fin());
             //tle.setGroup(cm.getDes_equ());
             
@@ -3908,6 +3907,19 @@ public class ManMaestroMan implements Serializable {
             }
         }
     }
+    
+    public void onSelect(TimelineSelectEvent e) {  
+        TimelineEvent tlmtto = e.getTimelineEvent();  
+        
+        for (CatCalendario cm : listaMttos) {
+            if (cm.getCod_man() == tlmtto.getData()) {
+                catcalendario = cm;
+                buscar_serie = catcalendario.getCod_lis_equ();
+                llenarMantenimientos();
+                break;
+            }
+        }
+    }     
 
     public void imprimir_f_man_004() {
         try {
@@ -3927,21 +3939,7 @@ public class ManMaestroMan implements Serializable {
             Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void onSelect(TimelineSelectEvent tle) {
-
-        TimelineEvent tlmtto = (TimelineEvent) tle.getTimelineEvent();
-
-        for (CatCalendario cm : listaMttos) {
-            if (cm.getCod_man() == tlmtto.getData()) {
-                catcalendario = cm;
-                buscar_serie = catcalendario.getCod_lis_equ();
-                llenarMantenimientos();
-                break;
-            }
-        }
-    }
-        
+       
     public byte[] imprimirFicha() throws SQLException, JRException {
         ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         String reportPath = ctx.getRealPath(File.separator + "reportes" + File.separator);
