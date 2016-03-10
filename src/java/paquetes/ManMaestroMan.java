@@ -101,7 +101,7 @@ public class ManMaestroMan implements Serializable {
     private List<CatSolicitudesDetalle> solicitudes;
     private List<CatSolicitudesDetalle> requisiciones;
     private CatCalendario catcalendario;
-    private List<CatCalendario> listaMttos;
+    private List<CatCalendario> listaMttosPre;
     private CatDepartamentos catdepartamentos;
     private List<CatDepartamentos> departamentos;
     private ScheduleModel mttoModel;
@@ -135,7 +135,7 @@ public class ManMaestroMan implements Serializable {
         
         llenarMttosCalendario();
                
-        for (CatCalendario cm : listaMttos) {
+        for (CatCalendario cm : listaMttosPre) {
             DefaultScheduleEvent cmt = new DefaultScheduleEvent();
             TimelineEvent tle = new TimelineEvent();
             tle.setData(cm.getDes_equ());
@@ -932,12 +932,12 @@ public class ManMaestroMan implements Serializable {
         this.catcalendario = catcalendario;
     }
 
-    public List<CatCalendario> getListaMttos() {
-        return listaMttos;
+    public List<CatCalendario> getListaMttosPre() {
+        return listaMttosPre;
     }
 
-    public void setListaMttos(List<CatCalendario> listaMttos) {
-        this.listaMttos = listaMttos;
+    public void setListaMttos(List<CatCalendario> listaMttosPre) {
+        this.listaMttosPre = listaMttosPre;
     }
 
     public ScheduleModel getMttoModel() {
@@ -3815,7 +3815,7 @@ public class ManMaestroMan implements Serializable {
 
         ScheduleEvent smtto = (ScheduleEvent) selectEvent.getObject();
 
-        for (CatCalendario cm : listaMttos) {
+        for (CatCalendario cm : listaMttosPre) {
             if (cm.getCod_man() == smtto.getData()) {
                 catcalendario = cm;
                 buscar_serie = catcalendario.getCod_lis_equ();
@@ -3834,13 +3834,14 @@ public class ManMaestroMan implements Serializable {
         String mQuery = "";
         try {
             catcalendario = new CatCalendario();
-            listaMttos = new ArrayList<>();
+            listaMttosPre = new ArrayList<>();
 
             mQuery = " select tbl_mae_man.cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, des_equ, "
                     + "if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=2,'yellow','red')) as color,"
                     + " week(fec_ini,1) as semana "
                     + " from tbl_mae_man inner join lis_equ on "
                     + " tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ "
+                    + " where tbl_mae_man.cod_tip = 1"
                     + " order by cod_man;";
 
             ResultSet resVariable;
@@ -3848,7 +3849,7 @@ public class ManMaestroMan implements Serializable {
             mAccesos.Conectar();
             resVariable = mAccesos.querySQLvariable(mQuery);
             while (resVariable.next()) {
-                listaMttos.add(new CatCalendario(
+                listaMttosPre.add(new CatCalendario(
                         resVariable.getString(1),
                         resVariable.getString(2),
                         resVariable.getString(3),
@@ -3888,7 +3889,7 @@ public class ManMaestroMan implements Serializable {
 
     public void onEventMove(ScheduleEntryMoveEvent mttoMove) {
 
-        for (CatCalendario cm : listaMttos) {
+        for (CatCalendario cm : listaMttosPre) {
             if (cm.getCod_man() == mttoMove.getScheduleEvent().getData()) {
                 catcalendario = cm;
                 actualizar();
@@ -3899,7 +3900,7 @@ public class ManMaestroMan implements Serializable {
     }
 
     public void onEventResize(ScheduleEntryResizeEvent mttoResize) {
-        for (CatCalendario cm : listaMttos) {
+        for (CatCalendario cm : listaMttosPre) {
             if (cm.getCod_man() == mttoResize.getScheduleEvent().getData()) {
                 catcalendario = cm;
                 actualizar();
@@ -3911,7 +3912,7 @@ public class ManMaestroMan implements Serializable {
     public void onSelect(TimelineSelectEvent e) {  
         TimelineEvent tlmtto = e.getTimelineEvent();  
         
-        for (CatCalendario cm : listaMttos) {
+        for (CatCalendario cm : listaMttosPre) {
             if (cm.getCod_man() == tlmtto.getData()) {
                 catcalendario = cm;
                 buscar_serie = catcalendario.getCod_lis_equ();
