@@ -3971,7 +3971,7 @@ public class ManMaestroMan implements Serializable {
         TimelineEvent tlmtto = e.getTimelineEvent();  
         
         for (CatCalendario cm : listaMttosPre) {
-            if (cm.getCod_man() == tlmtto.getData()) {
+            if (cm.getDes_equ() == tlmtto.getData()) {
                 catcalendario = cm;
                 buscar_serie = catcalendario.getCod_lis_equ();
                 llenarMttosPreventivos();
