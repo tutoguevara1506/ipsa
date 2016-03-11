@@ -41,6 +41,7 @@ import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.UnselectEvent;
+import org.primefaces.extensions.event.timeline.TimelineModificationEvent;
 import org.primefaces.extensions.event.timeline.TimelineSelectEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.model.timeline.TimelineModel;
@@ -101,6 +102,7 @@ public class ManMaestroMan implements Serializable {
     private List<CatSolicitudesDetalle> solicitudes;
     private List<CatSolicitudesDetalle> requisiciones;
     private CatCalendario catcalendario;
+    private List<CatCalendario> listaMttos;
     private List<CatCalendario> listaMttosPre;
     private CatDepartamentos catdepartamentos;
     private List<CatDepartamentos> departamentos;
@@ -119,7 +121,8 @@ public class ManMaestroMan implements Serializable {
     private TreeNode root, selectednode;
     
     // Variables para timeline
-    private TimelineModel modelTimeLine;  
+    private TimelineModel modelTimeLine;
+    private TimelineEvent eventTimeLine;
       
     private UploadedFile file;
 
@@ -133,7 +136,7 @@ public class ManMaestroMan implements Serializable {
         modelTimeLine = new TimelineModel(); 
         Date now = new Date();
         
-        llenarMttosCalendario();
+        llenarMttosPreventivos();
                
         for (CatCalendario cm : listaMttosPre) {
             DefaultScheduleEvent cmt = new DefaultScheduleEvent();
@@ -932,14 +935,7 @@ public class ManMaestroMan implements Serializable {
         this.catcalendario = catcalendario;
     }
 
-    public List<CatCalendario> getListaMttosPre() {
-        return listaMttosPre;
-    }
-
-    public void setListaMttos(List<CatCalendario> listaMttosPre) {
-        this.listaMttosPre = listaMttosPre;
-    }
-
+   
     public ScheduleModel getMttoModel() {
         return mttoModel;
     }
@@ -1012,7 +1008,31 @@ public class ManMaestroMan implements Serializable {
     public void setCod_dep(String cod_dep) {
         this.cod_dep = cod_dep;
     }
-    
+
+    public TimelineEvent getEventTimeLine() {
+        return eventTimeLine;
+    }
+
+    public void setEventTimeLine(TimelineEvent eventTimeLine) {
+        this.eventTimeLine = eventTimeLine;
+    }   
+
+    public List<CatCalendario> getListaMttos() {
+        return listaMttos;
+    }
+
+    public void setListaMttos(List<CatCalendario> listaMttos) {
+        this.listaMttos = listaMttos;
+    }
+
+    public List<CatCalendario> getListaMttosPre() {
+        return listaMttosPre;
+    }
+
+    public void setListaMttosPre(List<CatCalendario> listaMttosPre) {
+        this.listaMttosPre = listaMttosPre;
+    }
+                
     public void iniciarventana() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
@@ -3834,15 +3854,53 @@ public class ManMaestroMan implements Serializable {
         String mQuery = "";
         try {
             catcalendario = new CatCalendario();
-            listaMttosPre = new ArrayList<>();
+            listaMttos = new ArrayList<>();
 
             mQuery = " select tbl_mae_man.cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, des_equ, "
                     + "if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=2,'yellow','red')) as color,"
                     + " week(fec_ini,1) as semana "
                     + " from tbl_mae_man inner join lis_equ on "
                     + " tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ "
-                    + " where tbl_mae_man.cod_tip = 1"
                     + " order by cod_man;";
+
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                listaMttos.add(new CatCalendario(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getDate(5),
+                        resVariable.getDate(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10),
+                        resVariable.getString(11)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Calendarización. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+    
+     public void llenarMttosPreventivos() {
+        String mQuery = "";
+        try {
+            
+            listaMttosPre = new ArrayList<>();
+
+            mQuery = " select tbl_mae_man.cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, des_equ, "
+                     + "if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=2,'yellow','red')) as color,"
+                    + " week(fec_ini,1) as semana "
+                    + " from tbl_mae_man inner join lis_equ on "
+                    + " tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ "
+                    + " where cod_tip = 1 order by cod_man;";
 
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -3916,12 +3974,31 @@ public class ManMaestroMan implements Serializable {
             if (cm.getCod_man() == tlmtto.getData()) {
                 catcalendario = cm;
                 buscar_serie = catcalendario.getCod_lis_equ();
-                llenarMantenimientos();
+                llenarMttosPreventivos();
                 break;
             }
         }
-    }     
-
+    }    
+    
+     public void onChange(TimelineModificationEvent e) {  
+        // get clone of the TimelineEvent to be changed with new start / end dates  
+        eventTimeLine = e.getTimelineEvent();  
+  
+        // update booking in DB...  
+  
+        // if everything was ok, no UI update is required. Only the model should be updated  
+        modelTimeLine.update(eventTimeLine);  
+  
+        FacesMessage msg =  
+            new FacesMessage(FacesMessage.SEVERITY_INFO, "The booking dates have been updated", null);  
+                FacesContext.getCurrentInstance().addMessage(null, msg);  
+  
+        // otherwise (if DB operation failed) a rollback can be done with the same response as follows:  
+        // TimelineEvent oldEvent = model.getEvent(model.getIndex(event));  
+        // TimelineUpdater timelineUpdater = TimelineUpdater.getCurrentInstance(":mainForm:timeline");  
+        // model.update(oldEvent, timelineUpdater);  
+    }  
+     
     public void imprimir_f_man_004() {
         try {
             byte[] content;

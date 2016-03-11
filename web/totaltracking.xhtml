@@ -353,19 +353,22 @@
                 <h:form>
                     <p:growl id="msgs" showDetail="true" />
                     
-                    <p:panel id="graficaMantenimientos" header="Grafico de Mantenimientos" closable="true">
+                    <p:panel id="graficaMantenimientos" header="Grafico de Mantenimientos Preventivos" closable="true" visible="#{!manSeguridad.disableOpt('dashboardMtto')}">
                             <h:form id="frmTimeLine"> 
                                 <p:growl id="msgTimeLine" showDetail="true" life="4500"/>
                                 <pe:timeline id="timeline" value="#{manMaestroMan.modelTimeLine}" height="330px" 
                                                 zoomable="true"  
                                                 selectable="true"
+                                                editable="true"                                               
                                                 moveable="true"  
                                                 stackEvents="true"  
                                                 axisOnTop="false"
                                                 eventStyle="dot"
                                                 showCurrentTime="true"  
-                                                showNavigation="true">
-                                    <p:ajax  event="select" listener="#{manMaestroMan.onSelect}" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
+                                                showNavigation="true"
+                                                timeChangeable="true">
+                                        <p:ajax  event="edit" listener="#{manMaestroMan.onSelect}" process="@form" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
+                                        <p:ajax  event="changed" listener="#{manMaestroMan.onChange}" process="@form"/> 
                                    </pe:timeline>  
 
                                    <h:outputStylesheet id="timelineCSS">  
@@ -384,8 +387,8 @@
                             <h:outputText value="Solicitudes pendientes"  />
                         </p:panel>
 
-                        <p:panel id="cargaPersonal" header="Carga del personal" closable="true">
-                            <h:outputText value="Informacion de actividad del personal" />
+                        <p:panel id="cargaPersonal" header="Alertas" closable="true">
+                            <h:outputText value="Ultimas alertas presentadas" />
                         </p:panel>
                         
                     </p:dashboard>
