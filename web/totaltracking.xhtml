@@ -367,7 +367,7 @@
                                                 showCurrentTime="true"  
                                                 showNavigation="true"
                                                 timeChangeable="true">
-                                        <p:ajax  event="select" listener="#{manMaestroMan.onSelect}" process="@form" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
+                                        <p:ajax  event="edit" listener="#{manMaestroMan.onEdit}" process="@form" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
                                         <p:ajax  event="changed" listener="#{manMaestroMan.onChange}" process="@form"/> 
                                    </pe:timeline>  
 

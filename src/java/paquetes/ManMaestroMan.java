@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -137,6 +138,7 @@ public class ManMaestroMan implements Serializable {
         Date now = new Date();
         
         llenarMttosPreventivos();
+        llenarListaEquipos();
                
         for (CatCalendario cm : listaMttosPre) {
             DefaultScheduleEvent cmt = new DefaultScheduleEvent();
@@ -152,13 +154,13 @@ public class ManMaestroMan implements Serializable {
             long r = (cm.getFec_ini().getTime())- now.getTime();
             double dias = Math.floor(r / (1000 * 60 * 60 * 24)); 
             String estado = cm.getDet_sta();
-            String color;
+            String color ="";
             
-            if ("1".equals(estado) && dias > 1){
+            if (("1".equals(estado) || "4".equals(estado)) && dias > 1){
                 color= "entiempo";
-            } else if ("1".equals(estado) && dias < 30){
+            } else if ("1".equals(estado) && dias > -30){
                 color= "atrasoleve";
-            } else {
+            } else if ("1".equals(estado) && dias < -30){
                 color= "atrazado";
             }
             tle.setStyleClass(color);
@@ -3967,36 +3969,39 @@ public class ManMaestroMan implements Serializable {
         }
     }
     
-    public void onSelect(TimelineSelectEvent e) {  
+    public void onEdit(TimelineModificationEvent e) {
         TimelineEvent tlmtto = e.getTimelineEvent();  
         
         for (CatCalendario cm : listaMttosPre) {
             if (cm.getDes_equ() == tlmtto.getData()) {
                 catcalendario = cm;
                 buscar_serie = catcalendario.getCod_lis_equ();
-                llenarMttosPreventivos();
+                llenarMantenimientos();
                 break;
             }
         }
     }    
     
      public void onChange(TimelineModificationEvent e) {  
-        // get clone of the TimelineEvent to be changed with new start / end dates  
-        eventTimeLine = e.getTimelineEvent();  
-  
-        // update booking in DB...  
-  
-        // if everything was ok, no UI update is required. Only the model should be updated  
-        modelTimeLine.update(eventTimeLine);  
-  
-        FacesMessage msg =  
-            new FacesMessage(FacesMessage.SEVERITY_INFO, "The booking dates have been updated", null);  
-                FacesContext.getCurrentInstance().addMessage(null, msg);  
-  
-        // otherwise (if DB operation failed) a rollback can be done with the same response as follows:  
-        // TimelineEvent oldEvent = model.getEvent(model.getIndex(event));  
-        // TimelineUpdater timelineUpdater = TimelineUpdater.getCurrentInstance(":mainForm:timeline");  
-        // model.update(oldEvent, timelineUpdater);  
+              
+          for (CatCalendario cm : listaMttosPre) {
+            if (cm.getDes_equ()== e.getTimelineEvent().getData()) {
+                Calendar calendar = Calendar.getInstance();
+                                
+                long dif = cm.getFec_fin().getTime() - cm.getFec_ini().getTime();
+                long difDias = dif / (1000 * 60 * 60 * 24);
+                
+                calendar.setTime(e.getTimelineEvent().getStartDate());
+                calendar.add(Calendar.DAY_OF_YEAR, (int)difDias); 
+                 
+                catcalendario = cm;
+                cm.setFec_ini(e.getTimelineEvent().getStartDate());
+                cm.setFec_fin(calendar.getTime());
+                               
+                actualizar();
+                break;
+            }
+        }
     }  
      
     public void imprimir_f_man_004() {
