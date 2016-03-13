@@ -183,7 +183,7 @@ public class ManAlertas implements Serializable {
                     mQuery = "insert into cat_ale (id_ale, proceso, tabla_ctrl, campo_ctrl, alerta, aviso, recordatorio, id_estado) "
                             + "values (" + id_ale + ",'" + proceso + "','"+ tabla_ctrl + "','" + campo_ctrl + "','" + alerta + "','" + aviso + "','" + recordatorio + "','" + id_estado + "');";
                 } else {
-                    mQuery = "update cat_mar SET "
+                    mQuery = "update cat_ale SET "
                             + " proceso = '" + proceso + "', "
                             + " tabla_ctrl = '" + tabla_ctrl + "', "
                             + " campo_ctrl = '" + campo_ctrl + "', "
