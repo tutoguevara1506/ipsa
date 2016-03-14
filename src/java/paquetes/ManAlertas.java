@@ -22,6 +22,8 @@ public class ManAlertas implements Serializable {
     private List<CatAlertas> alertas;
     private CatDepartamentos catdepartamentos;
     private List<CatDepartamentos> departamentos;
+    private CatUsuarios catusuarios;
+    private List<CatUsuarios> usuarios;
     
     private String id_ale, proceso, tabla_ctrl, campo_ctrl, alerta, aviso, recordatorio, id_estado, cod_dep;
 
@@ -54,6 +56,22 @@ public class ManAlertas implements Serializable {
 
     public void setDepartamentos(List<CatDepartamentos> departamentos) {
         this.departamentos = departamentos;
+    }
+
+    public CatUsuarios getCatusuarios() {
+        return catusuarios;
+    }
+
+    public void setCatusuarios(CatUsuarios catusuarios) {
+        this.catusuarios = catusuarios;
+    }
+
+    public List<CatUsuarios> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<CatUsuarios> usuarios) {
+        this.usuarios = usuarios;
     }
 
     public void setAlertas(List<CatAlertas> alertas) {
@@ -144,6 +162,7 @@ public class ManAlertas implements Serializable {
         id_estado = "";
         llenarAlertas();
         llenarDepartamentos();
+        llenarUsuarios();
     }
 
     public void cerrarventana() {
@@ -180,6 +199,40 @@ public class ManAlertas implements Serializable {
 
         } catch (Exception e) {
             System.out.println("Error en el llenado de Catálogo de Departamentos. " + e.getMessage());
+        }
+    }
+    
+    public void llenarUsuarios() {
+        try {
+            catusuarios = new CatUsuarios();
+            usuarios = new ArrayList<>();
+
+            String mQuery = "select usu.cod_usu, usu.nom_usu, usu.des_pas, usu.tip_usu, usu.cod_pai, "
+                    + "usu.cod_dep, usu.det_nom, usu.det_mai, ifnull(usu.cod_pai,'') as cod_pai, ifnull(dep.nom_dep,'') as nomdep "
+                    + "from cat_usu as usu "
+                    + "left join cat_dep as dep on usu.cod_dep = dep.cod_dep order by cod_usu;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                usuarios.add(new CatUsuarios(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10)                         
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Catálogo de Usuarios. " + e.getMessage());
         }
     }
 

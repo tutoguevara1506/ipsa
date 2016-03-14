@@ -7237,21 +7237,46 @@
                                          onfocus="this.select()"/>
                         </h:panelGroup>             
                     </h:panelGrid>
-                    <h:panelGrid columns="2" cellpadding="2">
-                        <p:dataList id="usuOrigen" value="#{manAlertas.departamentos}" var="origen" itemType="circle" style="width:150;">  
-                            <h:panelGroup id="origenBox" layout="box" style="z-index:9999; cursor:move;" >  
-                                #{origen.nom_dep}  
-                            </h:panelGroup> 
-                            <p:draggable for="origenBox" revert="true" helper="clone" cursor="move"/>  
-                        </p:dataList> 
-                        
-                        <p:dataList id="usuDestino" value="#{manAlertas.departamentos}" var="destino" itemType="circle">  
-                            <h:panelGroup id="destinoBox" layout="box" style="z-index:9999; cursor:move;">  
-                                #{destino.nom_dep}  
-                            </h:panelGroup> 
-                            <p:draggable for="destinoBox" revert="true" helper="clone" cursor="move"/>  
-                        </p:dataList> 
-                    </h:panelGrid>
+                    <h:form id="usuariosForm">
+                        <p:fieldset id="ususist" legend="Usuarios">
+                              <p:dataTable id="ususistdt" var="ususis"
+                                    value="#{manAlertas.usuarios}">
+                                    <p:column style="width:20px">
+                                          <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+                                          <p:draggable for="dragIcon" revert="true" helper="clone" />
+                                    </p:column>
+
+                                    <p:column headerText="Usuario">
+                                        <h:outputText value="#{ususis.nom_usu}" />
+                                    </p:column>
+
+                              </p:dataTable>
+                        </p:fieldset>
+
+                        <p:fieldset id="usuale" legend="Usuario Seleccionado"
+                              style="margin-top:20px">
+                              <p:outputPanel id="dropArea">
+                                    <h:outputText value="Coloque usuario aqui aqui!"
+                                          rendered="#{empty manAlertas.usuSeleccionados}" style="font-size:24px;" />
+                                    <p:dataTable id="usualedt" var="usualer"
+                                          value="#{manAlertas.usuariosSeleccionados}"
+                                          rendered="#{not empty manAlertas.usuSeleccionados}">
+                                          <p:column headerText="Usuario">
+                                                <h:outputText value="#{usualer.nom_usu}" />
+                                          </p:column>   
+                                    </p:dataTable>
+                              </p:outputPanel>
+                        </p:fieldset>
+
+                        <p:droppable for="usuale" tolerance="touch"
+                              activeStyleClass="ui-state-highlight" datasource="ususistdt"
+                              onDrop="handleDrop">
+                              <p:ajax listener="#{manAlertas.onDrop}"
+                                    update="dropArea todasPessoasTabela" />
+                        </p:droppable>
+
+                  </h:form>
+                    
                     
                     <p:dataTable id="dtAlertas" var="vAlertas" 
                                  value="#{manAlertas.alertas}" 
