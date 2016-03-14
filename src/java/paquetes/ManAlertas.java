@@ -20,7 +20,10 @@ public class ManAlertas implements Serializable {
     Login cbean;
     private CatAlertas catalertas;
     private List<CatAlertas> alertas;
-    private String id_ale, proceso, tabla_ctrl, campo_ctrl, alerta, aviso, recordatorio, id_estado;
+    private CatDepartamentos catdepartamentos;
+    private List<CatDepartamentos> departamentos;
+    
+    private String id_ale, proceso, tabla_ctrl, campo_ctrl, alerta, aviso, recordatorio, id_estado, cod_dep;
 
     public ManAlertas() {
     }
@@ -35,6 +38,22 @@ public class ManAlertas implements Serializable {
 
     public List<CatAlertas> getAlertas() {
         return alertas;
+    }
+
+    public CatDepartamentos getCatdepartamentos() {
+        return catdepartamentos;
+    }
+
+    public void setCatdepartamentos(CatDepartamentos catdepartamentos) {
+        this.catdepartamentos = catdepartamentos;
+    }
+
+    public List<CatDepartamentos> getDepartamentos() {
+        return departamentos;
+    }
+
+    public void setDepartamentos(List<CatDepartamentos> departamentos) {
+        this.departamentos = departamentos;
     }
 
     public void setAlertas(List<CatAlertas> alertas) {
@@ -105,6 +124,15 @@ public class ManAlertas implements Serializable {
         this.id_estado = id_estado;
     }
 
+    public String getCod_dep() {
+        return cod_dep;
+    }
+
+    public void setCod_dep(String cod_dep) {
+        this.cod_dep = cod_dep;
+    }
+    
+
     public void iniciarventana() {
         id_ale = "";
         proceso = ""; 
@@ -115,6 +143,7 @@ public class ManAlertas implements Serializable {
         recordatorio = "";
         id_estado = "";
         llenarAlertas();
+        llenarDepartamentos();
     }
 
     public void cerrarventana() {
@@ -128,6 +157,31 @@ public class ManAlertas implements Serializable {
         id_estado = "";
         alertas = new ArrayList<>();
     }
+    
+    public void llenarDepartamentos() {
+        try {
+            catdepartamentos = new CatDepartamentos();
+            departamentos = new ArrayList<>();
+
+            String mQuery = "select cod_dep, cod_pai, nom_dep "
+                    + "from cat_dep order by cod_dep;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                departamentos.add(new CatDepartamentos(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Catálogo de Departamentos. " + e.getMessage());
+        }
+    }
 
     public void llenarAlertas() {
         String mQuery = "";
@@ -135,7 +189,7 @@ public class ManAlertas implements Serializable {
             catalertas = new CatAlertas();
             alertas = new ArrayList<>();
 
-            mQuery = "select id_ale, proceso, tabla_ctrl, campo_ctrl, alerta, aviso, recordatorio, id_estado from cat_ale order by id_ale;";
+            mQuery = "select id_ale, proceso, tabla_ctrl, camp_ctrl, alerta, aviso, recordatorio, id_estado from cat_ale order by id_ale;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
