@@ -24,6 +24,8 @@ public class ManAlertas implements Serializable {
     private List<CatDepartamentos> departamentos;
     private CatUsuarios catusuarios;
     private List<CatUsuarios> usuarios;
+    private CatAlertasUsuarios catalertasusuarios;
+    private List<CatAlertasUsuarios> alertasusuarios;
     
     private String id_ale, proceso, tabla_ctrl, campo_ctrl, alerta, aviso, recordatorio, id_estado, cod_dep;
 
@@ -76,6 +78,22 @@ public class ManAlertas implements Serializable {
 
     public void setAlertas(List<CatAlertas> alertas) {
         this.alertas = alertas;
+    }
+
+    public CatAlertasUsuarios getCatalertasusuarios() {
+        return catalertasusuarios;
+    }
+
+    public void setCatalertasusuarios(CatAlertasUsuarios catalertasusuarios) {
+        this.catalertasusuarios = catalertasusuarios;
+    }
+
+    public List<CatAlertasUsuarios> getAlertasusuarios() {
+        return alertasusuarios;
+    }
+
+    public void setAlertasusuarios(List<CatAlertasUsuarios> alertasusuarios) {
+        this.alertasusuarios = alertasusuarios;
     }
 
     public String getId_ale() {
@@ -236,6 +254,32 @@ public class ManAlertas implements Serializable {
         }
     }
 
+    public void llenarUsuSeleccionados() {
+        try {
+            catalertasusuarios = new CatAlertasUsuarios();
+            alertasusuarios = new ArrayList<>();
+
+            String mQuery = "SELECT id_ale_usu, id_ale, cod_usu " 
+                    + "FROM ipsa.cat_ale_usu; ";
+                    
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                alertasusuarios.add(new CatAlertasUsuarios(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3)                    
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Catálogo de Usuarios Seleccionados. " + e.getMessage());
+        }
+    }
+    
     public void llenarAlertas() {
         String mQuery = "";
         try {

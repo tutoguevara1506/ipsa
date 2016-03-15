@@ -7160,12 +7160,12 @@
         *********************************************************************-->
 
         <p:dialog  id="dlgAlertas" widgetVar="wAlertas" modal="true" 
-                   width="580" height="350" closable="false" resizable="false" 
+                   width="650" height="500" closable="false" resizable="false" 
                    header="Mantenimiento de Alertas" rendered="true" 
                    dynamic="true" visible="false" 
                    >
 
-            <h:form id="frmAlertas"> 
+            <h:form id="frmAlertas" style="height:400px"> 
                 <p:growl id="msgAlertas" showDetail="true" life="4500"/>
                 <p:toolbar>
                     <f:facet name="left">
@@ -7207,24 +7207,27 @@
                 <div style=" background-color: #ebf8fe;">
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Departamento" style="font-weight:bold;"/>
-                        <p:selectOneMenu value="#{manAlertas.cod_dep}" 
-                                         style="width:300px;text-align:right;"
+                        <h:panelGroup>
+                            <p:selectOneMenu value="#{manAlertas.cod_dep}" 
+                                         style="width:200px;text-align:right;"
                                          immediate="false">  
-                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
-                            <f:selectItems value="#{manAlertas.departamentos}" var="mdepale"
+                                <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                                <f:selectItems value="#{manAlertas.departamentos}" var="mdepale"
                                            itemLabel="#{mdepale.nom_dep}" itemValue="#{mdepale.cod_dep}"/>
-                        </p:selectOneMenu>
-                        
-                        <h:outputText value="Tabla" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="55" value="#{manAlertas.tabla_ctrl}" 
+                            </p:selectOneMenu>
+                            <p:spacer width="10"/>
+                            <h:outputText value="Tabla" style="font-weight:bold;" />
+                            <p:spacer width="10"/>
+                            <p:inputText maxlength="50" size="30" value="#{manAlertas.tabla_ctrl}" 
                                      onfocus="this.select()"/>
+                        </h:panelGroup>
                         
-                        <h:outputText value="Campo" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="55" value="#{manAlertas.campo_ctrl}" 
+                        <h:outputText value="Campo condición" style="font-weight:bold;" />
+                        <p:inputText maxlength="75" size="72" value="#{manAlertas.campo_ctrl}" 
                                      onfocus="this.select()"/>
                         
                         <h:outputText value="Texto de la alerta" style="font-weight:bold;" />
-                        <p:inputTextarea rows="5" cols="50" maxlength="250" value="#{manAlertas.alerta}" 
+                        <p:inputTextarea rows="3" cols="70" maxlength="250" value="#{manAlertas.alerta}" 
                                      onfocus="this.select()"/>
                         <h:outputText value="Dias antes para aviso" style="font-weight:bold;" />
                         <h:panelGroup>
@@ -7237,10 +7240,10 @@
                                          onfocus="this.select()"/>
                         </h:panelGroup>             
                     </h:panelGrid>
-                    <h:form id="usuariosForm">
+                    <h:panelGrid id="usuariosGrid"  columns="2" cellpadding="5">
                         <p:fieldset id="ususist" legend="Usuarios">
                               <p:dataTable id="ususistdt" var="ususis"
-                                    value="#{manAlertas.usuarios}">
+                                           value="#{manAlertas.usuarios}" style="width:250px">
                                     <p:column style="width:20px">
                                           <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
                                           <p:draggable for="dragIcon" revert="true" helper="clone" />
@@ -7253,10 +7256,10 @@
                               </p:dataTable>
                         </p:fieldset>
 
-                        <p:fieldset id="usuale" legend="Usuario Seleccionado"
+                        <p:fieldset id="usuale" legend="Usuario a Notificar"
                               style="margin-top:20px">
                               <p:outputPanel id="dropArea">
-                                    <h:outputText value="Coloque usuario aqui aqui!"
+                                    <h:outputText value="Coloque usuario aqui !"
                                           rendered="#{empty manAlertas.usuSeleccionados}" style="font-size:24px;" />
                                     <p:dataTable id="usualedt" var="usualer"
                                           value="#{manAlertas.usuariosSeleccionados}"
@@ -7275,9 +7278,7 @@
                                     update="dropArea todasPessoasTabela" />
                         </p:droppable>
 
-                  </h:form>
-                    
-                    
+                  </h:panelGrid>
                     <p:dataTable id="dtAlertas" var="vAlertas" 
                                  value="#{manAlertas.alertas}" 
                                  emptyMessage="No se encontraron resultados" 
