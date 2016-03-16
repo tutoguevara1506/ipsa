@@ -5,20 +5,21 @@ import java.io.Serializable;
 
 public class CatAlertas implements Serializable{
     
-    private String id_ale, proceso, tabla_ctrl, campo_ctrl, alerta, aviso, recordatorio, id_estado;
+    private String id_ale, cod_dep, tabla_ctrl, camp_ctrl, alerta, aviso, recordatorio, id_estado, nomdepto;
 
     public CatAlertas() {
     }
 
-    public CatAlertas(String id_ale, String proceso, String tabla_ctrl, String campo_ctrl, String alerta, String aviso, String recordatorio, String id_estado) {
+    public CatAlertas(String id_ale, String cod_dep, String tabla_ctrl, String camp_ctrl, String alerta, String aviso, String recordatorio, String id_estado, String nomdepto) {
         this.id_ale = id_ale;
-        this.proceso = proceso;
+        this.cod_dep = cod_dep;
         this.tabla_ctrl = tabla_ctrl;
-        this.campo_ctrl = campo_ctrl;
+        this.camp_ctrl = camp_ctrl;
         this.alerta = alerta;
         this.aviso = aviso;
         this.recordatorio = recordatorio;
         this.id_estado = id_estado;
+        this.nomdepto = nomdepto;
     }
 
     public String getId_ale() {
@@ -29,12 +30,12 @@ public class CatAlertas implements Serializable{
         this.id_ale = id_ale;
     }
 
-    public String getProceso() {
-        return proceso;
+    public String getCod_dep() {
+        return cod_dep;
     }
 
-    public void setProceso(String proceso) {
-        this.proceso = proceso;
+    public void setCod_dep(String cod_dep) {
+        this.cod_dep = cod_dep;
     }
 
     public String getTabla_ctrl() {
@@ -45,12 +46,12 @@ public class CatAlertas implements Serializable{
         this.tabla_ctrl = tabla_ctrl;
     }
 
-    public String getCampo_ctrl() {
-        return campo_ctrl;
+    public String getCamp_ctrl() {
+        return camp_ctrl;
     }
 
-    public void setCampo_ctrl(String campo_ctrl) {
-        this.campo_ctrl = campo_ctrl;
+    public void setCamp_ctrl(String camp_ctrl) {
+        this.camp_ctrl = camp_ctrl;
     }
 
     public String getAlerta() {
@@ -84,4 +85,13 @@ public class CatAlertas implements Serializable{
     public void setId_estado(String id_estado) {
         this.id_estado = id_estado;
     }   
+
+    public String getNomdepto() {
+        return nomdepto;
+    }
+
+    public void setNomdepto(String nomdepto) {
+        this.nomdepto = nomdepto;
+    }
+    
 }

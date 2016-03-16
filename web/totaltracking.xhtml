@@ -7223,7 +7223,7 @@
                         </h:panelGroup>
                         
                         <h:outputText value="Campo condición" style="font-weight:bold;" />
-                        <p:inputText maxlength="75" size="72" value="#{manAlertas.campo_ctrl}" 
+                        <p:inputText maxlength="75" size="72" value="#{manAlertas.camp_ctrl}" 
                                      onfocus="this.select()"/>
                         
                         <h:outputText value="Texto de la alerta" style="font-weight:bold;" />
@@ -7240,65 +7240,27 @@
                                          onfocus="this.select()"/>
                         </h:panelGroup>             
                     </h:panelGrid>
-                    <h:panelGrid id="usuariosGrid"  columns="2" cellpadding="5">
-                        <p:fieldset id="ususist" legend="Usuarios">
-                              <p:dataTable id="ususistdt" var="ususis"
-                                           value="#{manAlertas.usuarios}" style="width:250px">
-                                    <p:column style="width:20px">
-                                          <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
-                                          <p:draggable for="dragIcon" revert="true" helper="clone" />
-                                    </p:column>
-
-                                    <p:column headerText="Usuario">
-                                        <h:outputText value="#{ususis.nom_usu}" />
-                                    </p:column>
-
-                              </p:dataTable>
-                        </p:fieldset>
-
-                        <p:fieldset id="usuale" legend="Usuario a Notificar"
-                              style="margin-top:20px">
-                              <p:outputPanel id="dropArea">
-                                    <h:outputText value="Coloque usuario aqui !"
-                                          rendered="#{empty manAlertas.usuSeleccionados}" style="font-size:24px;" />
-                                    <p:dataTable id="usualedt" var="usualer"
-                                          value="#{manAlertas.usuariosSeleccionados}"
-                                          rendered="#{not empty manAlertas.usuSeleccionados}">
-                                          <p:column headerText="Usuario">
-                                                <h:outputText value="#{usualer.nom_usu}" />
-                                          </p:column>   
-                                    </p:dataTable>
-                              </p:outputPanel>
-                        </p:fieldset>
-
-                        <p:droppable for="usuale" tolerance="touch"
-                              activeStyleClass="ui-state-highlight" datasource="ususistdt"
-                              onDrop="handleDrop">
-                              <p:ajax listener="#{manAlertas.onDrop}"
-                                    update="dropArea todasPessoasTabela" />
-                        </p:droppable>
-
-                  </h:panelGrid>
+                    
                     <p:dataTable id="dtAlertas" var="vAlertas" 
                                  value="#{manAlertas.alertas}" 
                                  emptyMessage="No se encontraron resultados" 
                                  selectionMode="single" selection="#{manAlertas.catalertas}" 
                                  rowKey="#{vAlertas.id_ale}"
                                  editable="false" 
-                                 style="width:540px"
+                                 style="width:560px"
                                  scrollable="true"
                                  scrollHeight="190"
                                  >
                         <p:ajax event="rowSelect" listener="#{manAlertas.onRowSelect}" 
                                 update=":frmAlertas" />
                         <p:column style="width:30px" headerText="Departamento">
-                            <h:outputText value="#{vAlertas.nomdepto}" />
+                            <h:outputText value="#{vAlertas.nom_dep}" />
                         </p:column>                    
                         <p:column style="width:80px" headerText="tabla">
                             <h:outputText value="#{vAlertas.tabla_ctrl}" />
                         </p:column>
                         <p:column style="width:80px" headerText="condision">
-                            <h:outputText value="#{vAlertas.campo_ctrl}" />
+                            <h:outputText value="#{vAlertas.camp_ctrl}" />
                         </p:column>
                         <p:column style="width:80px" headerText="estado">
                             <h:outputText value="#{vAlertas.id_estado}" />
