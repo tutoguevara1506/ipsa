@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 public class CatMantenimientos implements Serializable {
 
-    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, 
-            cod_usu, nomtip, status, datraso, color, cod_per, periodo, flg_ext, cod_sup, turno, cod_pri, cod_dep;
+    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta,
+            cod_usu, nomtip, status, datraso, color, cod_per, periodo, flg_ext, cod_sup, turno, cod_pri, cod_dep, cod_alt, obs_tec, otr_per;
 
     public CatMantenimientos() {
     }
 
-    public CatMantenimientos(String cod_lis_equ, String cod_man, String cod_tip, String det_obs, String fec_ini, String fec_fin, String det_sta, String cod_usu, String nomtip, String status, String datraso, String color, String cod_per, String periodo, String flg_ext, String cod_sup, String turno, String cod_pri, String cod_dep) {
+    public CatMantenimientos(String cod_lis_equ, String cod_man, String cod_tip, String det_obs, String fec_ini, String fec_fin, String det_sta, String cod_usu, String nomtip, String status, String datraso, String color, String cod_per, String periodo, String flg_ext, String cod_sup, String turno, String cod_pri, String cod_dep, String cod_alt, String obs_tec, String otr_per) {
         this.cod_lis_equ = cod_lis_equ;
         this.cod_man = cod_man;
         this.cod_tip = cod_tip;
@@ -30,6 +30,9 @@ public class CatMantenimientos implements Serializable {
         this.turno = turno;
         this.cod_pri = cod_pri;
         this.cod_dep = cod_dep;
+        this.cod_alt = cod_alt;
+        this.obs_tec = obs_tec;
+        this.otr_per = otr_per;
     }
 
     public String getCod_lis_equ() {
@@ -183,5 +186,29 @@ public class CatMantenimientos implements Serializable {
     public void setCod_dep(String cod_dep) {
         this.cod_dep = cod_dep;
     }
-    
+
+    public String getCod_alt() {
+        return cod_alt;
+    }
+
+    public void setCod_alt(String cod_alt) {
+        this.cod_alt = cod_alt;
+    }
+
+    public String getObs_tec() {
+        return obs_tec;
+    }
+
+    public void setObs_tec(String obs_tec) {
+        this.obs_tec = obs_tec;
+    }
+
+    public String getOtr_per() {
+        return otr_per;
+    }
+
+    public void setOtr_per(String otr_per) {
+        this.otr_per = otr_per;
+    }
+
 }

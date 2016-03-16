@@ -328,9 +328,9 @@
                                 />
                     <p:menuitem value="Control de  alertas" icon="ui-icon-alert" 
                                 id="menuControlAlertas"
-                                onclick="PF('wAlertas').show()"
-                                update=":frmAlertas"
-                                actionListener="#{manAlertas.iniciarventana()}"
+                                onclick="PF('wEstado').show()"
+                                update=":frmUsuarios"
+                                actionListener="#{manUsuarios.iniciarventana()}"
                                 style="width: 190px;"
                                 disabled="#{manSeguridad.disableOpt('menuControlAlertas')}"
                                 />
@@ -353,22 +353,20 @@
                 <h:form>
                     <p:growl id="msgs" showDetail="true" />
                     
-                    <p:panel id="graficaMantenimientos" header="Grafico de Mantenimientos Preventivos" closable="true" visible="#{!manSeguridad.disableOpt('dashboardMtto')}">
-                            <h:form id="frmTimeLine"> 
-                                <p:growl id="msgTimeLine" showDetail="true" life="4500"/>
-                                <pe:timeline id="timeline" value="#{manMaestroMan.modelTimeLine}" height="330px" 
+                    <p:panel id="graficaMantenimientos" header="Grafico de Mantenimientos" closable="true">
+                            <h:form id="frmGraMtto"> 
+                                <p:growl id="msgDetEva" showDetail="true" life="4500"/>
+                                <pe:timeline id="timeline" value="#{manMaestroMan.modelTimeLine}" height="320px" 
+                                                selectable="true"  
                                                 zoomable="true"  
-                                                selectable="true"
-                                                editable="true"                                               
                                                 moveable="true"  
                                                 stackEvents="true"  
                                                 axisOnTop="false"
                                                 eventStyle="dot"
                                                 showCurrentTime="true"  
                                                 showNavigation="true"
-                                                timeChangeable="true">
-                                        <p:ajax  event="edit" listener="#{manMaestroMan.onEdit}" process="@form" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
-                                        <p:ajax  event="changed" listener="#{manMaestroMan.onChange}" process="@form"/> 
+                                                locale="es"> 
+                                       <p:ajax  process="@this" event="select" listener="#{manMaestroMan.onSelect}" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
                                    </pe:timeline>  
 
                                    <h:outputStylesheet id="timelineCSS">  
@@ -387,8 +385,8 @@
                             <h:outputText value="Solicitudes pendientes"  />
                         </p:panel>
 
-                        <p:panel id="cargaPersonal" header="Alertas" closable="true">
-                            <h:outputText value="Ultimas alertas presentadas" />
+                        <p:panel id="cargaPersonal" header="Carga del personal" closable="true">
+                            <h:outputText value="Informacion de actividad del personal" />
                         </p:panel>
                         
                     </p:dashboard>
@@ -2884,6 +2882,7 @@
             </h:form>
         </p:dialog>
 
+
         <!--******************************************************************** 
         ********************* Pantalla Nueva Requisición ***********************
         *********************************************************************-->
@@ -5255,7 +5254,7 @@
                             </h:panelGrid>
                             <h:panelGrid columns="4" cellpadding="5">
                                 <h:outputText value="Otra Falla" style="font-weight:bold;"/>
-                                <p:inputText value="valor" size="78" maxlength="300"/>
+                                <p:inputText value="#{manMaestroMan.otr_fal}" size="78" maxlength="300"/>
                                 <p:commandButton title="Agregar" icon="ui-icon-plus" style="width:30px;" 
                                                  actionListener="#{manMaestroMan.agregarfalla()}"
                                                  update=":frmMaestraNew"
@@ -5266,7 +5265,7 @@
                                                  />
                             </h:panelGrid>
 
-                             <p:dataTable id="dtFallMan" var="vFallMan" 
+                            <p:dataTable id="dtFallMan" var="vFallMan" 
                                          value="#{manMaestroMan.fallas}" 
                                          emptyMessage="No se encontraron resultados" 
                                          selection="#{manMaestroMan.catmantenimientosfal}" 
@@ -5293,6 +5292,8 @@
                                  <p:column style="width:200px;" headerText="Personalizada">
                                      <h:outputText value="#{vFallMan.det_obs}" />
                                 </p:column>
+
+
 
                             </p:dataTable>
                         </p:tab>
@@ -7150,134 +7151,6 @@
                         </p:column>  
                         <p:column style="width:15px" headerText="Criterio">
                             <h:outputText value="#{vDetEva.nomcri}" />
-                        </p:column>
-                    </p:dataTable>
-                </div>
-
-            </h:form>
-        </p:dialog>  
- 
- <!-- *******************************************************************
-        **************** Pantalla mantenimiento de Alestas          ********
-        *********************************************************************-->
-
-        <p:dialog  id="dlgAlertas" widgetVar="wAlertas" modal="true" 
-                   width="580" height="350" closable="false" resizable="false" 
-                   header="Mantenimiento de Alertas" rendered="true" 
-                   dynamic="true" visible="false" 
-                   >
-
-            <h:form id="frmAlertas"> 
-                <p:growl id="msgAlertas" showDetail="true" life="4500"/>
-                <p:toolbar>
-                    <f:facet name="left">
-                        <p:commandButton value="Nuevo" style=" width: 100px;"
-                                         actionListener="#{manAlertas.nuevo()}"
-                                         update=":frmAlertas"
-                                         icon="ui-icon-document"
-                                         />
-                        <p:commandButton value="Guardar" style=" width: 100px;"
-                                         action="#{manAlertas.guardar()}"
-                                         update=":frmAlertas"
-                                         icon="ui-icon-disk"
-                                         />
-                        <p:commandButton value="Eliminar" style=" width: 100px;"
-                                         actionListener="#{manAlertas.eliminar()}"
-                                         update=":frmAlertas"
-                                         icon="ui-icon-trash"
-                                         >
-                            <p:confirm header="Eliminar Registro" 
-                                       message="¿Realmente desea eliminar este Registro?" 
-                                       icon="ui-icon-alert"/>
-                        </p:commandButton>
-                        <p:commandButton value="Cerrar" style=" width: 100px;"
-                                         onclick="PF('wAlertas').hide()"
-                                         action="#{manAlertas.cerrarventana()}" 
-                                         update=":frmAlertas"
-                                         icon="ui-icon-close"
-                                         />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
-                    </f:facet>
-                </p:toolbar>
-                <div style=" background-color: #ebf8fe;">
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputText value="Departamento" style="font-weight:bold;"/>
-                        <p:selectOneMenu value="#{manAlertas.cod_dep}" 
-                                         style="width:300px;text-align:right;"
-                                         immediate="false">  
-                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
-                            <f:selectItems value="#{manAlertas.departamentos}" var="mdepale"
-                                           itemLabel="#{mdepale.nom_dep}" itemValue="#{mdepale.cod_dep}"/>
-                        </p:selectOneMenu>
-                        
-                        <h:outputText value="Tabla" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="55" value="#{manAlertas.tabla_ctrl}" 
-                                     onfocus="this.select()"/>
-                        
-                        <h:outputText value="Campo" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="55" value="#{manAlertas.campo_ctrl}" 
-                                     onfocus="this.select()"/>
-                        
-                        <h:outputText value="Texto de la alerta" style="font-weight:bold;" />
-                        <p:inputTextarea rows="5" cols="50" maxlength="250" value="#{manAlertas.alerta}" 
-                                     onfocus="this.select()"/>
-                        <h:outputText value="Dias antes para aviso" style="font-weight:bold;" />
-                        <h:panelGroup>
-                            <p:inputText maxlength="200" size="10" value="#{manAlertas.aviso}" 
-                                         onfocus="this.select()"/>
-                            <p:spacer width="10"/>
-                            <h:outputText value="Dias para recordatorio" style="font-weight:bold;" />
-                            <p:spacer width="10"/>
-                            <p:inputText maxlength="200" size="10" value="#{manAlertas.recordatorio}" 
-                                         onfocus="this.select()"/>
-                        </h:panelGroup>             
-                    </h:panelGrid>
-                    <h:panelGrid columns="2" cellpadding="2">
-                        <p:dataList id="usuOrigen" value="#{manAlertas.departamentos}" var="origen" itemType="circle" style="width:150;">  
-                            <h:panelGroup id="origenBox" layout="box" style="z-index:9999; cursor:move;" >  
-                                #{origen.nom_dep}  
-                            </h:panelGroup> 
-                            <p:draggable for="origenBox" revert="true" helper="clone" cursor="move"/>  
-                        </p:dataList> 
-                        
-                        <p:dataList id="usuDestino" value="#{manAlertas.departamentos}" var="destino" itemType="circle">  
-                            <h:panelGroup id="destinoBox" layout="box" style="z-index:9999; cursor:move;">  
-                                #{destino.nom_dep}  
-                            </h:panelGroup> 
-                            <p:draggable for="destinoBox" revert="true" helper="clone" cursor="move"/>  
-                        </p:dataList> 
-                    </h:panelGrid>
-                    
-                    <p:dataTable id="dtAlertas" var="vAlertas" 
-                                 value="#{manAlertas.alertas}" 
-                                 emptyMessage="No se encontraron resultados" 
-                                 selectionMode="single" selection="#{manAlertas.catalertas}" 
-                                 rowKey="#{vAlertas.id_ale}"
-                                 editable="false" 
-                                 style="width:540px"
-                                 scrollable="true"
-                                 scrollHeight="190"
-                                 >
-                        <p:ajax event="rowSelect" listener="#{manAlertas.onRowSelect}" 
-                                update=":frmAlertas" />
-                        <p:column style="width:30px" headerText="Departamento">
-                            <h:outputText value="#{vAlertas.nomdepto}" />
-                        </p:column>                    
-                        <p:column style="width:80px" headerText="tabla">
-                            <h:outputText value="#{vAlertas.tabla_ctrl}" />
-                        </p:column>
-                        <p:column style="width:80px" headerText="condision">
-                            <h:outputText value="#{vAlertas.campo_ctrl}" />
-                        </p:column>
-                        <p:column style="width:80px" headerText="estado">
-                            <h:outputText value="#{vAlertas.id_estado}" />
                         </p:column>
                     </p:dataTable>
                 </div>

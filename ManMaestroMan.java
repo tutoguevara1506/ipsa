@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -42,7 +41,6 @@ import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.UnselectEvent;
-import org.primefaces.extensions.event.timeline.TimelineModificationEvent;
 import org.primefaces.extensions.event.timeline.TimelineSelectEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.model.timeline.TimelineModel;
@@ -104,13 +102,12 @@ public class ManMaestroMan implements Serializable {
     private List<CatSolicitudesDetalle> requisiciones;
     private CatCalendario catcalendario;
     private List<CatCalendario> listaMttos;
-    private List<CatCalendario> listaMttosPre;
     private CatDepartamentos catdepartamentos;
     private List<CatDepartamentos> departamentos;
     private ScheduleModel mttoModel;
     private ScheduleEvent mtto = new DefaultScheduleEvent();
 
-    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, 
+    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin,
             det_sta, cod_usu, cod_per, flg_ext, cod_sup, turno, cod_pri, cod_dep, cod_alt, obs_tec, otr_per;
     private String gen_det_man, gen_fec_man, gen_cod_ope, gen_det_obs, gen_cod_usu, gen_det_min;
     private String pie_det_man, pie_fec_man, pie_cod_pai, pie_cod_bod, pie_cod_ubi,
@@ -118,13 +115,21 @@ public class ManMaestroMan implements Serializable {
     private String ane_det_man, ane_det_obs, ane_tip_ane, ane_rut_ane, ane_cod_usu;
     private String acc_det_man, acc_fec_man, acc_cod_pai, acc_det_can, acc_des_ite, acc_cod_usu;
 
-    private String tabindex, buscar_serie, nompai, nombod, nomubi, cod_gru_fal, cod_fal,otr_fal, mmensaje;
+    private String tabindex, buscar_serie, nompai, nombod, nomubi, cod_gru_fal, cod_fal, otr_fal, mmensaje;
     private Date dfecha1, dfecha2, dfecha3, dfecfinF, dfecini;
     private TreeNode root, selectednode;
 
     // Variables para timeline
     private TimelineModel modelTimeLine;
-    private TimelineEvent eventTimeLine;
+
+    private boolean selectable = true;
+    private boolean zoomable = true;
+    private boolean moveable = true;
+    private boolean stackEvents = true;
+    private String eventStyle = "box";
+    private boolean axisOnTop = false;
+    private boolean showCurrentTime = true;
+    private boolean showNavigation = false;
 
     private UploadedFile file;
 
@@ -138,10 +143,9 @@ public class ManMaestroMan implements Serializable {
         modelTimeLine = new TimelineModel();
         Date now = new Date();
 
-        llenarMttosPreventivos();
-        llenarListaEquipos();
+        llenarMttosCalendario();
 
-        for (CatCalendario cm : listaMttosPre) {
+        for (CatCalendario cm : listaMttos) {
             DefaultScheduleEvent cmt = new DefaultScheduleEvent();
             TimelineEvent tle = new TimelineEvent();
             tle.setData(cm.getDes_equ());
@@ -155,20 +159,20 @@ public class ManMaestroMan implements Serializable {
             long r = (cm.getFec_ini().getTime()) - now.getTime();
             double dias = Math.floor(r / (1000 * 60 * 60 * 24));
             String estado = cm.getDet_sta();
-            String color = "";
+            String color;
 
-            if (("1".equals(estado) || "4".equals(estado)) && dias > 1) {
+            if ("1".equals(estado) && dias > 1) {
                 color = "entiempo";
-            } else if ("1".equals(estado) && dias > -30) {
+            } else if ("1".equals(estado) && dias < 30) {
                 color = "atrasoleve";
-            } else if ("1".equals(estado) && dias < -30) {
+            } else {
                 color = "atrazado";
             }
             tle.setStyleClass(color);
             cmt.setId(cm.getCod_man());
             cmt.setDescription(cm.getDet_obs());
             cmt.setTitle(cm.getDes_equ());
-            cmt.setData(cm.getCod_man());
+            //cmt.setData(cm.getCod_man());
             cmt.setAllDay(true);
             cmt.setEditable(true);
             cmt.setStartDate(cm.getFec_ini());
@@ -190,6 +194,7 @@ public class ManMaestroMan implements Serializable {
 
             mttoModel.addEvent(cmt);
             modelTimeLine.add(tle);
+
         }
     }
 
@@ -945,6 +950,14 @@ public class ManMaestroMan implements Serializable {
         this.catcalendario = catcalendario;
     }
 
+    public List<CatCalendario> getListaMttos() {
+        return listaMttos;
+    }
+
+    public void setListaMttos(List<CatCalendario> listaMttos) {
+        this.listaMttos = listaMttos;
+    }
+
     public ScheduleModel getMttoModel() {
         return mttoModel;
     }
@@ -959,6 +972,70 @@ public class ManMaestroMan implements Serializable {
 
     public void setModelTimeLine(TimelineModel modelTimeLine) {
         this.modelTimeLine = modelTimeLine;
+    }
+
+    public boolean isSelectable() {
+        return selectable;
+    }
+
+    public void setSelectable(boolean selectable) {
+        this.selectable = selectable;
+    }
+
+    public boolean isZoomable() {
+        return zoomable;
+    }
+
+    public void setZoomable(boolean zoomable) {
+        this.zoomable = zoomable;
+    }
+
+    public boolean isMoveable() {
+        return moveable;
+    }
+
+    public void setMoveable(boolean moveable) {
+        this.moveable = moveable;
+    }
+
+    public boolean isStackEvents() {
+        return stackEvents;
+    }
+
+    public void setStackEvents(boolean stackEvents) {
+        this.stackEvents = stackEvents;
+    }
+
+    public String getEventStyle() {
+        return eventStyle;
+    }
+
+    public void setEventStyle(String eventStyle) {
+        this.eventStyle = eventStyle;
+    }
+
+    public boolean isAxisOnTop() {
+        return axisOnTop;
+    }
+
+    public void setAxisOnTop(boolean axisOnTop) {
+        this.axisOnTop = axisOnTop;
+    }
+
+    public boolean isShowCurrentTime() {
+        return showCurrentTime;
+    }
+
+    public void setShowCurrentTime(boolean showCurrentTime) {
+        this.showCurrentTime = showCurrentTime;
+    }
+
+    public boolean isShowNavigation() {
+        return showNavigation;
+    }
+
+    public void setShowNavigation(boolean showNavigation) {
+        this.showNavigation = showNavigation;
     }
 
     public ScheduleEvent getMtto() {
@@ -1039,30 +1116,6 @@ public class ManMaestroMan implements Serializable {
 
     public void setOtr_per(String otr_per) {
         this.otr_per = otr_per;
-    }
-
-    public TimelineEvent getEventTimeLine() {
-        return eventTimeLine;
-    }
-
-    public void setEventTimeLine(TimelineEvent eventTimeLine) {
-        this.eventTimeLine = eventTimeLine;
-    }
-
-    public List<CatCalendario> getListaMttos() {
-        return listaMttos;
-    }
-
-    public void setListaMttos(List<CatCalendario> listaMttos) {
-        this.listaMttos = listaMttos;
-    }
-
-    public List<CatCalendario> getListaMttosPre() {
-        return listaMttosPre;
-    }
-
-    public void setListaMttosPre(List<CatCalendario> listaMttosPre) {
-        this.listaMttosPre = listaMttosPre;
     }
 
     public void iniciarventana() {
@@ -1270,13 +1323,14 @@ public class ManMaestroMan implements Serializable {
             cod_dep = "0";
             Accesos acc = new Accesos();
             acc.Conectar();
-            cod_alt = acc.strQuerySQLvariable("select ifnull(max(cod_alt),0)+1 from tbl_mae_man;");
+            cod_alt = acc.strQuerySQLvariable("select ifnull(max(cod_alt),0) + 1 as cod from tbl_mae_man;");
             acc.Desconectar();
             obs_tec = "";
             otr_per = "";
             cod_gru_fal = "0";
             cod_fal = "0";
             otr_fal = "";
+
             llenarTipos();
             llenarPeriodos();
             llenarGrupoFallas();
@@ -1461,14 +1515,15 @@ public class ManMaestroMan implements Serializable {
                         + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=2,'yellow','red')) as color,"
                         + "mm.cod_per, "
                         + "per.nom_per,"
-                        + "mm.flg_ext,mm.cod_sup, mm.turno, mm.cod_pri, mm.cod_dep,mm.cod_alt,mm.obs_tec,mm.otr_per "
+                        + "mm.flg_ext,mm.cod_sup, mm.turno, mm.cod_pri, mm.cod_dep,"
+                        + "mm.cod_alt,obs_tec,otr_per "
                         + "from tbl_mae_man as mm "
                         + "left join cat_tip as tip on mm.cod_tip = tip.cod_tip "
                         + "left join cat_per as per on mm.cod_per = per.cod_per "
                         + "where "
                         + "mm.det_sta IN (1,3) "
                         + "and mm.cod_lis_equ =" + buscar_serie + " "
-                        + "order by mm.cod_man;";
+                        + "order by mm.cod_alt;";
 
                 ResultSet resVariable;
 
@@ -1996,7 +2051,7 @@ public class ManMaestroMan implements Serializable {
         try {
             departamentos = new ArrayList<>();
 
-            String mQuery = "select cod_pai, cod_pai, nom_pai "
+            String mQuery = "select cod_pai,'', nom_pai "
                     + "from cat_pai order by cod_pai;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -2029,12 +2084,12 @@ public class ManMaestroMan implements Serializable {
                             + "cod_tip,det_obs,fec_ini,fec_fin,det_sta,cod_usu,"
                             + "cod_per,flg_ext,cod_sup,turno,cod_pri,cod_dep,"
                             + "cod_alt,obs_tec,otr_per) "
-                            + "VALUES (" + cod_lis_equ + "," + cod_man + ","
-                            + cod_tip + ",'" + det_obs.replace("'", " ") + "',"
+                            + "VALUES (" + cod_lis_equ + "," + cod_man + "," + cod_tip + ",'" + det_obs.replace("'", " ") + "',"
                             + "str_to_date('" + fec_ini + "','%d/%m/%Y %H:%i'),str_to_date('" + fec_fin + "','%d/%m/%Y %H:%i'),1,"
                             + cod_usu + "," + cod_per + "," + flg_ext + ","
-                            + cod_sup + "," + turno + "," + cod_pri + "," + cod_dep + ","
-                            + cod_alt + ",'" + obs_tec + "','" + otr_per + "');";
+                            + cod_sup + "," + turno + ",'" + cod_pri + "'," + cod_dep
+                            + "," + cod_alt + ",'" + obs_tec + "','" + otr_per
+                            + "');";
                 } else {
                     mQuery = "delete from tbl_det_man_fal where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
                     mAccesos.dmlSQLvariable(mQuery);
@@ -2049,9 +2104,9 @@ public class ManMaestroMan implements Serializable {
                             + "cod_sup = " + cod_sup + ","
                             + "turno= " + turno + ","
                             + "cod_pri= '" + cod_pri + "',"
-                            + "cod_dep= " + cod_dep + ", "
-                            + "cod_alt= " + cod_alt + ", "
-                            + "obs_tec='" + obs_tec + "', "
+                            + "cod_dep= " + cod_dep + ","
+                            + "cod_alt=" + cod_alt + ","
+                            + "obs_tec='" + obs_tec + "',"
                             + "otr_per='" + otr_per + "' "
                             + "where cod_lis_equ = " + cod_lis_equ + " "
                             + "and cod_man = " + cod_man + ";";
@@ -2062,7 +2117,8 @@ public class ManMaestroMan implements Serializable {
 
                 for (int i = 0; i < fallas.size(); i++) {
                     mValues = mValues + ",(" + cod_lis_equ + "," + cod_man + ","
-                            + (i + 1) + "," + fallas.get(i).getCod_gru_fal() + "," + fallas.get(i).getCod_fal() + ",'')";
+                            + (i + 1) + "," + fallas.get(i).getCod_gru_fal() + ","
+                            + fallas.get(i).getCod_fal() + ",'" + fallas.get(i).getDet_obs() + "')";
                 }
 
                 if (!"".equals(mValues)) {
@@ -2092,6 +2148,15 @@ public class ManMaestroMan implements Serializable {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Escoger un Tipo de Mantenimiento.", 2);
         }
+        /*Accesos acc = new Accesos();
+        acc.Conectar();
+         if (!"0".equals(acc.strQuerySQLvariable("select count(cod_alt) as cod from tbl_mae_man where cod_alt=" + cod_alt + ";"))) {
+              mvalidar = false;
+            addMessage("Validar Datos", "Debe Escoger un Tipo de Mantenimiento.", 2);
+         }
+        acc.Desconectar();
+         */
+
         return mvalidar;
 
     }
@@ -3367,6 +3432,9 @@ public class ManMaestroMan implements Serializable {
         cod_dep = ((CatMantenimientos) event.getObject()).getCod_dep();
         turno = ((CatMantenimientos) event.getObject()).getTurno();
         cod_pri = ((CatMantenimientos) event.getObject()).getCod_pri();
+        cod_alt = ((CatMantenimientos) event.getObject()).getCod_alt();
+        obs_tec = ((CatMantenimientos) event.getObject()).getObs_tec();
+        otr_per = ((CatMantenimientos) event.getObject()).getOtr_per();
         if ("00/00/0000".equals(fec_ini)) {
             fec_ini = "";
         }
@@ -3892,8 +3960,9 @@ public class ManMaestroMan implements Serializable {
     public void onEventSelect(SelectEvent selectEvent) {
 
         ScheduleEvent smtto = (ScheduleEvent) selectEvent.getObject();
+        TimelineEvent tlmtto = (TimelineEvent) selectEvent.getObject();
 
-        for (CatCalendario cm : listaMttosPre) {
+        for (CatCalendario cm : listaMttos) {
             if (cm.getCod_man() == smtto.getData()) {
                 catcalendario = cm;
                 buscar_serie = catcalendario.getCod_lis_equ();
@@ -3947,45 +4016,6 @@ public class ManMaestroMan implements Serializable {
         }
     }
 
-    public void llenarMttosPreventivos() {
-        String mQuery = "";
-        try {
-
-            listaMttosPre = new ArrayList<>();
-
-            mQuery = " select tbl_mae_man.cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, des_equ, "
-                    + "if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=2,'yellow','red')) as color,"
-                    + " week(fec_ini,1) as semana "
-                    + " from tbl_mae_man inner join lis_equ on "
-                    + " tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ "
-                    + " where cod_tip = 1 order by cod_man;";
-
-            ResultSet resVariable;
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            resVariable = mAccesos.querySQLvariable(mQuery);
-            while (resVariable.next()) {
-                listaMttosPre.add(new CatCalendario(
-                        resVariable.getString(1),
-                        resVariable.getString(2),
-                        resVariable.getString(3),
-                        resVariable.getString(4),
-                        resVariable.getDate(5),
-                        resVariable.getDate(6),
-                        resVariable.getString(7),
-                        resVariable.getString(8),
-                        resVariable.getString(9),
-                        resVariable.getString(10),
-                        resVariable.getString(11)
-                ));
-            }
-            mAccesos.Desconectar();
-
-        } catch (Exception e) {
-            System.out.println("Error en el llenado de Calendarización. " + e.getMessage() + " Query: " + mQuery);
-        }
-    }
-
     public void actualizar() {
         String mQuery;
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
@@ -4005,7 +4035,7 @@ public class ManMaestroMan implements Serializable {
 
     public void onEventMove(ScheduleEntryMoveEvent mttoMove) {
 
-        for (CatCalendario cm : listaMttosPre) {
+        for (CatCalendario cm : listaMttos) {
             if (cm.getCod_man() == mttoMove.getScheduleEvent().getData()) {
                 catcalendario = cm;
                 actualizar();
@@ -4016,44 +4046,9 @@ public class ManMaestroMan implements Serializable {
     }
 
     public void onEventResize(ScheduleEntryResizeEvent mttoResize) {
-        for (CatCalendario cm : listaMttosPre) {
+        for (CatCalendario cm : listaMttos) {
             if (cm.getCod_man() == mttoResize.getScheduleEvent().getData()) {
                 catcalendario = cm;
-                actualizar();
-                break;
-            }
-        }
-    }
-
-    public void onEdit(TimelineModificationEvent e) {
-        TimelineEvent tlmtto = e.getTimelineEvent();
-
-        for (CatCalendario cm : listaMttosPre) {
-            if (cm.getDes_equ() == tlmtto.getData()) {
-                catcalendario = cm;
-                buscar_serie = catcalendario.getCod_lis_equ();
-                llenarMantenimientos();
-                break;
-            }
-        }
-    }
-
-    public void onChange(TimelineModificationEvent e) {
-
-        for (CatCalendario cm : listaMttosPre) {
-            if (cm.getDes_equ() == e.getTimelineEvent().getData()) {
-                Calendar calendar = Calendar.getInstance();
-
-                long dif = cm.getFec_fin().getTime() - cm.getFec_ini().getTime();
-                long difDias = dif / (1000 * 60 * 60 * 24);
-
-                calendar.setTime(e.getTimelineEvent().getStartDate());
-                calendar.add(Calendar.DAY_OF_YEAR, (int) difDias);
-
-                catcalendario = cm;
-                cm.setFec_ini(e.getTimelineEvent().getStartDate());
-                cm.setFec_fin(calendar.getTime());
-
                 actualizar();
                 break;
             }
@@ -4076,6 +4071,20 @@ public class ManMaestroMan implements Serializable {
             Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void onSelect(TimelineSelectEvent e) {
+
+        TimelineEvent tlmtto = (TimelineEvent) e.getTimelineEvent();
+
+        for (CatCalendario cm : listaMttos) {
+            if (cm.getCod_man() == tlmtto.getData()) {
+                catcalendario = cm;
+                buscar_serie = catcalendario.getCod_lis_equ();
+                llenarMantenimientos();
+                break;
+            }
         }
     }
 
