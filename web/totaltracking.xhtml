@@ -7165,7 +7165,7 @@
                    dynamic="true" visible="false" 
                    >
 
-            <h:form id="frmAlertas" style="height:400px"> 
+            <h:form id="frmAlertas" style="height:480px"> 
                 <p:growl id="msgAlertas" showDetail="true" life="4500"/>
                 <p:toolbar>
                     <f:facet name="left">
@@ -7231,29 +7231,44 @@
                                      onfocus="this.select()"/>
                         <h:outputText value="Dias antes para aviso" style="font-weight:bold;" />
                         <h:panelGroup>
-                            <p:inputText maxlength="200" size="10" value="#{manAlertas.aviso}" 
+                            <p:inputText maxlength="3" size="10" value="#{manAlertas.aviso}"
                                          onfocus="this.select()"/>
                             <p:spacer width="10"/>
                             <h:outputText value="Dias para recordatorio" style="font-weight:bold;" />
                             <p:spacer width="10"/>
-                            <p:inputText maxlength="200" size="10" value="#{manAlertas.recordatorio}" 
+                            <p:inputText maxlength="3" size="10" value="#{manAlertas.recordatorio}"
                                          onfocus="this.select()"/>
                         </h:panelGroup>             
                     </h:panelGrid>
-                    
+                    <p:fieldset id="usualert" legend="Usuarios">
+                        <p:dataTable id="usuariosDisponibles" var="usudis" value="#{manAlertas.usuarios}">
+                            <p:column style="width:20px">
+                                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+                                <p:draggable for="dragIcon" revert="true" helper="clone"/>
+                            </p:column>
+
+                            <p:column headerText="Id">
+                                <h:outputText value="#{usudis.cod_usu}" />
+                            </p:column>
+
+                            <p:column headerText="Usuario">
+                                <h:outputText value="#{usudis.nom_usu}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
                     <p:dataTable id="dtAlertas" var="vAlertas" 
                                  value="#{manAlertas.alertas}" 
                                  emptyMessage="No se encontraron resultados" 
                                  selectionMode="single" selection="#{manAlertas.catalertas}" 
                                  rowKey="#{vAlertas.id_ale}"
                                  editable="false" 
-                                 style="width:560px"
+                                 style="width:600px"
                                  scrollable="true"
                                  scrollHeight="190"
                                  >
                         <p:ajax event="rowSelect" listener="#{manAlertas.onRowSelect}" 
                                 update=":frmAlertas" />
-                        <p:column style="width:30px" headerText="Departamento">
+                        <p:column style="width:80px" headerText="Departamento">
                             <h:outputText value="#{vAlertas.nom_dep}" />
                         </p:column>                    
                         <p:column style="width:80px" headerText="tabla">
@@ -7262,7 +7277,7 @@
                         <p:column style="width:80px" headerText="condision">
                             <h:outputText value="#{vAlertas.camp_ctrl}" />
                         </p:column>
-                        <p:column style="width:80px" headerText="estado">
+                        <p:column style="width:50px" headerText="estado">
                             <h:outputText value="#{vAlertas.id_estado}" />
                         </p:column>
                     </p:dataTable>

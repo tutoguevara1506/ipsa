@@ -5,12 +5,12 @@ import java.io.Serializable;
 
 public class CatAlertas implements Serializable{
     
-    private String id_ale, cod_dep, tabla_ctrl, camp_ctrl, alerta, aviso, recordatorio, id_estado, nomdepto;
+    private String id_ale, cod_dep, tabla_ctrl, camp_ctrl, alerta, aviso, recordatorio, id_estado, nom_dep;
 
     public CatAlertas() {
     }
 
-    public CatAlertas(String id_ale, String cod_dep, String tabla_ctrl, String camp_ctrl, String alerta, String aviso, String recordatorio, String id_estado, String nomdepto) {
+    public CatAlertas(String id_ale, String cod_dep, String tabla_ctrl, String camp_ctrl, String alerta, String aviso, String recordatorio, String id_estado, String nom_dep) {
         this.id_ale = id_ale;
         this.cod_dep = cod_dep;
         this.tabla_ctrl = tabla_ctrl;
@@ -19,7 +19,7 @@ public class CatAlertas implements Serializable{
         this.aviso = aviso;
         this.recordatorio = recordatorio;
         this.id_estado = id_estado;
-        this.nomdepto = nomdepto;
+        this.nom_dep = nom_dep;
     }
 
     public String getId_ale() {
@@ -86,12 +86,12 @@ public class CatAlertas implements Serializable{
         this.id_estado = id_estado;
     }   
 
-    public String getNomdepto() {
-        return nomdepto;
+    public String getNom_dep() {
+        return nom_dep;
     }
 
-    public void setNomdepto(String nomdepto) {
-        this.nomdepto = nomdepto;
+    public void setNom_dep(String nom_dep) {
+        this.nom_dep = nom_dep;
     }
     
 }

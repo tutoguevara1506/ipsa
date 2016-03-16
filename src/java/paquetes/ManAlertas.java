@@ -349,9 +349,8 @@ public class ManAlertas implements Serializable {
                 System.out.println("Error al Guardar Alerta. " + e.getMessage() + " Query: " + mQuery);
             }
             llenarAlertas();
+            nuevo();
         }
-        nuevo();
-
     }
 
     public void eliminar() {
@@ -396,19 +395,26 @@ public class ManAlertas implements Serializable {
         
         if ("".equals(alerta) == true) {
             mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un texto a enviar como alerta.", 2);
-        }
-        
-        if ("".equals(aviso) == true) {
-            mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un periodo de tiempo para avisar la alerta.", 2);
-        }
-        
-        if ("".equals(recordatorio) == true) {
-            mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar un periodo de tiempo para recordar la alerta.", 2);
         }
-  
+        
+        if ("".equals(aviso)) {
+            mValidar = false;
+            addMessage("Validar Datos", "Debe Ingresar una Cantidad de dias en la alerta mayor que Cero.", 2);
+        } else if (!Utilitarios.isNumeric(aviso)) {
+            mValidar = false;
+            addMessage("Validar Datos", "Debe Ingresar una numero valido de dias para el aviso.", 2);
+        }
+        
+        
+        if ("".equals(recordatorio)) {
+            mValidar = false;
+            addMessage("Validar Datos", "Debe Ingresar una Cantidad de dias en el periodo para recordatorio mayor que Cero.", 2);
+        } else if (!Utilitarios.isNumeric(recordatorio)) {
+            mValidar = false;
+            addMessage("Validar Datos", "Debe Ingresar una numero valido de dias para el recordatorio.", 2);
+        }
+        
         return mValidar;
 
     }
