@@ -38,8 +38,5 @@ public class CatAlertasUsuarios implements Serializable{
 
     public void setCod_usu(String cod_usu) {
         this.cod_usu = cod_usu;
-    }
-
-    
-     
+    }    
 }
