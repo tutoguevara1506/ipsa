@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.SelectEvent;
 
 @Named
@@ -252,8 +253,9 @@ public class ManAlertas implements Serializable {
             catalertasusuarios = new CatAlertasUsuarios();
             alertasusuarios = new ArrayList<>();
 
-            String mQuery = "SELECT id_ale_usu, id_ale, cod_usu " 
-                    + "FROM ipsa.cat_ale_usu where id_ale= "+ id_ale +";";
+            String mQuery = "SELECT id_ale_usu, id_ale, ale.cod_usu, usu.nom_usu" 
+                    + "FROM ipsa.cat_ale_usu ale inner join ipsa.cat_usu usu on ale.cod_usu = usu.cod_usu"
+                    + "where id_ale= "+ id_ale +";";
                     
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -263,7 +265,8 @@ public class ManAlertas implements Serializable {
                 alertasusuarios.add(new CatAlertasUsuarios(
                         resVariable.getString(1),
                         resVariable.getString(2),
-                        resVariable.getString(3)                    
+                        resVariable.getString(3),                
+                        resVariable.getString(4)
                 ));
             }
             mAccesos.Desconectar();
@@ -428,6 +431,13 @@ public class ManAlertas implements Serializable {
         aviso = ((CatAlertas) event.getObject()).getAviso();
         recordatorio = ((CatAlertas) event.getObject()).getRecordatorio();
         id_estado = ((CatAlertas) event.getObject()).getId_estado();
+    }
+    
+    public void onUsuDrop(DragDropEvent ddEvent) {
+               
+        catalertasusuarios = ((CatAlertasUsuarios) ddEvent.getData());
+        alertasusuarios.add(catalertasusuarios);
+        alertasusuarios.remove(catalertasusuarios);
     }
 
     public void addMessage(String summary, String detail, int tipo) {

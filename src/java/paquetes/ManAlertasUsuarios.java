@@ -85,7 +85,7 @@ public class ManAlertasUsuarios implements Serializable {
             catalertasusu = new CatAlertasUsuarios();
             alertasusu = new ArrayList<>();
 
-            mQuery = "select id_ale_usu, id_ale, cod_usu order by id_ale_usu;";
+            mQuery = "select id_ale_usu, id_ale, cod_usu, nom_usu order by id_ale_usu;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -94,7 +94,8 @@ public class ManAlertasUsuarios implements Serializable {
                 alertasusu.add(new CatAlertasUsuarios(
                         resVariable.getString(1),
                         resVariable.getString(2),
-                        resVariable.getString(3)
+                        resVariable.getString(3),
+                        resVariable.getString(4)
                 ));
             }
             mAccesos.Desconectar();

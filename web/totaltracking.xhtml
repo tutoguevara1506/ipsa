@@ -7156,7 +7156,7 @@
         </p:dialog>  
  
  <!-- *******************************************************************
-        **************** Pantalla mantenimiento de Alestas          ********
+        **************** Pantalla mantenimiento de Alertas          ********
         *********************************************************************-->
 
         <p:dialog  id="dlgAlertas" widgetVar="wAlertas" modal="true" 
@@ -7165,7 +7165,7 @@
                    dynamic="true" visible="false" 
                    >
 
-            <h:form id="frmAlertas" style="height:480px"> 
+            <h:form id="frmAlertas" > 
                 <p:growl id="msgAlertas" showDetail="true" life="4500"/>
                 <p:toolbar>
                     <f:facet name="left">
@@ -7240,8 +7240,9 @@
                                          onfocus="this.select()"/>
                         </h:panelGroup>             
                     </h:panelGrid>
-                    <p:fieldset id="usualert" legend="Usuarios">
-                        <p:dataTable id="usuariosDisponibles" var="usudis" value="#{manAlertas.usuarios}">
+                    <h:panelGrid columns="2" cellpadding="5">
+                    <p:fieldset id="usudis" legend="Usuarios Disponibles" style="width:270px">
+                        <p:dataTable id="usuariosDisponibles" var="usudis" value="#{manAlertas.usuarios}" style="width:260px" scrollHeight="150">
                             <p:column style="width:20px">
                                 <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
                                 <p:draggable for="dragIcon" revert="true" helper="clone"/>
@@ -7254,8 +7255,31 @@
                             <p:column headerText="Usuario">
                                 <h:outputText value="#{usudis.nom_usu}" />
                             </p:column>
-                        </p:dataTable>
+                        </p:dataTable>                        
                     </p:fieldset>
+                    
+                    <p:fieldset id="ususel" legend="Usuarios Seleccionados" style="width:270px ">
+                        <p:outputPanel id="dropArea">
+                            <h:outputText value="Area de asignación." rendered="#{empty manAlertas.alertasusuarios}" style="font-size:24px;" />
+                            <p:dataTable id="usuariosSeleccionados" var="ususel" value="#{manAlertas.alertasusuarios}" 
+                                         rendered="#{not empty manAlertas.alertasusuarios}" style="width:260px" scrollHeight="150">
+                                <p:column headerText="Id">
+                                    <h:outputText value="#{ususel.cod_usu}" />
+                                </p:column>
+
+                                <p:column headerText="Usuario">
+                                    <h:outputText value="#{ususel.nom_usu}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:outputPanel>                    
+                    </p:fieldset>
+                        
+                    </h:panelGrid>
+                    
+                    <p:droppable for="ususel" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosDisponibles" onDrop="handleDrop">
+                             <p:ajax listener="#{manAlertas.onUsuDrop}" update="dropArea usuariosDisponibles" />
+                    </p:droppable>
+                                        
                     <p:dataTable id="dtAlertas" var="vAlertas" 
                                  value="#{manAlertas.alertas}" 
                                  emptyMessage="No se encontraron resultados" 
@@ -7264,7 +7288,7 @@
                                  editable="false" 
                                  style="width:600px"
                                  scrollable="true"
-                                 scrollHeight="190"
+                                 scrollHeight="75"
                                  >
                         <p:ajax event="rowSelect" listener="#{manAlertas.onRowSelect}" 
                                 update=":frmAlertas" />
@@ -7327,7 +7351,7 @@
             </h:form>
         </p:dialog>  
  
-        <script type="text/javascript">
+         <script type="text/javascript">
             PrimeFaces.locales['es'] = {
                 closeText: 'Cerrar',
                 prevText: 'Previo',
@@ -7350,6 +7374,12 @@
                 day: 'Dia',
                 allDayText: 'Todo el dia'
             };
+            
+            function handleDrop(event, ui) {
+                var droppedCar = ui.draggable;
+                droppedCar.fadeOut('fast');
+            }
+            
         </script>
 
     </h:body>

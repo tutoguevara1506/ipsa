@@ -5,15 +5,16 @@ import java.io.Serializable;
 
 public class CatAlertasUsuarios implements Serializable{
     
-    private String id_ale_usu, id_ale, cod_usu;
+    private String id_ale_usu, id_ale, cod_usu, nom_usu;
 
     public CatAlertasUsuarios() {
     }
 
-    public CatAlertasUsuarios(String id_ale_usu, String id_ale, String cod_usu) {
+    public CatAlertasUsuarios(String id_ale_usu, String id_ale, String cod_usu, String nom_usu) {
         this.id_ale_usu = id_ale_usu;
         this.id_ale = id_ale;
         this.cod_usu = cod_usu;
+        this.nom_usu = nom_usu;
     }
 
     public String getId_ale() {
@@ -38,5 +39,14 @@ public class CatAlertasUsuarios implements Serializable{
 
     public void setCod_usu(String cod_usu) {
         this.cod_usu = cod_usu;
-    }    
+    }   
+
+    public String getNom_usu() {
+        return nom_usu;
+    }
+
+    public void setNom_usu(String nom_usu) {
+        this.nom_usu = nom_usu;
+    }
+    
 }
