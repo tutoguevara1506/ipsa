@@ -25,6 +25,7 @@ public class ManAlertas implements Serializable {
     private List<CatDepartamentos> departamentos;
     private CatUsuarios catusuarios;
     private List<CatUsuarios> usuarios;
+    private List<CatUsuarios> usuariosel;
     private CatAlertasUsuarios catalertasusuarios;
     private List<CatAlertasUsuarios> alertasusuarios;
     
@@ -92,6 +93,15 @@ public class ManAlertas implements Serializable {
     public List<CatAlertasUsuarios> getAlertasusuarios() {
         return alertasusuarios;
     }
+
+    public List<CatUsuarios> getUsuariosel() {
+        return usuariosel;
+    }
+
+    public void setUsuariosel(List<CatUsuarios> usuariosel) {
+        this.usuariosel = usuariosel;
+    }
+    
 
     public void setAlertasusuarios(List<CatAlertasUsuarios> alertasusuarios) {
         this.alertasusuarios = alertasusuarios;
@@ -435,9 +445,9 @@ public class ManAlertas implements Serializable {
     
     public void onUsuDrop(DragDropEvent ddEvent) {
                
-        catalertasusuarios = ((CatAlertasUsuarios) ddEvent.getData());
-        alertasusuarios.add(catalertasusuarios);
-        alertasusuarios.remove(catalertasusuarios);
+        catusuarios = ((CatUsuarios) ddEvent.getData());
+        usuariosel.add(catusuarios);
+        usuarios.remove(catalertasusuarios);
     }
 
     public void addMessage(String summary, String detail, int tipo) {

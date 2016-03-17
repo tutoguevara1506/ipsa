@@ -7260,9 +7260,9 @@
                     
                     <p:fieldset id="ususel" legend="Usuarios Seleccionados" style="width:270px ">
                         <p:outputPanel id="dropArea">
-                            <h:outputText value="Area de asignación." rendered="#{empty manAlertas.alertasusuarios}" style="font-size:24px;" />
-                            <p:dataTable id="usuariosSeleccionados" var="ususel" value="#{manAlertas.alertasusuarios}" 
-                                         rendered="#{not empty manAlertas.alertasusuarios}" style="width:260px" scrollHeight="150">
+                            <h:outputText value="Area de asignación." rendered="#{empty manAlertas.usuariosel}" style="font-size:24px;" />
+                            <p:dataTable id="usuariosSeleccionados" var="ususel" value="#{manAlertas.usuariosel}" 
+                                         rendered="#{not empty manAlertas.usuariosel}" style="width:260px" scrollHeight="150">
                                 <p:column headerText="Id">
                                     <h:outputText value="#{ususel.cod_usu}" />
                                 </p:column>
