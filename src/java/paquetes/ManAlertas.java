@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -34,6 +35,11 @@ public class ManAlertas implements Serializable {
     public ManAlertas() {
     }
 
+    @PostConstruct
+    public void init() {
+        usuariosel = new ArrayList<CatUsuarios>();
+    }
+    
     public CatAlertas getCatalertas() {
         return catalertas;
     }
@@ -447,7 +453,7 @@ public class ManAlertas implements Serializable {
                
         catusuarios = ((CatUsuarios) ddEvent.getData());
         usuariosel.add(catusuarios);
-        usuarios.remove(catalertasusuarios);
+        usuarios.remove(catusuarios);
     }
 
     public void addMessage(String summary, String detail, int tipo) {

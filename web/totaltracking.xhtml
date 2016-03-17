@@ -7232,12 +7232,12 @@
                         <h:outputText value="Dias antes para aviso" style="font-weight:bold;" />
                         <h:panelGroup>
                             <p:inputText maxlength="3" size="10" value="#{manAlertas.aviso}"
-                                         onfocus="this.select()"/>
+                                         onfocus="this.select()" onkeypress="return valida(event)"/>
                             <p:spacer width="10"/>
                             <h:outputText value="Dias para recordatorio" style="font-weight:bold;" />
                             <p:spacer width="10"/>
                             <p:inputText maxlength="3" size="10" value="#{manAlertas.recordatorio}"
-                                         onfocus="this.select()"/>
+                                         onfocus="this.select()" onkeypress="return valida(event)"/>
                         </h:panelGroup>             
                     </h:panelGrid>
                     <h:panelGrid columns="2" cellpadding="5">
@@ -7309,48 +7309,7 @@
 
             </h:form>
         </p:dialog>  
- 
   
- <!-- *******************************************************************
-        **************** Grafico    de mantenimientos             ********
-        *********************************************************************-->
-
-        <p:dialog  id="dlgGraMtto" widgetVar="wGraMtto" modal="true" 
-                   width="580" height="350" closable="false" resizable="false" 
-                   header="Grafico de Mantenimientos" rendered="true" 
-                   dynamic="true" visible="false" 
-                   >
-
-            <h:form id="frmGraMtto"> 
-                <p:growl id="msgDetEva" showDetail="true" life="4500"/>
-                    <p:dataTable id="dtGraMtto" var="vGraMtto" 
-                                 value="#{manMaestroMan.mantenimientos}" 
-                                 emptyMessage="No se encontraron resultados" 
-                                 selectionMode="single" selection="#{manMaestroMan.catmantenimientos}" 
-                                 rowKey="#{vGraMtto.cod_man} #{vGraMtto.cod_lis_equ}"
-                                 editable="false" 
-                                 style="width:540px"
-                                 scrollable="true"
-                                 scrollHeight="190"
-                                 >
-                        <p:ajax event="rowSelect" listener="#{manMaestroMan.onRowSelect}" 
-                                update=":frmGraMtto" />
-                        <p:column style="width:10px" headerText="ID">
-                            <h:outputText value="#{vGraMtto.nomtip}" />
-                        </p:column>
-                        <p:column style="width:10px" headerText="Enero">
-                            <h:outputText value="#{vGraMtto.nomtip}" />
-                        </p:column>
-                        <p:column style="width:80px" headerText="Febrero">
-                            <h:outputText value="#{vGraMtto.nomtip}" />
-                        </p:column>  
-                        <p:column style="width:15px" headerText="Marzo">
-                            <h:outputText value="#{vGraMtto.nomtip}" />
-                        </p:column>
-                    </p:dataTable>
-            </h:form>
-        </p:dialog>  
- 
          <script type="text/javascript">
             PrimeFaces.locales['es'] = {
                 closeText: 'Cerrar',
