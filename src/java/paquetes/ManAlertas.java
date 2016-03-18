@@ -447,6 +447,8 @@ public class ManAlertas implements Serializable {
         aviso = ((CatAlertas) event.getObject()).getAviso();
         recordatorio = ((CatAlertas) event.getObject()).getRecordatorio();
         id_estado = ((CatAlertas) event.getObject()).getId_estado();
+        llenarUsuarios();
+        llenarUsuSeleccionados();
     }
     
     public void onUsuDrop(DragDropEvent ddEvent) {
@@ -454,6 +456,13 @@ public class ManAlertas implements Serializable {
         catusuarios = ((CatUsuarios) ddEvent.getData());
         usuariosel.add(catusuarios);
         usuarios.remove(catusuarios);
+    }
+    
+    public void onUsuDropRet(DragDropEvent ddEvent) {
+               
+        catusuarios = ((CatUsuarios) ddEvent.getData());
+        usuarios.add(catusuarios);
+        usuariosel.remove(catusuarios);
     }
 
     public void addMessage(String summary, String detail, int tipo) {

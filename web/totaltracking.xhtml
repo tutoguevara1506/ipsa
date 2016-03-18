@@ -7263,6 +7263,10 @@
                             <h:outputText value="Area de asignación." rendered="#{empty manAlertas.usuariosel}" style="font-size:24px;" />
                             <p:dataTable id="usuariosSeleccionados" var="ususel" value="#{manAlertas.usuariosel}" 
                                          rendered="#{not empty manAlertas.usuariosel}" style="width:260px" scrollHeight="150">
+                                <p:column style="width:20px">
+                                    <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+                                    <p:draggable for="dragIcon" revert="true" helper="clone"/>
+                                </p:column>
                                 <p:column headerText="Id">
                                     <h:outputText value="#{ususel.cod_usu}" />
                                 </p:column>
@@ -7278,6 +7282,10 @@
                     
                     <p:droppable for="ususel" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosDisponibles" onDrop="handleDrop">
                              <p:ajax listener="#{manAlertas.onUsuDrop}" update="dropArea usuariosDisponibles" />
+                    </p:droppable>
+                    
+                    <p:droppable for="usudis" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosSeleccionados" onDrop="handleDrop">
+                             <p:ajax listener="#{manAlertas.onUsuDropRet}" update="dropArea usuariosDisponibles" />
                     </p:droppable>
                                         
                     <p:dataTable id="dtAlertas" var="vAlertas" 
