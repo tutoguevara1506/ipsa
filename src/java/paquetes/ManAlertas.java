@@ -31,6 +31,7 @@ public class ManAlertas implements Serializable {
     private List<CatAlertasUsuarios> alertasusuarios;
     
     private String id_ale, cod_dep, tabla_ctrl, camp_ctrl, alerta, aviso, recordatorio, id_estado;
+    private String id_ale_usu, cod_usu;
 
     public ManAlertas() {
     }
@@ -177,7 +178,22 @@ public class ManAlertas implements Serializable {
     public void setCod_dep(String cod_dep) {
         this.cod_dep = cod_dep;
     }
-    
+
+    public String getId_ale_usu() {
+        return id_ale_usu;
+    }
+
+    public void setId_ale_usu(String id_ale_usu) {
+        this.id_ale_usu = id_ale_usu;
+    }
+
+    public String getCod_usu() {
+        return cod_usu;
+    }
+
+    public void setCod_usu(String cod_usu) {
+        this.cod_usu = cod_usu;
+    }
 
     public void iniciarventana() {
         id_ale = "";
@@ -234,11 +250,21 @@ public class ManAlertas implements Serializable {
         try {
             catusuarios = new CatUsuarios();
             usuarios = new ArrayList<>();
-
-            String mQuery = "select usu.cod_usu, usu.nom_usu, usu.des_pas, usu.tip_usu, usu.cod_pai, "
+            String mQuery = "";
+            
+            if("".equals(id_ale)){
+                mQuery = "select usu.cod_usu, usu.nom_usu, usu.des_pas, usu.tip_usu, usu.cod_pai, "
                     + "usu.cod_dep, usu.det_nom, usu.det_mai, ifnull(usu.cod_pai,'') as cod_pai, ifnull(dep.nom_dep,'') as nomdep "
                     + "from cat_usu as usu "
                     + "left join cat_dep as dep on usu.cod_dep = dep.cod_dep order by cod_usu;";
+            }
+            else {
+                mQuery = "select usu.cod_usu, usu.nom_usu, usu.des_pas, usu.tip_usu, usu.cod_pai, "
+                    + "usu.cod_dep, usu.det_nom, usu.det_mai, ifnull(usu.cod_pai,'') as cod_pai, ifnull(dep.nom_dep,'') as nomdep "
+                    + "from cat_usu as usu left join cat_dep as dep on usu.cod_dep = dep.cod_dep "
+                    + "where usu.cod_usu NOT IN (select alusu.cod_usu from cat_ale_usu alusu where alusu.id_ale="+id_ale+") order by cod_usu;";
+            }
+            
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -361,6 +387,27 @@ public class ManAlertas implements Serializable {
 
                 }
                 mAccesos.dmlSQLvariable(mQuery);
+                               
+                usuariosel.stream().forEach((usadd) -> {
+                    String mQuery2="";
+                    
+                     if ("".equals(id_ale_usu)) {
+                        mQuery2 = "select ifnull(max(id_ale_usu),0)+1 as codigo from cat_ale_usu;";
+                        id_ale_usu = mAccesos.strQuerySQLvariable(mQuery2);
+                        cod_usu = usadd.getCod_usu();
+                    
+                        mQuery2 = "insert into cat_ale_usu (id_ale_usu, id_ale, cod_usu) "
+                            + "values (" + id_ale_usu + "," + id_ale + ","+ cod_usu + ");";
+                    } else {
+                        mQuery2 = "update cat_ale_usu SET "
+                            + " id_ale = " + id_ale + ", "
+                            + " cod_usu = " + cod_usu + " WHERE id_ale_usu = " + id_ale_usu + ";";
+                    }
+                    
+                    mAccesos.dmlSQLvariable(mQuery2);
+                    System.out.println(usadd.getCod_usu());
+                });            
+                
                 mAccesos.Desconectar();
                 addMessage("Guardar Alerta", "Información Almacenada con éxito.", 1);
             } catch (Exception e) {
