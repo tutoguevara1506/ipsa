@@ -7290,12 +7290,16 @@
                                         
                     <p:dataTable id="dtAlertas" var="vAlertas" 
                                  value="#{manAlertas.alertas}" 
+                                 rows ="3"
                                  emptyMessage="No se encontraron resultados" 
                                  selectionMode="single" selection="#{manAlertas.catalertas}" 
                                  rowKey="#{vAlertas.id_ale}"
                                  editable="false" 
                                  style="width:600px"
                                  scrollable="true"
+                                 paginator="true"
+                                 paginatorPosition="top"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  scrollHeight="75"
                                  >
                         <p:ajax event="rowSelect" listener="#{manAlertas.onRowSelect}" 

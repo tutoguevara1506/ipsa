@@ -204,6 +204,8 @@ public class ManAlertas implements Serializable {
         aviso = "";
         recordatorio = "";
         id_estado = "";
+        id_ale_usu = "";
+        cod_usu = "";
         llenarAlertas();
         llenarDepartamentos();
         llenarUsuarios();
@@ -218,6 +220,8 @@ public class ManAlertas implements Serializable {
         aviso = "";
         recordatorio = "";
         id_estado = "";
+        id_ale_usu= "";
+        cod_usu = "";
         alertas = new ArrayList<>();
     }
     
@@ -359,6 +363,8 @@ public class ManAlertas implements Serializable {
         aviso = "";
         recordatorio = "";
         id_estado = "";
+        id_ale_usu="";
+        cod_usu="";
         catalertas = new CatAlertas();
     }
 
