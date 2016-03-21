@@ -27,8 +27,6 @@ public class ManAlertas implements Serializable {
     private CatUsuarios catusuarios;
     private List<CatUsuarios> usuarios;
     private List<CatUsuarios> usuariosel;
-    private CatAlertasUsuarios catalertasusuarios;
-    private List<CatAlertasUsuarios> alertasusuarios;
     
     private String id_ale, cod_dep, tabla_ctrl, camp_ctrl, alerta, aviso, recordatorio, id_estado;
     private String id_ale_usu, cod_usu;
@@ -89,17 +87,7 @@ public class ManAlertas implements Serializable {
         this.alertas = alertas;
     }
 
-    public CatAlertasUsuarios getCatalertasusuarios() {
-        return catalertasusuarios;
-    }
-
-    public void setCatalertasusuarios(CatAlertasUsuarios catalertasusuarios) {
-        this.catalertasusuarios = catalertasusuarios;
-    }
-
-    public List<CatAlertasUsuarios> getAlertasusuarios() {
-        return alertasusuarios;
-    }
+   
 
     public List<CatUsuarios> getUsuariosel() {
         return usuariosel;
@@ -107,11 +95,6 @@ public class ManAlertas implements Serializable {
 
     public void setUsuariosel(List<CatUsuarios> usuariosel) {
         this.usuariosel = usuariosel;
-    }
-    
-
-    public void setAlertasusuarios(List<CatAlertasUsuarios> alertasusuarios) {
-        this.alertasusuarios = alertasusuarios;
     }
 
     public String getId_ale() {
@@ -223,6 +206,7 @@ public class ManAlertas implements Serializable {
         id_ale_usu= "";
         cod_usu = "";
         alertas = new ArrayList<>();
+        usuariosel = new ArrayList<>();
     }
     
     public void llenarDepartamentos() {
@@ -296,23 +280,31 @@ public class ManAlertas implements Serializable {
 
     public void llenarUsuSeleccionados() {
         try {
-            catalertasusuarios = new CatAlertasUsuarios();
-            alertasusuarios = new ArrayList<>();
+            usuariosel = new ArrayList<>();
 
-            String mQuery = "SELECT id_ale_usu, id_ale, ale.cod_usu, usu.nom_usu" 
-                    + "FROM ipsa.cat_ale_usu ale inner join ipsa.cat_usu usu on ale.cod_usu = usu.cod_usu"
-                    + "where id_ale= "+ id_ale +";";
+            String mQuery = "select usu.cod_usu, usu.nom_usu, usu.des_pas, usu.tip_usu, usu.cod_pai, "
+                    + "usu.cod_dep, usu.det_nom, usu.det_mai, ifnull(usu.cod_pai,'') as cod_pai, ifnull(dep.nom_dep,'') as nomdep "
+                    + "from cat_usu as usu "
+                    + "left join cat_dep as dep on usu.cod_dep = dep.cod_dep "
+                    + "inner join cat_ale_usu aleu on usu.cod_usu = aleu.cod_usu "
+                    + " where aleu.id_ale = " + id_ale + " order by cod_usu;";
                     
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
             resVariable = mAccesos.querySQLvariable(mQuery);
             while (resVariable.next()) {
-                alertasusuarios.add(new CatAlertasUsuarios(
+                usuariosel.add(new CatUsuarios(
                         resVariable.getString(1),
                         resVariable.getString(2),
-                        resVariable.getString(3),                
-                        resVariable.getString(4)
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10)                         
                 ));
             }
             mAccesos.Desconectar();
@@ -366,6 +358,8 @@ public class ManAlertas implements Serializable {
         id_ale_usu="";
         cod_usu="";
         catalertas = new CatAlertas();
+        llenarUsuarios();
+        usuariosel = new ArrayList<>();
     }
 
     public void guardar() {
