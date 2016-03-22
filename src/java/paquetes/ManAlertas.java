@@ -28,7 +28,7 @@ public class ManAlertas implements Serializable {
     private List<CatUsuarios> usuarios;
     private List<CatUsuarios> usuariosel;
     
-    private String id_ale, cod_dep, tabla_ctrl, camp_ctrl, alerta, aviso, recordatorio, id_estado;
+    private String id_ale, cod_dep, tabla_ctrl, camp_ctrl, camp_ref, alerta, aviso, recordatorio, id_estado;
     private String id_ale_usu, cod_usu;
 
     public ManAlertas() {
@@ -122,6 +122,14 @@ public class ManAlertas implements Serializable {
         this.camp_ctrl = camp_ctrl;
     }
 
+    public String getCamp_ref() {
+        return camp_ref;
+    }
+
+    public void setCamp_ref(String camp_ref) {
+        this.camp_ref = camp_ref;
+    }
+    
     public String getAlerta() {
         return alerta;
     }
@@ -183,6 +191,7 @@ public class ManAlertas implements Serializable {
         cod_dep = ""; 
         tabla_ctrl = "";
         camp_ctrl = "";
+        camp_ref = "";
         alerta = "";
         aviso = "";
         recordatorio = "";
@@ -199,6 +208,7 @@ public class ManAlertas implements Serializable {
         cod_dep = ""; 
         tabla_ctrl = "";
         camp_ctrl = "";
+        camp_ref = "";
         alerta = "";
         aviso = "";
         recordatorio = "";
@@ -320,7 +330,7 @@ public class ManAlertas implements Serializable {
             catalertas = new CatAlertas();
             alertas = new ArrayList<>();
 
-            mQuery = "select ale.id_ale, ale.cod_dep, ale.tabla_ctrl, ale.camp_ctrl, ale.alerta, ale.aviso, ale.recordatorio, ale.id_estado, dep.nom_dep "
+            mQuery = "select ale.id_ale, ale.cod_dep, ale.tabla_ctrl, ale.camp_ctrl, ale.camp_ref, ale.alerta, ale.aviso, ale.recordatorio, ale.id_estado, dep.nom_dep "
                     +"from cat_ale ale inner join cat_dep dep on ale.cod_dep = dep.cod_dep order by ale.id_ale;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -336,7 +346,8 @@ public class ManAlertas implements Serializable {
                         resVariable.getString(6),
                         resVariable.getString(7),
                         resVariable.getString(8),
-                        resVariable.getString(9)
+                        resVariable.getString(9),
+                        resVariable.getString(10)
                 ));
             }
             mAccesos.Desconectar();
@@ -351,6 +362,7 @@ public class ManAlertas implements Serializable {
         cod_dep = ""; 
         tabla_ctrl = "";
         camp_ctrl = "";
+        camp_ref = "";
         alerta = "";
         aviso = "";
         recordatorio = "";
@@ -372,13 +384,14 @@ public class ManAlertas implements Serializable {
                 if ("".equals(id_ale)) {
                     mQuery = "select ifnull(max(id_ale),0)+1 as codigo from cat_ale;";
                     id_ale = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into cat_ale (id_ale, cod_dep, tabla_ctrl, camp_ctrl, alerta, aviso, recordatorio, id_estado) "
-                            + "values (" + id_ale + ",'" + cod_dep + "','"+ tabla_ctrl + "','" + camp_ctrl + "','" + alerta + "','" + aviso + "','" + recordatorio + "','" + id_estado + "');";
+                    mQuery = "insert into cat_ale (id_ale, cod_dep, tabla_ctrl, camp_ctrl, camp_ref, alerta, aviso, recordatorio, id_estado) "
+                            + "values (" + id_ale + ",'" + cod_dep + "','"+ tabla_ctrl + "','" + camp_ctrl + "','"+ camp_ref + "','" + alerta + "','" + aviso + "','" + recordatorio + "','" + id_estado + "');";
                 } else {
                     mQuery = "update cat_ale SET "
                             + " cod_dep = '" + cod_dep + "', "
                             + " tabla_ctrl = '" + tabla_ctrl + "', "
                             + " camp_ctrl = '" + camp_ctrl + "', "
+                            + " camp_ref = '" + camp_ref + "', "
                             + " alerta = '" + alerta + "', "
                             + " aviso = '" + aviso + "', "
                             + " recordatorio = '" + recordatorio + "', "
@@ -459,6 +472,11 @@ public class ManAlertas implements Serializable {
             addMessage("Validar Datos", "Debe Ingresar una campo fecha a controlar.", 2);
         }
         
+        if ("".equals(camp_ctrl) == true) {
+            mValidar = false;
+            addMessage("Validar Datos", "Debe Ingresar una campo de referencia controlar.", 2);
+        }
+        
         if ("".equals(alerta) == true) {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar un periodo de tiempo para recordar la alerta.", 2);
@@ -490,6 +508,7 @@ public class ManAlertas implements Serializable {
         cod_dep = ((CatAlertas) event.getObject()).getCod_dep();
         tabla_ctrl = ((CatAlertas) event.getObject()).getTabla_ctrl();
         camp_ctrl = ((CatAlertas) event.getObject()).getCamp_ctrl();
+        camp_ref = ((CatAlertas) event.getObject()).getCamp_ref();
         alerta = ((CatAlertas) event.getObject()).getAlerta();
         aviso = ((CatAlertas) event.getObject()).getAviso();
         recordatorio = ((CatAlertas) event.getObject()).getRecordatorio();

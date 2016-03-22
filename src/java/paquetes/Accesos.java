@@ -85,5 +85,26 @@ public class Accesos extends Conexion {
 
         }
     }
+    
+    public String dmlPrimaryvariable(String tabla) {
+        String primary="";
+        try {
+             DatabaseMetaData meta = con.getMetaData();
+             ResultSet rs = meta.getPrimaryKeys(null, null, tabla);
+             
+             while (rs.first()) {
+               primary = rs.getString("COLUMN_NAME");
+            }
+             
+            
+             
+        } catch (Exception e) {
+            System.err.println("Sql Operación PrimaryKey Exception:" + e.getMessage() + " Query: " + tabla);
+
+        } finally {
+
+        }
+        return primary;
+    }
 
 }
