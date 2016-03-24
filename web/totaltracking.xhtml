@@ -7207,28 +7207,21 @@
                 <div style=" background-color: #ebf8fe;">
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Departamento" style="font-weight:bold;"/>
-                        <h:panelGroup>
-                            <p:selectOneMenu value="#{manAlertas.cod_dep}" 
+                        <p:selectOneMenu value="#{manAlertas.cod_dep}" 
                                          style="width:200px;text-align:right;"
                                          immediate="false">  
                                 <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                                 <f:selectItems value="#{manAlertas.departamentos}" var="mdepale"
                                            itemLabel="#{mdepale.nom_dep}" itemValue="#{mdepale.cod_dep}"/>
-                            </p:selectOneMenu>
-                            <p:spacer width="10"/>
-                            <h:outputText value="Tabla" style="font-weight:bold;" />
-                            <p:spacer width="10"/>
-                            <p:inputText maxlength="50" size="30" value="#{manAlertas.tabla_ctrl}" 
-                                     onfocus="this.select()"/>
-                        </h:panelGroup>
-                        
-                        <h:outputText value="Campo condición" style="font-weight:bold;" />
-                        <p:inputText maxlength="75" size="72" value="#{manAlertas.camp_ctrl}" 
-                                     onfocus="this.select()"/>
-                        
-                        <h:outputText value="Texto de la alerta" style="font-weight:bold;" />
-                        <p:inputTextarea rows="3" cols="70" maxlength="250" value="#{manAlertas.alerta}" 
-                                     onfocus="this.select()"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="Tipo de alerta" style="font-weight:bold;" />
+                        <p:selectOneMenu value="#{manAlertas.id_tip_ale}" 
+                                         style="width:300px;text-align:right;"
+                                         immediate="false">  
+                                <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                                <f:selectItems value="#{manAlertas.tiposalertas}" var="mtipale"
+                                           itemLabel="#{mtipale.nom_tip_ale}" itemValue="#{mtipale.id_tip_ale}"/>
+                        </p:selectOneMenu>
                         <h:outputText value="Dias antes para aviso" style="font-weight:bold;" />
                         <h:panelGroup>
                             <p:inputText maxlength="3" size="10" value="#{manAlertas.aviso}"
@@ -7307,14 +7300,14 @@
                         <p:column style="width:80px" headerText="Departamento">
                             <h:outputText value="#{vAlertas.nom_dep}" />
                         </p:column>                    
-                        <p:column style="width:80px" headerText="tabla">
-                            <h:outputText value="#{vAlertas.tabla_ctrl}" />
+                        <p:column style="width:160px" headerText="Tipo Alerta">
+                            <h:outputText value="#{vAlertas.nom_tip_ale}" />
+                        </p:column>         
+                        <p:column style="width:40px" headerText="Aviso">
+                            <h:outputText value="#{vAlertas.aviso}" />
                         </p:column>
-                        <p:column style="width:80px" headerText="condision">
-                            <h:outputText value="#{vAlertas.camp_ctrl}" />
-                        </p:column>
-                        <p:column style="width:50px" headerText="estado">
-                            <h:outputText value="#{vAlertas.id_estado}" />
+                        <p:column style="width:40px" headerText="Recordar">
+                            <h:outputText value="#{vAlertas.recordatorio}" />
                         </p:column>
                     </p:dataTable>
                 </div>

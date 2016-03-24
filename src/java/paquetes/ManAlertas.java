@@ -24,11 +24,12 @@ public class ManAlertas implements Serializable {
     private List<CatAlertas> alertas;
     private CatDepartamentos catdepartamentos;
     private List<CatDepartamentos> departamentos;
+    private List<CatTiposAlertas> tiposalertas;
     private CatUsuarios catusuarios;
     private List<CatUsuarios> usuarios;
     private List<CatUsuarios> usuariosel;
     
-    private String id_ale, cod_dep, tabla_ctrl, camp_ctrl, camp_ref, alerta, aviso, recordatorio, id_estado;
+    private String id_ale, cod_dep, id_tip_ale, aviso, recordatorio, id_estado;
     private String id_ale_usu, cod_usu;
 
     public ManAlertas() {
@@ -66,6 +67,15 @@ public class ManAlertas implements Serializable {
     public void setDepartamentos(List<CatDepartamentos> departamentos) {
         this.departamentos = departamentos;
     }
+
+    public List<CatTiposAlertas> getTiposalertas() {
+        return tiposalertas;
+    }
+
+    public void setTiposalertas(List<CatTiposAlertas> tiposalertas) {
+        this.tiposalertas = tiposalertas;
+    }
+    
 
     public CatUsuarios getCatusuarios() {
         return catusuarios;
@@ -105,39 +115,14 @@ public class ManAlertas implements Serializable {
         this.id_ale = id_ale;
     }
 
-    
-    public String getTabla_ctrl() {
-        return tabla_ctrl;
+    public String getId_tip_ale() {
+        return id_tip_ale;
     }
 
-    public void setTabla_ctrl(String tabla_ctrl) {
-        this.tabla_ctrl = tabla_ctrl;
+    public void setId_tip_ale(String id_tip_ale) {
+        this.id_tip_ale = id_tip_ale;
     }
-
-    public String getCamp_ctrl() {
-        return camp_ctrl;
-    }
-
-    public void setCamp_ctrl(String camp_ctrl) {
-        this.camp_ctrl = camp_ctrl;
-    }
-
-    public String getCamp_ref() {
-        return camp_ref;
-    }
-
-    public void setCamp_ref(String camp_ref) {
-        this.camp_ref = camp_ref;
-    }
-    
-    public String getAlerta() {
-        return alerta;
-    }
-
-    public void setAlerta(String alerta) {
-        this.alerta = alerta;
-    }
-
+  
     public String getAviso() {
         return aviso;
     }
@@ -189,10 +174,7 @@ public class ManAlertas implements Serializable {
     public void iniciarventana() {
         id_ale = "";
         cod_dep = ""; 
-        tabla_ctrl = "";
-        camp_ctrl = "";
-        camp_ref = "";
-        alerta = "";
+        id_tip_ale = "";
         aviso = "";
         recordatorio = "";
         id_estado = "";
@@ -200,16 +182,14 @@ public class ManAlertas implements Serializable {
         cod_usu = "";
         llenarAlertas();
         llenarDepartamentos();
+        llenarTiposAlertas();
         llenarUsuarios();
     }
 
     public void cerrarventana() {
         id_ale = "";
         cod_dep = ""; 
-        tabla_ctrl = "";
-        camp_ctrl = "";
-        camp_ref = "";
-        alerta = "";
+        id_tip_ale = "";
         aviso = "";
         recordatorio = "";
         id_estado = "";
@@ -235,6 +215,31 @@ public class ManAlertas implements Serializable {
                         resVariable.getString(1),
                         resVariable.getString(2),
                         resVariable.getString(3)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Catálogo de Departamentos. " + e.getMessage());
+        }
+    }
+    
+    public void llenarTiposAlertas() {
+        try {
+            
+            tiposalertas = new ArrayList<>();
+
+            String mQuery = "select id_tip_ale, nom_tip_ale "
+                    + "from cat_tip_ale order by id_tip_ale;";
+            
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                tiposalertas.add(new CatTiposAlertas(
+                        resVariable.getString(1),
+                        resVariable.getString(2)
                 ));
             }
             mAccesos.Desconectar();
@@ -330,8 +335,9 @@ public class ManAlertas implements Serializable {
             catalertas = new CatAlertas();
             alertas = new ArrayList<>();
 
-            mQuery = "select ale.id_ale, ale.cod_dep, ale.tabla_ctrl, ale.camp_ctrl, ale.camp_ref, ale.alerta, ale.aviso, ale.recordatorio, ale.id_estado, dep.nom_dep "
-                    +"from cat_ale ale inner join cat_dep dep on ale.cod_dep = dep.cod_dep order by ale.id_ale;";
+            mQuery = "select ale.id_ale, ale.cod_dep, ale.id_tip_ale, ale.aviso, ale.recordatorio, ale.id_estado, dep.nom_dep, tip.nom_tip_ale "
+                    +"from cat_ale ale inner join cat_dep dep on ale.cod_dep = dep.cod_dep "
+                    + "inner join cat_tip_ale tip on ale.id_tip_ale = tip.id_tip_ale order by ale.id_ale;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -345,9 +351,7 @@ public class ManAlertas implements Serializable {
                         resVariable.getString(5),
                         resVariable.getString(6),
                         resVariable.getString(7),
-                        resVariable.getString(8),
-                        resVariable.getString(9),
-                        resVariable.getString(10)
+                        resVariable.getString(8)
                 ));
             }
             mAccesos.Desconectar();
@@ -360,10 +364,7 @@ public class ManAlertas implements Serializable {
     public void nuevo() {
         id_ale = "";
         cod_dep = ""; 
-        tabla_ctrl = "";
-        camp_ctrl = "";
-        camp_ref = "";
-        alerta = "";
+        id_tip_ale = "";
         aviso = "";
         recordatorio = "";
         id_estado = "";
@@ -384,20 +385,16 @@ public class ManAlertas implements Serializable {
                 if ("".equals(id_ale)) {
                     mQuery = "select ifnull(max(id_ale),0)+1 as codigo from cat_ale;";
                     id_ale = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into cat_ale (id_ale, cod_dep, tabla_ctrl, camp_ctrl, camp_ref, alerta, aviso, recordatorio, id_estado) "
-                            + "values (" + id_ale + ",'" + cod_dep + "','"+ tabla_ctrl + "','" + camp_ctrl + "','"+ camp_ref + "','" + alerta + "','" + aviso + "','" + recordatorio + "','" + id_estado + "');";
+                    mQuery = "insert into cat_ale (id_ale, cod_dep, id_tip_ale, aviso, recordatorio, id_estado) "
+                            + "values (" + id_ale + ",'" + cod_dep + "'," + id_tip_ale + ", " + aviso + ", " + recordatorio + "," + id_estado + ");";
                 } else {
                     mQuery = "update cat_ale SET "
                             + " cod_dep = '" + cod_dep + "', "
-                            + " tabla_ctrl = '" + tabla_ctrl + "', "
-                            + " camp_ctrl = '" + camp_ctrl + "', "
-                            + " camp_ref = '" + camp_ref + "', "
-                            + " alerta = '" + alerta + "', "
-                            + " aviso = '" + aviso + "', "
-                            + " recordatorio = '" + recordatorio + "', "
-                            + " id_estado = '" + id_estado + "' "
+                            + " id_tip_ale = " + id_tip_ale + ", "
+                            + " aviso = " + aviso + ", "
+                            + " recordatorio = " + recordatorio + ", "
+                            + " id_estado = " + id_estado + " "
                             + "WHERE id_ale = " + id_ale + ";";
-
                 }
                 mAccesos.dmlSQLvariable(mQuery);
                                
@@ -462,24 +459,9 @@ public class ManAlertas implements Serializable {
             addMessage("Validar Datos", "Debe Ingresar un Departamento.", 2);
         }
         
-        if ("".equals(tabla_ctrl) == true) {
+        if ("".equals(id_tip_ale) == true) {
             mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar una tabla a controlar.", 2);
-        }
-
-        if ("".equals(camp_ctrl) == true) {
-            mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar una campo fecha a controlar.", 2);
-        }
-        
-        if ("".equals(camp_ctrl) == true) {
-            mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar una campo de referencia controlar.", 2);
-        }
-        
-        if ("".equals(alerta) == true) {
-            mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un periodo de tiempo para recordar la alerta.", 2);
+            addMessage("Validar Datos", "Debe Ingresar un tipo de alerta.", 2);
         }
         
         if ("".equals(aviso)) {
@@ -489,8 +471,7 @@ public class ManAlertas implements Serializable {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar una numero valido de dias para el aviso.", 2);
         }
-        
-        
+
         if ("".equals(recordatorio)) {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar una Cantidad de dias en el periodo para recordatorio mayor que Cero.", 2);
@@ -506,10 +487,7 @@ public class ManAlertas implements Serializable {
     public void onRowSelect(SelectEvent event) {
         id_ale = ((CatAlertas) event.getObject()).getId_ale();
         cod_dep = ((CatAlertas) event.getObject()).getCod_dep();
-        tabla_ctrl = ((CatAlertas) event.getObject()).getTabla_ctrl();
-        camp_ctrl = ((CatAlertas) event.getObject()).getCamp_ctrl();
-        camp_ref = ((CatAlertas) event.getObject()).getCamp_ref();
-        alerta = ((CatAlertas) event.getObject()).getAlerta();
+        id_tip_ale = ((CatAlertas) event.getObject()).getId_tip_ale();
         aviso = ((CatAlertas) event.getObject()).getAviso();
         recordatorio = ((CatAlertas) event.getObject()).getRecordatorio();
         id_estado = ((CatAlertas) event.getObject()).getId_estado();

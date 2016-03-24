@@ -5,22 +5,20 @@ import java.io.Serializable;
 
 public class CatAlertas implements Serializable{
     
-    private String id_ale, cod_dep, tabla_ctrl, camp_ctrl, camp_ref, alerta, aviso, recordatorio, id_estado, nom_dep;
+    private String id_ale, cod_dep, id_tip_ale, aviso, recordatorio, id_estado, nom_dep, nom_tip_ale;
 
     public CatAlertas() {
     }
 
-    public CatAlertas(String id_ale, String cod_dep, String tabla_ctrl, String camp_ctrl, String camp_ref, String alerta, String aviso, String recordatorio, String id_estado, String nom_dep) {
+    public CatAlertas(String id_ale, String cod_dep, String id_tip_ale, String aviso, String recordatorio, String id_estado, String nom_dep, String nom_tip_ale) {
         this.id_ale = id_ale;
         this.cod_dep = cod_dep;
-        this.tabla_ctrl = tabla_ctrl;
-        this.camp_ctrl = camp_ctrl;
-        this.camp_ref = camp_ref;
-        this.alerta = alerta;
+        this.id_tip_ale = id_tip_ale;
         this.aviso = aviso;
         this.recordatorio = recordatorio;
         this.id_estado = id_estado;
         this.nom_dep = nom_dep;
+        this.nom_tip_ale = nom_tip_ale;
     }
 
     public String getId_ale() {
@@ -39,28 +37,12 @@ public class CatAlertas implements Serializable{
         this.cod_dep = cod_dep;
     }
 
-    public String getTabla_ctrl() {
-        return tabla_ctrl;
+    public String getId_tip_ale() {
+        return id_tip_ale;
     }
 
-    public void setTabla_ctrl(String tabla_ctrl) {
-        this.tabla_ctrl = tabla_ctrl;
-    }
-
-    public String getCamp_ctrl() {
-        return camp_ctrl;
-    }
-
-    public void setCamp_ctrl(String camp_ctrl) {
-        this.camp_ctrl = camp_ctrl;
-    }
-
-    public String getAlerta() {
-        return alerta;
-    }
-
-    public void setAlerta(String alerta) {
-        this.alerta = alerta;
+    public void setId_tip_ale(String id_tip_ale) {
+        this.id_tip_ale = id_tip_ale;
     }
 
     public String getAviso() {
@@ -95,11 +77,13 @@ public class CatAlertas implements Serializable{
         this.nom_dep = nom_dep;
     }
 
-    public String getCamp_ref() {
-        return camp_ref;
+    public String getNom_tip_ale() {
+        return nom_tip_ale;
     }
 
-    public void setCamp_ref(String camp_ref) {
-        this.camp_ref = camp_ref;
-    }   
+    public void setNom_tip_ale(String nom_tip_ale) {
+        this.nom_tip_ale = nom_tip_ale;
+    }
+    
+    
 }

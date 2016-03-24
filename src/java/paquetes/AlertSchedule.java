@@ -67,8 +67,9 @@ public class AlertSchedule {
                 String mQuery="";
                 
                 try {
+                    logale = new ArrayList<>();
                     //String pri= mAccesos.dmlPrimaryvariable(ale.getTabla_ctrl());
-                    mQuery ="SELECT "+ale.getCamp_ctrl()+" FROM "+ ale.getTabla_ctrl();
+                    mQuery ="SELECT * FROM cat_ale;";
                     ResultSet resVariable;
                     Accesos mAccesos = new Accesos();
                     mAccesos.Conectar();
@@ -153,27 +154,27 @@ public class AlertSchedule {
         
         try {
             
-            mQuery = "SELECT  id_ale, cod_dep, tabla_ctrl, camp_ctrl, camp_ref, alerta, aviso, recordatorio, id_estado "
-                    + " FROM ipsa.cat_ale;";
+            alertas = new ArrayList<>();
             
+            mQuery = "select ale.id_ale, ale.cod_dep, ale.id_tip_ale, ale.aviso, ale.recordatorio, ale.id_estado, dep.nom_dep, tip.nom_tip_ale "
+                    +"from cat_ale ale inner join cat_dep dep on ale.cod_dep = dep.cod_dep "
+                    + "inner join cat_tip_ale tip on ale.id_tip_ale = tip.id_tip_ale order by ale.id_ale;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
             resVariable = mAccesos.querySQLvariable(mQuery);
             while (resVariable.next()) {
                 alertas.add(new CatAlertas(
-                resVariable.getString(1),
-                resVariable.getString(2),
-                resVariable.getString(3),
-                resVariable.getString(4),
-                resVariable.getString(5),
-                resVariable.getString(6),
-                resVariable.getString(7),
-                resVariable.getString(8),
-                resVariable.getString(9),
-                resVariable.getString(10)
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8)
                 ));
-            }            
+            }
             mAccesos.Desconectar();
 
         } catch (Exception e) {
