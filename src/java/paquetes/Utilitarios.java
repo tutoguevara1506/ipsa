@@ -1,6 +1,8 @@
 package paquetes;
 
 import java.sql.*;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class Utilitarios extends Conexion {
 
@@ -15,5 +17,19 @@ public class Utilitarios extends Conexion {
     		return false;
     	}
     }
+    
+    public java.sql.Date sumarFechas(java.sql.Date fch, int dias){ 
+        Calendar cal = new GregorianCalendar(); 
+        cal.setTimeInMillis(fch.getTime()); 
+        cal.add(Calendar.DATE, dias); 
+        return new Date(cal.getTimeInMillis()); 
+    } 
+
+   public java.sql.Date restarFechas(java.sql.Date fch, int dias){ 
+     Calendar cal = new GregorianCalendar(); 
+     cal.setTimeInMillis(fch.getTime()); 
+     cal.add(Calendar.DATE, - dias); 
+     return new Date(cal.getTimeInMillis()); 
+   }  
   
 }

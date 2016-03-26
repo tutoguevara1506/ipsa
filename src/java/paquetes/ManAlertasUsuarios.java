@@ -85,7 +85,9 @@ public class ManAlertasUsuarios implements Serializable {
             catalertasusu = new CatAlertasUsuarios();
             alertasusu = new ArrayList<>();
 
-            mQuery = "select id_ale_usu, id_ale, cod_usu, nom_usu order by id_ale_usu;";
+            mQuery = "select aleusu.id_ale_usu, aleusu.id_ale, aleusu.cod_usu, usu.nom_usu, per.mail from "
+                    + "cat_ale_usu aleusu inner join cat_usu usu on aleusu.cod_usu = usu.cod_usu "
+                    + "inner join  cat_persona per on usu.cod_usu = per.cod_usu order by id_ale_usu;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -95,7 +97,8 @@ public class ManAlertasUsuarios implements Serializable {
                         resVariable.getString(1),
                         resVariable.getString(2),
                         resVariable.getString(3),
-                        resVariable.getString(4)
+                        resVariable.getString(4),
+                        resVariable.getString(5)
                 ));
             }
             mAccesos.Desconectar();

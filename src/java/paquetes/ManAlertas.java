@@ -415,7 +415,7 @@ public class ManAlertas implements Serializable {
                     }
                     
                     mAccesos.dmlSQLvariable(mQuery2);
-                    System.out.println(usadd.getCod_usu());
+                   // System.out.println(usadd.getCod_usu());
                 });            
                 
                 mAccesos.Desconectar();

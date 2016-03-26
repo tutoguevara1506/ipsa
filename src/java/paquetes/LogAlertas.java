@@ -5,18 +5,17 @@ import java.io.Serializable;
 
 public class LogAlertas implements Serializable{
     
-    private String id_log_ale, fec_ale, cod_lis_equ, ale_des, tip_ale, ale_destino;
+    private String id_log_ale, fec_ale, id_tip_ale, ale_des, nom_tip_ale;
 
     public LogAlertas() {
     }
 
-    public LogAlertas(String id_log_ale, String fec_ale, String cod_lis_equ, String ale_des, String tip_ale, String ale_destino) {
+    public LogAlertas(String id_log_ale, String fec_ale, String id_tip_ale, String ale_des, String nom_tip_ale) {
         this.id_log_ale = id_log_ale;
         this.fec_ale = fec_ale;
-        this.cod_lis_equ = cod_lis_equ;
+        this.id_tip_ale = id_tip_ale;
         this.ale_des = ale_des;
-        this.tip_ale = tip_ale;
-        this.ale_destino = ale_destino;
+        this.nom_tip_ale = nom_tip_ale;
     }
 
     public String getId_log_ale() {
@@ -35,12 +34,12 @@ public class LogAlertas implements Serializable{
         this.fec_ale = fec_ale;
     }
 
-    public String getCod_lis_equ() {
-        return cod_lis_equ;
+    public String getId_tip_ale() {
+        return id_tip_ale;
     }
 
-    public void setCod_lis_equ(String cod_lis_equ) {
-        this.cod_lis_equ = cod_lis_equ;
+    public void setId_tip_ale(String id_tip_ale) {
+        this.id_tip_ale = id_tip_ale;
     }
 
     public String getAle_des() {
@@ -51,20 +50,11 @@ public class LogAlertas implements Serializable{
         this.ale_des = ale_des;
     }
 
-    public String getTip_ale() {
-        return tip_ale;
+    public String getNom_tip_ale() {
+        return nom_tip_ale;
     }
 
-    public void setTip_ale(String tip_ale) {
-        this.tip_ale = tip_ale;
-    }
-
-    public String getAle_destino() {
-        return ale_destino;
-    }
-
-    public void setAle_destino(String ale_destino) {
-        this.ale_destino = ale_destino;
-    }
-    
+    public void setNom_tip_ale(String nom_tip_ale) {
+        this.nom_tip_ale = nom_tip_ale;
+    }    
 }
