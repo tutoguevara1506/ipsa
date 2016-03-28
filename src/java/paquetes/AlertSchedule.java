@@ -5,7 +5,6 @@
  */
 package paquetes;
 
-import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,8 +29,8 @@ public class AlertSchedule {
     private List<CatAlertas> alertas;
     private CatAlertasUsuarios catalertasusuarios;
     private List<CatAlertasUsuarios> alertasusuarios;
-    private CatMantenimientos catmantenimientos;
-    private List<CatMantenimientos> mantenimientos;
+    
+    private List<CatCalendario> listaMttosPre;
     private LogAlertas logalertas;
     private List<LogAlertas> logale;
     private String id_log_ale, fec_ale, id_tip_ale,  ale_des;
@@ -39,13 +38,12 @@ public class AlertSchedule {
     
     private final Logger log = Logger.getLogger(getClass().getName());
     private String hostname, smtp_port, user, pass, remitente;
-    Email email = new SimpleEmail();
     Calendar calendar =Calendar.getInstance(); //obtiene la fecha de hoy 
 
     
         
-   // @Schedule(hour = "8", dayOfWeek = "*", info = "Todos los dias a las 8:00 a.m.")
-    @Schedule(second = "*", minute = "*/10", hour = "*", persistent= true, info = "cada 2 minutos")
+    @Schedule(hour = "8", dayOfWeek = "*", info = "Todos los dias a las 8:00 a.m.")
+    //@Schedule(second = "*", minute = "*/10", hour = "*", persistent= true, info = "cada 2 minutos")
 
     public void performTask() throws EmailException {
 
@@ -61,12 +59,6 @@ public class AlertSchedule {
             //email.setStartTLSEnabled(true);
             //email.setStartTLSRequired(true);
             
-            email.setHostName(this.hostname);
-            email.setSmtpPort(Integer.parseInt(this.smtp_port));
-            email.setAuthenticator(new DefaultAuthenticator(this.user, this.pass));
-            email.setSSLOnConnect(true);
-            email.setFrom(this.remitente);
-
             obtenerAlertas();
                         
             // Luego de obtener las alertas las recorremos para conformar cada uno de los selects de validacion
@@ -75,13 +67,18 @@ public class AlertSchedule {
                 llenarAlertasUsuarios(ale.getId_ale());
                 verificarPorTipoAlerta(ale);
                 
-                logale.stream().forEach((logAlerta) ->{
+                logale.stream().forEach((lgal) ->{
                     
                     try {
-                        
+                        Email email = new SimpleEmail();
+                        email.setHostName(this.hostname);
+                        email.setSmtpPort(Integer.parseInt(this.smtp_port));
+                        email.setAuthenticator(new DefaultAuthenticator(this.user, this.pass));
+                        email.setSSLOnConnect(true);
+                        email.setFrom(this.remitente);
                         //String[] recipients = {"rramirezech@hotmail.com", "rramirezech@outlook.com", "rramirezech@gmail.com"};
-                        email.setSubject(logAlerta.getNom_tip_ale());
-                        email.setMsg(logAlerta.getAle_des());
+                        email.setSubject(lgal.getNom_tip_ale());
+                        email.setMsg(lgal.getAle_des());
                         
                         alertasusuarios.stream().forEach((mailDestino) ->{
                             try {
@@ -98,18 +95,17 @@ public class AlertSchedule {
                     }
                 });
                 
-            });
-                
-     } 
+            });                
+        } 
         catch (Exception e) {
             log.error("Error en la tarea programada");
             log.info(e);
-
-            long time = System.currentTimeMillis();
-            time = System.currentTimeMillis() - timeInit;
-            log.info(":. Fin tarea programada. Tiempo de proceso = " + time);
-
         }
+        
+        long time = System.currentTimeMillis();
+        time = System.currentTimeMillis() - timeInit;
+        log.info(":. Fin tarea programada. Tiempo de proceso = " + time);   
+        
     }
     
     public void ConfiguracionMail() {
@@ -178,17 +174,18 @@ public class AlertSchedule {
  
             case "1":       // Mantenimientos Preventivos
                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                llenarMantenimientos(ale);
+                llenarMttosPreventivos(ale);
                 Date hoy = calendar.getTime();
+                logale = new ArrayList<>();
                 
-                mantenimientos.stream().forEach((mtto) -> {
+                listaMttosPre.stream().forEach((mtto) -> {
                     String mQuery = "";
                     id_log_ale="";
                     fec_ale = format.format(hoy);                    
                     id_tip_ale = ale.getId_tip_ale();
-                    ale_des = "Faltan " + ale.getAviso() + "para realizar el mantenimiento preventivo del "
-                            + "equipo "+ mtto.getCod_lis_equ();
-                    logale = new ArrayList<>();
+                    ale_des = "Faltan " + ale.getAviso() + " dias para realizar el mantenimiento preventivo del "
+                            + "equipo "+ mtto.getDes_equ();
+                    
                     
                     try {
                             Accesos mAccesos = new Accesos();
@@ -289,74 +286,52 @@ public class AlertSchedule {
         }
     }
     
-    public void llenarMantenimientos(CatAlertas ale) {
+    public void llenarMttosPreventivos(CatAlertas ale) {
         String mQuery = "";
         
         try {
             
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            catmantenimientos = new CatMantenimientos();
-            mantenimientos = new ArrayList<>();
-            calendar.roll(Calendar.DATE, Integer.parseInt(ale.getAviso())); //el -3 indica que se le restaran 3 dias 
+            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+            
+            listaMttosPre = new ArrayList<>();
+            calendar.roll(Calendar.DATE, Integer.parseInt(ale.getAviso())); // roll resta dias add suma 
             Date fech = calendar.getTime();
-                        
-            mQuery = "select "
-                   + "mm.cod_lis_equ, "
-                   + "mm.cod_man, "
-                   + "mm.cod_tip, "
-                   + "mm.det_obs, "
-                   + "date_format(mm.fec_ini,'%d/%m/%Y %H:%i'), "
-                   + "date_format(mm.fec_fin,'%d/%m/%Y %H:%i'), "
-                   + "mm.det_sta, "
-                   + "mm.cod_usu,"
-                   + "tip.nom_tip,"
-                   + "mm.det_sta, "
-                   + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<2,0,(TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))) as dr,"
-                   + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=2,'yellow','red')) as color,"
-                   + "mm.cod_per, "
-                   + "per.nom_per,"
-                   + "mm.flg_ext,mm.cod_sup, mm.turno, mm.cod_pri, mm.cod_dep "
-                   + "from tbl_mae_man as mm "
-                   + "left join cat_tip as tip on mm.cod_tip = tip.cod_tip "
-                   + "left join cat_per as per on mm.cod_per = per.cod_per "
-                   + "where "
-                   + "mm.det_sta IN (1,3) "
-                   + "and mm.fec_ini >=" + format.format(fech) + " "
-                   + "order by mm.cod_man;";
+            Date hoy = new Date();
             
-                ResultSet resVariable;
-                Accesos mAccesos = new Accesos();
-                mAccesos.Conectar();
-
-                resVariable = mAccesos.querySQLvariable(mQuery);
-                while (resVariable.next()) {
-                    mantenimientos.add(new CatMantenimientos(
-                            resVariable.getString(1),
-                            resVariable.getString(2),
-                            resVariable.getString(3),
-                            resVariable.getString(4),
-                            resVariable.getString(5),
-                            resVariable.getString(6),
-                            resVariable.getString(7),
-                            resVariable.getString(8),
-                            resVariable.getString(9),
-                            resVariable.getString(10),
-                            resVariable.getString(11),
-                            resVariable.getString(12),
-                            resVariable.getString(13),
-                            resVariable.getString(14),
-                            resVariable.getString(15),
-                            resVariable.getString(16),
-                            resVariable.getString(17),
-                            resVariable.getString(18),
-                            resVariable.getString(19)
-                    ));
-
-                }
-                mAccesos.Desconectar();
             
+            listaMttosPre = new ArrayList<>();
+
+            mQuery = " select tbl_mae_man.cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, des_equ, "
+                     + "if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=2,'yellow','red')) as color,"
+                    + " week(fec_ini,1) as semana "
+                    + " from tbl_mae_man inner join lis_equ on "
+                    + " tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ "
+                    + " where cod_tip = 1 AND "
+                    + " det_sta IN (1,3) AND fec_ini >= '" + format.format(fech) + "' AND fec_ini <= '" + format.format(hoy) + "' order by cod_man;";
+
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                listaMttosPre.add(new CatCalendario(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getDate(5),
+                        resVariable.getDate(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10),
+                        resVariable.getString(11)
+                ));
+            }
+            mAccesos.Desconectar();
+
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Mantenimientos en AlertSchedule. " + e.getMessage() + " Query: " + mQuery);
+            System.out.println("Error en el llenado de Calendarización. " + e.getMessage() + " Query: " + mQuery);
         }
     }
     
@@ -509,30 +484,6 @@ public class AlertSchedule {
 
     public void setId_tip_ale(String id_tip_ale) {
         this.id_tip_ale = id_tip_ale;
-    }
-
-    public CatMantenimientos getCatmantenimientos() {
-        return catmantenimientos;
-    }
-
-    public void setCatmantenimientos(CatMantenimientos catmantenimientos) {
-        this.catmantenimientos = catmantenimientos;
-    }
-
-    public List<CatMantenimientos> getMantenimientos() {
-        return mantenimientos;
-    }
-
-    public void setMantenimientos(List<CatMantenimientos> mantenimientos) {
-        this.mantenimientos = mantenimientos;
-    }
-
-    public Email getEmail() {
-        return email;
-    }
-
-    public void setEmail(Email email) {
-        this.email = email;
     }
 
     public Calendar getCalendar() {
