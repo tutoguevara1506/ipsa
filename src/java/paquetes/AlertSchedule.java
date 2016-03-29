@@ -259,35 +259,6 @@ public class AlertSchedule {
         }
     }
     
-    public void llenarLogAlertas() {
-        String mQuery = "";
-        try {
-            
-            logale = new ArrayList<>();
-
-            mQuery = "select lale.id_log_ale, lale.fec_ale, lale.id_tip_ale, lale.ale_des, tip.nom_ale from log_ale lale "
-                    + "inner join cat_tip_ale tip  on lale.id_tip_ale = tip.id_tip_ale order by id_ale_usu;";
-            
-            ResultSet resVariable;
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            resVariable = mAccesos.querySQLvariable(mQuery);
-            while (resVariable.next()) {
-                logale.add(new LogAlertas(
-                        resVariable.getString(1),
-                        resVariable.getString(2),
-                        resVariable.getString(3),
-                        resVariable.getString(4),
-                        resVariable.getString(5)
-                ));
-            }
-            mAccesos.Desconectar();
-
-        } catch (Exception e) {
-            System.out.println("Error en el registro de log de alertas. " + e.getMessage() + " Query: " + mQuery);
-        }
-    }
-    
     public void llenarMttosPreventivos(CatAlertas ale) {
         String mQuery = "";
         

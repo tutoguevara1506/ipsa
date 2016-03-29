@@ -28,6 +28,8 @@ public class ManAlertas implements Serializable {
     private CatUsuarios catusuarios;
     private List<CatUsuarios> usuarios;
     private List<CatUsuarios> usuariosel;
+    private LogAlertas logalertas;
+    private List<LogAlertas> logale;
     
     private String id_ale, cod_dep, id_tip_ale, aviso, recordatorio, id_estado;
     private String id_ale_usu, cod_usu;
@@ -38,6 +40,7 @@ public class ManAlertas implements Serializable {
     @PostConstruct
     public void init() {
         usuariosel = new ArrayList<CatUsuarios>();
+        llenarLogAlertas();        
     }
     
     public CatAlertas getCatalertas() {
@@ -171,6 +174,22 @@ public class ManAlertas implements Serializable {
         this.cod_usu = cod_usu;
     }
 
+    public List<LogAlertas> getLogale() {
+        return logale;
+    }
+
+    public void setLogale(List<LogAlertas> logale) {
+        this.logale = logale;
+    }
+
+    public LogAlertas getLogalertas() {
+        return logalertas;
+    }
+
+    public void setLogalertas(LogAlertas logalertas) {
+        this.logalertas = logalertas;
+    }
+        
     public void iniciarventana() {
         id_ale = "";
         cod_dep = ""; 
@@ -358,6 +377,37 @@ public class ManAlertas implements Serializable {
 
         } catch (Exception e) {
             System.out.println("Error en el registro de alertas. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+    
+    public void llenarLogAlertas() {
+        String mQuery = "";
+        try {
+            
+            logalertas = new LogAlertas();
+            logale = new ArrayList<>();
+
+            mQuery = "SELECT lale.id_log_ale, lale.fec_ale, lale.id_tip_ale, lale.ale_des, tip.nom_tip_ale "
+                    + "FROM log_ale lale INNER JOIN cat_tip_ale tip  ON lale.id_tip_ale = tip.id_tip_ale "
+                    + "order by lale.fec_ale desc;";
+            
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                logale.add(new LogAlertas(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el registro de log de alertas. " + e.getMessage() + " Query: " + mQuery);
         }
     }
 
