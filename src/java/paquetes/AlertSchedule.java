@@ -33,7 +33,7 @@ public class AlertSchedule {
     private List<CatCalendario> listaMttosPre;
     private LogAlertas logalertas;
     private List<LogAlertas> logale;
-    private String id_log_ale, fec_ale, id_tip_ale,  ale_des, nom_tip_ale;   
+    private String id_log_ale, fec_ale, id_tip_ale,  ale_des, nom_tip_ale, id_ale;   
     
     private final Logger log = Logger.getLogger(getClass().getName());
     private String hostname, smtp_port, user, pass, remitente;
@@ -41,8 +41,8 @@ public class AlertSchedule {
 
     
         
-    @Schedule(hour = "8", dayOfWeek = "*", info = "Todos los dias a las 8:00 a.m.")
-    //@Schedule(second = "*", minute = "*/10", hour = "*", persistent= true, info = "cada 10 minutos")
+    //@Schedule(hour = "8", dayOfWeek = "*", info = "Todos los dias a las 8:00 a.m.")
+    @Schedule(second = "*", minute = "*/10", hour = "*", persistent= true, info = "cada 10 minutos")
 
     public void performTask() throws EmailException {
 
@@ -59,9 +59,11 @@ public class AlertSchedule {
             // Luego de obtener las alertas las recorremos para conformar cada uno de los selects de validacion
             alertas.stream().forEach((ale) -> {
                 
+                id_ale = ale.getId_ale();
                 llenarAlertasUsuarios(ale.getId_ale());
                 verificarPorTipoAlerta(ale);
                 nom_tip_ale = ale.getNom_tip_ale();
+                
                 
                 logale.stream().forEach((lgal) ->{
                     
@@ -314,8 +316,8 @@ public class AlertSchedule {
             try {
                 Accesos mAccesos = new Accesos();
                 mAccesos.Conectar();
-                mQuery = "insert into log_ale (id_log_ale, fec_ale, id_tip_ale, ale_des) "
-                            + "values (" + id_log_ale + ", str_to_date('" +fec_ale+ "', '%d/%m/%Y %H:%i')," + id_tip_ale + ",'"+ale_des+"');";
+                mQuery = "insert into log_ale (id_log_ale, fec_ale, id_tip_ale, ale_des, id_ale) "
+                            + "values (" + id_log_ale + ", str_to_date('" +fec_ale+ "', '%d/%m/%Y %H:%i')," + id_tip_ale + ",'"+ale_des+"', "+id_ale+");";
                 mAccesos.dmlSQLvariable(mQuery);
                 mAccesos.Desconectar();
                 
@@ -473,6 +475,22 @@ public class AlertSchedule {
 
     public void setNom_tip_ale(String nom_tip_ale) {
         this.nom_tip_ale = nom_tip_ale;
+    }
+
+    public List<CatCalendario> getListaMttosPre() {
+        return listaMttosPre;
+    }
+
+    public void setListaMttosPre(List<CatCalendario> listaMttosPre) {
+        this.listaMttosPre = listaMttosPre;
+    }
+
+    public String getId_ale() {
+        return id_ale;
+    }
+
+    public void setId_ale(String id_ale) {
+        this.id_ale = id_ale;
     }
     
 }

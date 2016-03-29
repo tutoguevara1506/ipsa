@@ -387,9 +387,10 @@ public class ManAlertas implements Serializable {
             logalertas = new LogAlertas();
             logale = new ArrayList<>();
 
-            mQuery = "SELECT lale.id_log_ale, lale.fec_ale, lale.id_tip_ale, lale.ale_des, tip.nom_tip_ale "
-                    + "FROM log_ale lale INNER JOIN cat_tip_ale tip  ON lale.id_tip_ale = tip.id_tip_ale "
-                    + "order by lale.fec_ale desc;";
+            mQuery = "SELECT DISTINCT lale.id_log_ale, lale.fec_ale, lale.id_tip_ale, lale.ale_des, tip.nom_tip_ale "
+                    + "FROM log_ale lale INNER JOIN cat_tip_ale tip  ON lale.id_tip_ale = tip.id_tip_ale " 
+                    + "INNER JOIN cat_ale_usu usu ON usu.id_ale = lale.id_ale "
+                    + "WHERE usu.cod_usu ="+ cbean.getCod_usu() + " order by lale.fec_ale desc;";
             
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
