@@ -397,22 +397,19 @@ public class ManAlertas implements Serializable {
                             + "WHERE id_ale = " + id_ale + ";";
                 }
                 mAccesos.dmlSQLvariable(mQuery);
-                               
+                    
+                mQuery = "delete from cat_ale_usu where id_ale = "+ id_ale + ";";
+                mAccesos.dmlSQLvariable(mQuery);
+                
                 usuariosel.stream().forEach((usadd) -> {
                     String mQuery2="";
+                                        
+                    mQuery2 = "select ifnull(max(id_ale_usu),0)+1 as codigo from cat_ale_usu;";
+                    id_ale_usu = mAccesos.strQuerySQLvariable(mQuery2);
+                     cod_usu = usadd.getCod_usu();
                     
-                     if ("".equals(id_ale_usu)) {
-                        mQuery2 = "select ifnull(max(id_ale_usu),0)+1 as codigo from cat_ale_usu;";
-                        id_ale_usu = mAccesos.strQuerySQLvariable(mQuery2);
-                        cod_usu = usadd.getCod_usu();
-                    
-                        mQuery2 = "insert into cat_ale_usu (id_ale_usu, id_ale, cod_usu) "
-                            + "values (" + id_ale_usu + "," + id_ale + ","+ cod_usu + ");";
-                    } else {
-                        mQuery2 = "update cat_ale_usu SET "
-                            + " id_ale = " + id_ale + ", "
-                            + " cod_usu = " + cod_usu + " WHERE id_ale_usu = " + id_ale_usu + ";";
-                    }
+                    mQuery2 = "insert into cat_ale_usu (id_ale_usu, id_ale, cod_usu) "
+                    + "values (" + id_ale_usu + "," + id_ale + ","+ cod_usu + ");";
                     
                     mAccesos.dmlSQLvariable(mQuery2);
                    // System.out.println(usadd.getCod_usu());

@@ -33,8 +33,7 @@ public class AlertSchedule {
     private List<CatCalendario> listaMttosPre;
     private LogAlertas logalertas;
     private List<LogAlertas> logale;
-    private String id_log_ale, fec_ale, id_tip_ale,  ale_des;
-    //private String id_ale, cod_dep, id_tip_ale, aviso, recordatorio, id_estado, nom_dep, nom_tip_ale;
+    private String id_log_ale, fec_ale, id_tip_ale,  ale_des, nom_tip_ale;   
     
     private final Logger log = Logger.getLogger(getClass().getName());
     private String hostname, smtp_port, user, pass, remitente;
@@ -43,7 +42,7 @@ public class AlertSchedule {
     
         
     @Schedule(hour = "8", dayOfWeek = "*", info = "Todos los dias a las 8:00 a.m.")
-    //@Schedule(second = "*", minute = "*/10", hour = "*", persistent= true, info = "cada 2 minutos")
+    //@Schedule(second = "*", minute = "*/10", hour = "*", persistent= true, info = "cada 10 minutos")
 
     public void performTask() throws EmailException {
 
@@ -55,10 +54,6 @@ public class AlertSchedule {
         try {
             timeInit = System.currentTimeMillis();
                
-            // TLS agregado para server AWS
-            //email.setStartTLSEnabled(true);
-            //email.setStartTLSRequired(true);
-            
             obtenerAlertas();
                         
             // Luego de obtener las alertas las recorremos para conformar cada uno de los selects de validacion
@@ -66,6 +61,7 @@ public class AlertSchedule {
                 
                 llenarAlertasUsuarios(ale.getId_ale());
                 verificarPorTipoAlerta(ale);
+                nom_tip_ale = ale.getNom_tip_ale();
                 
                 logale.stream().forEach((lgal) ->{
                     
@@ -74,10 +70,13 @@ public class AlertSchedule {
                         email.setHostName(this.hostname);
                         email.setSmtpPort(Integer.parseInt(this.smtp_port));
                         email.setAuthenticator(new DefaultAuthenticator(this.user, this.pass));
+                        // TLS agregado para server AWS Se quita comentario a setSSL.
+                        //email.setStartTLSEnabled(true);
+                        //email.setStartTLSRequired(true);
+                        
                         email.setSSLOnConnect(true);
                         email.setFrom(this.remitente);
-                        //String[] recipients = {"rramirezech@hotmail.com", "rramirezech@outlook.com", "rramirezech@gmail.com"};
-                        email.setSubject(lgal.getNom_tip_ale());
+                        email.setSubject(nom_tip_ale);
                         email.setMsg(lgal.getAle_des());
                         
                         alertasusuarios.stream().forEach((mailDestino) ->{
@@ -94,7 +93,6 @@ public class AlertSchedule {
                         System.out.println("Error en la conformacion del correo. " + e.getMessage());                        
                     }
                 });
-                
             });                
         } 
         catch (Exception e) {
@@ -169,24 +167,29 @@ public class AlertSchedule {
     }
     
     public void verificarPorTipoAlerta(CatAlertas ale){
-               
+        
+        logale = new ArrayList<>();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date hoy = new Date();
+        
         switch (ale.getId_tip_ale()) {
  
             case "1":       // Mantenimientos Preventivos
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                llenarMttosPreventivos(ale);
-                Date hoy = calendar.getTime();
-                logale = new ArrayList<>();
                 
+                llenarMttosPreventivos(ale);              
+                                
                 listaMttosPre.stream().forEach((mtto) -> {
                     String mQuery = "";
                     id_log_ale="";
-                    fec_ale = format.format(hoy);                    
+                    fec_ale = format.format(hoy);
+                    final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
+                    long dias = (hoy.getTime() - mtto.getFec_ini().getTime())/MILLSECS_PER_DAY;
+                    
                     id_tip_ale = ale.getId_tip_ale();
-                    ale_des = "Faltan " + ale.getAviso() + " dias para realizar el mantenimiento preventivo del "
+                    ale_des = "Faltan " + dias + " dias para realizar el mantenimiento preventivo del "
                             + "equipo "+ mtto.getDes_equ();
                     
-                    
+                                        
                     try {
                             Accesos mAccesos = new Accesos();
                             mAccesos.Conectar();
@@ -196,15 +199,13 @@ public class AlertSchedule {
                     } catch (Exception e) {
                             System.out.println("Error al Guardar Alerta. " + e.getMessage() + " Query: " + mQuery);
                         }
-                    
-                    //System.out.println("desAlerta = "+ DesAlerta + "; fecha alerta= "+ fechaAlerta+"; tipoAlerta= "+tipoAlerta+"; tipoAlerta2= "+tipoAlerta2);
-                    
-                                    
+                                                        
                     logale.add(new LogAlertas(
                             id_log_ale,
                             fec_ale,
                             id_tip_ale,
-                            ale_des, ""
+                            ale_des, 
+                            nom_tip_ale
                     ));
                     
                     guardar();
@@ -214,7 +215,8 @@ public class AlertSchedule {
             break;
 
             case "2":       // Vida util de repuestos 
-                System.out.println("dos");
+                llenarMttosPreventivos(ale);
+                                
             break;
 
             case "3":       // Tiempo para adquisicion de repuestos
@@ -492,9 +494,14 @@ public class AlertSchedule {
 
     public void setCalendar(Calendar calendar) {
         this.calendar = calendar;
+    } 
+
+    public String getNom_tip_ale() {
+        return nom_tip_ale;
     }
-    
-    
-    
+
+    public void setNom_tip_ale(String nom_tip_ale) {
+        this.nom_tip_ale = nom_tip_ale;
+    }
     
 }
