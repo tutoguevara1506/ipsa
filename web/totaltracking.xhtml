@@ -387,8 +387,30 @@
                             <h:outputText value="Solicitudes pendientes"  />
                         </p:panel>
 
-                        <p:panel id="cargaPersonal" header="Alertas" closable="true">
-                            <h:outputText value="Ultimas alertas presentadas" />
+                        <p:panel id="dashAlertas" header="Alertas" closable="true">
+                                <p:dataTable id="dshAlert" var="vDaler" 
+                                     value="#{manAlertas.logale}" 
+                                     emptyMessage="No se encontraron resultados" 
+                                     selectionMode="single" selection="#{manAlertas.logalertas}" 
+                                     rowKey="#{vDaler.id_log_ale}"
+                                     editable="false" 
+                                     scrollable="true"
+                                     scrollHeight="80"
+                                     style="width:550px"
+                                     >
+                            <p:column style="width:30px" headerText="Id">
+                                <h:outputText value="#{vDaler.id_log_ale}" />
+                            </p:column>
+                            <p:column style="width:100px" headerText="Tipo Alerta">
+                                <h:outputText value="#{vDaler.nom_tip_ale}" />
+                            </p:column>
+                            <p:column style="width:60px" headerText="Fecha">
+                                <h:outputText value="#{vDaler.fec_ale}" />
+                            </p:column>
+                            <p:column style="width:180px" headerText="Descripcion">
+                                <h:outputText value="#{vDaler.ale_des}" />
+                            </p:column>
+                        </p:dataTable>
                         </p:panel>
                         
                     </p:dashboard>
