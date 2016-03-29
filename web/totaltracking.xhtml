@@ -229,7 +229,7 @@
                     <p:submenu label="Configuración" icon="ui-icon-folder-open">
                         <p:menuitem value="Cargos Personal" icon="ui-icon-contact" 
                                     onclick="PF('wCargo').show()"
-                                    style="width: 150px;"
+                                    style="width: 170px;"
                                     action="#{manCargos.iniciarventana()}" 
                                     update=":frmCargo"
                                     disabled="#{manSeguridad.disableOpt('menuCargos')}"
@@ -237,28 +237,28 @@
                         <p:menuitem value="Evaluaciones" icon="ui-icon-arrowreturnthick-1-s" 
                                     onclick="PF('wEval').show()"
                                     update=":frmEval"
-                                    style="width: 150px;"
+                                    style="width: 170px;"
                                     actionListener="#{manEvaluaciones.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuEvaluaciones')}"
                                     />
                         <p:menuitem value="Factores" icon="ui-icon-pin-s" 
                                     onclick="PF('wFacEval').show()"
                                     update=":frmFacEval"
-                                    style="width: 150px;"
+                                    style="width: 170px;"
                                     actionListener="#{manFactores.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuFactores')}"
                                     />
                         <p:menuitem value="Criterios" icon="ui-icon-pin-s" 
                                     onclick="PF('wCriEval').show()"
                                     update=":frmCriEval"
-                                    style="width: 150px;"
+                                    style="width: 170px;"
                                     actionListener="#{manCriterios.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuCriterios')}"
                                     />
                         <p:menuitem value="Configuracion Evaluacion" icon="ui-icon-pin-s" 
                                     onclick="PF('wDetEva').show()"
                                     update=":frmDetEva"
-                                    style="width: 150px;"
+                                    style="width: 170px;"
                                     actionListener="#{manEvaluacionDetalle.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuConfiguraEvaluacion')}"
                                     />
@@ -7133,6 +7133,7 @@
                         <p:selectOneMenu value="#{manEvaluacionDetalle.id_fac}" 
                                          style="width:455px;text-align:right;"
                                          immediate="false">  
+                            <p:ajax event="change" listener="#{manEvaluacionDetalle.llenarCriterios()}" update="somCritDetEva" />
                             <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                             <f:selectItems value="#{manEvaluacionDetalle.factores}" var="mfacdet"
                                            itemLabel="#{mfacdet.nom_fac}" itemValue="#{mfacdet.id_fac}"/>
@@ -7140,6 +7141,7 @@
                         <h:outputText value="Criterio" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manEvaluacionDetalle.id_cri}" 
                                          style="width:455px;text-align:right;"
+                                         id="somCritDetEva"
                                          immediate="false">  
                             <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                             <f:selectItems value="#{manEvaluacionDetalle.criterios}" var="mcridet"

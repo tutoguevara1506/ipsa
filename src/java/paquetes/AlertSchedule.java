@@ -41,8 +41,8 @@ public class AlertSchedule {
 
     
         
-    //@Schedule(hour = "8", dayOfWeek = "*", info = "Todos los dias a las 8:00 a.m.")
-    @Schedule(second = "*", minute = "*/10", hour = "*", persistent= true, info = "cada 10 minutos")
+    @Schedule(hour = "8", dayOfWeek = "*", info = "Todos los dias a las 8:00 a.m.")
+    //@Schedule(second = "*", minute = "*/10", hour = "*", persistent= true, info = "cada 10 minutos")
 
     public void performTask() throws EmailException {
 
