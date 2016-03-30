@@ -229,7 +229,7 @@
                     <p:submenu label="Configuración" icon="ui-icon-folder-open">
                         <p:menuitem value="Cargos Personal" icon="ui-icon-contact" 
                                     onclick="PF('wCargo').show()"
-                                    style="width: 150px;"
+                                    style="width: 170px;"
                                     action="#{manCargos.iniciarventana()}" 
                                     update=":frmCargo"
                                     disabled="#{manSeguridad.disableOpt('menuCargos')}"
@@ -237,28 +237,28 @@
                         <p:menuitem value="Evaluaciones" icon="ui-icon-arrowreturnthick-1-s" 
                                     onclick="PF('wEval').show()"
                                     update=":frmEval"
-                                    style="width: 150px;"
+                                    style="width: 170px;"
                                     actionListener="#{manEvaluaciones.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuEvaluaciones')}"
                                     />
                         <p:menuitem value="Factores" icon="ui-icon-pin-s" 
                                     onclick="PF('wFacEval').show()"
                                     update=":frmFacEval"
-                                    style="width: 150px;"
+                                    style="width: 170px;"
                                     actionListener="#{manFactores.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuFactores')}"
                                     />
                         <p:menuitem value="Criterios" icon="ui-icon-pin-s" 
                                     onclick="PF('wCriEval').show()"
                                     update=":frmCriEval"
-                                    style="width: 150px;"
+                                    style="width: 170px;"
                                     actionListener="#{manCriterios.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuCriterios')}"
                                     />
                         <p:menuitem value="Configuracion Evaluacion" icon="ui-icon-pin-s" 
                                     onclick="PF('wDetEva').show()"
                                     update=":frmDetEva"
-                                    style="width: 150px;"
+                                    style="width: 170px;"
                                     actionListener="#{manEvaluacionDetalle.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuConfiguraEvaluacion')}"
                                     />
@@ -387,8 +387,30 @@
                             <h:outputText value="Solicitudes pendientes"  />
                         </p:panel>
 
-                        <p:panel id="cargaPersonal" header="Alertas" closable="true">
-                            <h:outputText value="Ultimas alertas presentadas" />
+                        <p:panel id="dashAlertas" header="Alertas" closable="true">
+                                <p:dataTable id="dshAlert" var="vDaler" 
+                                     value="#{manAlertas.logale}" 
+                                     emptyMessage="No se encontraron resultados" 
+                                     selectionMode="single" selection="#{manAlertas.logalertas}" 
+                                     rowKey="#{vDaler.id_log_ale}"
+                                     editable="false" 
+                                     scrollable="true"
+                                     scrollHeight="80"
+                                     style="width:550px"
+                                     >
+                            <p:column style="width:30px" headerText="Id">
+                                <h:outputText value="#{vDaler.id_log_ale}" />
+                            </p:column>
+                            <p:column style="width:100px" headerText="Tipo Alerta">
+                                <h:outputText value="#{vDaler.nom_tip_ale}" />
+                            </p:column>
+                            <p:column style="width:60px" headerText="Fecha">
+                                <h:outputText value="#{vDaler.fec_ale}" />
+                            </p:column>
+                            <p:column style="width:180px" headerText="Descripcion">
+                                <h:outputText value="#{vDaler.ale_des}" />
+                            </p:column>
+                        </p:dataTable>
                         </p:panel>
                         
                     </p:dashboard>
@@ -4776,9 +4798,9 @@
 
                             <p:ajax event="rowSelect" listener="#{manMaestroMan.onRowSelectEnc}" update=":frmMaestra"/>
 
-                            <p:column style="width:10px" headerText="Id" filterBy="#{vEncMan.cod_man}" filterMatchMode="contains"  
+                            <p:column style="width:10px" headerText="Id" filterBy="#{vEncMan.cod_alt}" filterMatchMode="contains"  
                                       filterStyle="display:none; visibility:hidden;">
-                                <h:outputText value="#{vEncMan.cod_man}" />
+                                <h:outputText value="#{vEncMan.cod_alt}" />
                             </p:column>
                             <p:column style="width:30px" headerText="Fecha">
                                 <h:outputText value="#{vEncMan.fec_ini}" />
@@ -5255,7 +5277,7 @@
                             </h:panelGrid>
                             <h:panelGrid columns="4" cellpadding="5">
                                 <h:outputText value="Otra Falla" style="font-weight:bold;"/>
-                                <p:inputText value="valor" size="78" maxlength="300"/>
+                                <p:inputText value="#{manMaestroMan.otr_fal}" size="78" maxlength="300"/>
                                 <p:commandButton title="Agregar" icon="ui-icon-plus" style="width:30px;" 
                                                  actionListener="#{manMaestroMan.agregarfalla()}"
                                                  update=":frmMaestraNew"
@@ -7113,6 +7135,7 @@
                         <p:selectOneMenu value="#{manEvaluacionDetalle.id_fac}" 
                                          style="width:455px;text-align:right;"
                                          immediate="false">  
+                            <p:ajax event="change" listener="#{manEvaluacionDetalle.llenarCriterios()}" update="somCritDetEva" />
                             <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                             <f:selectItems value="#{manEvaluacionDetalle.factores}" var="mfacdet"
                                            itemLabel="#{mfacdet.nom_fac}" itemValue="#{mfacdet.id_fac}"/>
@@ -7120,6 +7143,7 @@
                         <h:outputText value="Criterio" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manEvaluacionDetalle.id_cri}" 
                                          style="width:455px;text-align:right;"
+                                         id="somCritDetEva"
                                          immediate="false">  
                             <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                             <f:selectItems value="#{manEvaluacionDetalle.criterios}" var="mcridet"
@@ -7158,16 +7182,16 @@
         </p:dialog>  
  
  <!-- *******************************************************************
-        **************** Pantalla mantenimiento de Alestas          ********
+        **************** Pantalla mantenimiento de Alertas          ********
         *********************************************************************-->
 
         <p:dialog  id="dlgAlertas" widgetVar="wAlertas" modal="true" 
-                   width="580" height="350" closable="false" resizable="false" 
+                   width="650" height="500" closable="false" resizable="false" 
                    header="Mantenimiento de Alertas" rendered="true" 
                    dynamic="true" visible="false" 
                    >
 
-            <h:form id="frmAlertas"> 
+            <h:form id="frmAlertas" > 
                 <p:growl id="msgAlertas" showDetail="true" life="4500"/>
                 <p:toolbar>
                     <f:facet name="left">
@@ -7210,123 +7234,114 @@
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Departamento" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manAlertas.cod_dep}" 
-                                         style="width:300px;text-align:right;"
+                                         style="width:200px;text-align:right;"
                                          immediate="false">  
-                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
-                            <f:selectItems value="#{manAlertas.departamentos}" var="mdepale"
+                                <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                                <f:selectItems value="#{manAlertas.departamentos}" var="mdepale"
                                            itemLabel="#{mdepale.nom_dep}" itemValue="#{mdepale.cod_dep}"/>
                         </p:selectOneMenu>
-                        
-                        <h:outputText value="Tabla" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="55" value="#{manAlertas.tabla_ctrl}" 
-                                     onfocus="this.select()"/>
-                        
-                        <h:outputText value="Campo" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="55" value="#{manAlertas.campo_ctrl}" 
-                                     onfocus="this.select()"/>
-                        
-                        <h:outputText value="Texto de la alerta" style="font-weight:bold;" />
-                        <p:inputTextarea rows="5" cols="50" maxlength="250" value="#{manAlertas.alerta}" 
-                                     onfocus="this.select()"/>
+                        <h:outputText value="Tipo de alerta" style="font-weight:bold;" />
+                        <p:selectOneMenu value="#{manAlertas.id_tip_ale}" 
+                                         style="width:300px;text-align:right;"
+                                         immediate="false">  
+                                <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                                <f:selectItems value="#{manAlertas.tiposalertas}" var="mtipale"
+                                           itemLabel="#{mtipale.nom_tip_ale}" itemValue="#{mtipale.id_tip_ale}"/>
+                        </p:selectOneMenu>
                         <h:outputText value="Dias antes para aviso" style="font-weight:bold;" />
                         <h:panelGroup>
-                            <p:inputText maxlength="200" size="10" value="#{manAlertas.aviso}" 
-                                         onfocus="this.select()"/>
+                            <p:inputText maxlength="3" size="10" value="#{manAlertas.aviso}"
+                                         onfocus="this.select()" onkeypress="return valida(event)"/>
                             <p:spacer width="10"/>
                             <h:outputText value="Dias para recordatorio" style="font-weight:bold;" />
                             <p:spacer width="10"/>
-                            <p:inputText maxlength="200" size="10" value="#{manAlertas.recordatorio}" 
-                                         onfocus="this.select()"/>
+                            <p:inputText maxlength="3" size="10" value="#{manAlertas.recordatorio}"
+                                         onfocus="this.select()" onkeypress="return valida(event)"/>
                         </h:panelGroup>             
                     </h:panelGrid>
-                    <h:panelGrid columns="2" cellpadding="2">
-                        <p:dataList id="usuOrigen" value="#{manAlertas.departamentos}" var="origen" itemType="circle" style="width:150;">  
-                            <h:panelGroup id="origenBox" layout="box" style="z-index:9999; cursor:move;" >  
-                                #{origen.nom_dep}  
-                            </h:panelGroup> 
-                            <p:draggable for="origenBox" revert="true" helper="clone" cursor="move"/>  
-                        </p:dataList> 
+                    <h:panelGrid columns="2" cellpadding="5">
+                    <p:fieldset id="usudis" legend="Usuarios Disponibles" style="width:270px">
+                        <p:dataTable id="usuariosDisponibles" var="usudis" value="#{manAlertas.usuarios}" style="width:260px" scrollHeight="150">
+                            <p:column style="width:20px">
+                                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+                                <p:draggable for="dragIcon" revert="true" helper="clone"/>
+                            </p:column>
+
+                            <p:column headerText="Id">
+                                <h:outputText value="#{usudis.cod_usu}" />
+                            </p:column>
+
+                            <p:column headerText="Usuario">
+                                <h:outputText value="#{usudis.nom_usu}" />
+                            </p:column>
+                        </p:dataTable>                        
+                    </p:fieldset>
+                    
+                    <p:fieldset id="ususel" legend="Usuarios Seleccionados" style="width:270px ">
+                        <p:outputPanel id="dropArea">
+                            <h:outputText value="Area de asignación." rendered="#{empty manAlertas.usuariosel}" style="font-size:24px;" />
+                            <p:dataTable id="usuariosSeleccionados" var="ususel" value="#{manAlertas.usuariosel}" 
+                                         rendered="#{not empty manAlertas.usuariosel}" style="width:260px" scrollHeight="150">
+                                <p:column style="width:20px">
+                                    <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+                                    <p:draggable for="dragIcon" revert="true" helper="clone"/>
+                                </p:column>
+                                <p:column headerText="Id">
+                                    <h:outputText value="#{ususel.cod_usu}" />
+                                </p:column>
+
+                                <p:column headerText="Usuario">
+                                    <h:outputText value="#{ususel.nom_usu}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:outputPanel>                    
+                    </p:fieldset>
                         
-                        <p:dataList id="usuDestino" value="#{manAlertas.departamentos}" var="destino" itemType="circle">  
-                            <h:panelGroup id="destinoBox" layout="box" style="z-index:9999; cursor:move;">  
-                                #{destino.nom_dep}  
-                            </h:panelGroup> 
-                            <p:draggable for="destinoBox" revert="true" helper="clone" cursor="move"/>  
-                        </p:dataList> 
                     </h:panelGrid>
                     
+                    <p:droppable for="ususel" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosDisponibles" onDrop="handleDrop">
+                             <p:ajax listener="#{manAlertas.onUsuDrop}" update="dropArea usuariosDisponibles" />
+                    </p:droppable>
+                    
+                    <p:droppable for="usudis" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosSeleccionados" onDrop="handleDrop">
+                             <p:ajax listener="#{manAlertas.onUsuDropRet}" update="dropArea usuariosDisponibles" />
+                    </p:droppable>
+                                        
                     <p:dataTable id="dtAlertas" var="vAlertas" 
                                  value="#{manAlertas.alertas}" 
+                                 rows ="3"
                                  emptyMessage="No se encontraron resultados" 
                                  selectionMode="single" selection="#{manAlertas.catalertas}" 
                                  rowKey="#{vAlertas.id_ale}"
                                  editable="false" 
-                                 style="width:540px"
+                                 style="width:600px"
                                  scrollable="true"
-                                 scrollHeight="190"
+                                 paginator="true"
+                                 paginatorPosition="top"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 scrollHeight="75"
                                  >
                         <p:ajax event="rowSelect" listener="#{manAlertas.onRowSelect}" 
                                 update=":frmAlertas" />
-                        <p:column style="width:30px" headerText="Departamento">
-                            <h:outputText value="#{vAlertas.nomdepto}" />
+                        <p:column style="width:80px" headerText="Departamento">
+                            <h:outputText value="#{vAlertas.nom_dep}" />
                         </p:column>                    
-                        <p:column style="width:80px" headerText="tabla">
-                            <h:outputText value="#{vAlertas.tabla_ctrl}" />
+                        <p:column style="width:160px" headerText="Tipo Alerta">
+                            <h:outputText value="#{vAlertas.nom_tip_ale}" />
+                        </p:column>         
+                        <p:column style="width:40px" headerText="Aviso">
+                            <h:outputText value="#{vAlertas.aviso}" />
                         </p:column>
-                        <p:column style="width:80px" headerText="condision">
-                            <h:outputText value="#{vAlertas.campo_ctrl}" />
-                        </p:column>
-                        <p:column style="width:80px" headerText="estado">
-                            <h:outputText value="#{vAlertas.id_estado}" />
+                        <p:column style="width:40px" headerText="Recordar">
+                            <h:outputText value="#{vAlertas.recordatorio}" />
                         </p:column>
                     </p:dataTable>
                 </div>
 
             </h:form>
         </p:dialog>  
- 
   
- <!-- *******************************************************************
-        **************** Grafico    de mantenimientos             ********
-        *********************************************************************-->
-
-        <p:dialog  id="dlgGraMtto" widgetVar="wGraMtto" modal="true" 
-                   width="580" height="350" closable="false" resizable="false" 
-                   header="Grafico de Mantenimientos" rendered="true" 
-                   dynamic="true" visible="false" 
-                   >
-
-            <h:form id="frmGraMtto"> 
-                <p:growl id="msgDetEva" showDetail="true" life="4500"/>
-                    <p:dataTable id="dtGraMtto" var="vGraMtto" 
-                                 value="#{manMaestroMan.mantenimientos}" 
-                                 emptyMessage="No se encontraron resultados" 
-                                 selectionMode="single" selection="#{manMaestroMan.catmantenimientos}" 
-                                 rowKey="#{vGraMtto.cod_man} #{vGraMtto.cod_lis_equ}"
-                                 editable="false" 
-                                 style="width:540px"
-                                 scrollable="true"
-                                 scrollHeight="190"
-                                 >
-                        <p:ajax event="rowSelect" listener="#{manMaestroMan.onRowSelect}" 
-                                update=":frmGraMtto" />
-                        <p:column style="width:10px" headerText="ID">
-                            <h:outputText value="#{vGraMtto.nomtip}" />
-                        </p:column>
-                        <p:column style="width:10px" headerText="Enero">
-                            <h:outputText value="#{vGraMtto.nomtip}" />
-                        </p:column>
-                        <p:column style="width:80px" headerText="Febrero">
-                            <h:outputText value="#{vGraMtto.nomtip}" />
-                        </p:column>  
-                        <p:column style="width:15px" headerText="Marzo">
-                            <h:outputText value="#{vGraMtto.nomtip}" />
-                        </p:column>
-                    </p:dataTable>
-            </h:form>
-        </p:dialog>  
- 
-        <script type="text/javascript">
+         <script type="text/javascript">
             PrimeFaces.locales['es'] = {
                 closeText: 'Cerrar',
                 prevText: 'Previo',
@@ -7349,6 +7364,12 @@
                 day: 'Dia',
                 allDayText: 'Todo el dia'
             };
+            
+            function handleDrop(event, ui) {
+                var droppedCar = ui.draggable;
+                droppedCar.fadeOut('fast');
+            }
+            
         </script>
 
     </h:body>

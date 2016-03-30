@@ -43,7 +43,6 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.UnselectEvent;
 import org.primefaces.extensions.event.timeline.TimelineModificationEvent;
-import org.primefaces.extensions.event.timeline.TimelineSelectEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.model.timeline.TimelineModel;
 import org.primefaces.model.DefaultScheduleEvent;
@@ -110,7 +109,7 @@ public class ManMaestroMan implements Serializable {
     private ScheduleModel mttoModel;
     private ScheduleEvent mtto = new DefaultScheduleEvent();
 
-    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, 
+    private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin,
             det_sta, cod_usu, cod_per, flg_ext, cod_sup, turno, cod_pri, cod_dep, cod_alt, obs_tec, otr_per;
     private String gen_det_man, gen_fec_man, gen_cod_ope, gen_det_obs, gen_cod_usu, gen_det_min;
     private String pie_det_man, pie_fec_man, pie_cod_pai, pie_cod_bod, pie_cod_ubi,
@@ -118,7 +117,7 @@ public class ManMaestroMan implements Serializable {
     private String ane_det_man, ane_det_obs, ane_tip_ane, ane_rut_ane, ane_cod_usu;
     private String acc_det_man, acc_fec_man, acc_cod_pai, acc_det_can, acc_des_ite, acc_cod_usu;
 
-    private String tabindex, buscar_serie, nompai, nombod, nomubi, cod_gru_fal, cod_fal,otr_fal, mmensaje;
+    private String tabindex, buscar_serie, nompai, nombod, nomubi, cod_gru_fal, cod_fal, otr_fal, mmensaje;
     private Date dfecha1, dfecha2, dfecha3, dfecfinF, dfecini;
     private TreeNode root, selectednode;
 
@@ -1188,7 +1187,7 @@ public class ManMaestroMan implements Serializable {
         selectednode = null;
         catmantenimientos = new CatMantenimientos();
         mantenimientos = new ArrayList<>();
-
+        RequestContext.getCurrentInstance().execute("PF('wvEncMan').clearFilters()");
     }
 
     public void nuevo() {
@@ -1456,9 +1455,23 @@ public class ManMaestroMan implements Serializable {
                         + "when 2 then 'CANCELADO' "
                         + "when 3 then 'EN PROCESO' "
                         + "when 4 then 'FINALIZADO' "
-                        + "end as status,"
-                        + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<2,0,(TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))) as dr,"
-                        + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=2,'yellow','red')) as color,"
+                        + "end as status, "
+                        + "case mm.det_sta "
+                        + "when 1 then "
+                        + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<2,0,(TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))) "
+                        + "when 2 then 0 "
+                        + "when 3 then "
+                        + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<2,0,(TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))) "
+                        + "when 4 then 0 "
+                        + "end as dr, "
+                        + "case mm.det_sta "
+                        + "when 1 then "
+                        + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=2,'yellow','red')) "
+                        + "when 2 then 'lime' "
+                        + "when 3 then "
+                        + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=2,'yellow','red')) "
+                        + "when 4 then 'lime' "
+                        + "end as color,"
                         + "mm.cod_per, "
                         + "per.nom_per,"
                         + "mm.flg_ext,mm.cod_sup, mm.turno, mm.cod_pri, mm.cod_dep,mm.cod_alt,mm.obs_tec,mm.otr_per "
@@ -1466,7 +1479,7 @@ public class ManMaestroMan implements Serializable {
                         + "left join cat_tip as tip on mm.cod_tip = tip.cod_tip "
                         + "left join cat_per as per on mm.cod_per = per.cod_per "
                         + "where "
-                        + "mm.det_sta IN (1,3) "
+                        + "mm.det_sta IN (1,2,3,4) "
                         + "and mm.cod_lis_equ =" + buscar_serie + " "
                         + "order by mm.cod_man;";
 
@@ -2033,7 +2046,7 @@ public class ManMaestroMan implements Serializable {
                             + cod_tip + ",'" + det_obs.replace("'", " ") + "',"
                             + "str_to_date('" + fec_ini + "','%d/%m/%Y %H:%i'),str_to_date('" + fec_fin + "','%d/%m/%Y %H:%i'),1,"
                             + cod_usu + "," + cod_per + "," + flg_ext + ","
-                            + cod_sup + "," + turno + "," + cod_pri + "," + cod_dep + ","
+                            + cod_sup + "," + turno + ",'" + cod_pri + "'," + cod_dep + ","
                             + cod_alt + ",'" + obs_tec + "','" + otr_per + "');";
                 } else {
                     mQuery = "delete from tbl_det_man_fal where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
@@ -3206,6 +3219,16 @@ public class ManMaestroMan implements Serializable {
                             + "VALUES (" + cod_lis_equ + "," + newcodman + "," + cod_tip + ",'Mantenimiento Preventivo',"
                             + "str_to_date('" + newfechaini + "','%d/%m/%Y %H:%i'),str_to_date('" + newfechaini + "','%d/%m/%Y %H:%i'),1,"
                             + cod_usu + "," + cod_per + "," + flg_ext + ");";
+                    /*mQuery = "insert into tbl_mae_man (cod_lis_equ,cod_man,"
+                            + "cod_tip,det_obs,fec_ini,fec_fin,det_sta,cod_usu,"
+                            + "cod_per,flg_ext,cod_sup,turno,cod_pri,cod_dep,"
+                            + "cod_alt,obs_tec,otr_per) "
+                            + "VALUES (" + cod_lis_equ + "," + newcodman + ","
+                            + cod_tip + ",'Mantenimiento Preventivo',"
+                            + "str_to_date('" + newfechaini + "','%d/%m/%Y %H:%i'),str_to_date('" + newfechaini + "','%d/%m/%Y %H:%i'),1,"
+                            + cod_usu + "," + cod_per + "," + flg_ext + ","
+                            + cod_sup + "," + turno + ",'" + cod_pri + "'," + cod_dep + ","
+                            + cod_alt + ",'" + obs_tec + "','" + otr_per + "');";*/
                     macc.dmlSQLvariable(mQuery);
                 }
                 macc.Desconectar();
@@ -3319,7 +3342,7 @@ public class ManMaestroMan implements Serializable {
     public void onclickbuscar() {
 
         limpiarventana();
-
+        RequestContext.getCurrentInstance().execute("PF('wvEncMan').clearFilters()");
     }
 
     public void llenarListaEquipos() {

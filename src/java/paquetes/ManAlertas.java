@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.SelectEvent;
 
 @Named
@@ -22,12 +24,25 @@ public class ManAlertas implements Serializable {
     private List<CatAlertas> alertas;
     private CatDepartamentos catdepartamentos;
     private List<CatDepartamentos> departamentos;
+    private List<CatTiposAlertas> tiposalertas;
+    private CatUsuarios catusuarios;
+    private List<CatUsuarios> usuarios;
+    private List<CatUsuarios> usuariosel;
+    private LogAlertas logalertas;
+    private List<LogAlertas> logale;
     
-    private String id_ale, proceso, tabla_ctrl, campo_ctrl, alerta, aviso, recordatorio, id_estado, cod_dep;
+    private String id_ale, cod_dep, id_tip_ale, aviso, recordatorio, id_estado;
+    private String id_ale_usu, cod_usu;
 
     public ManAlertas() {
     }
 
+    @PostConstruct
+    public void init() {
+        usuariosel = new ArrayList<CatUsuarios>();
+        llenarLogAlertas();        
+    }
+    
     public CatAlertas getCatalertas() {
         return catalertas;
     }
@@ -56,8 +71,43 @@ public class ManAlertas implements Serializable {
         this.departamentos = departamentos;
     }
 
+    public List<CatTiposAlertas> getTiposalertas() {
+        return tiposalertas;
+    }
+
+    public void setTiposalertas(List<CatTiposAlertas> tiposalertas) {
+        this.tiposalertas = tiposalertas;
+    }
+    
+
+    public CatUsuarios getCatusuarios() {
+        return catusuarios;
+    }
+
+    public void setCatusuarios(CatUsuarios catusuarios) {
+        this.catusuarios = catusuarios;
+    }
+
+    public List<CatUsuarios> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<CatUsuarios> usuarios) {
+        this.usuarios = usuarios;
+    }
+
     public void setAlertas(List<CatAlertas> alertas) {
         this.alertas = alertas;
+    }
+
+   
+
+    public List<CatUsuarios> getUsuariosel() {
+        return usuariosel;
+    }
+
+    public void setUsuariosel(List<CatUsuarios> usuariosel) {
+        this.usuariosel = usuariosel;
     }
 
     public String getId_ale() {
@@ -68,38 +118,14 @@ public class ManAlertas implements Serializable {
         this.id_ale = id_ale;
     }
 
-    public String getProceso() {
-        return proceso;
+    public String getId_tip_ale() {
+        return id_tip_ale;
     }
 
-    public void setProceso(String proceso) {
-        this.proceso = proceso;
+    public void setId_tip_ale(String id_tip_ale) {
+        this.id_tip_ale = id_tip_ale;
     }
-
-    public String getTabla_ctrl() {
-        return tabla_ctrl;
-    }
-
-    public void setTabla_ctrl(String tabla_ctrl) {
-        this.tabla_ctrl = tabla_ctrl;
-    }
-
-    public String getCampo_ctrl() {
-        return campo_ctrl;
-    }
-
-    public void setCampo_ctrl(String campo_ctrl) {
-        this.campo_ctrl = campo_ctrl;
-    }
-
-    public String getAlerta() {
-        return alerta;
-    }
-
-    public void setAlerta(String alerta) {
-        this.alerta = alerta;
-    }
-
+  
     public String getAviso() {
         return aviso;
     }
@@ -131,31 +157,65 @@ public class ManAlertas implements Serializable {
     public void setCod_dep(String cod_dep) {
         this.cod_dep = cod_dep;
     }
-    
 
+    public String getId_ale_usu() {
+        return id_ale_usu;
+    }
+
+    public void setId_ale_usu(String id_ale_usu) {
+        this.id_ale_usu = id_ale_usu;
+    }
+
+    public String getCod_usu() {
+        return cod_usu;
+    }
+
+    public void setCod_usu(String cod_usu) {
+        this.cod_usu = cod_usu;
+    }
+
+    public List<LogAlertas> getLogale() {
+        return logale;
+    }
+
+    public void setLogale(List<LogAlertas> logale) {
+        this.logale = logale;
+    }
+
+    public LogAlertas getLogalertas() {
+        return logalertas;
+    }
+
+    public void setLogalertas(LogAlertas logalertas) {
+        this.logalertas = logalertas;
+    }
+        
     public void iniciarventana() {
         id_ale = "";
-        proceso = ""; 
-        tabla_ctrl = "";
-        campo_ctrl = "";
-        alerta = "";
+        cod_dep = ""; 
+        id_tip_ale = "";
         aviso = "";
         recordatorio = "";
         id_estado = "";
+        id_ale_usu = "";
+        cod_usu = "";
         llenarAlertas();
         llenarDepartamentos();
+        llenarTiposAlertas();
+        llenarUsuarios();
     }
 
     public void cerrarventana() {
         id_ale = "";
-        proceso = ""; 
-        tabla_ctrl = "";
-        campo_ctrl = "";
-        alerta = "";
+        cod_dep = ""; 
+        id_tip_ale = "";
         aviso = "";
         recordatorio = "";
         id_estado = "";
+        id_ale_usu= "";
+        cod_usu = "";
         alertas = new ArrayList<>();
+        usuariosel = new ArrayList<>();
     }
     
     public void llenarDepartamentos() {
@@ -182,14 +242,121 @@ public class ManAlertas implements Serializable {
             System.out.println("Error en el llenado de Catálogo de Departamentos. " + e.getMessage());
         }
     }
+    
+    public void llenarTiposAlertas() {
+        try {
+            
+            tiposalertas = new ArrayList<>();
 
+            String mQuery = "select id_tip_ale, nom_tip_ale "
+                    + "from cat_tip_ale order by id_tip_ale;";
+            
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                tiposalertas.add(new CatTiposAlertas(
+                        resVariable.getString(1),
+                        resVariable.getString(2)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Catálogo de Departamentos. " + e.getMessage());
+        }
+    }
+    
+    public void llenarUsuarios() {
+        try {
+            catusuarios = new CatUsuarios();
+            usuarios = new ArrayList<>();
+            String mQuery = "";
+            
+            if("".equals(id_ale)){
+                mQuery = "select usu.cod_usu, usu.nom_usu, usu.des_pas, usu.tip_usu, usu.cod_pai, "
+                    + "usu.cod_dep, usu.det_nom, usu.det_mai, ifnull(usu.cod_pai,'') as cod_pai, ifnull(dep.nom_dep,'') as nomdep "
+                    + "from cat_usu as usu "
+                    + "left join cat_dep as dep on usu.cod_dep = dep.cod_dep order by cod_usu;";
+            }
+            else {
+                mQuery = "select usu.cod_usu, usu.nom_usu, usu.des_pas, usu.tip_usu, usu.cod_pai, "
+                    + "usu.cod_dep, usu.det_nom, usu.det_mai, ifnull(usu.cod_pai,'') as cod_pai, ifnull(dep.nom_dep,'') as nomdep "
+                    + "from cat_usu as usu left join cat_dep as dep on usu.cod_dep = dep.cod_dep "
+                    + "where usu.cod_usu NOT IN (select alusu.cod_usu from cat_ale_usu alusu where alusu.id_ale="+id_ale+") order by cod_usu;";
+            }
+            
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                usuarios.add(new CatUsuarios(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10)                         
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Catálogo de Usuarios. " + e.getMessage());
+        }
+    }
+
+    public void llenarUsuSeleccionados() {
+        try {
+            usuariosel = new ArrayList<>();
+
+            String mQuery = "select usu.cod_usu, usu.nom_usu, usu.des_pas, usu.tip_usu, usu.cod_pai, "
+                    + "usu.cod_dep, usu.det_nom, usu.det_mai, ifnull(usu.cod_pai,'') as cod_pai, ifnull(dep.nom_dep,'') as nomdep "
+                    + "from cat_usu as usu "
+                    + "left join cat_dep as dep on usu.cod_dep = dep.cod_dep "
+                    + "inner join cat_ale_usu aleu on usu.cod_usu = aleu.cod_usu "
+                    + " where aleu.id_ale = " + id_ale + " order by cod_usu;";
+                    
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                usuariosel.add(new CatUsuarios(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10)                         
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Catálogo de Usuarios Seleccionados. " + e.getMessage());
+        }
+    }
+    
     public void llenarAlertas() {
         String mQuery = "";
         try {
             catalertas = new CatAlertas();
             alertas = new ArrayList<>();
 
-            mQuery = "select id_ale, proceso, tabla_ctrl, camp_ctrl, alerta, aviso, recordatorio, id_estado from cat_ale order by id_ale;";
+            mQuery = "select ale.id_ale, ale.cod_dep, ale.id_tip_ale, ale.aviso, ale.recordatorio, ale.id_estado, dep.nom_dep, tip.nom_tip_ale "
+                    +"from cat_ale ale inner join cat_dep dep on ale.cod_dep = dep.cod_dep "
+                    + "inner join cat_tip_ale tip on ale.id_tip_ale = tip.id_tip_ale order by ale.id_ale;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -212,21 +379,56 @@ public class ManAlertas implements Serializable {
             System.out.println("Error en el registro de alertas. " + e.getMessage() + " Query: " + mQuery);
         }
     }
+    
+    public void llenarLogAlertas() {
+        String mQuery = "";
+        try {
+            
+            logalertas = new LogAlertas();
+            logale = new ArrayList<>();
+
+            mQuery = "SELECT DISTINCT lale.id_log_ale, lale.fec_ale, lale.id_tip_ale, lale.ale_des, tip.nom_tip_ale "
+                    + "FROM log_ale lale INNER JOIN cat_tip_ale tip  ON lale.id_tip_ale = tip.id_tip_ale " 
+                    + "INNER JOIN cat_ale_usu usu ON usu.id_ale = lale.id_ale "
+                    + "WHERE usu.cod_usu ="+ cbean.getCod_usu() + " order by lale.fec_ale desc;";
+            
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                logale.add(new LogAlertas(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el registro de log de alertas. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
 
     public void nuevo() {
         id_ale = "";
-        proceso = ""; 
-        tabla_ctrl = "";
-        campo_ctrl = "";
-        alerta = "";
+        cod_dep = ""; 
+        id_tip_ale = "";
         aviso = "";
         recordatorio = "";
         id_estado = "";
+        id_ale_usu="";
+        cod_usu="";
         catalertas = new CatAlertas();
+        llenarUsuarios();
+        usuariosel = new ArrayList<>();
     }
 
     public void guardar() {
         String mQuery = "";
+        this.id_estado= "0";
         if (validardatos()) {
             try {
                 Accesos mAccesos = new Accesos();
@@ -234,21 +436,36 @@ public class ManAlertas implements Serializable {
                 if ("".equals(id_ale)) {
                     mQuery = "select ifnull(max(id_ale),0)+1 as codigo from cat_ale;";
                     id_ale = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into cat_ale (id_ale, proceso, tabla_ctrl, campo_ctrl, alerta, aviso, recordatorio, id_estado) "
-                            + "values (" + id_ale + ",'" + proceso + "','"+ tabla_ctrl + "','" + campo_ctrl + "','" + alerta + "','" + aviso + "','" + recordatorio + "','" + id_estado + "');";
+                    mQuery = "insert into cat_ale (id_ale, cod_dep, id_tip_ale, aviso, recordatorio, id_estado) "
+                            + "values (" + id_ale + ",'" + cod_dep + "'," + id_tip_ale + ", " + aviso + ", " + recordatorio + "," + id_estado + ");";
                 } else {
                     mQuery = "update cat_ale SET "
-                            + " proceso = '" + proceso + "', "
-                            + " tabla_ctrl = '" + tabla_ctrl + "', "
-                            + " campo_ctrl = '" + campo_ctrl + "', "
-                            + " alerta = '" + alerta + "', "
-                            + " aviso = '" + aviso + "', "
-                            + " recordatorio = '" + recordatorio + "', "
-                            + " id_estado = '" + id_estado + "' "
+                            + " cod_dep = '" + cod_dep + "', "
+                            + " id_tip_ale = " + id_tip_ale + ", "
+                            + " aviso = " + aviso + ", "
+                            + " recordatorio = " + recordatorio + ", "
+                            + " id_estado = " + id_estado + " "
                             + "WHERE id_ale = " + id_ale + ";";
-
                 }
                 mAccesos.dmlSQLvariable(mQuery);
+                    
+                mQuery = "delete from cat_ale_usu where id_ale = "+ id_ale + ";";
+                mAccesos.dmlSQLvariable(mQuery);
+                
+                usuariosel.stream().forEach((usadd) -> {
+                    String mQuery2="";
+                                        
+                    mQuery2 = "select ifnull(max(id_ale_usu),0)+1 as codigo from cat_ale_usu;";
+                    id_ale_usu = mAccesos.strQuerySQLvariable(mQuery2);
+                     cod_usu = usadd.getCod_usu();
+                    
+                    mQuery2 = "insert into cat_ale_usu (id_ale_usu, id_ale, cod_usu) "
+                    + "values (" + id_ale_usu + "," + id_ale + ","+ cod_usu + ");";
+                    
+                    mAccesos.dmlSQLvariable(mQuery2);
+                   // System.out.println(usadd.getCod_usu());
+                });            
+                
                 mAccesos.Desconectar();
                 addMessage("Guardar Alerta", "Información Almacenada con éxito.", 1);
             } catch (Exception e) {
@@ -256,9 +473,8 @@ public class ManAlertas implements Serializable {
                 System.out.println("Error al Guardar Alerta. " + e.getMessage() + " Query: " + mQuery);
             }
             llenarAlertas();
+            nuevo();
         }
-        nuevo();
-
     }
 
     public void eliminar() {
@@ -286,49 +502,59 @@ public class ManAlertas implements Serializable {
     public boolean validardatos() {
         
         boolean mValidar = true;
-        if ("".equals(proceso) == true) {
+        if ("".equals(cod_dep) == true) {
             mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un Proceso.", 2);
+            addMessage("Validar Datos", "Debe Ingresar un Departamento.", 2);
         }
         
-        if ("".equals(tabla_ctrl) == true) {
+        if ("".equals(id_tip_ale) == true) {
             mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar una tabla a controlar.", 2);
+            addMessage("Validar Datos", "Debe Ingresar un tipo de alerta.", 2);
+        }
+        
+        if ("".equals(aviso)) {
+            mValidar = false;
+            addMessage("Validar Datos", "Debe Ingresar una Cantidad de dias en la alerta mayor que Cero.", 2);
+        } else if (!Utilitarios.isNumeric(aviso)) {
+            mValidar = false;
+            addMessage("Validar Datos", "Debe Ingresar una numero valido de dias para el aviso.", 2);
         }
 
-        if ("".equals(campo_ctrl) == true) {
+        if ("".equals(recordatorio)) {
             mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar una campo fecha a controlar.", 2);
+            addMessage("Validar Datos", "Debe Ingresar una Cantidad de dias en el periodo para recordatorio mayor que Cero.", 2);
+        } else if (!Utilitarios.isNumeric(recordatorio)) {
+            mValidar = false;
+            addMessage("Validar Datos", "Debe Ingresar una numero valido de dias para el recordatorio.", 2);
         }
         
-        if ("".equals(alerta) == true) {
-            mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un texto a enviar como alerta.", 2);
-        }
-        
-        if ("".equals(aviso) == true) {
-            mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un periodo de tiempo para avisar la alerta.", 2);
-        }
-        
-        if ("".equals(recordatorio) == true) {
-            mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un periodo de tiempo para recordar la alerta.", 2);
-        }
-  
         return mValidar;
 
     }
 
     public void onRowSelect(SelectEvent event) {
         id_ale = ((CatAlertas) event.getObject()).getId_ale();
-        proceso = ((CatAlertas) event.getObject()).getProceso();
-        tabla_ctrl = ((CatAlertas) event.getObject()).getTabla_ctrl();
-        campo_ctrl = ((CatAlertas) event.getObject()).getCampo_ctrl();
-        alerta = ((CatAlertas) event.getObject()).getAlerta();
+        cod_dep = ((CatAlertas) event.getObject()).getCod_dep();
+        id_tip_ale = ((CatAlertas) event.getObject()).getId_tip_ale();
         aviso = ((CatAlertas) event.getObject()).getAviso();
         recordatorio = ((CatAlertas) event.getObject()).getRecordatorio();
         id_estado = ((CatAlertas) event.getObject()).getId_estado();
+        llenarUsuarios();
+        llenarUsuSeleccionados();
+    }
+    
+    public void onUsuDrop(DragDropEvent ddEvent) {
+               
+        catusuarios = ((CatUsuarios) ddEvent.getData());
+        usuariosel.add(catusuarios);
+        usuarios.remove(catusuarios);
+    }
+    
+    public void onUsuDropRet(DragDropEvent ddEvent) {
+               
+        catusuarios = ((CatUsuarios) ddEvent.getData());
+        usuarios.add(catusuarios);
+        usuariosel.remove(catusuarios);
     }
 
     public void addMessage(String summary, String detail, int tipo) {

@@ -173,7 +173,6 @@ public class ManEvaluacionDetalle implements Serializable {
         id_cri = "";
         llenarEvaluaciones();
         llenarFactores();
-        llenarCriterios();
         
     }
 
@@ -242,7 +241,7 @@ public class ManEvaluacionDetalle implements Serializable {
             catcriterios = new CatCriterios();
             criterios = new ArrayList<>();
 
-            mQuery = "select id_cri, nom_cri, id_fac from cat_cri order by id_cri;";
+            mQuery = "select id_cri, nom_cri, id_fac from cat_cri where id_fac ="+ id_fac + " order by id_cri;";
             
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();

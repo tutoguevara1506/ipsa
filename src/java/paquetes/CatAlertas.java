@@ -5,20 +5,20 @@ import java.io.Serializable;
 
 public class CatAlertas implements Serializable{
     
-    private String id_ale, proceso, tabla_ctrl, campo_ctrl, alerta, aviso, recordatorio, id_estado;
+    private String id_ale, cod_dep, id_tip_ale, aviso, recordatorio, id_estado, nom_dep, nom_tip_ale;
 
     public CatAlertas() {
     }
 
-    public CatAlertas(String id_ale, String proceso, String tabla_ctrl, String campo_ctrl, String alerta, String aviso, String recordatorio, String id_estado) {
+    public CatAlertas(String id_ale, String cod_dep, String id_tip_ale, String aviso, String recordatorio, String id_estado, String nom_dep, String nom_tip_ale) {
         this.id_ale = id_ale;
-        this.proceso = proceso;
-        this.tabla_ctrl = tabla_ctrl;
-        this.campo_ctrl = campo_ctrl;
-        this.alerta = alerta;
+        this.cod_dep = cod_dep;
+        this.id_tip_ale = id_tip_ale;
         this.aviso = aviso;
         this.recordatorio = recordatorio;
         this.id_estado = id_estado;
+        this.nom_dep = nom_dep;
+        this.nom_tip_ale = nom_tip_ale;
     }
 
     public String getId_ale() {
@@ -29,36 +29,20 @@ public class CatAlertas implements Serializable{
         this.id_ale = id_ale;
     }
 
-    public String getProceso() {
-        return proceso;
+    public String getCod_dep() {
+        return cod_dep;
     }
 
-    public void setProceso(String proceso) {
-        this.proceso = proceso;
+    public void setCod_dep(String cod_dep) {
+        this.cod_dep = cod_dep;
     }
 
-    public String getTabla_ctrl() {
-        return tabla_ctrl;
+    public String getId_tip_ale() {
+        return id_tip_ale;
     }
 
-    public void setTabla_ctrl(String tabla_ctrl) {
-        this.tabla_ctrl = tabla_ctrl;
-    }
-
-    public String getCampo_ctrl() {
-        return campo_ctrl;
-    }
-
-    public void setCampo_ctrl(String campo_ctrl) {
-        this.campo_ctrl = campo_ctrl;
-    }
-
-    public String getAlerta() {
-        return alerta;
-    }
-
-    public void setAlerta(String alerta) {
-        this.alerta = alerta;
+    public void setId_tip_ale(String id_tip_ale) {
+        this.id_tip_ale = id_tip_ale;
     }
 
     public String getAviso() {
@@ -84,4 +68,22 @@ public class CatAlertas implements Serializable{
     public void setId_estado(String id_estado) {
         this.id_estado = id_estado;
     }   
+
+    public String getNom_dep() {
+        return nom_dep;
+    }
+
+    public void setNom_dep(String nom_dep) {
+        this.nom_dep = nom_dep;
+    }
+
+    public String getNom_tip_ale() {
+        return nom_tip_ale;
+    }
+
+    public void setNom_tip_ale(String nom_tip_ale) {
+        this.nom_tip_ale = nom_tip_ale;
+    }
+    
+    
 }

@@ -496,15 +496,17 @@ public class ManPersonas implements Serializable {
 
     public void guardar() {
         String mQuery = "";
+        //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         if (validardatos()) {
             try {
                 Accesos mAccesos = new Accesos();
                 mAccesos.Conectar();
                 if ("00/00/0000".equals(fingreso)) {
-                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                     Date dfecha = Date.from(Instant.now());
                     fingreso = format.format(dfecha);
-                }                    
+                } 
+                
                 if ("".equals(id_per)) {
                     mQuery = "select ifnull(max(id_per),0)+1 as codigo from cat_persona;";
                     id_per = mAccesos.strQuerySQLvariable(mQuery);
