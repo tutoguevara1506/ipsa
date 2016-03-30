@@ -172,8 +172,19 @@ public class ManEvaluacionDetalle implements Serializable {
         num_preg = "";
         id_cri = "";
         llenarEvaluaciones();
-        llenarFactores();
+        llenarEvaluacionDetalle();
         
+    }
+    
+     public void nuevo() {
+        id_eva_det ="";
+        id_eva = "";
+        id_fac = "";
+        num_preg = "";
+        id_cri = "";
+        catevaluaciondetalle = new CatEvaluacionDetalle();
+        factores = new ArrayList<>();
+        criterios = new ArrayList<>();        
     }
 
     public void cerrarventana() {
@@ -182,6 +193,8 @@ public class ManEvaluacionDetalle implements Serializable {
         id_eva = "";
         num_preg = "";
         id_cri = "";
+        factores = new ArrayList<>();
+        criterios = new ArrayList<>();
     }
     
     
@@ -296,14 +309,7 @@ public class ManEvaluacionDetalle implements Serializable {
     }
     
     
-    public void nuevo() {
-        id_eva_det ="";
-        id_eva = "";
-        id_fac = "";
-        num_preg = "";
-        id_cri = "";
-        catevaluaciondetalle = new CatEvaluacionDetalle();
-    }
+   
 
     public void guardar() {
         String mQuery = "";
@@ -385,9 +391,12 @@ public class ManEvaluacionDetalle implements Serializable {
     }
     
     public void onRowSelect(SelectEvent event) {
+        llenarFactores();
         id_eva_det =((CatEvaluacionDetalle) event.getObject()).getId_eva_det();
         id_eva = ((CatEvaluacionDetalle) event.getObject()).getId_eva();
         num_preg = ((CatEvaluacionDetalle) event.getObject()).getNum_preg();
+        id_fac = ((CatEvaluacionDetalle) event.getObject()).getId_fac();
+        llenarCriterios();
         id_cri = ((CatEvaluacionDetalle) event.getObject()).getId_cri();
     }
 

@@ -185,7 +185,7 @@ public class AlertSchedule {
                     id_log_ale="";
                     fec_ale = format.format(hoy);
                     final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
-                    long dias = (hoy.getTime() - mtto.getFec_ini().getTime())/MILLSECS_PER_DAY;
+                    long dias = (mtto.getFec_ini().getTime() - hoy.getTime())/MILLSECS_PER_DAY;
                     
                     id_tip_ale = ale.getId_tip_ale();
                     ale_des = "Faltan " + dias + " dias para realizar el mantenimiento preventivo del "
