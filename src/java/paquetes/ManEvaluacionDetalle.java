@@ -267,10 +267,10 @@ public class ManEvaluacionDetalle implements Serializable {
             catevaluaciondetalle = new CatEvaluacionDetalle();
             evaluaciondetalle = new ArrayList<>();
 
-            mQuery = "select det.id_eva_det, det.id_eva, det.num_preg, det.id_fac, det.id_cri, eva.nom_eva, fac.nomfac, cri.nomcri from "
+            mQuery = "select det.id_eva_det, det.id_eva, det.num_preg, det.id_fac, det.id_cri, eva.nom_eva, fac.nom_fac, cri.nom_cri from "
                     + " cat_eva_det det inner join cat_fac fac on fac.id_fac = det.id_fac inner join "
                     + " cat_eva  eva on det.id_eva = eva.id_eva inner join "
-                    + " cat_cri cri on det.id_cri = cri.id_cri order by cat_eva_det;";
+                    + " cat_cri cri on det.id_cri = cri.id_cri order by id_eva_det;";
             
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -314,12 +314,13 @@ public class ManEvaluacionDetalle implements Serializable {
                 if ("".equals(id_eva_det)) {
                     mQuery = "select ifnull(max(id_eva_det),0)+1 as codigo from cat_eva_det;";
                     id_eva_det = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into cat_eva_det (id_eva_det, id_eva, num_preg, id_cri) "
-                            + "values (" + id_eva_det + "," + id_eva + "," + num_preg + "," + id_cri + ");";
+                    mQuery = "insert into cat_eva_det (id_eva_det, id_eva, num_preg, id_fac, id_cri) "
+                            + "values (" + id_eva_det + "," + id_eva + "," + num_preg + "," + id_fac + ","+ id_cri+ ");";
                 } else {
                     mQuery = "update cat_eva_det SET "
                             + " id_eva = " + id_eva + ", "
                             + " num_preg = " + num_preg + ", "
+                            + " id_fac = " + id_fac + ", "
                             + " id_cri = " + id_cri + " "
                             + "WHERE id_eva_det = " + id_eva_det + ";";
 

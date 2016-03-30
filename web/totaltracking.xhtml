@@ -7080,7 +7080,7 @@
         *********************************************************************-->
 
         <p:dialog  id="dlgDetEva" widgetVar="wDetEva" modal="true" 
-                   width="580" height="350" closable="false" resizable="false" 
+                   width="580" height="400" closable="false" resizable="false" 
                    header="Registro de detalle de evaluaciones" rendered="true" 
                    dynamic="true" visible="false" 
                    >
@@ -7126,12 +7126,22 @@
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
                     <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Evaluacion" style="font-weight:bold;"/>
+                        <p:selectOneMenu value="#{manEvaluacionDetalle.id_eva}" 
+                                         style="width:440px;text-align:right;"
+                                         immediate="false">  
+                            <p:ajax event="change" listener="#{manEvaluacionDetalle.llenarFactores()}" update="somFacDetEva" />
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                            <f:selectItems value="#{manEvaluacionDetalle.evaluaciones}" var="mevadet"
+                                           itemLabel="#{mevadet.nom_eva}" itemValue="#{mevadet.id_eva}"/>
+                        </p:selectOneMenu>
                         <h:outputText value="Numero pregunta" style="font-weight:bold;" />
                         <p:inputText maxlength="5" size="5" value="#{manEvaluacionDetalle.num_preg}" 
                                      onfocus="this.select()"/>
                         <h:outputText value="Factor" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manEvaluacionDetalle.id_fac}" 
-                                         style="width:455px;text-align:right;"
+                                         style="width:440px;text-align:right;"
+                                         id="somFacDetEva"
                                          immediate="false">  
                             <p:ajax event="change" listener="#{manEvaluacionDetalle.llenarCriterios()}" update="somCritDetEva" />
                             <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
@@ -7140,7 +7150,7 @@
                         </p:selectOneMenu>
                         <h:outputText value="Criterio" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manEvaluacionDetalle.id_cri}" 
-                                         style="width:455px;text-align:right;"
+                                         style="width:440px;text-align:right;"
                                          id="somCritDetEva"
                                          immediate="false">  
                             <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
@@ -7157,7 +7167,7 @@
                                  editable="false" 
                                  style="width:540px"
                                  scrollable="true"
-                                 scrollHeight="190"
+                                 scrollHeight="180"
                                  >
                         <p:ajax event="rowSelect" listener="#{manEvaluacionDetalle.onRowSelect}" 
                                 update=":frmDetEva" />
@@ -7167,10 +7177,10 @@
                         <p:column style="width:10px" headerText="No. Pregunta">
                             <h:outputText value="#{vDetEva.num_preg}" />
                         </p:column>
-                        <p:column style="width:80px" headerText="Factor">
+                        <p:column style="width:30px" headerText="Factor">
                             <h:outputText value="#{vDetEva.nomfac}" />
                         </p:column>  
-                        <p:column style="width:15px" headerText="Criterio">
+                        <p:column style="width:150px" headerText="Criterio">
                             <h:outputText value="#{vDetEva.nomcri}" />
                         </p:column>
                     </p:dataTable>
