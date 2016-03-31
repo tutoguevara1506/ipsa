@@ -172,8 +172,19 @@ public class ManEvaluacionDetalle implements Serializable {
         num_preg = "";
         id_cri = "";
         llenarEvaluaciones();
-        llenarFactores();
+        llenarEvaluacionDetalle();
         
+    }
+    
+     public void nuevo() {
+        id_eva_det ="";
+        id_eva = "";
+        id_fac = "";
+        num_preg = "";
+        id_cri = "";
+        catevaluaciondetalle = new CatEvaluacionDetalle();
+        factores = new ArrayList<>();
+        criterios = new ArrayList<>();        
     }
 
     public void cerrarventana() {
@@ -182,6 +193,8 @@ public class ManEvaluacionDetalle implements Serializable {
         id_eva = "";
         num_preg = "";
         id_cri = "";
+        factores = new ArrayList<>();
+        criterios = new ArrayList<>();
     }
     
     
@@ -267,10 +280,10 @@ public class ManEvaluacionDetalle implements Serializable {
             catevaluaciondetalle = new CatEvaluacionDetalle();
             evaluaciondetalle = new ArrayList<>();
 
-            mQuery = "select det.id_eva_det, det.id_eva, det.num_preg, det.id_fac, det.id_cri, eva.nom_eva, fac.nomfac, cri.nomcri from "
+            mQuery = "select det.id_eva_det, det.id_eva, det.num_preg, det.id_fac, det.id_cri, eva.nom_eva, fac.nom_fac, cri.nom_cri from "
                     + " cat_eva_det det inner join cat_fac fac on fac.id_fac = det.id_fac inner join "
                     + " cat_eva  eva on det.id_eva = eva.id_eva inner join "
-                    + " cat_cri cri on det.id_cri = cri.id_cri order by cat_eva_det;";
+                    + " cat_cri cri on det.id_cri = cri.id_cri order by id_eva_det;";
             
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -296,14 +309,7 @@ public class ManEvaluacionDetalle implements Serializable {
     }
     
     
-    public void nuevo() {
-        id_eva_det ="";
-        id_eva = "";
-        id_fac = "";
-        num_preg = "";
-        id_cri = "";
-        catevaluaciondetalle = new CatEvaluacionDetalle();
-    }
+   
 
     public void guardar() {
         String mQuery = "";
@@ -314,12 +320,13 @@ public class ManEvaluacionDetalle implements Serializable {
                 if ("".equals(id_eva_det)) {
                     mQuery = "select ifnull(max(id_eva_det),0)+1 as codigo from cat_eva_det;";
                     id_eva_det = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into cat_eva_det (id_eva_det, id_eva, num_preg, id_cri) "
-                            + "values (" + id_eva_det + "," + id_eva + "," + num_preg + "," + id_cri + ");";
+                    mQuery = "insert into cat_eva_det (id_eva_det, id_eva, num_preg, id_fac, id_cri) "
+                            + "values (" + id_eva_det + "," + id_eva + "," + num_preg + "," + id_fac + ","+ id_cri+ ");";
                 } else {
                     mQuery = "update cat_eva_det SET "
                             + " id_eva = " + id_eva + ", "
                             + " num_preg = " + num_preg + ", "
+                            + " id_fac = " + id_fac + ", "
                             + " id_cri = " + id_cri + " "
                             + "WHERE id_eva_det = " + id_eva_det + ";";
 
@@ -384,9 +391,12 @@ public class ManEvaluacionDetalle implements Serializable {
     }
     
     public void onRowSelect(SelectEvent event) {
+        llenarFactores();
         id_eva_det =((CatEvaluacionDetalle) event.getObject()).getId_eva_det();
         id_eva = ((CatEvaluacionDetalle) event.getObject()).getId_eva();
         num_preg = ((CatEvaluacionDetalle) event.getObject()).getNum_preg();
+        id_fac = ((CatEvaluacionDetalle) event.getObject()).getId_fac();
+        llenarCriterios();
         id_cri = ((CatEvaluacionDetalle) event.getObject()).getId_cri();
     }
 
