@@ -27,8 +27,8 @@ as Resultado
 from tbl_det_man_fal as mf
 left join cat_fal as ct on mf.cod_fal = ct.cod_fal
 WHERE mf.cod_lis_equ = mm.cod_lis_equ AND mf.cod_man = mm.cod_man),'')) as fallas,
-if((select count(dmf.cod_gru_fal) from tbl_det_man_fal as dmf where dmf.cod_lis_equ=mm.cod_lis_equ and dmf.cod_man=mm.cod_man and dmf.cod_gru_fal=1)=0,'','X') as meca,
-if((select count(dmf.cod_gru_fal) from tbl_det_man_fal as dmf where dmf.cod_lis_equ=mm.cod_lis_equ and dmf.cod_man=mm.cod_man and dmf.cod_gru_fal=2)=0,'','X') as elec,
+if((select count(dmf.cod_gru_fal) from tbl_det_man_fal as dmf where dmf.cod_lis_equ=mm.cod_lis_equ and dmf.cod_man=mm.cod_man and dmf.cod_gru_fal in (1,3))=0,'','X') as meca,
+if((select count(dmf.cod_gru_fal) from tbl_det_man_fal as dmf where dmf.cod_lis_equ=mm.cod_lis_equ and dmf.cod_man=mm.cod_man and dmf.cod_gru_fal in (2,3))=0,'','X') as elec,
 (select 
 group_concat(concat(ifnull(co.nom_ope,''),' ',mg.det_obs) separator ',')
 as Resultado 
@@ -45,7 +45,7 @@ FROM tbl_mae_man as mm
 left join  lis_equ as lequ on mm.cod_lis_equ = lequ.cod_lis_equ 
 left join cat_pai as pai on lequ.cod_pai = pai.cod_pai 
 left join cat_persona as persona on mm.cod_usu = persona.cod_usu 
-left join cat_dep as dep on dep.cod_dep = mm.cod_dep 
+left join cat_dep as dep on dep.cod_dep = mm.cod_dep
 WHERE mm.cod_lis_equ = $P{cod_lis_equ} 
 AND mm.cod_man = $P{cod_man}]]>
 	</queryString>
@@ -91,7 +91,7 @@ AND mm.cod_man = $P{cod_man}]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{turno}.equals(0) ? "X" : ""]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="283" y="86" width="212" height="13" uuid="58565162-09f3-4e89-825c-503fcd6453cf"/>
 					<textElement>
 						<font size="8"/>
@@ -112,7 +112,7 @@ AND mm.cod_man = $P{cod_man}]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{fec_ini}]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="65" y="98" width="444" height="26" uuid="7287ee5c-1fc2-42bb-8f48-8413e3fa7371"/>
 					<textElement>
 						<font size="8"/>
@@ -148,7 +148,7 @@ AND mm.cod_man = $P{cod_man}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fec_ini}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="134" y="136" width="372" height="48" uuid="8918ee6c-b54f-4014-aaf9-0445a0f5495c"/>
 				<textElement>
 					<font size="8"/>
@@ -162,35 +162,35 @@ AND mm.cod_man = $P{cod_man}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nom_pai}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="65" y="211" width="165" height="13" uuid="c57801b9-935b-4859-902b-ecfc26643b5a"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tecnico}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="365" y="205" width="50" height="13" uuid="5cab6b2c-c579-44ad-bad7-5c05abe06534"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{meca}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="459" y="205" width="50" height="13" uuid="8f82dc85-b52e-4c7b-a60e-872f321c90dc"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{elec}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="81" y="224" width="425" height="26" uuid="b6165aa3-da7a-4ee7-8490-155b7c778f7b"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tareas}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="83" y="250" width="425" height="23" uuid="d79095a7-88fc-461c-9d61-5d610f210ee0"/>
 				<textElement>
 					<font size="8"/>

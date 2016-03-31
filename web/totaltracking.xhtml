@@ -5234,8 +5234,9 @@
                             <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezadoFin}" />
                         </p:calendar>
                     </h:panelGrid>
-                    <p:tabView>
-                        <p:tab title="Observaciones Técnicas">
+                    <p:tabView tabindex="#{manMaestroMan.panindex}">
+                        <p:ajax event="tabChange" listener="#{manMaestroMan.onTabPanChange}" />
+                        <p:tab id="tabOBSTEC" title="Observaciones Técnicas">
                             <h:panelGrid columns="4" cellpadding="5">
                                 <h:outputText value="Responsable" style="font-weight:bold;"/>
                                 <p:selectOneMenu value="#{manMaestroMan.cod_usu}" 
@@ -5252,7 +5253,7 @@
                                 <p:inputTextarea cols="87" rows="2" value="#{manMaestroMan.obs_tec}" maxlength="300"/>
                             </h:panelGrid>
                         </p:tab>
-                        <p:tab title="Fallas">
+                        <p:tab id="tabFALL" title="Fallas">
                             <h:panelGrid columns="4" cellpadding="5">
                                 <h:outputText value="Grupo Falla" style="font-weight:bold;"/>
                                 <p:selectOneMenu value="#{manMaestroMan.cod_gru_fal}" 

@@ -117,7 +117,7 @@ public class ManMaestroMan implements Serializable {
     private String ane_det_man, ane_det_obs, ane_tip_ane, ane_rut_ane, ane_cod_usu;
     private String acc_det_man, acc_fec_man, acc_cod_pai, acc_det_can, acc_des_ite, acc_cod_usu;
 
-    private String tabindex, buscar_serie, nompai, nombod, nomubi, cod_gru_fal, cod_fal, otr_fal, mmensaje;
+    private String tabindex, buscar_serie, nompai, nombod, nomubi, cod_gru_fal, cod_fal, otr_fal, mmensaje, panindex;
     private Date dfecha1, dfecha2, dfecha3, dfecfinF, dfecini;
     private TreeNode root, selectednode;
 
@@ -936,6 +936,14 @@ public class ManMaestroMan implements Serializable {
         this.mmensaje = mmensaje;
     }
 
+    public String getPanindex() {
+        return panindex;
+    }
+
+    public void setPanindex(String panindex) {
+        this.panindex = panindex;
+    }
+
     public CatCalendario getCatcalendario() {
         return catcalendario;
     }
@@ -1253,7 +1261,7 @@ public class ManMaestroMan implements Serializable {
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             dfecini = Date.from(Instant.now());
             dfecfinF = Date.from(Instant.now());
-
+            panindex = "0";
             cod_man = "";
             cod_tip = "0";
             det_obs = "";
@@ -1297,6 +1305,7 @@ public class ManMaestroMan implements Serializable {
         if ("".equals(cod_man) || "0".equals(cod_man)) {
             addMessage("Modificar Mantenimiento", "Debe Seleccionar un Registro a Modificar.", 2);
         } else {
+            panindex = "0";
             fallas = new ArrayList<>();
             llenarTipos();
             llenarPeriodos();
@@ -2075,7 +2084,7 @@ public class ManMaestroMan implements Serializable {
 
                 for (int i = 0; i < fallas.size(); i++) {
                     mValues = mValues + ",(" + cod_lis_equ + "," + cod_man + ","
-                            + (i + 1) + "," + fallas.get(i).getCod_gru_fal() + "," + fallas.get(i).getCod_fal() + ",'')";
+                            + (i + 1) + "," + fallas.get(i).getCod_gru_fal() + "," + fallas.get(i).getCod_fal() + ",'" + fallas.get(i).getDet_obs() + "')";
                 }
 
                 if (!"".equals(mValues)) {
@@ -2090,6 +2099,7 @@ public class ManMaestroMan implements Serializable {
                 addMessage("Guardar Mantenimiento", "Error al momento de guardar la información. " + e.getMessage(), 2);
                 System.out.println("Error al Guardar Mantenimiento. " + e.getMessage() + " Query: " + mQuery);
             }
+            RequestContext.getCurrentInstance().execute("PF('wvEncMan').clearFilters()");
             llenarMantenimientos();
             RequestContext.getCurrentInstance().execute("PF('wMaestraNew').hide()");
         }
@@ -2692,7 +2702,7 @@ public class ManMaestroMan implements Serializable {
     }
 
     public void eliminarfalla() {
-        if ("0".equals(cod_fal)) {
+        if ("0".equals(cod_gru_fal)) {
             addMessage("Eliminar Fallas", "Debe Seleccionar una Falla para Remover.", 2);
         } else {
             for (int i = 0; i < fallas.size(); i++) {
@@ -3390,6 +3400,9 @@ public class ManMaestroMan implements Serializable {
         cod_dep = ((CatMantenimientos) event.getObject()).getCod_dep();
         turno = ((CatMantenimientos) event.getObject()).getTurno();
         cod_pri = ((CatMantenimientos) event.getObject()).getCod_pri();
+        cod_alt = ((CatMantenimientos) event.getObject()).getCod_alt();
+        obs_tec = ((CatMantenimientos) event.getObject()).getObs_tec();
+        otr_per = ((CatMantenimientos) event.getObject()).getOtr_per();
         if ("00/00/0000".equals(fec_ini)) {
             fec_ini = "";
         }
@@ -3553,6 +3566,20 @@ public class ManMaestroMan implements Serializable {
                 break;
             case "tabANE":
                 tabindex = "3";
+                break;
+
+        }
+        //System.out.println(tabindex);
+        //RequestContext.getCurrentInstance().update(":frmListaEquipos:tvLE");
+    }
+
+    public void onTabPanChange(TabChangeEvent event) {
+        switch (event.getTab().getId()) {
+            case "tabOBSTEC":
+                panindex = "0";
+                break;
+            case "tabFALL":
+                panindex = "1";
                 break;
 
         }
