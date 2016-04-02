@@ -293,6 +293,14 @@
                                 actionListener="#{manDepartamentos.iniciarventana()}"
                                 disabled="#{manSeguridad.disableOpt('menuDeptos')}"
                                 />
+                    <p:menuitem value="Listados" icon="ui-icon-person"
+                                id="menuListaEspecifica"
+                                onclick="PF('wLisEsp').show()"
+                                update=":frmLisEsp"
+                                actionListener="#{manListaEspecifica.iniciarventana()}"
+                                style="width: 190px;"
+                                disabled="#{manSeguridad.disableOpt('menuListaEspecifica')}"
+                                />
                     <p:menuitem value="Grupos de seguridad" icon="ui-icon-suitcase" 
                                 id="menuGruposSeg"
                                 onclick="PF('wGrupo').show()"
@@ -309,7 +317,6 @@
                                 style="width: 190px;"
                                 disabled="#{manSeguridad.disableOpt('menuCatCtrl')}"
                                 />
-
                     <p:menuitem value="Asignación Usuarios-Grupos" icon="ui-icon-pin-s" 
                                 id="menuAsigUsrGrp"
                                 onclick="PF('wUsrGrp').show()"
@@ -345,7 +352,7 @@
             </p:menubar>
         </h:form>
         
-         <!--******************************************************************** 
+        <!--******************************************************************** 
         *************************     DASHBOARD    ****************************
         *********************************************************************-->
 
@@ -418,7 +425,6 @@
                     <div style="clear:both" />
                 </h:form>
             </div>      
-       
             
         <!--******************************************************************** 
         *************************Barra Notificación ****************************
@@ -5195,8 +5201,8 @@
                         <p:selectOneMenu value="#{manMaestroMan.cod_sup}" 
                                          style=" width: 200px;">
                             <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                            <f:selectItems value="#{manMaestroMan.usuarios}" var="usumanman"
-                                           itemLabel="#{usumanman.det_nom}" itemValue="#{usumanman.cod_usu}"/> 
+                            <f:selectItems value="#{manMaestroMan.supervisores}" var="supmanman"
+                                           itemLabel="#{supmanman.det_nom}" itemValue="#{supmanman.cod_usu}"/> 
                         </p:selectOneMenu>
                         <p:selectOneMenu value="#{manMaestroMan.cod_per}" 
                                          style=" width: 120px;">
@@ -7078,7 +7084,7 @@
             </h:form>
         </p:dialog>  
 
- <!-- *******************************************************************
+        <!-- *******************************************************************
         **************** Pantalla Detalle de evaluacion             ********
         *********************************************************************-->
 
@@ -7191,8 +7197,101 @@
 
             </h:form>
         </p:dialog>  
+        
+        <!-- *******************************************************************
+        *********************** Pantalla Lista Específica **********************
+        *********************************************************************-->
+
+        <p:dialog  id="dlgLisEsp" widgetVar="wLisEsp" modal="true" 
+                   width="580" height="400" closable="false" resizable="false" 
+                   header="Listados Específicos" rendered="true" 
+                   dynamic="true" visible="false" 
+                   >
+
+            <h:form id="frmLisEsp"> 
+                <p:growl id="msgLisEsp" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manListaEspecifica.nuevo()}"
+                                         update=":frmLisEsp"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         action="#{manListaEspecifica.guardar()}"
+                                         update=":frmLisEsp"
+                                         icon="ui-icon-disk"
+                                         />
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         actionListener="#{manListaEspecifica.eliminar()}"
+                                         update=":frmLisEsp"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wLisEsp').hide()"
+                                         action="#{manListaEspecifica.cerrarventana()}" 
+                                         update=":frmLisEsp"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+                <div style=" background-color: #ebf8fe;">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Lista" style="font-weight:bold;"/>
+                        <p:selectOneMenu value="#{manListaEspecifica.cod_lis}" 
+                                         style="width:440px;text-align:right;"
+                                         immediate="false">  
+                            <p:ajax event="change" listener="#{manListaEspecifica.llenarLista()}" update=":frmLisEsp" />
+                            <f:selectItem itemLabel="Seleccione Una" itemValue="0" />
+                            <f:selectItem itemLabel="Supervisores Producción" itemValue="1" />
+                            <f:selectItem itemLabel="Técnicos Mantenimiento" itemValue="2" />
+                            <f:selectItem itemLabel="Aprobaciones Compras" itemValue="3" />
+                            <f:selectItem itemLabel="Aprobaciones Bodega" itemValue="4" />
+                        </p:selectOneMenu>
+                        <h:outputText value="Usuario" style="font-weight:bold;" />
+                        <p:selectOneMenu value="#{manListaEspecifica.cod_usu}" 
+                                         style="width:440px;text-align:right;"
+                                         immediate="false">  
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                            <f:selectItems value="#{manListaEspecifica.usuarios}" var="vusulisesp"
+                                           itemLabel="#{vusulisesp.det_nom}" itemValue="#{vusulisesp.cod_usu}"/>
+                        </p:selectOneMenu>
+                        
+                    </h:panelGrid>
+                    <p:dataTable id="dtDetLisEsp" var="vDetLisEsp" 
+                                 value="#{manListaEspecifica.lista}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manListaEspecifica.catlistaespecifica}" 
+                                 rowKey="#{vDetLisEsp.cod_lis},#{vDetLisEsp.cod_usu}"
+                                 editable="false" 
+                                 style="width:540px"
+                                 scrollable="true"
+                                 scrollHeight="220"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manListaEspecifica.onRowSelect}" 
+                                update=":frmLisEsp" />
+                        <p:column style="width:10px" headerText="Usuario">
+                            <h:outputText value="#{vDetLisEsp.nom_usu}" />
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+            </h:form>
+        </p:dialog>  
  
- <!-- *******************************************************************
+        <!-- *******************************************************************
         **************** Pantalla mantenimiento de Alertas          ********
         *********************************************************************-->
 
