@@ -81,6 +81,7 @@ public class ManMaestroMan implements Serializable {
     private List<CatUbicaciones> ubicaciones;
     private CatUsuarios catusuarios;
     private List<CatUsuarios> usuarios;
+    private List<CatUsuarios> supervisores;
     private CatEquipos catequipos;
     private List<CatEquipos> equipos;
     private CatListaEquipos catlistaequipos;
@@ -350,6 +351,14 @@ public class ManMaestroMan implements Serializable {
 
     public void setUsuarios(List<CatUsuarios> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public List<CatUsuarios> getSupervisores() {
+        return supervisores;
+    }
+
+    public void setSupervisores(List<CatUsuarios> supervisores) {
+        this.supervisores = supervisores;
     }
 
     public CatEquipos getCatequipos() {
@@ -1284,6 +1293,7 @@ public class ManMaestroMan implements Serializable {
             cod_gru_fal = "0";
             cod_fal = "0";
             otr_fal = "";
+            llenarSupervisores();
             llenarTipos();
             llenarPeriodos();
             llenarGrupoFallas();
@@ -1307,6 +1317,7 @@ public class ManMaestroMan implements Serializable {
         } else {
             panindex = "0";
             fallas = new ArrayList<>();
+            llenarSupervisores();
             llenarTipos();
             llenarPeriodos();
             llenarFallas();
@@ -1675,6 +1686,43 @@ public class ManMaestroMan implements Serializable {
         }
     }
 
+    public void llenarSupervisores() {
+        try {
+            supervisores = new ArrayList<>();
+
+            String mQuery = "select usu.cod_usu, usu.nom_usu, usu.des_pas, usu.tip_usu, usu.cod_pai, "
+                    + "usu.cod_dep, usu.det_nom, usu.det_mai,ifnull(pai.nom_pai,'') as nom_pai, ifnull(dep.nom_dep,'') as nom_dep "
+                    + "from cat_usu as usu "
+                    + "left join cat_dep as dep on usu.cod_dep = dep.cod_dep and usu.cod_pai = dep.cod_pai "
+                    + "left join cat_pai as pai on usu.cod_pai = pai.cod_pai "
+                    + "left join lis_esp as lis on usu.cod_usu = lis.cod_usu "
+                    + "where lis.cod_lis = 1 "
+                    + "order by usu.cod_usu;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                supervisores.add(new CatUsuarios(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Supervisores ManMaestroMan. " + e.getMessage());
+        }
+    }
+
     public void llenarUsuarios() {
         try {
             catusuarios = new CatUsuarios();
@@ -1684,7 +1732,10 @@ public class ManMaestroMan implements Serializable {
                     + "usu.cod_dep, usu.det_nom, usu.det_mai,ifnull(pai.nom_pai,'') as nom_pai, ifnull(dep.nom_dep,'') as nom_dep "
                     + "from cat_usu as usu "
                     + "left join cat_dep as dep on usu.cod_dep = dep.cod_dep and usu.cod_pai = dep.cod_pai "
-                    + "left join cat_pai as pai on usu.cod_pai = pai.cod_pai order by cod_usu;";
+                    + "left join cat_pai as pai on usu.cod_pai = pai.cod_pai "
+                    + "left join lis_esp as lis on usu.cod_usu = lis.cod_usu "
+                    + "where lis.cod_lis = 2 "
+                    + "order by cod_usu;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
