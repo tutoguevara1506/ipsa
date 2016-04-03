@@ -408,7 +408,7 @@ public class ManEvaluacionPersonas implements Serializable {
             evaluacionpersonas = new ArrayList<>();
 
             String mQuery = "SELECT id_eva_per, id_per, id_eva, f_eva, per_eva, obs_eva" +
-                            " FROM ipsa.tbl_eva_per WHERE id_per = "+ id_per +" order by id_eva_per;";
+                            " FROM ipsa.tbl_eva_per order by id_eva_per;";
             
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -427,7 +427,7 @@ public class ManEvaluacionPersonas implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Departamentos en ManMaestroMan. " + e.getMessage());
+            System.out.println("Error en el llenado de Evaluaciones en ManEvaluacionPersonas. " + e.getMessage());
         }
     }
 
