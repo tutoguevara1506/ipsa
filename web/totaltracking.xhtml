@@ -7314,8 +7314,8 @@
                             <h:outputText value="#{vEvaPer.f_eva}" />
                         </p:column>
                         <p:column style="width:32px;text-align: center">
-                            <p:commandButton update=":frmEvaPer:pDetEvaPer" oncomplete="PF('wDetEvaPer').show()" icon="ui-icon-search" title="View">
-                                <f:setPropertyActionListener value="#{vEvaPer.id_eva_per}" target="#{manEvaluacionPersonas.selectedEva}" />
+                            <p:commandButton update=":pDetEvaPer" oncomplete="PF('wDetEvaPer').show()" icon="ui-icon-search" title="View">
+                                <f:setPropertyActionListener value="#{vEvaPer.id_eva_per}" target="#{manEvaluacionPersonas.catevaluacionpersonas}" />
                              </p:commandButton>
                         </p:column>
                     </p:dataTable>
@@ -7331,7 +7331,7 @@
                    >
         
             <p:outputPanel id="pDetEvaPer" style="text-align:center;">
-                <p:panelGrid  columns="2" rendered="#{not empty manEvaluacionPersonas.selectedEva}" columnClasses="label,value">
+                <p:panelGrid  columns="2" rendered="#{not empty manEvaluacionPersonas.catevaluacionpersonas}" columnClasses="label,value">
                 <f:facet name="header">
                     <h:outputText value="Persona que evalua" style="font-weight:bold;"/>
                 </f:facet>

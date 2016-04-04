@@ -499,11 +499,6 @@ public class ManEvaluacionPersonas implements Serializable {
         f_eva = format.format(date);
     }
     
-    public void selectedEva() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        f_eva = format.format(f_eva);
-    }
-
     public boolean validardatos() {
         boolean mValidar = true;
         
