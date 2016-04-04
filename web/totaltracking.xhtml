@@ -7206,11 +7206,11 @@
         </p:dialog>  
         
         <!-- *******************************************************************
-        **************** Pantalla mantenimiento de Fallas              ********
+        **************** Pantalla de Evaluacion de personas ********
         *********************************************************************-->
 
         <p:dialog  id="dlgEvaPer" widgetVar="wEvaPer" modal="true" 
-                   width="650" height="450" closable="false" resizable="false" 
+                   width="600" height="450" closable="false" resizable="false" 
                    header="Evaluaciones al personal" rendered="true" 
                    dynamic="true" visible="false" 
                    >
@@ -7258,7 +7258,7 @@
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Persona a Evaluar" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manEvaluacionPersonas.id_per}" 
-                                         style="width:455px;text-align:right;"
+                                         style="width:400px;text-align:right;"
                                          immediate="false">  
                             <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                             <f:selectItems value="#{manEvaluacionPersonas.personas}" var="mpereva"
@@ -7267,7 +7267,7 @@
                         
                         <h:outputText value="Persona que evalua" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manEvaluacionPersonas.per_eva}" 
-                                         style="width:455px;text-align:right;"
+                                         style="width:400px;text-align:right;"
                                          immediate="false">  
                             <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                             <f:selectItems value="#{manEvaluacionPersonas.personas}" var="mpereva"
@@ -7276,7 +7276,7 @@
                         
                         <h:outputText value="Evaluacion" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manEvaluacionPersonas.id_eva}" 
-                                         style="width:455px;text-align:right;"
+                                         style="width:400px;text-align:right;"
                                          immediate="false">  
                             <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                             <f:selectItems value="#{manEvaluacionPersonas.evaluaciones}" var="mevaeva"
@@ -7288,7 +7288,7 @@
                                              showOn="button" size="16"
                                              value="#{manEvaluacionPersonas.dfevaluacion}"
                                              >
-                                    <p:ajax event="dateSelect" listener="#{manSolicitudes.dateSelected}" />
+                                    <p:ajax event="dateSelect" listener="#{manEvaluacionPersonas.dateSelected}" />
                                 </p:calendar> 
                         
                     </h:panelGrid>
@@ -7303,21 +7303,43 @@
                                  scrollHeight="190"
                                  >
                         <p:ajax event="rowSelect" listener="#{manEvaluacionPersonas.onRowSelect}" 
-                                update=":frmFallas" />
-                        <p:column style="width:30px" headerText="Persona Evaluada">
-                            <h:outputText value="#{vEvaPer.id_per}" />
+                                update=":frmEvaPer" />
+                        <p:column style="width:40px" headerText="Persona Evaluada">
+                            <h:outputText value="#{vEvaPer.nom_per}" />
                         </p:column>                    
                         <p:column style="width:80px" headerText="Evaluacion">
-                            <h:outputText value="#{vEvaPer.id_eva}" />
+                            <h:outputText value="#{vEvaPer.nom_eva}" />
                         </p:column>
-                        <p:column style="width:80px" headerText="Fecha Evaluacion">
+                        <p:column style="width:30px" headerText="Fecha Evaluacion">
                             <h:outputText value="#{vEvaPer.f_eva}" />
+                        </p:column>
+                        <p:column style="width:32px;text-align: center">
+                            <p:commandButton update=":frmEvaPer:pDetEvaPer" oncomplete="PF('wDetEvaPer').show()" icon="ui-icon-search" title="View">
+                                <f:setPropertyActionListener value="#{vEvaPer.id_eva_per}" target="#{manEvaluacionPersonas.selectedEva}" />
+                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
                 </div>
-
             </h:form>
         </p:dialog>  
+        
+     
+        <p:dialog  id="dlgDetEvaPer" widgetVar="wDetEvaPer" modal="true" showEffect="fade" hideEffect="fade" 
+                   width="600" height="450" closable="false" resizable="false" 
+                   header="Evaluaciones al personal" rendered="true" 
+                   dynamic="true" visible="false" 
+                   >
+        
+            <p:outputPanel id="pDetEvaPer" style="text-align:center;">
+                <p:panelGrid  columns="2" rendered="#{not empty manEvaluacionPersonas.selectedEva}" columnClasses="label,value">
+                <f:facet name="header">
+                    <h:outputText value="Persona que evalua" style="font-weight:bold;"/>
+                </f:facet>
+ 
+               
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
         
         <!-- *******************************************************************
         *********************** Pantalla Lista Específica **********************

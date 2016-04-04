@@ -209,7 +209,6 @@ public class ManEvaluacionPersonas implements Serializable {
     }
 
     public void iniciarventana() {        
-        id_per = "";
         id_eva_per = "";
         id_per = "";
         id_eva = "";
@@ -407,8 +406,9 @@ public class ManEvaluacionPersonas implements Serializable {
             catevaluacionpersonas = new CatEvaluacionPersonas();
             evaluacionpersonas = new ArrayList<>();
 
-            String mQuery = "SELECT id_eva_per, id_per, id_eva, f_eva, per_eva, obs_eva" +
-                            " FROM ipsa.tbl_eva_per order by id_eva_per;";
+            String mQuery = "SELECT tbl.id_eva_per, tbl.id_per, tbl.id_eva, tbl.f_eva, tbl.per_eva, tbl.obs_eva, concat(per.nombres,' ',per.apellidos), eva.nom_eva" +
+                            " FROM ipsa.tbl_eva_per tbl inner join ipsa.cat_persona per on tbl.id_per = per.id_per "
+                          + " inner join cat_eva eva on tbl.id_eva = eva.id_eva order by id_eva_per;";
             
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -421,7 +421,9 @@ public class ManEvaluacionPersonas implements Serializable {
                         resVariable.getString(3),
                         resVariable.getString(4),
                         resVariable.getString(5),
-                        resVariable.getString(6)
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8)
                 ));
             }
             mAccesos.Desconectar();
@@ -444,8 +446,8 @@ public class ManEvaluacionPersonas implements Serializable {
                     id_eva_per = mAccesos.strQuerySQLvariable(mQuery);
                            
                     
-                    mQuery = "insert into cat_persona (id_eva_per, id_per, id_eva, f_eva, per_eva, obs_eva) "
-                            + "values (" + id_eva_per + "," + id_per + ", str_to_date('" + f_eva + "','%d/%m/%Y')" + ", " + per_eva + ",'" + obs_eva + "');";
+                    mQuery = "insert into tbl_eva_per (id_eva_per, id_per, id_eva, f_eva, per_eva, obs_eva) "
+                            + "values (" + id_eva_per + "," + id_per +  "," + id_eva + ", str_to_date('" + f_eva + "','%d/%m/%Y')" + ", " + per_eva + ",'" + obs_eva + "');";
                 } else {
                     mQuery = "update tbl_eva_per SET "                           
                             + " id_per = '" + id_per + "',"
@@ -463,7 +465,7 @@ public class ManEvaluacionPersonas implements Serializable {
                 addMessage("Guardar Evaluacion Persona", "Error al momento de guardar la información. " + e.getMessage(), 2);
                 System.out.println("Error al Guardar Evaluacion Persona. " + e.getMessage() + " Query: " + mQuery);
             }
-            llenarPersonas();
+            llenarEvaluacionPersonas();
             nuevo();
         }
  
@@ -496,6 +498,11 @@ public class ManEvaluacionPersonas implements Serializable {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         f_eva = format.format(date);
     }
+    
+    public void selectedEva() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        f_eva = format.format(f_eva);
+    }
 
     public boolean validardatos() {
         boolean mValidar = true;
@@ -510,7 +517,7 @@ public class ManEvaluacionPersonas implements Serializable {
             addMessage("Validar Datos", "Debe Ingresar Evaluacion.", 2);
         }
         
-        if ("".equals(f_eva) == true) {
+        if ("".equals(dfevaluacion) == true) {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar Fecha de evaluacion.", 2);
         }
@@ -526,14 +533,11 @@ public class ManEvaluacionPersonas implements Serializable {
 
     public void onRowSelect(SelectEvent event) {
         id_eva_per = ((CatEvaluacionPersonas) event.getObject()).getId_eva_per();
-        id_per = ((CatEvaluacionPersonas) event.getObject()).getId_eva_per();
-        id_eva = ((CatEvaluacionPersonas) event.getObject()).getId_eva_per();
-        f_eva = ((CatEvaluacionPersonas) event.getObject()).getId_eva_per();
-        per_eva = ((CatEvaluacionPersonas) event.getObject()).getId_eva_per();
-        obs_eva = ((CatEvaluacionPersonas) event.getObject()).getId_eva_per();
-        nom_per = ((CatEvaluacionPersonas) event.getObject()).getId_eva_per();
-        nom_per_eva = ((CatEvaluacionPersonas) event.getObject()).getId_eva_per();
-    
+        id_per = ((CatEvaluacionPersonas) event.getObject()).getId_per();
+        id_eva = ((CatEvaluacionPersonas) event.getObject()).getId_eva();
+        f_eva = ((CatEvaluacionPersonas) event.getObject()).getF_eva();
+        per_eva = ((CatEvaluacionPersonas) event.getObject()).getId_per_eva();
+        obs_eva = ((CatEvaluacionPersonas) event.getObject()).getObs_eva();    
     }
 
     public void addMessage(String summary, String detail, int tipo) {
