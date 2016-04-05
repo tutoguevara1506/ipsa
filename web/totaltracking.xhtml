@@ -7314,9 +7314,9 @@
                             <h:outputText value="#{vEvaPer.f_eva}" />
                         </p:column>
                         <p:column style="width:32px;text-align: center">
-                            <p:commandButton update=":pDetEvaPer" oncomplete="PF('wDetEvaPer').show()" icon="ui-icon-search" title="View">
+                            <p:commandButton update=":pDetEvaPer" oncomplete="PF('wDetEvaPer').show()" icon="ui-icon-search" title="View" action="#{manEvaluacionPersonas.llenarEvaluacionDetalle}">
                                 <f:setPropertyActionListener value="#{vEvaPer}" target="#{manEvaluacionPersonas.catevaluacionpersonas}" />
-                             </p:commandButton>
+                            </p:commandButton>
                         </p:column>
                     </p:dataTable>
                 </div>
@@ -7325,20 +7325,57 @@
         
      
         <p:dialog  id="dlgDetEvaPer" widgetVar="wDetEvaPer" modal="true" showEffect="fade" hideEffect="fade" 
-                   width="600" height="450" closable="false" resizable="false" 
+                   width="650" height="550" closable="false" resizable="false" 
                    header="Evaluaciones al personal" rendered="true" 
                    dynamic="true" visible="false" 
                    >
         
-            <p:outputPanel id="pDetEvaPer" style="text-align:center;">
-                <p:panelGrid  columns="2" rendered="#{not empty manEvaluacionPersonas.catevaluacionpersonas}" columnClasses="label,value">
-                <f:facet name="header">
-                    <h:outputText value="Persona que evalua" style="font-weight:bold;"/>
-                </f:facet>
- 
-               
-            </p:panelGrid>
-        </p:outputPanel>
+            <h:form id="pDetEvaPer"> 
+            
+                <p:dataTable id="dtDetEvaPer" var="vDetEvaPer" 
+                             value="#{manEvaluacionPersonas.evaluaciondetalle}" 
+                             emptyMessage="No se encontraron resultados" 
+                             selectionMode="single" selection="#{manEvaluacionPersonas.catevaluaciondetalle}" 
+                             rowKey="#{vDetEvaPer.id_eva_det}"
+                             editable="false" 
+                             style="width:540px"
+                             scrollable="true"
+                             scrollHeight="190"
+                          >
+                        <p:ajax event="rowSelect" listener="#{manEvaluacionPersonas.onRowSelect}" 
+                                update=":frmEvaPer" />
+                        <p:column style="width:40px" headerText="Factor">
+                            <h:outputText value="#{vDetEvaPer.nomfac}" />
+                        </p:column>                    
+                        <p:column style="width:80px" headerText="Criterio">
+                            <h:outputText value="#{vDetEvaPer.nomcri}" />
+                        </p:column>
+                        <p:column style="width:30px" headerText="Malo">
+                            <p:cellEditor>
+                                <f:facet name="output"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}" id="cal1"/></f:facet>
+                                <f:facet name="input"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}" onchange="cal2=false"/></f:facet>
+                            </p:cellEditor>
+                        </p:column> 
+                        <p:column style="width:30px" headerText="Regular">
+                            <p:cellEditor>
+                                <f:facet name="output"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}"id="cal2" /></f:facet>
+                                <f:facet name="input"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}" onchange="cal2=false"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>    
+                        <p:column style="width:30px" headerText="Bueno">
+                            <p:cellEditor>
+                                <f:facet name="output"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}" id="cal3"/></f:facet>
+                                <f:facet name="input"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}" onchange="cal2=false" /></f:facet>
+                            </p:cellEditor>
+                        </p:column>    
+                        <p:column style="width:30px" headerText="Excelente">
+                            <p:cellEditor>
+                                <f:facet name="output"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}" id="cal4"/></f:facet>
+                                <f:facet name="input"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}" onchange="cal2=false" /></f:facet>
+                            </p:cellEditor>
+                        </p:column>    
+                    </p:dataTable>  
+        </h:form>
     </p:dialog>
         
         <!-- *******************************************************************

@@ -32,8 +32,11 @@ public class ManEvaluacionPersonas implements Serializable {
     private List<CatEvaluaciones> evaluaciones;
     private CatEvaluacionPersonas catevaluacionpersonas;
     private List<CatEvaluacionPersonas> evaluacionpersonas;
+    private CatEvaluacionDetalle catevaluaciondetalle;
+    private List<CatEvaluacionDetalle> evaluaciondetalle;
     
-    private String id_eva_per, id_per, id_eva, f_eva, per_eva, obs_eva, nom_per, nom_per_eva;
+    
+    private String id_eva_per, id_per, id_eva, f_eva, per_eva, obs_eva, nom_per, nom_per_eva, califCrit;
     private Date dfevaluacion;
     
     public ManEvaluacionPersonas() {
@@ -148,6 +151,22 @@ public class ManEvaluacionPersonas implements Serializable {
         return evaluacionpersonas;
     }
 
+    public CatEvaluacionDetalle getCatevaluaciondetalle() {
+        return catevaluaciondetalle;
+    }
+
+    public void setCatevaluaciondetalle(CatEvaluacionDetalle catevaluaciondetalle) {
+        this.catevaluaciondetalle = catevaluaciondetalle;
+    }
+
+    public List<CatEvaluacionDetalle> getEvaluaciondetalle() {
+        return evaluaciondetalle;
+    }
+
+    public void setEvaluaciondetalle(List<CatEvaluacionDetalle> evaluaciondetalle) {
+        this.evaluaciondetalle = evaluaciondetalle;
+    }
+    
     public void setEvaluacionpersonas(List<CatEvaluacionPersonas> evaluacionpersonas) {
         this.evaluacionpersonas = evaluacionpersonas;
     }
@@ -206,6 +225,14 @@ public class ManEvaluacionPersonas implements Serializable {
 
     public void setNom_per_eva(String nom_per_eva) {
         this.nom_per_eva = nom_per_eva;
+    }
+
+    public String getCalifCrit() {
+        return califCrit;
+    }
+
+    public void setCalifCrit(String califCrit) {
+        this.califCrit = califCrit;
     }
 
     public void iniciarventana() {        
@@ -274,7 +301,7 @@ public class ManEvaluacionPersonas implements Serializable {
             System.out.println("Error en el llenado de Cargos de Personal. " + e.getMessage() + " Query: " + mQuery);
         }
     }
-    
+       
     public void llenarUsuarios() {
         try {
             catusuarios = new CatUsuarios();
@@ -432,6 +459,40 @@ public class ManEvaluacionPersonas implements Serializable {
             System.out.println("Error en el llenado de Evaluaciones en ManEvaluacionPersonas. " + e.getMessage());
         }
     }
+    
+    public void llenarEvaluacionDetalle() {
+        String mQuery = "";
+        try {
+            catevaluaciondetalle = new CatEvaluacionDetalle();
+            evaluaciondetalle = new ArrayList<>();
+
+            mQuery = "select det.id_eva_det, det.id_eva, det.num_preg, det.id_fac, det.id_cri, eva.nom_eva, fac.nom_fac, cri.nom_cri from "
+                    + " cat_eva_det det inner join cat_fac fac on fac.id_fac = det.id_fac inner join "
+                    + " cat_eva  eva on det.id_eva = eva.id_eva inner join "
+                    + " cat_cri cri on det.id_cri = cri.id_cri where det.id_eva = "+ catevaluacionpersonas.getId_eva() +" order by id_eva_det;";
+            
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                evaluaciondetalle.add(new CatEvaluacionDetalle(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Detalle evaluaciones. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }  
 
     public void guardar() {
         String mQuery = "";
@@ -499,6 +560,9 @@ public class ManEvaluacionPersonas implements Serializable {
         f_eva = format.format(date);
     }
     
+    public void setCalificacion (String c) {
+        califCrit = c;
+    }
     public boolean validardatos() {
         boolean mValidar = true;
         
@@ -532,7 +596,7 @@ public class ManEvaluacionPersonas implements Serializable {
         id_eva = ((CatEvaluacionPersonas) event.getObject()).getId_eva();
         f_eva = ((CatEvaluacionPersonas) event.getObject()).getF_eva();
         per_eva = ((CatEvaluacionPersonas) event.getObject()).getId_per_eva();
-        obs_eva = ((CatEvaluacionPersonas) event.getObject()).getObs_eva();    
+        obs_eva = ((CatEvaluacionPersonas) event.getObject()).getObs_eva(); 
     }
 
     public void addMessage(String summary, String detail, int tipo) {
