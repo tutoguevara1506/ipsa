@@ -7325,7 +7325,7 @@
         
      
         <p:dialog  id="dlgDetEvaPer" widgetVar="wDetEvaPer" modal="true" showEffect="fade" hideEffect="fade" 
-                   width="650" height="550" closable="false" resizable="false" 
+                   width="780" height="550" closable="false" resizable="false" 
                    header="Evaluaciones al personal" rendered="true" 
                    dynamic="true" visible="false" 
                    >
@@ -7338,43 +7338,40 @@
                              selectionMode="single" selection="#{manEvaluacionPersonas.catevaluaciondetalle}" 
                              rowKey="#{vDetEvaPer.id_eva_det}"
                              editable="false" 
-                             style="width:540px"
+                             style="width:750px"
                              scrollable="true"
                              scrollHeight="190"
                           >
-                        <p:ajax event="rowSelect" listener="#{manEvaluacionPersonas.onRowSelect}" 
-                                update=":frmEvaPer" />
-                        <p:column style="width:40px" headerText="Factor">
-                            <h:outputText value="#{vDetEvaPer.nomfac}" />
-                        </p:column>                    
-                        <p:column style="width:80px" headerText="Criterio">
-                            <h:outputText value="#{vDetEvaPer.nomcri}" />
-                        </p:column>
-                        <p:column style="width:30px" headerText="Malo">
-                            <p:cellEditor>
-                                <f:facet name="output"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}" id="cal1"/></f:facet>
-                                <f:facet name="input"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}" onchange="cal2=false"/></f:facet>
-                            </p:cellEditor>
-                        </p:column> 
-                        <p:column style="width:30px" headerText="Regular">
-                            <p:cellEditor>
-                                <f:facet name="output"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}"id="cal2" /></f:facet>
-                                <f:facet name="input"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}" onchange="cal2=false"/></f:facet>
-                            </p:cellEditor>
-                        </p:column>    
-                        <p:column style="width:30px" headerText="Bueno">
-                            <p:cellEditor>
-                                <f:facet name="output"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}" id="cal3"/></f:facet>
-                                <f:facet name="input"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}" onchange="cal2=false" /></f:facet>
-                            </p:cellEditor>
-                        </p:column>    
-                        <p:column style="width:30px" headerText="Excelente">
-                            <p:cellEditor>
-                                <f:facet name="output"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}" id="cal4"/></f:facet>
-                                <f:facet name="input"><p:selectBooleanCheckbox value="#{manEvaluacionPersonas.califCrit}" onchange="cal2=false" /></f:facet>
-                            </p:cellEditor>
-                        </p:column>    
-                    </p:dataTable>  
+                    <f:facet name="header">
+                         EVALUACION DE DESEMPEÑO
+                    </f:facet>
+                    <p:ajax event="rowSelect" listener="#{manEvaluacionPersonas.onRowSelect}" update=":frmEvaPer" />
+                       
+                    <p:column style="width:80px" headerText="Factor" >
+                        <h:outputText value="#{vDetEvaPer.nomfac}" />
+                    </p:column>
+                    <p:column style="width:100px" headerText="Criterio">
+                        <h:outputText value="#{vDetEvaPer.nomcri}" />
+                    </p:column>
+                    <p:column style="width:300px" headerText="Calificación">  
+                        <p:cellEditor>
+                            <f:facet name="output"><p:selectOneRadio onclick="radioButton(this);">
+                                    <f:selectItem itemLabel="Malo" itemValue="1" />
+                                    <f:selectItem itemLabel="Regular" itemValue="2" />
+                                    <f:selectItem itemLabel="Bueno" itemValue="3" />
+                                    <f:selectItem itemLabel="Excelente" itemValue="4" />
+                                </p:selectOneRadio>  
+                            </f:facet>
+                            <f:facet name="input"><p:selectOneRadio onclick="radioButton(this);">
+                                    <f:selectItem itemLabel="Malo" itemValue="1" />
+                                    <f:selectItem itemLabel="Regular" itemValue="2" />
+                                    <f:selectItem itemLabel="Bueno" itemValue="3" />
+                                    <f:selectItem itemLabel="Excelente" itemValue="4" />
+                                </p:selectOneRadio>                               
+                            </f:facet>    
+                        </p:cellEditor>
+                    </p:column> 
+                </p:dataTable>  
         </h:form>
     </p:dialog>
         

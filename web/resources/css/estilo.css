@@ -52,6 +52,10 @@ td {
     font-size: x-small;
 }
 
+tbody {
+    border-color: transparent;
+}
+
 form.jsfcrud_list_form td, td td {
     border-top-style: solid;
     border-bottom-style: solid;

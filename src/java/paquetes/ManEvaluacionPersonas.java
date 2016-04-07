@@ -9,6 +9,7 @@ import java.util.List;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
@@ -34,6 +35,7 @@ public class ManEvaluacionPersonas implements Serializable {
     private List<CatEvaluacionPersonas> evaluacionpersonas;
     private CatEvaluacionDetalle catevaluaciondetalle;
     private List<CatEvaluacionDetalle> evaluaciondetalle;
+    
     
     
     private String id_eva_per, id_per, id_eva, f_eva, per_eva, obs_eva, nom_per, nom_per_eva, califCrit;
@@ -590,6 +592,14 @@ public class ManEvaluacionPersonas implements Serializable {
 
     }
 
+    public void setSelected(ValueChangeEvent event) {
+	        
+        System.out.println("algo "+ id_eva );
+                //employee = (Employee) htmlDataTable.getRowData();
+                //list = new ArrayList<employee>();
+	        //list.add(employee);
+
+	    }
     public void onRowSelect(SelectEvent event) {
         id_eva_per = ((CatEvaluacionPersonas) event.getObject()).getId_eva_per();
         id_per = ((CatEvaluacionPersonas) event.getObject()).getId_per();
