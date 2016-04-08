@@ -38,7 +38,8 @@ public class ManEvaluacionPersonas implements Serializable {
     
     
     
-    private String id_eva_per, id_per, id_eva, f_eva, per_eva, obs_eva, nom_per, nom_per_eva, califCrit;
+    private String id_eva_per, id_per, id_eva, f_eva, per_eva, obs_eva, nom_per, nom_per_eva, califCrit, id_det_eva_per;
+    private String id_fac, id_cri, id_cal;
     private Date dfevaluacion;
     
     public ManEvaluacionPersonas() {
@@ -98,6 +99,46 @@ public class ManEvaluacionPersonas implements Serializable {
 
     public void setId_per(String id_persona) {
         this.id_per = id_persona;
+    }
+
+    public String getId_det_eva_per() {
+        return id_det_eva_per;
+    }
+
+    public void setId_det_eva_per(String id_det_eva_per) {
+        this.id_det_eva_per = id_det_eva_per;
+    }
+
+    public String getId_eva_per() {
+        return id_eva_per;
+    }
+
+    public void setId_eva_per(String id_eva_per) {
+        this.id_eva_per = id_eva_per;
+    }
+
+    public String getId_fac() {
+        return id_fac;
+    }
+
+    public void setId_fac(String id_fac) {
+        this.id_fac = id_fac;
+    }
+
+    public String getId_cri() {
+        return id_cri;
+    }
+
+    public void setId_cri(String id_cri) {
+        this.id_cri = id_cri;
+    }
+
+    public String getId_cal() {
+        return id_cal;
+    }
+
+    public void setId_cal(String id_cal) {
+        this.id_cal = id_cal;
     }
 
     public Date getDfevaluacion() {
@@ -171,14 +212,6 @@ public class ManEvaluacionPersonas implements Serializable {
     
     public void setEvaluacionpersonas(List<CatEvaluacionPersonas> evaluacionpersonas) {
         this.evaluacionpersonas = evaluacionpersonas;
-    }
-
-    public String getId_eva_per() {
-        return id_eva_per;
-    }
-
-    public void setId_eva_per(String id_eva_per) {
-        this.id_eva_per = id_eva_per;
     }
 
     public String getId_eva() {
@@ -471,7 +504,7 @@ public class ManEvaluacionPersonas implements Serializable {
             mQuery = "select det.id_eva_det, det.id_eva, det.num_preg, det.id_fac, det.id_cri, eva.nom_eva, fac.nom_fac, cri.nom_cri from "
                     + " cat_eva_det det inner join cat_fac fac on fac.id_fac = det.id_fac inner join "
                     + " cat_eva  eva on det.id_eva = eva.id_eva inner join "
-                    + " cat_cri cri on det.id_cri = cri.id_cri where det.id_eva = "+ catevaluacionpersonas.getId_eva() +" order by id_eva_det;";
+                    + " cat_cri cri on det.id_cri = cri.id_cri where det.id_eva = "+ id_eva +" order by id_eva_det;";
             
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -511,6 +544,31 @@ public class ManEvaluacionPersonas implements Serializable {
                     
                     mQuery = "insert into tbl_eva_per (id_eva_per, id_per, id_eva, f_eva, per_eva, obs_eva) "
                             + "values (" + id_eva_per + "," + id_per +  "," + id_eva + ", str_to_date('" + f_eva + "','%d/%m/%Y')" + ", " + per_eva + ",'" + obs_eva + "');";
+                    
+                   // insert de detalle de  evaluacion
+                    
+                    llenarEvaluacionDetalle();
+                    
+                    evaluaciondetalle.stream().forEach((evdet) -> {
+                        String mQuery2="";
+
+                        mQuery2 = "SELECT ifnull(max(id_det_eva_per),0)+1 as codigo FROM ipsa.det_eva_per;";
+                        id_det_eva_per = mAccesos.strQuerySQLvariable(mQuery2);
+                        id_fac = evdet.getId_fac();
+                        id_cri = evdet.getId_cri();
+                                                
+                        mQuery2 = "INSERT INTO ipsa.det_eva_per " +
+                                  "(id_det_eva_per, id_eva_per, id_fac, id_cri, id_cal) " +
+                                  "VALUES ("+id_det_eva_per+","+id_eva_per+","+ id_fac+","+ id_cri+","+ id_cal+");";
+
+                        mAccesos.dmlSQLvariable(mQuery2);
+                       // System.out.println(usadd.getCod_usu());
+                    });            
+                    
+                    //mQuery2 = 
+                    
+                    
+                    
                 } else {
                     mQuery = "update tbl_eva_per SET "                           
                             + " id_per = '" + id_per + "',"

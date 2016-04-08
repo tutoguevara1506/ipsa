@@ -7331,7 +7331,17 @@
                    >
         
             <h:form id="pDetEvaPer"> 
-            
+                <p:growl id="msgEvaPer" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">   
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('vDetEvaPer').hide()"
+                                         action="#{manEvaluacionPersonas.cerrarventana()}" 
+                                         update=":frmEvaPer"
+                                         icon="ui-icon-close"
+                                         />
+                    </f:facet>
+                </p:toolbar>
                 <p:dataTable id="dtDetEvaPer" var="vDetEvaPer" 
                              value="#{manEvaluacionPersonas.evaluaciondetalle}" 
                              emptyMessage="No se encontraron resultados" 
@@ -7340,7 +7350,7 @@
                              editable="false" 
                              style="width:750px"
                              scrollable="true"
-                             scrollHeight="190"
+                             scrollHeight="500"
                           >
                     <f:facet name="header">
                          EVALUACION DE DESEMPEÑO
