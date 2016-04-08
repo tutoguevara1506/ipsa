@@ -545,7 +545,7 @@ public class ManEvaluacionPersonas implements Serializable {
                     mQuery = "insert into tbl_eva_per (id_eva_per, id_per, id_eva, f_eva, per_eva, obs_eva) "
                             + "values (" + id_eva_per + "," + id_per +  "," + id_eva + ", str_to_date('" + f_eva + "','%d/%m/%Y')" + ", " + per_eva + ",'" + obs_eva + "');";
                     
-                   // insert de detalle de  evaluacion
+                   // insert de detalle de  evaluacion de una sola vez
                     
                     llenarEvaluacionDetalle();
                     
