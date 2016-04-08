@@ -554,12 +554,13 @@ public class ManEvaluacionPersonas implements Serializable {
 
                         mQuery2 = "SELECT ifnull(max(id_det_eva_per),0)+1 as codigo FROM ipsa.det_eva_per;";
                         id_det_eva_per = mAccesos.strQuerySQLvariable(mQuery2);
+                        id_eva = evdet.getId_eva();
                         id_fac = evdet.getId_fac();
                         id_cri = evdet.getId_cri();
                                                 
                         mQuery2 = "INSERT INTO ipsa.det_eva_per " +
-                                  "(id_det_eva_per, id_eva_per, id_fac, id_cri, id_cal) " +
-                                  "VALUES ("+id_det_eva_per+","+id_eva_per+","+ id_fac+","+ id_cri+","+ id_cal+");";
+                                  "(id_det_eva_per, id_eva_per, id_eva, id_fac, id_cri, id_cal) " +
+                                  "VALUES ("+id_det_eva_per+","+id_eva_per+","+id_eva+","+ id_fac+","+ id_cri+","+ id_cal+");";
 
                         mAccesos.dmlSQLvariable(mQuery2);
                        // System.out.println(usadd.getCod_usu());
@@ -594,18 +595,21 @@ public class ManEvaluacionPersonas implements Serializable {
 
     public void eliminar() {
         String mQuery = "";
+        String mQuery2 = "";
         Accesos mAccesos = new Accesos();
         mAccesos.Conectar();
         if ("".equals(id_per) == false) {
             try {
-                mQuery = "delete from cat_persona where id_per=" + id_per + ";";
+                mQuery2 = "delete from det_eva_per where id_eva_per = " + id_eva_per + ";";
+                mQuery = "delete from tbl_eva_per where id_eva_per=" + id_eva_per + ";";
+                mAccesos.dmlSQLvariable(mQuery2);
                 mAccesos.dmlSQLvariable(mQuery);
-                addMessage("Eliminar Persona", "Información Eliminada con éxito.", 1);
+                addMessage("Eliminar Evaluacion", "Información Eliminada con éxito.", 1);
             } catch (Exception e) {
-                addMessage("Eliminar Persona", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
-                System.out.println("Error al Eliminar Persona. " + e.getMessage() + " Query: " + mQuery);
+                addMessage("Eliminar Evaluacion", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
+                System.out.println("Error al Eliminar Evaluación " + e.getMessage() + " Query: " + mQuery);
             }
-            llenarPersonas();
+            llenarEvaluacionPersonas();
             nuevo();
         } else {
             addMessage("Eliminar Persona", "Debe elegir un Registro.", 2);
@@ -626,12 +630,12 @@ public class ManEvaluacionPersonas implements Serializable {
     public boolean validardatos() {
         boolean mValidar = true;
         
-        if ("".equals(id_per) == true) {
+        if ("0".equals(id_per) == true) {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar Nombre de la persona a evaluar.", 2);
         }
         
-        if ("".equals(id_eva) == true) {
+        if ("0".equals(id_eva) == true) {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar Evaluacion.", 2);
         }
@@ -641,7 +645,7 @@ public class ManEvaluacionPersonas implements Serializable {
             addMessage("Validar Datos", "Debe Ingresar Fecha de evaluacion.", 2);
         }
         
-        if ("".equals(per_eva) == true) {
+        if ("0".equals(per_eva) == true) {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar Persona que evalua.", 2);
         }
