@@ -23,22 +23,16 @@ public class ManEvaluacionPersonas implements Serializable {
     Login cbean;
     private CatPersonas catpersonas;
     private List<CatPersonas> personas;
-    private CatCargos catcargos;
-    private List<CatCargos> cargos;
-    private CatUsuarios catusuarios;
-    private List<CatUsuarios> usuarios;
-    private CatDepartamentos catdepartamentos;
-    private List<CatDepartamentos> departamentos;
     private CatEvaluaciones catevaluaciones;
     private List<CatEvaluaciones> evaluaciones;
     private CatEvaluacionPersonas catevaluacionpersonas;
     private List<CatEvaluacionPersonas> evaluacionpersonas;
     private CatEvaluacionDetalle catevaluaciondetalle;
     private List<CatEvaluacionDetalle> evaluaciondetalle;
-    
-    
-    
-    private String id_eva_per, id_per, id_eva, f_eva, per_eva, obs_eva, nom_per, nom_per_eva, califCrit, id_det_eva_per;
+    private CatDetalleEvaluacionPersonas catdetalleevaluacionpersonas;
+    private List<CatDetalleEvaluacionPersonas> detalleevaluacionpersonas;
+       
+    private String id_eva_per, id_per, id_eva, f_eva, per_eva, obs_eva, nom_per, nom_per_eva, calif, id_det_eva_per;
     private String id_fac, id_cri, id_cal;
     private Date dfevaluacion;
     
@@ -59,38 +53,6 @@ public class ManEvaluacionPersonas implements Serializable {
 
     public void setPersonas(List<CatPersonas> personas) {
         this.personas = personas;
-    }
-
-    public CatCargos getCatcargos() {
-        return catcargos;
-    }
-
-    public void setCatcargos(CatCargos catcargos) {
-        this.catcargos = catcargos;
-    }
-
-    public List<CatCargos> getCargos() {
-        return cargos;
-    }
-
-    public void setCargos(List<CatCargos> cargos) {
-        this.cargos = cargos;
-    }
-
-    public CatUsuarios getCatusuarios() {
-        return catusuarios;
-    }
-
-    public void setCatusuarios(CatUsuarios catusuarios) {
-        this.catusuarios = catusuarios;
-    }
-
-    public List<CatUsuarios> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<CatUsuarios> usuarios) {
-        this.usuarios = usuarios;
     }
     
     public String getId_per() {
@@ -149,22 +111,6 @@ public class ManEvaluacionPersonas implements Serializable {
         this.dfevaluacion = dfevaluacion;
     }
 
-    public CatDepartamentos getCatdepartamentos() {
-        return catdepartamentos;
-    }
-
-    public void setCatdepartamentos(CatDepartamentos catdepartamentos) {
-        this.catdepartamentos = catdepartamentos;
-    }
-
-    public List<CatDepartamentos> getDepartamentos() {
-        return departamentos;
-    }
-
-    public void setDepartamentos(List<CatDepartamentos> departamentos) {
-        this.departamentos = departamentos;
-    }
-
     public CatEvaluaciones getCatevaluaciones() {
         return catevaluaciones;
     }
@@ -214,6 +160,22 @@ public class ManEvaluacionPersonas implements Serializable {
         this.evaluacionpersonas = evaluacionpersonas;
     }
 
+    public CatDetalleEvaluacionPersonas getCatdetalleevaluacionpersonas() {
+        return catdetalleevaluacionpersonas;
+    }
+
+    public void setCatdetalleevaluacionpersonas(CatDetalleEvaluacionPersonas catdetalleevaluacionpersonas) {
+        this.catdetalleevaluacionpersonas = catdetalleevaluacionpersonas;
+    }
+
+    public List<CatDetalleEvaluacionPersonas> getDetalleevaluacionpersonas() {
+        return detalleevaluacionpersonas;
+    }
+
+    public void setDetalleevaluacionpersonas(List<CatDetalleEvaluacionPersonas> detalleevaluacionpersonas) {
+        this.detalleevaluacionpersonas = detalleevaluacionpersonas;
+    }
+    
     public String getId_eva() {
         return id_eva;
     }
@@ -262,12 +224,12 @@ public class ManEvaluacionPersonas implements Serializable {
         this.nom_per_eva = nom_per_eva;
     }
 
-    public String getCalifCrit() {
-        return califCrit;
+    public String getCalif() {
+        return calif;
     }
 
-    public void setCalifCrit(String califCrit) {
-        this.califCrit = califCrit;
+    public void setCalif(String calif) {
+        this.calif = calif;
     }
 
     public void iniciarventana() {        
@@ -279,11 +241,8 @@ public class ManEvaluacionPersonas implements Serializable {
         obs_eva = "";
         nom_per = "";
         nom_per_eva = "";
-        llenarCargos();
-        llenarUsuarios();
         llenarPersonas();
         llenarEvaluaciones();
-        llenarDepartamentos();
         llenarEvaluacionPersonas();
     }
     
@@ -311,65 +270,6 @@ public class ManEvaluacionPersonas implements Serializable {
         nom_per = "";
         nom_per_eva = "";
         personas = new ArrayList<>();
-    }
-
-    public void llenarCargos() {
-        String mQuery = "";
-        try {
-            catcargos = new CatCargos();
-            cargos = new ArrayList<>();
-
-            mQuery = "select id_car, des_car from cat_car order by id_car;";
-            ResultSet resVariable;
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            resVariable = mAccesos.querySQLvariable(mQuery);
-            while (resVariable.next()) {
-                cargos.add(new CatCargos(
-                        resVariable.getString(1),
-                        resVariable.getString(2)
-                ));
-            }
-            mAccesos.Desconectar();
-
-        } catch (Exception e) {
-            System.out.println("Error en el llenado de Cargos de Personal. " + e.getMessage() + " Query: " + mQuery);
-        }
-    }
-       
-    public void llenarUsuarios() {
-        try {
-            catusuarios = new CatUsuarios();
-            usuarios = new ArrayList<>();
-
-            String mQuery = "select usu.cod_usu, usu.nom_usu, usu.des_pas, usu.tip_usu, usu.cod_pai, "
-                    + "usu.cod_dep, usu.det_nom, usu.det_mai,ifnull(pai.nom_pai,'') as nom_pai, ifnull(dep.nom_dep,'') as nom_dep "
-                    + "from cat_usu as usu "
-                    + "left join cat_dep as dep on usu.cod_dep = dep.cod_dep and usu.cod_pai = dep.cod_pai "
-                    + "left join cat_pai as pai on usu.cod_pai = pai.cod_pai order by cod_usu;";
-            ResultSet resVariable;
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            resVariable = mAccesos.querySQLvariable(mQuery);
-            while (resVariable.next()) {
-                usuarios.add(new CatUsuarios(
-                        resVariable.getString(1),
-                        resVariable.getString(2),
-                        resVariable.getString(3),
-                        resVariable.getString(4),
-                        resVariable.getString(5),
-                        resVariable.getString(6),
-                        resVariable.getString(7),
-                        resVariable.getString(8),
-                        resVariable.getString(9),
-                        resVariable.getString(10)
-                ));
-            }
-            mAccesos.Desconectar();
-
-        } catch (Exception e) {
-            System.out.println("Error en el llenado de Catálogo de Usuarios. " + e.getMessage());
-        }
     }
     
     public void llenarPersonas() {
@@ -413,31 +313,6 @@ public class ManEvaluacionPersonas implements Serializable {
         }
     }
 
-    
-    public void llenarDepartamentos() {
-        try {
-            catdepartamentos = new CatDepartamentos();
-            departamentos = new ArrayList<>();
-
-            String mQuery = "select cod_dep, cod_pai, nom_dep "
-                    + "from cat_dep order by cod_dep;";
-            ResultSet resVariable;
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            resVariable = mAccesos.querySQLvariable(mQuery);
-            while (resVariable.next()) {
-                departamentos.add(new CatDepartamentos(
-                        resVariable.getString(1),
-                        resVariable.getString(2),
-                        resVariable.getString(3)
-                ));
-            }
-            mAccesos.Desconectar();
-
-        } catch (Exception e) {
-            System.out.println("Error en el llenado de Departamentos en ManMaestroMan. " + e.getMessage());
-        }
-    }
     
      public void llenarEvaluaciones() {
         String mQuery = "";
@@ -527,7 +402,44 @@ public class ManEvaluacionPersonas implements Serializable {
         } catch (Exception e) {
             System.out.println("Error en el llenado de Detalle evaluaciones. " + e.getMessage() + " Query: " + mQuery);
         }
-    }  
+    } 
+    
+    public void llenarDetalleEvaluacionPersonas() {
+        String mQuery = "";
+        try {
+            catdetalleevaluacionpersonas = new CatDetalleEvaluacionPersonas();
+            detalleevaluacionpersonas = new ArrayList<>();
+
+            mQuery = "SELECT det.id_det_eva_per, det.id_eva_per, det.id_eva, det.id_fac, det.id_cri, det.id_cal, det.calif, eva.nom_eva, fac.nom_fac, cri.nom_cri " +
+                     "FROM ipsa.det_eva_per det inner join cat_eva eva on det.id_eva = eva.id_eva " +
+                     "inner join cat_fac fac on det.id_fac = fac.id_fac " +
+                     "inner join cat_cri cri on det.id_cri = cri.id_cri " +
+                     "where det.id_eva_per ="+catevaluacionpersonas.getId_eva_per()+";";
+            
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                detalleevaluacionpersonas.add(new CatDetalleEvaluacionPersonas(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Registro de Personas. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
 
     public void guardar() {
         String mQuery = "";
@@ -566,8 +478,7 @@ public class ManEvaluacionPersonas implements Serializable {
                        // System.out.println(usadd.getCod_usu());
                     });            
                     
-                    //mQuery2 = 
-                    
+                    //mQuery2 =              
                     
                     
                 } else {
@@ -593,6 +504,29 @@ public class ManEvaluacionPersonas implements Serializable {
  
     }
 
+    public void guardarDetalle() {
+        String mQuery = "";
+        
+        try {
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+                
+            mQuery = "update tbl_eva_per SET "                           
+                    + " calif = '" + calif + "'"
+                    + " WHERE id_eva_per = " + id_det_eva_per + ";"; 
+                                        
+            mAccesos.dmlSQLvariable(mQuery);
+            mAccesos.Desconectar();
+            
+            addMessage("Guardar Evaluacion Persona", "Información Almacenada con éxito.", 1);
+         } catch (Exception e) {
+            addMessage("Guardar Evaluacion Persona", "Error al momento de guardar la información. " + e.getMessage(), 2);
+            System.out.println("Error al Guardar Evaluacion Persona. " + e.getMessage() + " Query: " + mQuery);
+        }
+            llenarEvaluacionPersonas();
+            nuevo(); 
+    }
+    
     public void eliminar() {
         String mQuery = "";
         String mQuery2 = "";
@@ -625,7 +559,7 @@ public class ManEvaluacionPersonas implements Serializable {
     }
     
     public void setCalificacion (String c) {
-        califCrit = c;
+        calif = c;
     }
     public boolean validardatos() {
         boolean mValidar = true;
@@ -669,6 +603,18 @@ public class ManEvaluacionPersonas implements Serializable {
         f_eva = ((CatEvaluacionPersonas) event.getObject()).getF_eva();
         per_eva = ((CatEvaluacionPersonas) event.getObject()).getId_per_eva();
         obs_eva = ((CatEvaluacionPersonas) event.getObject()).getObs_eva(); 
+    }
+    
+    public void onRowDetalle(SelectEvent event) {
+        
+        id_det_eva_per = ((CatDetalleEvaluacionPersonas) event.getObject()).getId_det_eva_per();
+        id_eva_per = ((CatDetalleEvaluacionPersonas) event.getObject()).getId_eva_per();
+        id_eva = ((CatDetalleEvaluacionPersonas) event.getObject()).getId_eva();
+        id_fac = ((CatDetalleEvaluacionPersonas) event.getObject()).getId_fac();
+        id_cri = ((CatDetalleEvaluacionPersonas) event.getObject()).getId_cri(); 
+        id_cal =  ((CatDetalleEvaluacionPersonas) event.getObject()).getId_cal(); 
+        calif =  ((CatDetalleEvaluacionPersonas) event.getObject()).getCalif(); 
+        guardarDetalle();
     }
 
     public void addMessage(String summary, String detail, int tipo) {
