@@ -256,6 +256,7 @@ public class ManEvaluacionPersonas implements Serializable {
         obs_eva = "";
         nom_per = "";
         nom_per_eva = "";
+        llenarPersonas();
         catevaluacionpersonas = new CatEvaluacionPersonas();
     }
 
