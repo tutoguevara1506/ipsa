@@ -7353,13 +7353,13 @@
                              emptyMessage="No se encontraron resultados" 
                              selectionMode="single" selection="#{manEvaluacionPersonas.catdetalleevaluacionpersonas}" 
                              rowKey="#{vDetEvaPer.id_det_eva_per}"
-                             editable="false" 
                              style="width:750px"
                              scrollable="true"
                              scrollHeight="500"
-                          >
-                     <p:ajax event="blur" listener="#{manEvaluacionPersonas.onRowDetalle}" 
-                                update=":frmEvaPer" />
+                             rowIndexVar="rowIndex" 
+                             widgetVar="editeva"
+                                                    >
+                     <p:ajax event="rowSelect" listener="#{manEvaluacionPersonas.onRowDetalle}" update=":frmEvaPer" />
                     <f:facet name="header">
                          EVALUACION DE DESEMPEÑO
                     </f:facet>
@@ -7370,13 +7370,13 @@
                     <p:column style="width:100px" headerText="Criterio">
                         <h:outputText value="#{vDetEvaPer.nom_cri}" />
                     </p:column>
-                    <p:column style="width:300px" headerText="Calificación">  
-                        <p:selectOneRadio onclick="radioButton(this);" value="#{vDetEvaPer.calif}">
+                    <p:column style="width:300px" headerText="Calificación">
+                        <p:selectOneRadio  value="#{vDetEvaPer.calif}" >
                             <f:selectItem itemLabel="Malo" itemValue="1" />
                             <f:selectItem itemLabel="Regular" itemValue="2" />
                             <f:selectItem itemLabel="Bueno" itemValue="3" />
                             <f:selectItem itemLabel="Excelente" itemValue="4" />
-                        </p:selectOneRadio>  
+                        </p:selectOneRadio>                        
                     </p:column> 
                 </p:dataTable>  
         </h:form>
