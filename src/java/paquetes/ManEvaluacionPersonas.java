@@ -505,27 +505,32 @@ public class ManEvaluacionPersonas implements Serializable {
  
     }
 
-    public void guardarDetalle() {
-        String mQuery = "";
+   public void guardarDetalle() {
         
         try {
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
-                
-            mQuery = "update tbl_eva_per SET "                           
-                    + " calif = '" + calif + "'"
-                    + " WHERE id_eva_per = " + id_det_eva_per + ";"; 
+                        
+            detalleevaluacionpersonas.stream().forEach((detevaper) -> {
                                         
-            mAccesos.dmlSQLvariable(mQuery);
+                    String mQuery = "update ipsa.det_eva_per SET "                           
+                    + " calif = '" + detevaper.getCalif() + "'"
+                    + " WHERE id_det_eva_per = " + detevaper.getId_det_eva_per() + ";"; 
+                    
+                    mAccesos.dmlSQLvariable(mQuery);
+                   // System.out.println(usadd.getCod_usu());
+                });            
+                                                                   
+            
             mAccesos.Desconectar();
             
             addMessage("Guardar Evaluacion Persona", "Información Almacenada con éxito.", 1);
          } catch (Exception e) {
             addMessage("Guardar Evaluacion Persona", "Error al momento de guardar la información. " + e.getMessage(), 2);
-            System.out.println("Error al Guardar Evaluacion Persona. " + e.getMessage() + " Query: " + mQuery);
+            System.out.println("Error al Guardar Evaluacion Persona. " + e.getMessage() + " Query: ");
         }
-            llenarEvaluacionPersonas();
-            nuevo(); 
+            //llenarEvaluacionPersonas();
+            //nuevo(); 
     }
     
     public void eliminar() {
