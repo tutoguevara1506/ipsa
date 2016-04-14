@@ -524,8 +524,14 @@ public class ManEvaluacionPersonas implements Serializable {
             String mQuery = "update ipsa.det_eva_per SET "                           
                     + " calif = " + calif + ""
                     + " WHERE id_det_eva_per = " + id_det_eva_per + ";"; 
-                    
+            
             mAccesos.dmlSQLvariable(mQuery);
+            
+            /*String mQuery2 = "update ipsa.tbl_eva_per SET "                           
+                    + " obs_eva = " + obs_eva + ""
+                    + " WHERE id_eva_per = " + id_eva_per + ";"; 
+                             
+            mAccesos.dmlSQLvariable(mQuery2);*/
             mAccesos.Desconectar();
             
          } catch (Exception e) {

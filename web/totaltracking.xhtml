@@ -7355,14 +7355,14 @@
                              editable="false" 
                              style="width:750px"
                              scrollable="true"
-                             scrollHeight="500"
+                             scrollHeight="400"
                              widgetVar="evaDetalle"
                              rowIndexVar="findex"
                           >
                      <p:ajax event="rowSelect" listener="#{manEvaluacionPersonas.onRowDetalle}" 
                                 update=":frmEvaPer" />
                     <f:facet name="header">
-                         EVALUACION DE DESEMPEÑO
+                        <h:outputText value="#{vDetEvaPer.nom_eva}" />
                     </f:facet>
                                            
                     <p:column style="width:80px" headerText="Factor" >
@@ -7379,7 +7379,10 @@
                             <f:selectItem itemLabel="Excelente" itemValue="4" />
                         </p:selectOneRadio>  
                     </p:column> 
-                </p:dataTable>  
+                </p:dataTable>
+                <h:outputText value="Observaciones:" style="font-weight:bold;"/>
+                <p:inputTextarea rows="3" cols="105" value="#{manEvaluacionPersonas.obs_eva}" counter="display" maxlength="500" counterTemplate="{0} caracteres disponibles." autoResize="false" />
+                <h:outputText id="display" />
             </h:form>
         </p:dialog>
         
