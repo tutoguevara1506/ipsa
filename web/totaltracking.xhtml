@@ -7345,11 +7345,6 @@
                                          update=":frmEvaPer"
                                          icon="ui-icon-print"
                                          />
-                         <p:commandButton value="Guardar" style=" width: 100px;"
-                                         action="#{manEvaluacionPersonas.guardarDetalle()}"
-                                         update=":frmEvaPer"
-                                         icon="ui-icon-disk"
-                                         />
                     </f:facet>
                 </p:toolbar>
                 <p:dataTable id="dtDetEvaPer" var="vDetEvaPer" 
@@ -7357,13 +7352,15 @@
                              emptyMessage="No se encontraron resultados" 
                              selectionMode="single" selection="#{manEvaluacionPersonas.catdetalleevaluacionpersonas}" 
                              rowKey="#{vDetEvaPer.id_det_eva_per}"
+                             editable="false" 
                              style="width:750px"
                              scrollable="true"
                              scrollHeight="500"
-                             editable="true"
-                             editMode="cell"                             
-                             >
-
+                             widgetVar="evaDetalle"
+                             rowIndexVar="findex"
+                          >
+                     <p:ajax event="rowSelect" listener="#{manEvaluacionPersonas.onRowDetalle}" 
+                                update=":frmEvaPer" />
                     <f:facet name="header">
                          EVALUACION DE DESEMPEÑO
                     </f:facet>
@@ -7375,24 +7372,12 @@
                         <h:outputText value="#{vDetEvaPer.nom_cri}" />
                     </p:column>
                     <p:column style="width:300px" headerText="Calificación">  
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                
-                                <p:selectOneRadio value="#{vDetEvaPer.calif}">
-                                    <f:selectItem itemLabel="Malo" itemValue="1" />
-                                    <f:selectItem itemLabel="Regular" itemValue="2" />
-                                    <f:selectItem itemLabel="Bueno" itemValue="3" />
-                                    <f:selectItem itemLabel="Excelente" itemValue="4" />
-                                </p:selectOneRadio>   </f:facet>
-                            <f:facet name="input">
-                                <p:selectOneRadio value="#{vDetEvaPer.calif}">
-                                    <f:selectItem itemLabel="Malo" itemValue="1" />
-                                    <f:selectItem itemLabel="Regular" itemValue="2" />
-                                    <f:selectItem itemLabel="Bueno" itemValue="3" />
-                                    <f:selectItem itemLabel="Excelente" itemValue="4" />
-                                </p:selectOneRadio>        
-                            </f:facet>
-                        </p:cellEditor>
+                        <p:selectOneRadio onclick="PF('evaDetalle').selectRow(#{findex})" value="#{vDetEvaPer.calif}">
+                            <f:selectItem itemLabel="Malo" itemValue="1" />
+                            <f:selectItem itemLabel="Regular" itemValue="2" />
+                            <f:selectItem itemLabel="Bueno" itemValue="3" />
+                            <f:selectItem itemLabel="Excelente" itemValue="4" />
+                        </p:selectOneRadio>  
                     </p:column> 
                 </p:dataTable>  
             </h:form>

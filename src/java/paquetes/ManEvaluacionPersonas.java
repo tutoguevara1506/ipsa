@@ -511,20 +511,23 @@ public class ManEvaluacionPersonas implements Serializable {
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
                         
-            detalleevaluacionpersonas.stream().forEach((detevaper) -> {
+            /*detalleevaluacionpersonas.stream().forEach((detevaper) -> {
                                         
                     String mQuery = "update ipsa.det_eva_per SET "                           
-                    + " calif = '" + detevaper.getCalif() + "'"
+                    + " calif = " + detevaper.getCalif() + ""
                     + " WHERE id_det_eva_per = " + detevaper.getId_det_eva_per() + ";"; 
                     
                     mAccesos.dmlSQLvariable(mQuery);
                    // System.out.println(usadd.getCod_usu());
-                });            
-                                                                   
+                });  */
             
+            String mQuery = "update ipsa.det_eva_per SET "                           
+                    + " calif = " + calif + ""
+                    + " WHERE id_det_eva_per = " + id_det_eva_per + ";"; 
+                    
+            mAccesos.dmlSQLvariable(mQuery);
             mAccesos.Desconectar();
             
-            addMessage("Guardar Evaluacion Persona", "Información Almacenada con éxito.", 1);
          } catch (Exception e) {
             addMessage("Guardar Evaluacion Persona", "Error al momento de guardar la información. " + e.getMessage(), 2);
             System.out.println("Error al Guardar Evaluacion Persona. " + e.getMessage() + " Query: ");
@@ -611,8 +614,7 @@ public class ManEvaluacionPersonas implements Serializable {
         obs_eva = ((CatEvaluacionPersonas) event.getObject()).getObs_eva(); 
     }
     
-    public void onRowDetalle(SelectEvent event) {
-        
+    public void onRowDetalle(SelectEvent event) {      
         id_det_eva_per = ((CatDetalleEvaluacionPersonas) event.getObject()).getId_det_eva_per();
         id_eva_per = ((CatDetalleEvaluacionPersonas) event.getObject()).getId_eva_per();
         id_eva = ((CatDetalleEvaluacionPersonas) event.getObject()).getId_eva();
