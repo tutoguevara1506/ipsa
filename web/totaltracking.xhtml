@@ -7301,6 +7301,8 @@
                                  style="width:540px"
                                  scrollable="true"
                                  scrollHeight="190"
+                                 widgetVar="evaCabecera"
+                                 rowIndexVar="eindex"
                                  >
                         <p:ajax event="rowSelect" listener="#{manEvaluacionPersonas.onRowSelect}" 
                                 update=":frmEvaPer" />
@@ -7314,7 +7316,7 @@
                             <h:outputText value="#{vEvaPer.f_eva}" />
                         </p:column>
                         <p:column style="width:32px;text-align: center">
-                            <p:commandButton update=":pDetEvaPer" oncomplete="PF('wDetEvaPer').show()" icon="ui-icon-search" title="View" action="#{manEvaluacionPersonas.llenarDetalleEvaluacionPersonas}">
+                            <p:commandButton update=":pDetEvaPer" oncomplete="PF('wDetEvaPer').show()" onclick="PF('evaCabecera').selectRow(#{eindex})" icon="ui-icon-search" title="View" action="#{manEvaluacionPersonas.llenarDetalleEvaluacionPersonas}">
                                 <f:setPropertyActionListener value="#{vEvaPer}" target="#{manEvaluacionPersonas.catevaluacionpersonas}" />
                             </p:commandButton>
                         </p:column>
@@ -7324,7 +7326,7 @@
         </p:dialog>          
      
         <p:dialog  id="dlgDetEvaPer" widgetVar="wDetEvaPer" modal="true" showEffect="fade" hideEffect="fade" 
-                   width="780" height="550" closable="false" resizable="false" 
+                   width="800" height="550" closable="false" resizable="false" 
                    header="Evaluaciones al personal" rendered="true" 
                    dynamic="true" visible="false" 
                    >
@@ -7335,15 +7337,14 @@
                     <f:facet name="left">   
                         <p:commandButton value="Cerrar" style=" width: 100px;"
                                          onclick="PF('wDetEvaPer').hide()"
-                                         action="#{manEvaluacionPersonas.cerrarventana()}" 
+                                         action="#{manEvaluacionPersonas.cerrardetalle()}" 
                                          update=":frmEvaPer"
                                          icon="ui-icon-close"
                                          />
-                         <p:commandButton value="Imprimir" style=" width: 100px;"
-                                         onclick="PF('wDetEvaPer').hide()"
-                                         action="#{manEvaluacionPersonas.cerrarventana()}" 
-                                         update=":frmEvaPer"
-                                         icon="ui-icon-print"
+                         <p:commandButton value="Imprimir" icon="ui-icon-print"
+                                         onclick="this.form.target = '_blank';" 
+                                         action="#{manEvaluacionPersonas.imprimir()}" 
+                                         ajax="false"
                                          />
                     </f:facet>
                 </p:toolbar>
@@ -7353,7 +7354,7 @@
                              selectionMode="single" selection="#{manEvaluacionPersonas.catdetalleevaluacionpersonas}" 
                              rowKey="#{vDetEvaPer.id_det_eva_per}"
                              editable="false" 
-                             style="width:750px"
+                             style="width:780px"
                              scrollable="true"
                              scrollHeight="400"
                              widgetVar="evaDetalle"
@@ -7364,7 +7365,9 @@
                     <f:facet name="header">
                         <h:outputText value="#{vDetEvaPer.nom_eva}" />
                     </f:facet>
-                                           
+                    <p:column style="width:10px" headerText="No." >
+                        <h:outputText value="#{vDetEvaPer.num_preg}" />
+                    </p:column>                     
                     <p:column style="width:80px" headerText="Factor" >
                         <h:outputText value="#{vDetEvaPer.nom_fac}" />
                     </p:column>

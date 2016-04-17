@@ -121,6 +121,11 @@ tr.jsfcrud_even_row {
     background: #003399 !important;
  }
  
+ 
+.ui-selectoneradio.ui-widget td {
+    border: 0 none;
+}
+ 
   
  /* Custom styles for the Timeline */  
 div.timeline-frame {  

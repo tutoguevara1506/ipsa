@@ -1,17 +1,27 @@
 package paquetes;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
 import org.primefaces.event.SelectEvent;
 
 @Named
@@ -33,7 +43,7 @@ public class ManEvaluacionPersonas implements Serializable {
     private List<CatDetalleEvaluacionPersonas> detalleevaluacionpersonas;
        
     private String id_eva_per, id_per, id_eva, f_eva, per_eva, obs_eva, nom_per, nom_per_eva, calif, id_det_eva_per;
-    private String id_fac, id_cri, id_cal;
+    private String id_fac, id_cri, id_cal, num_preg;
     private Date dfevaluacion;
     
     public ManEvaluacionPersonas() {
@@ -232,6 +242,14 @@ public class ManEvaluacionPersonas implements Serializable {
         this.calif = calif;
     }
 
+    public String getNum_preg() {
+        return num_preg;
+    }
+
+    public void setNum_preg(String num_preg) {
+        this.num_preg = num_preg;
+    }
+    
     public void iniciarventana() {        
         id_eva_per = "";
         id_per = "";
@@ -248,10 +266,11 @@ public class ManEvaluacionPersonas implements Serializable {
     
     public void nuevo() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-         id_eva_per = "";
+        id_eva_per = "";
         id_per = "";
         id_eva = "";
         f_eva = "";
+        dfevaluacion = new Date();
         per_eva = "";
         obs_eva = "";
         nom_per = "";
@@ -261,7 +280,6 @@ public class ManEvaluacionPersonas implements Serializable {
     }
 
     public void cerrarventana() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         id_eva_per = "";
         id_per = "";
         id_eva = "";
@@ -271,6 +289,12 @@ public class ManEvaluacionPersonas implements Serializable {
         nom_per = "";
         nom_per_eva = "";
         personas = new ArrayList<>();
+    }
+    
+    public void cerrardetalle() {
+        calif = "";
+        id_det_eva_per = "";
+        guardaObservacion();
     }
     
     public void llenarPersonas() {
@@ -344,7 +368,7 @@ public class ManEvaluacionPersonas implements Serializable {
             catevaluacionpersonas = new CatEvaluacionPersonas();
             evaluacionpersonas = new ArrayList<>();
 
-            String mQuery = "SELECT tbl.id_eva_per, tbl.id_per, tbl.id_eva, tbl.f_eva, tbl.per_eva, tbl.obs_eva, concat(per.nombres,' ',per.apellidos), eva.nom_eva" +
+            String mQuery = "SELECT tbl.id_eva_per, tbl.id_per, tbl.id_eva, DATE_FORMAT(tbl.f_eva, '%d/%m/%Y'), tbl.per_eva, tbl.obs_eva, concat(per.nombres,' ',per.apellidos), eva.nom_eva" +
                             " FROM ipsa.tbl_eva_per tbl inner join ipsa.cat_persona per on tbl.id_per = per.id_per "
                           + " inner join cat_eva eva on tbl.id_eva = eva.id_eva order by id_eva_per;";
             
@@ -411,7 +435,7 @@ public class ManEvaluacionPersonas implements Serializable {
             catdetalleevaluacionpersonas = new CatDetalleEvaluacionPersonas();
             detalleevaluacionpersonas = new ArrayList<>();
 
-            mQuery = "SELECT det.id_det_eva_per, det.id_eva_per, det.id_eva, det.id_fac, det.id_cri, det.id_cal, det.calif, eva.nom_eva, fac.nom_fac, cri.nom_cri " +
+            mQuery = "SELECT det.id_det_eva_per, det.id_eva_per, det.id_eva, det.id_fac, det.num_preg, det.id_cri, det.id_cal, det.calif, eva.nom_eva, fac.nom_fac, cri.nom_cri " +
                      "FROM ipsa.det_eva_per det inner join cat_eva eva on det.id_eva = eva.id_eva " +
                      "inner join cat_fac fac on det.id_fac = fac.id_fac " +
                      "inner join cat_cri cri on det.id_cri = cri.id_cri " +
@@ -432,7 +456,8 @@ public class ManEvaluacionPersonas implements Serializable {
                         resVariable.getString(7),
                         resVariable.getString(8),
                         resVariable.getString(9),
-                        resVariable.getString(10)
+                        resVariable.getString(10),
+                        resVariable.getString(11)
                 ));
             }
             mAccesos.Desconectar();
@@ -469,11 +494,12 @@ public class ManEvaluacionPersonas implements Serializable {
                         id_det_eva_per = mAccesos.strQuerySQLvariable(mQuery2);
                         id_eva = evdet.getId_eva();
                         id_fac = evdet.getId_fac();
+                        num_preg= evdet.getNum_preg();
                         id_cri = evdet.getId_cri();
                                                 
                         mQuery2 = "INSERT INTO ipsa.det_eva_per " +
-                                  "(id_det_eva_per, id_eva_per, id_eva, id_fac, id_cri, id_cal) " +
-                                  "VALUES ("+id_det_eva_per+","+id_eva_per+","+id_eva+","+ id_fac+","+ id_cri+","+ id_cal+");";
+                                  "(id_det_eva_per, id_eva_per, id_eva, id_fac, num_preg, id_cri, id_cal) " +
+                                  "VALUES ("+id_det_eva_per+","+id_eva_per+","+id_eva+","+ id_fac+","+ num_preg+","+ id_cri+","+ id_cal+");";
 
                         mAccesos.dmlSQLvariable(mQuery2);
                        // System.out.println(usadd.getCod_usu());
@@ -486,7 +512,7 @@ public class ManEvaluacionPersonas implements Serializable {
                     mQuery = "update tbl_eva_per SET "                           
                             + " id_per = '" + id_per + "',"
                             + " id_eva = '" + id_eva + "',"
-                            + " f_eva = '" + f_eva + "',"
+                            + " f_eva = str_to_date('" + f_eva + "','%d/%m/%Y'),"
                             + " per_eva = '" + per_eva + "',"
                             + " obs_eva = '" + obs_eva + "'"
                             + " WHERE id_eva_per = " + id_eva_per + ";";
@@ -527,13 +553,6 @@ public class ManEvaluacionPersonas implements Serializable {
             
             mAccesos.dmlSQLvariable(mQuery);
             
-            /*String mQuery2 = "update ipsa.tbl_eva_per SET "                           
-                    + " obs_eva = " + obs_eva + ""
-                    + " WHERE id_eva_per = " + id_eva_per + ";"; 
-                             
-            mAccesos.dmlSQLvariable(mQuery2);*/
-            mAccesos.Desconectar();
-            
          } catch (Exception e) {
             addMessage("Guardar Evaluacion Persona", "Error al momento de guardar la información. " + e.getMessage(), 2);
             System.out.println("Error al Guardar Evaluacion Persona. " + e.getMessage() + " Query: ");
@@ -542,7 +561,25 @@ public class ManEvaluacionPersonas implements Serializable {
             //nuevo(); 
     }
     
-    public void eliminar() {
+   public void guardaObservacion() {
+       try {
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            String mQuery = "update ipsa.tbl_eva_per SET "                           
+                    + " obs_eva = '" + obs_eva + "'"
+                    + " WHERE id_eva_per = " + id_eva_per + ";"; 
+                             
+            mAccesos.dmlSQLvariable(mQuery);
+            mAccesos.Desconectar();            
+            
+       } catch (Exception e) {
+            addMessage("Guardar Observacion de evaluacion", "Error al momento de guardar la observacion. " + e.getMessage(), 2);
+            System.out.println("Error al Guardar Observacion de Evaluacion. " + e.getMessage());
+        }
+  
+   }
+   
+   public void eliminar() {
         String mQuery = "";
         String mQuery2 = "";
         Accesos mAccesos = new Accesos();
@@ -603,21 +640,15 @@ public class ManEvaluacionPersonas implements Serializable {
 
     }
 
-    public void setSelected(ValueChangeEvent event) {
-	        
-        System.out.println("algo "+ id_eva );
-                //employee = (Employee) htmlDataTable.getRowData();
-                //list = new ArrayList<employee>();
-	        //list.add(employee);
-
-	    }
-    public void onRowSelect(SelectEvent event) {
+    public void onRowSelect(SelectEvent event) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         id_eva_per = ((CatEvaluacionPersonas) event.getObject()).getId_eva_per();
         id_per = ((CatEvaluacionPersonas) event.getObject()).getId_per();
         id_eva = ((CatEvaluacionPersonas) event.getObject()).getId_eva();
         f_eva = ((CatEvaluacionPersonas) event.getObject()).getF_eva();
         per_eva = ((CatEvaluacionPersonas) event.getObject()).getId_per_eva();
-        obs_eva = ((CatEvaluacionPersonas) event.getObject()).getObs_eva(); 
+        obs_eva = ((CatEvaluacionPersonas) event.getObject()).getObs_eva();        
+        dfevaluacion = format.parse(f_eva);
     }
     
     public void onRowDetalle(SelectEvent event) {      
@@ -627,8 +658,39 @@ public class ManEvaluacionPersonas implements Serializable {
         id_fac = ((CatDetalleEvaluacionPersonas) event.getObject()).getId_fac();
         id_cri = ((CatDetalleEvaluacionPersonas) event.getObject()).getId_cri(); 
         id_cal =  ((CatDetalleEvaluacionPersonas) event.getObject()).getId_cal(); 
-        calif =  ((CatDetalleEvaluacionPersonas) event.getObject()).getCalif(); 
+        calif =  ((CatDetalleEvaluacionPersonas) event.getObject()).getCalif();
         guardarDetalle();
+    }
+    
+    public void imprimir() {
+        guardaObservacion();
+        try {
+            byte[] content;
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            content = imprimirEvaluacion();
+            response.setContentType("application/pdf");
+            response.setContentLength(content == null ? 0 : content.length);
+            response.getOutputStream().write(content);
+            response.getOutputStream().flush();
+            FacesContext.getCurrentInstance().responseComplete();
+        } catch (SQLException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public byte[] imprimirEvaluacion() throws SQLException, JRException {
+        ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String reportPath = ctx.getRealPath(File.separator + "reportes" + File.separator);
+        HashMap param = new HashMap();
+        param.put("id_eva_per", id_eva_per);
+        //param.put("cod_man", cod_man);
+
+        Accesos racc = new Accesos();
+        return JasperRunManager.runReportToPdf(reportPath + File.separator + "evaluacionDesempeno.jasper", param, racc.Conectar());
     }
 
     public void addMessage(String summary, String detail, int tipo) {
