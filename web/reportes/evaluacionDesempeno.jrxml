@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f7c2357c-b9d5-40fb-ba83-1d6aef871cee">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="532" leftMargin="40" rightMargin="40" topMargin="30" bottomMargin="30" uuid="f7c2357c-b9d5-40fb-ba83-1d6aef871cee">
 	<property name="ireport.zoom" value="1.8150000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="79"/>
+	<property name="ireport.y" value="192"/>
 	<parameter name="id_eva_per" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT tbl.id_eva_per, tbl.id_per, tbl.id_eva, tbl.f_eva, tbl.per_eva, tbl.obs_eva, eva.nom_eva, det.id_fac, fac.nom_fac, cri.nom_cri,
-det.num_preg, det.calif
+det.num_preg, IF(det.calif = 1, 'X', '') as malo,
+IF(det.calif = 2, 'X', '') as regular,
+IF(det.calif = 3, 'X', '') as bueno,
+IF(det.calif = 4, 'X', '') as excelente
 FROM ipsa.tbl_eva_per tbl inner join det_eva_per det on tbl.id_eva_per = det.id_eva_per
 inner join cat_eva eva on det.id_eva = eva.id_eva
 inner join cat_fac fac on det.id_fac = fac.id_fac
 inner join cat_cri cri on det.id_cri = cri.id_cri 
-where  tbl.id_eva_per = $P{id_eva_per};]]>
+where  tbl.id_eva_per = $P{id_eva_per} order by det.num_preg;]]>
 	</queryString>
 	<field name="id_eva_per" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -48,9 +51,10 @@ where  tbl.id_eva_per = $P{id_eva_per};]]>
 	<field name="num_preg" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="calif" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="malo" class="java.lang.String"/>
+	<field name="regular" class="java.lang.String"/>
+	<field name="bueno" class="java.lang.String"/>
+	<field name="excelente" class="java.lang.String"/>
 	<group name="encabezado">
 		<groupExpression><![CDATA[$F{id_eva_per}]]></groupExpression>
 		<groupHeader>
@@ -67,11 +71,11 @@ where  tbl.id_eva_per = $P{id_eva_per};]]>
 		<groupFooter>
 			<band height="118">
 				<textField>
-					<reportElement x="0" y="23" width="541" height="41" uuid="b6f68865-0c5a-41d3-9863-b453f217824a"/>
+					<reportElement x="0" y="38" width="541" height="41" uuid="b6f68865-0c5a-41d3-9863-b453f217824a"/>
 					<textFieldExpression><![CDATA[$F{obs_eva}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="3" width="85" height="20" uuid="7eb31f8a-4ff0-4369-8fee-ed6d0edd612f"/>
+					<reportElement x="0" y="18" width="85" height="20" uuid="7eb31f8a-4ff0-4369-8fee-ed6d0edd612f"/>
 					<text><![CDATA[Observaciones:]]></text>
 				</staticText>
 			</band>
@@ -80,14 +84,43 @@ where  tbl.id_eva_per = $P{id_eva_per};]]>
 	<group name="factor">
 		<groupExpression><![CDATA[$F{id_fac}]]></groupExpression>
 		<groupHeader>
-			<band height="32">
+			<band height="53">
+				<staticText>
+					<reportElement x="0" y="33" width="47" height="20" uuid="e6dcd397-d7e0-40b2-b185-83b235da470e"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="357" y="33" width="51" height="20" uuid="95dbbf3e-4bef-4aeb-9d6c-a998ad3d5b70"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Regular]]></text>
+				</staticText>
 				<textField>
-					<reportElement x="0" y="11" width="538" height="20" uuid="d815eed5-9e4e-43aa-8f0e-1f2c70ed98f6"/>
+					<reportElement x="0" y="4" width="538" height="20" uuid="d815eed5-9e4e-43aa-8f0e-1f2c70ed98f6"/>
 					<textElement>
 						<font isUnderline="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nom_fac}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement x="408" y="33" width="44" height="20" uuid="36f54732-8c5d-4e9c-af1f-4b447298ff76"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Bueno]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="306" y="33" width="51" height="20" uuid="4eb1495d-60aa-41fd-8e15-e995641553eb"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Malo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="47" y="33" width="259" height="20" uuid="ec03d727-d56d-4833-a05c-3fb53d40f496"/>
+					<text><![CDATA[Criterio de evaluación]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="452" y="33" width="49" height="20" uuid="19c66277-ac57-4a8d-9f1d-bb86c0843e48"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Excelente]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 	</group>
@@ -95,65 +128,36 @@ where  tbl.id_eva_per = $P{id_eva_per};]]>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="55" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<elementGroup/>
-			<staticText>
-				<reportElement x="0" y="4" width="47" height="20" uuid="e6dcd397-d7e0-40b2-b185-83b235da470e"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[No.]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="0" y="24" width="47" height="20" uuid="14110fee-2030-45fd-8aef-41972f086ea5"/>
+				<reportElement x="0" y="3" width="47" height="20" uuid="14110fee-2030-45fd-8aef-41972f086ea5"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{num_preg}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="47" y="4" width="259" height="20" uuid="ec03d727-d56d-4833-a05c-3fb53d40f496"/>
-				<text><![CDATA[nom_cri]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="47" y="24" width="259" height="20" uuid="c59a9e87-f000-4942-b678-e4cd36020c62"/>
+				<reportElement x="47" y="3" width="259" height="20" uuid="c59a9e87-f000-4942-b678-e4cd36020c62"/>
 				<textFieldExpression><![CDATA[$F{nom_cri}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="306" y="4" width="67" height="20" uuid="4eb1495d-60aa-41fd-8e15-e995641553eb"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[Malo]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="306" y="24" width="67" height="20" uuid="169a6f62-bdfc-42c6-b02b-2ad225394415"/>
+				<reportElement x="306" y="3" width="51" height="20" uuid="6113ac03-5496-4361-a76d-c8533c59af27"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{calif}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{malo}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="373" y="4" width="66" height="20" uuid="95dbbf3e-4bef-4aeb-9d6c-a998ad3d5b70"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[Regular]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="373" y="24" width="66" height="20" uuid="dc259d12-b4a0-4cc0-b716-6cf07f42d7a2"/>
+				<reportElement x="357" y="3" width="51" height="20" uuid="28bbef49-b624-423d-8916-7a37a82868c6"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{calif}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{regular}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="439" y="4" width="61" height="20" uuid="36f54732-8c5d-4e9c-af1f-4b447298ff76"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[Bueno]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="439" y="24" width="61" height="20" uuid="65df35ce-cd10-4e31-ac8f-aed84c96f14c"/>
+				<reportElement x="408" y="3" width="44" height="20" uuid="8b559378-7e86-4272-a7f6-a4aca92f41de"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{calif}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bueno}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="500" y="4" width="72" height="20" uuid="19c66277-ac57-4a8d-9f1d-bb86c0843e48"/>
+			<textField>
+				<reportElement x="452" y="3" width="49" height="20" uuid="c7be307b-71cf-4708-be09-40ed7dcbd804"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[Excelente]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="500" y="24" width="72" height="20" uuid="965acb6c-3c60-4d0b-80e6-cf92e3c50c1d"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{calif}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{excelente}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
