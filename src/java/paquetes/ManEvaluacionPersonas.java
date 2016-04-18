@@ -439,7 +439,7 @@ public class ManEvaluacionPersonas implements Serializable {
                      "FROM ipsa.det_eva_per det inner join cat_eva eva on det.id_eva = eva.id_eva " +
                      "inner join cat_fac fac on det.id_fac = fac.id_fac " +
                      "inner join cat_cri cri on det.id_cri = cri.id_cri " +
-                     "where det.id_eva_per ="+catevaluacionpersonas.getId_eva_per()+";";
+                     "where det.id_eva_per ="+catevaluacionpersonas.getId_eva_per()+" order by det.num_preg asc;";
             
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
