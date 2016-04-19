@@ -150,7 +150,7 @@ public class ManMaestroMan implements Serializable {
             //tle.setGroup(cm.getDes_equ());
 
             //Verifica condicion del mantenimiento
-            now = new Date();
+            /*now = new Date();
 
             long r = (cm.getFec_ini().getTime()) - now.getTime();
             double dias = Math.floor(r / (1000 * 60 * 60 * 24));
@@ -163,8 +163,20 @@ public class ManMaestroMan implements Serializable {
                 color = "atrasoleve";
             } else if ("1".equals(estado) && dias < -30) {
                 color = "atrazado";
+            }*/
+            
+            String status ="";
+            String color = cm.getColor();
+            
+            if ("lime".equals(color)) {
+                status = "entiempo";
+            } else if ("yellow".equals(color)) {
+                status = "atrasoleve";
+            } else if ("red".equals(color)) {
+                status = "atrazado";
             }
-            tle.setStyleClass(color);
+                        
+            tle.setStyleClass(status);
             cmt.setId(cm.getCod_man());
             cmt.setDescription(cm.getDet_obs());
             cmt.setTitle(cm.getDes_equ());
