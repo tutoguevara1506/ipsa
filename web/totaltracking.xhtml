@@ -277,6 +277,13 @@
                                 update=":frmPersonal"
                                 disabled="#{manSeguridad.disableOpt('menuPersonal')}"
                                 />
+                    <p:menuitem value="Evaluaciones" icon="ui-icon-person" 
+                                onclick="PF('wEvaPer').show()"
+                                style="width: 125px;"
+                                action="#{manEvaluacionPersonas.iniciarventana()}" 
+                                update=":frmEvaPer"
+                                disabled="#{manSeguridad.disableOpt('menuEvaluacionPersonal')}"
+                                />
                 </p:submenu>
 
                 <p:submenu label="Reportes" icon="ui-icon-print">
@@ -7803,6 +7810,190 @@
             </h:form>
         </p:dialog>  
 
+        <!-- *******************************************************************
+        **************** Pantalla de Evaluacion de personas ********
+        *********************************************************************-->
+
+        <p:dialog  id="dlgEvaPer" widgetVar="wEvaPer" modal="true" 
+                   width="600" height="450" closable="false" resizable="false" 
+                   header="Evaluaciones al personal" rendered="true" 
+                   dynamic="true" visible="false" 
+                   >
+
+            <h:form id="frmEvaPer"> 
+                <p:growl id="msgEvaPer" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manEvaluacionPersonas.nuevo()}"
+                                         update=":frmEvaPer"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         action="#{manEvaluacionPersonas.guardar()}"
+                                         update=":frmEvaPer"
+                                         icon="ui-icon-disk"
+                                         />
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         actionListener="#{manEvaluacionPersonas.eliminar()}"
+                                         update=":frmEvaPer"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wEvaPer').hide()"
+                                         action="#{manEvaluacionPersonas.cerrarventana()}" 
+                                         update=":frmEvaPer"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+                <div style=" background-color: #ebf8fe;">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Persona a Evaluar" style="font-weight:bold;"/>
+                        <p:selectOneMenu value="#{manEvaluacionPersonas.id_per}" 
+                                         style="width:400px;text-align:right;"
+                                         immediate="false">  
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                            <f:selectItems value="#{manEvaluacionPersonas.personas}" var="mpereva"
+                                           itemLabel="#{mpereva.nombres} #{mpereva.apellidos}" itemValue="#{mpereva.id_per}"/>
+                        </p:selectOneMenu>
+                        
+                        <h:outputText value="Persona que evalua" style="font-weight:bold;"/>
+                        <p:selectOneMenu value="#{manEvaluacionPersonas.per_eva}" 
+                                         style="width:400px;text-align:right;"
+                                         immediate="false">  
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                            <f:selectItems value="#{manEvaluacionPersonas.personas}" var="mpereva"
+                                           itemLabel="#{mpereva.nombres} #{mpereva.apellidos}" itemValue="#{mpereva.id_per}"/>
+                        </p:selectOneMenu>
+                        
+                        <h:outputText value="Evaluacion" style="font-weight:bold;"/>
+                        <p:selectOneMenu value="#{manEvaluacionPersonas.id_eva}" 
+                                         style="width:400px;text-align:right;"
+                                         immediate="false">  
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                            <f:selectItems value="#{manEvaluacionPersonas.evaluaciones}" var="mevaeva"
+                                           itemLabel="#{mevaeva.nom_eva}" itemValue="#{mevaeva.id_eva}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="Fecha de evaluacion" style="font-weight:bold;" />
+                        <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fdeeva"
+                                             readonlyInput="true" 
+                                             showOn="button" size="16"
+                                             value="#{manEvaluacionPersonas.dfevaluacion}"
+                                             >
+                                    <p:ajax event="dateSelect" listener="#{manEvaluacionPersonas.dateSelected}" />
+                                </p:calendar> 
+                        
+                    </h:panelGrid>
+                    <p:dataTable id="dtEvaPer" var="vEvaPer" 
+                                 value="#{manEvaluacionPersonas.evaluacionpersonas}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manEvaluacionPersonas.catevaluacionpersonas}" 
+                                 rowKey="#{vEvaPer.id_eva_per}"
+                                 editable="false" 
+                                 style="width:540px"
+                                 scrollable="true"
+                                 scrollHeight="190"
+                                 widgetVar="evaCabecera"
+                                 rowIndexVar="eindex"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manEvaluacionPersonas.onRowSelect}" 
+                                update=":frmEvaPer" />
+                        <p:column style="width:40px" headerText="Persona Evaluada">
+                            <h:outputText value="#{vEvaPer.nom_per}" />
+                        </p:column>                    
+                        <p:column style="width:80px" headerText="Evaluacion">
+                            <h:outputText value="#{vEvaPer.nom_eva}" />
+                        </p:column>
+                        <p:column style="width:30px" headerText="Fecha Evaluacion">
+                            <h:outputText value="#{vEvaPer.f_eva}" />
+                        </p:column>
+                        <p:column style="width:32px;text-align: center">
+                            <p:commandButton update=":pDetEvaPer" oncomplete="PF('wDetEvaPer').show()" onclick="PF('evaCabecera').selectRow(#{eindex})" icon="ui-icon-search" title="View" action="#{manEvaluacionPersonas.llenarDetalleEvaluacionPersonas}">
+                                <f:setPropertyActionListener value="#{vEvaPer}" target="#{manEvaluacionPersonas.catevaluacionpersonas}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </h:form>
+        </p:dialog>          
+     
+        <p:dialog  id="dlgDetEvaPer" widgetVar="wDetEvaPer" modal="true" showEffect="fade" hideEffect="fade" 
+                   width="800" height="550" closable="false" resizable="false" 
+                   header="Evaluaciones al personal" rendered="true" 
+                   dynamic="true" visible="false" 
+                   >
+        
+            <h:form id="pDetEvaPer"> 
+                <p:growl id="msgEvaPer" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="left">   
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wDetEvaPer').hide()"
+                                         action="#{manEvaluacionPersonas.cerrardetalle()}" 
+                                         update=":frmEvaPer"
+                                         icon="ui-icon-close"
+                                         />
+                         <p:commandButton value="Imprimir" icon="ui-icon-print"
+                                         onclick="this.form.target = '_blank';" 
+                                         action="#{manEvaluacionPersonas.imprimir()}" 
+                                         ajax="false"
+                                         />
+                    </f:facet>
+                </p:toolbar>
+                <p:dataTable id="dtDetEvaPer" var="vDetEvaPer" 
+                             value="#{manEvaluacionPersonas.detalleevaluacionpersonas}" 
+                             emptyMessage="No se encontraron resultados" 
+                             selectionMode="single" selection="#{manEvaluacionPersonas.catdetalleevaluacionpersonas}" 
+                             rowKey="#{vDetEvaPer.id_det_eva_per}"
+                             editable="false" 
+                             style="width:780px"
+                             scrollable="true"
+                             scrollHeight="400"
+                             widgetVar="evaDetalle"
+                             rowIndexVar="findex"
+                          >
+                     <p:ajax event="rowSelect" listener="#{manEvaluacionPersonas.onRowDetalle}" 
+                                update=":frmEvaPer" />
+                    <f:facet name="header">
+                        <h:outputText value="#{vDetEvaPer.nom_eva}" />
+                    </f:facet>
+                    <p:column style="width:10px" headerText="No." >
+                        <h:outputText value="#{vDetEvaPer.num_preg}" />
+                    </p:column>                     
+                    <p:column style="width:80px" headerText="Factor" >
+                        <h:outputText value="#{vDetEvaPer.nom_fac}" />
+                    </p:column>
+                    <p:column style="width:100px" headerText="Criterio">
+                        <h:outputText value="#{vDetEvaPer.nom_cri}" />
+                    </p:column>
+                    <p:column style="width:300px" headerText="Calificación">  
+                        <p:selectOneRadio onclick="PF('evaDetalle').selectRow(#{findex})" value="#{vDetEvaPer.calif}">
+                            <f:selectItem itemLabel="Malo" itemValue="1" />
+                            <f:selectItem itemLabel="Regular" itemValue="2" />
+                            <f:selectItem itemLabel="Bueno" itemValue="3" />
+                            <f:selectItem itemLabel="Excelente" itemValue="4" />
+                        </p:selectOneRadio>  
+                    </p:column> 
+                </p:dataTable>
+                <h:outputText value="Observaciones:" style="font-weight:bold;"/>
+                <p:inputTextarea rows="3" cols="105" value="#{manEvaluacionPersonas.obs_eva}" counter="display" maxlength="500" counterTemplate="{0} caracteres disponibles." autoResize="false" />
+                <h:outputText id="display" />
+            </h:form>
+        </p:dialog>
+        
         <!-- *******************************************************************
         *********************** Pantalla Lista Específica **********************
         *********************************************************************-->

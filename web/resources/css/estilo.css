@@ -52,6 +52,10 @@ td {
     font-size: x-small;
 }
 
+tbody {
+    border-color: transparent;
+}
+
 form.jsfcrud_list_form td, td td {
     border-top-style: solid;
     border-bottom-style: solid;
@@ -116,6 +120,11 @@ tr.jsfcrud_even_row {
  .mtto4 {
     background: #003399 !important;
  }
+ 
+ 
+.ui-selectoneradio.ui-widget td {
+    border: 0 none;
+}
  
   
  /* Custom styles for the Timeline */  
