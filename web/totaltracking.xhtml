@@ -15,7 +15,7 @@
 
     </h:head>
     <h:body id="mBody" onload="PF('bar').show()" >
-        
+
         <!--********************************************************************
         ************************** Barra de Menú *******************************
         *********************************************************************-->
@@ -32,7 +32,6 @@
                                     actionListener="#{manPaises.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuProcesos')}"
                                     />
-
                         <p:menuitem value="Fabricantes" icon="ui-icon-person" 
                                     onclick="PF('wPro').show()"
                                     style="width: 125px;"
@@ -111,6 +110,13 @@
                                 style="width: 125px;"
                                 update=":frmMaestra"
                                 actionListener="#{manMaestroMan.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuMattoMaestro')}"
+                                />
+                    <p:menuitem value="Integral" icon="ui-icon-wrench" 
+                                onclick="PF('wIntegralIni').show()"
+                                style="width: 125px;"
+                                update=":frmIntegralIni"
+                                actionListener="#{manMaestroMan.iniciarventanaintegral()}"
                                 disabled="#{manSeguridad.disableOpt('menuMattoMaestro')}"
                                 />
                     <p:menuitem value="Control de Mantenimientos" icon="ui-icon-calendar" 
@@ -351,51 +357,51 @@
                 </f:facet>
             </p:menubar>
         </h:form>
-        
+
         <!--******************************************************************** 
         *************************     DASHBOARD    ****************************
         *********************************************************************-->
 
-            <div style="height:500px">
-                <h:form>
-                    <p:growl id="msgs" showDetail="true" />
-                    
-                    <p:panel id="graficaMantenimientos" header="Grafico de Mantenimientos Preventivos" closable="true" visible="#{!manSeguridad.disableOpt('dashboardMtto')}">
-                            <h:form id="frmTimeLine"> 
-                                <p:growl id="msgTimeLine" showDetail="true" life="4500"/>
-                                <pe:timeline id="timeline" value="#{manMaestroMan.modelTimeLine}" height="330px" 
-                                                zoomable="true"  
-                                                selectable="true"
-                                                editable="true"                                               
-                                                moveable="true"  
-                                                stackEvents="true"  
-                                                axisOnTop="false"
-                                                eventStyle="dot"
-                                                showCurrentTime="true"  
-                                                showNavigation="true"
-                                                timeChangeable="true">
-                                        <p:ajax  event="edit" listener="#{manMaestroMan.onEdit}" process="@form" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
-                                        <p:ajax  event="changed" listener="#{manMaestroMan.onChange}" process="@form"/> 
-                                   </pe:timeline>  
+        <div style="height:500px">
+            <h:form>
+                <p:growl id="msgs" showDetail="true" />
 
-                                   <h:outputStylesheet id="timelineCSS">  
-                                       table .formColumn {  
-                                           padding: 0 5px 0 5px;  
-                                           text-align: right;  
-                                           white-space: nowrap;  
-                                       }         
-                                   </h:outputStylesheet>  
-                            </h:form>
-                        </p:panel>
+                <p:panel id="graficaMantenimientos" header="Grafico de Mantenimientos Preventivos" closable="true" visible="#{!manSeguridad.disableOpt('dashboardMtto')}">
+                    <h:form id="frmTimeLine"> 
+                        <p:growl id="msgTimeLine" showDetail="true" life="4500"/>
+                        <pe:timeline id="timeline" value="#{manMaestroMan.modelTimeLine}" height="330px" 
+                                     zoomable="true"  
+                                     selectable="true"
+                                     editable="true"                                               
+                                     moveable="true"  
+                                     stackEvents="true"  
+                                     axisOnTop="false"
+                                     eventStyle="dot"
+                                     showCurrentTime="true"  
+                                     showNavigation="true"
+                                     timeChangeable="true">
+                            <p:ajax  event="edit" listener="#{manMaestroMan.onEdit}" process="@form" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
+                            <p:ajax  event="changed" listener="#{manMaestroMan.onChange}" process="@form"/> 
+                        </pe:timeline>  
 
-                    <p:dashboard id="board" model="#{dashboardView.model}">
-                        <p:ajax event="reorder" listener="#{dashboardView.handleReorder}" update="msgs" />
-                        <p:panel id="solicitudesPendientes" header="Solicitudes" closable="true">
-                            <h:outputText value="Solicitudes pendientes"  />
-                        </p:panel>
+                        <h:outputStylesheet id="timelineCSS">  
+                            table .formColumn {  
+                            padding: 0 5px 0 5px;  
+                            text-align: right;  
+                            white-space: nowrap;  
+                            }         
+                        </h:outputStylesheet>  
+                    </h:form>
+                </p:panel>
 
-                        <p:panel id="dashAlertas" header="Alertas" closable="true">
-                                <p:dataTable id="dshAlert" var="vDaler" 
+                <p:dashboard id="board" model="#{dashboardView.model}">
+                    <p:ajax event="reorder" listener="#{dashboardView.handleReorder}" update="msgs" />
+                    <p:panel id="solicitudesPendientes" header="Solicitudes" closable="true">
+                        <h:outputText value="Solicitudes pendientes"  />
+                    </p:panel>
+
+                    <p:panel id="dashAlertas" header="Alertas" closable="true">
+                        <p:dataTable id="dshAlert" var="vDaler" 
                                      value="#{manAlertas.logale}" 
                                      emptyMessage="No se encontraron resultados" 
                                      selectionMode="single" selection="#{manAlertas.logalertas}" 
@@ -418,14 +424,14 @@
                                 <h:outputText value="#{vDaler.ale_des}" />
                             </p:column>
                         </p:dataTable>
-                        </p:panel>
-                        
-                    </p:dashboard>
+                    </p:panel>
 
-                    <div style="clear:both" />
-                </h:form>
-            </div>      
-            
+                </p:dashboard>
+
+                <div style="clear:both" />
+            </h:form>
+        </div>      
+
         <!--******************************************************************** 
         *************************Barra Notificación ****************************
         *********************************************************************-->
@@ -442,7 +448,7 @@
 
                     <h:graphicImage  id="cclogo" value="/nube.gif" width="60" height="55" 
                                      style=" position: absolute; top:0;right:10%;bottom:0;margin: auto; "/>
-                    
+
                     <h:graphicImage  id="ipsalogo" value="/logo.png" width="170" height="55" 
                                      style=" position: absolute; top:0;right:80%;bottom:0;margin: auto; "/>
                 </h:panelGrid>
@@ -5269,7 +5275,7 @@
                                     <f:selectItems value="#{manMaestroMan.grupofallas}" var="somgrufalnewman"
                                                    itemLabel="#{somgrufalnewman.nom_gru_fal}" itemValue="#{somgrufalnewman.cod_gru_fal}"/> 
                                 </p:selectOneMenu>
-                           
+
                                 <h:outputText value="Diagnóstico Falla" style="font-weight:bold;"/>
                                 <p:selectOneMenu value="#{manMaestroMan.cod_fal}" 
                                                  style=" width: 200px;"
@@ -5295,7 +5301,7 @@
                                                  />
                             </h:panelGrid>
 
-                             <p:dataTable id="dtFallMan" var="vFallMan" 
+                            <p:dataTable id="dtFallMan" var="vFallMan" 
                                          value="#{manMaestroMan.fallas}" 
                                          emptyMessage="No se encontraron resultados" 
                                          selection="#{manMaestroMan.catmantenimientosfal}" 
@@ -5319,8 +5325,8 @@
                                 <p:column style="width:200px;" headerText="Falla">
                                     <h:outputText value="#{vFallMan.nomfal}" />
                                 </p:column>
-                                 <p:column style="width:200px;" headerText="Personalizada">
-                                     <h:outputText value="#{vFallMan.det_obs}" />
+                                <p:column style="width:200px;" headerText="Personalizada">
+                                    <h:outputText value="#{vFallMan.det_obs}" />
                                 </p:column>
 
                             </p:dataTable>
@@ -5611,6 +5617,605 @@
                 </div>
             </h:form>
         </p:dialog>
+
+
+        <!--********************************************************************
+        ************************** Pantalla Fátima *****************************
+        *********************************************************************-->
+
+        <p:dialog  id="dlgIntegralIni" widgetVar="wIntegralIni" modal="true" 
+                   width="920" height="545" closable="false" resizable="false" 
+                   header="INGRESO ORDEN DE TRABAJO Y DETALLE TÉCNICO" rendered="true" 
+                   dynamic="false" visible="false" 
+                   >
+            <h:form id="frmIntegralIni" >
+                <p:growl id="msgIntegralIni" showDetail="true" life="4500"/>
+                <p:toolbar>
+                    <f:facet name="right">
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         update=":frmIntegralIni"
+                                         icon="ui-icon-document" 
+                                         actionListener="#{manMaestroMan.iniciarventanaintegral()}"
+                                         /> 
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         update=":frmIntegralIni"
+                                         icon="ui-icon-disk" 
+                                         actionListener="#{manMaestroMan.guardarintegral()}"
+                                         >
+                            <p:confirm header="Guardar Mantenimiento" 
+                                               message="¿Realmente desea Guardar Todos Los Cambios de este Mantenimiento?" 
+                                               icon="ui-icon-alert"/>
+                        </p:commandButton> 
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
+                                         update=":frmIntegralIni"
+                                         icon="ui-icon-trash" 
+                                         actionListener="#{manMaestroMan.eliminarencabezadoInt()}"
+                                         >
+                        <p:confirm header="Eliminar Mantenimiento" 
+                                               message="¿Realmente desea Eliminar este Mantenimiento?" 
+                                               icon="ui-icon-alert"/>
+                        </p:commandButton> 
+                        <p:commandButton value="Imprimir" icon="ui-icon-print"
+                                         onclick="this.form.target = '_blank';" 
+                                         action="#{manMaestroMan.imprimir_f_man_004}" 
+                                         ajax="false">
+                        </p:commandButton>
+
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         icon="ui-icon-close" 
+                                         actionListener="#{manMaestroMan.cerrarventananew()}"
+                                         onclick="PF('wIntegralIni').hide()"
+                                         update=":frmIntegralIni"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="Sí" type="button" 
+                                                     styleClass="ui-confirmdialog-yes" 
+                                                     icon="ui-icon-check" />
+                                    <p:commandButton value="No" type="button" 
+                                                     styleClass="ui-confirmdialog-no" 
+                                                     icon="ui-icon-close" />
+                                </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+                <p:tabView activeIndex="#{manMaestroMan.tabindex}" >
+                    <p:ajax event="tabChange" listener="#{manMaestroMan.onTabChangeIni}" />
+                    <p:tab id="listagenini" title="Listado" >
+                        <p:dataTable id="dtEncManInit" var="vEncManInit" 
+                                     value="#{manMaestroMan.mantenimientos}" 
+                                     emptyMessage="No se encontraron resultados" 
+                                     selection="#{manMaestroMan.catmantenimientos}" 
+                                     selectionMode="single"
+                                     rowKey="#{vEncManInit.cod_lis_equ},#{vEncManInit.cod_man}"
+                                     editable="false"
+                                     scrollable="true"
+                                     scrollHeight="320"
+                                     style="width:840px;"
+                                     widgetVar="wvEncManIni"
+                                     >
+
+                            <f:facet name="header">
+                                <p:outputPanel style=" text-align: right;">
+                                    <h:panelGroup>
+                                        <h:outputText value="Filtrar:&nbsp;&nbsp;" />
+                                        <p:inputText id="globalFilter" 
+                                                     onkeyup="PF('wvEncManIni').filter()" 
+                                                     style="width:100px;" 
+                                                     placeholder="Id, Equipo"/>
+                                    </h:panelGroup>
+
+                                </p:outputPanel>
+                            </f:facet>
+
+                            <p:ajax event="rowSelect" listener="#{manMaestroMan.onRowSelectEncInt}" update=":frmIntegralIni"/>
+
+                            <p:column style="width:10px" headerText="Id" filterBy="#{vEncManInit.cod_alt}" filterMatchMode="contains"  
+                                      filterStyle="display:none; visibility:hidden;">
+                                <h:outputText value="#{vEncManInit.cod_alt}" />
+                            </p:column>
+                            <p:column style="width:30px" headerText="Fecha">
+                                <h:outputText value="#{vEncManInit.fec_ini}" />
+                            </p:column>
+                            <p:column style="width:70px;" headerText="Tipo">
+                                <h:outputText value="#{vEncManInit.nomtip}" />
+                            </p:column>
+                            <p:column style="width:140px" headerText="Equipo" filterBy="#{vEncManInit.nomequ}" filterMatchMode="contains"  
+                                      filterStyle="display:none; visibility:hidden;">
+                                <h:outputText value="#{vEncManInit.nomequ}" />
+                            </p:column>
+                            <p:column style="width:50px" headerText="Estado">
+                                <h:outputText value="#{vEncManInit.status}" />
+                            </p:column>
+
+                        </p:dataTable>
+                        <h:panelGrid columns="3" cellpadding="5" style=" text-align: right;">
+                            <h:outputText value="Registros a Buscar: Últimos" style="font-weight:bold;"/>
+                            <p:inputText id="cmdlimit" value="#{manMaestroMan.vlimit}" size="7" maxlength="11"/>
+                            <p:commandButton value="Cargar" actionListener="#{manMaestroMan.llenarMantenimientosintegral()}" update="dtEncManInit,cmdlimit"/>
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab id="genini" title="General" >
+
+                        <p:panel>
+                            <h:panelGrid columns="6" cellpadding="5">
+                                <h:outputText value="Código" style="font-weight:bold;"/>
+                                <h:outputText value="Equipo" style="font-weight:bold;"/>
+                                <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
+                                <h:outputText value="Departamento" style="font-weight:bold;"/>
+                                <h:outputText value="Externo" style="font-weight:bold;"/>
+                                <h:outputText value="Tipo" style="font-weight:bold;"/>
+                                <p:inputText value="#{manMaestroMan.cod_alt}" size="7" maxlength="11"/>
+                                <p:selectOneMenu style=" width: 160px;" value="#{manMaestroMan.cod_lis_equ}"
+                                                 filter="true" filterMatchMode="contains" 
+                                                 >
+                                    <f:selectItem itemLabel="Seleccione Uno" itemValue="0"/>
+                                    <f:selectItems value="#{manMaestroMan.lequipos}" var="lequmanini"
+                                                   itemLabel="#{lequmanini.des_equ}" itemValue="#{lequmanini.cod_lis_equ}"/> 
+                                </p:selectOneMenu>
+                                <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
+                                             readonlyInput="true" showOn="button" 
+                                             size="16"
+                                             value="#{manMaestroMan.dfecini}"
+                                             >
+                                    <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezado}" />
+                                </p:calendar>
+                                <p:selectOneMenu value="#{manMaestroMan.cod_dep}" 
+                                                 style=" width: 140px;">
+                                    <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                    <f:selectItems value="#{manMaestroMan.departamentos}" var="intedep"
+                                                   itemLabel="#{intedep.nom_dep}" itemValue="#{intedep.cod_dep}"/> 
+                                </p:selectOneMenu>
+                                <p:selectOneMenu value="#{manMaestroMan.flg_ext}" 
+                                                 style=" width: 50px;">
+                                    <f:selectItem itemLabel="No" itemValue="0"/>
+                                    <f:selectItem itemLabel="Sí" itemValue="1"/>
+
+                                </p:selectOneMenu>
+                                <p:selectOneMenu value="#{manMaestroMan.cod_tip}" 
+                                                 style=" width: 120px;">
+                                    <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                    <f:selectItems value="#{manMaestroMan.tipos}" var="inttipman"
+                                                   itemLabel="#{inttipman.nom_tip}" itemValue="#{inttipman.cod_tip}"/> 
+                                </p:selectOneMenu>
+
+                            </h:panelGrid>
+                            <h:panelGrid columns="4" cellpadding="5">
+                                <h:outputText value="Supervisor" style="font-weight:bold;"/>
+                                <h:outputText value="Periodicidad" style="font-weight:bold;"/>
+                                <h:outputText value="Turno" style="font-weight:bold;"/>
+                                <h:outputText value="Prioridad" style="font-weight:bold;"/>
+                                <p:selectOneMenu value="#{manMaestroMan.cod_sup}" 
+                                                 style=" width: 200px;">
+                                    <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                    <f:selectItems value="#{manMaestroMan.supervisores}" var="intsupervm"
+                                                   itemLabel="#{intsupervm.det_nom}" itemValue="#{intsupervm.cod_usu}"/> 
+                                </p:selectOneMenu>
+                                <p:selectOneMenu value="#{manMaestroMan.cod_per}" 
+                                                 style=" width: 120px;">
+                                    <f:selectItem itemLabel="Ninguna" itemValue="0"/>
+                                    <f:selectItems value="#{manMaestroMan.periodos}" var="intperman"
+                                                   itemLabel="#{intperman.nom_per}" itemValue="#{intperman.cod_per}"/> 
+                                </p:selectOneMenu>
+                                <p:selectOneMenu value="#{manMaestroMan.turno}" 
+                                                 style=" width: 120px;">
+                                    <f:selectItem itemLabel="Diurno" itemValue="0"/>
+                                    <f:selectItem itemLabel="Nocturno" itemValue="1"/>
+                                </p:selectOneMenu>
+                                <p:selectOneMenu value="#{manMaestroMan.cod_pri}" 
+                                                 style=" width: 120px;">
+                                    <f:selectItem itemLabel="Normal" itemValue="B"/>
+                                    <f:selectItem itemLabel="Urgente" itemValue="A"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" cellpadding="5">
+                                <h:outputText value="Detalle de falla" style="font-weight:bold;"/>
+                                <p:inputTextarea cols="100" rows="2"
+                                                 maxlength="180"
+                                                 value="#{manMaestroMan.det_obs}"
+                                                 onfocus="this.select()"
+                                                 />
+                            </h:panelGrid>
+                            <p:separator />
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputText value="ESPACIO RESERVADO PARA MANTENIMIENTO &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; Fecha entrega" style="font-weight:bold;"/>
+                                <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
+                                             readonlyInput="true" showOn="button" 
+                                             size="16"
+                                             value="#{manMaestroMan.dfecfinF}"
+                                             >
+                                    <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezadoFin}" />
+                                </p:calendar>
+                            </h:panelGrid>
+                            <p:tabView tabindex="#{manMaestroMan.panindex}">
+                                <p:ajax event="tabChange" listener="#{manMaestroMan.onTabPanChange}" />
+                                <p:tab id="tabOBSTECini" title="Observaciones Técnicas">
+                                    <h:panelGrid columns="4" cellpadding="5">
+                                        <h:outputText value="Responsable" style="font-weight:bold;"/>
+                                        <p:selectOneMenu value="#{manMaestroMan.cod_usu}" 
+                                                         style=" width: 210px;">
+                                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.usuarios}" var="intusuman"
+                                                           itemLabel="#{intusuman.det_nom}" itemValue="#{intusuman.cod_usu}"/> 
+                                        </p:selectOneMenu>
+                                        <h:outputText value="Otro Personal" style="font-weight:bold;"/>
+                                        <p:inputText value="#{manMaestroMan.otr_per}" maxlength="300" size="38" />
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <h:outputText value="Diagnóstico" style="font-weight:bold;"/>
+                                        <p:inputTextarea cols="87" rows="2" value="#{manMaestroMan.obs_tec}" maxlength="300"/>
+                                    </h:panelGrid>
+                                </p:tab>
+                                <p:tab id="tabFALLini" title="Fallas">
+                                    <h:panelGrid columns="4" cellpadding="5">
+                                        <h:outputText value="Grupo Falla" style="font-weight:bold;"/>
+                                        <p:selectOneMenu value="#{manMaestroMan.cod_gru_fal}" 
+                                                         style=" width: 140px;">
+                                            <p:ajax event="change" listener="#{manMaestroMan.llenarListaFallas()}" update="somfallasint" />
+                                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.grupofallas}" var="somgrufalint"
+                                                           itemLabel="#{somgrufalint.nom_gru_fal}" itemValue="#{somgrufalint.cod_gru_fal}"/> 
+                                        </p:selectOneMenu>
+
+                                        <h:outputText value="Diagnóstico Falla" style="font-weight:bold;"/>
+                                        <p:selectOneMenu value="#{manMaestroMan.cod_fal}" 
+                                                         style=" width: 200px;"
+                                                         id="somfallasint"
+                                                         filter="true"
+                                                         filterMatchMode="contains"
+                                                         >
+                                            <f:selectItem itemLabel="Otra" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.listafallas}" var="somfalint"
+                                                           itemLabel="#{somfalint.nom_fal}" itemValue="#{somfalint.cod_fal}"/> 
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="4" cellpadding="5">
+                                        <h:outputText value="Otra Falla" style="font-weight:bold;"/>
+                                        <p:inputText value="#{manMaestroMan.otr_fal}" size="78" maxlength="300"/>
+                                        <p:commandButton title="Agregar" icon="ui-icon-plus" style="width:30px;" 
+                                                         actionListener="#{manMaestroMan.agregarfalla()}"
+                                                         update=":frmIntegralIni"
+                                                         />
+                                        <p:commandButton title="Eliminar" icon="ui-icon-minus" style="width:30px;" 
+                                                         actionListener="#{manMaestroMan.eliminarfalla()}"
+                                                         update=":frmIntegralIni"
+                                                         />
+                                    </h:panelGrid>
+
+                                    <p:dataTable id="dtFallInt" var="vFallInt" 
+                                                 value="#{manMaestroMan.fallas}" 
+                                                 emptyMessage="No se encontraron resultados" 
+                                                 selection="#{manMaestroMan.catmantenimientosfal}" 
+                                                 selectionMode="single"
+                                                 rowKey="#{vFallInt.det_man}"
+                                                 editable="false"
+                                                 scrollable="true"
+                                                 scrollHeight="80"
+                                                 style="width:670px;"
+                                                 >
+
+                                        <p:ajax event="rowSelect" listener="#{manMaestroMan.onRowSelectFal}" 
+                                                update=":frmIntegralIni"/>
+
+                                        <p:column style="width:50px;" headerText="Item">
+                                            <h:outputText value="#{vFallInt.det_man}" />
+                                        </p:column>
+                                        <p:column style="width:100px;" headerText="Grupo">
+                                            <h:outputText value="#{vFallInt.nomgrup}" />
+                                        </p:column>
+                                        <p:column style="width:200px;" headerText="Falla">
+                                            <h:outputText value="#{vFallInt.nomfal}" />
+                                        </p:column>
+                                        <p:column style="width:200px;" headerText="Personalizada">
+                                            <h:outputText value="#{vFallInt.det_obs}" />
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </p:tab>
+                            </p:tabView>
+
+
+                        </p:panel>
+
+
+                    </p:tab>
+                    <p:tab id="detintini" title="Detalle">
+                        <p:tabView id="tvDetMan2ini" activeIndex="#{manMaestroMan.tabindex2}" >
+                            <p:ajax event="tabChange" listener="#{manMaestroMan.onTab2Change}" />
+                            <p:tab id="tabGENini" title="Detalle Técnico">
+                                <p:panel>
+                                    <h:panelGrid columns="3" cellpadding="5">
+                                        <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
+                                        <h:outputText value="Acción" style="font-weight:bold;"/>
+                                        <h:outputText value="Realizó" style="font-weight:bold;"/>
+                                        <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
+                                                     readonlyInput="true" 
+                                                     showOn="button" size="16"
+                                                     value="#{manMaestroMan.dfecha1}"
+                                                     >
+                                            <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedGeneral}" />
+                                        </p:calendar> 
+                                        <p:selectOneMenu style=" width: 325px;" value="#{manMaestroMan.gen_cod_ope}"
+                                                         filter="true" filterMatchMode="contains" 
+                                                         >
+                                            <f:selectItem itemLabel="Seleccione Una" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.operaciones}" var="inttipope"
+                                                           itemLabel="#{inttipope.nom_ope}" itemValue="#{inttipope.cod_ope}"/> 
+                                        </p:selectOneMenu>
+                                        <p:selectOneMenu style=" width: 210px;" value="#{manMaestroMan.gen_cod_usu}">
+                                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.usuarios}" var="intusudet"
+                                                           itemLabel="#{intusudet.det_nom}" itemValue="#{intusudet.cod_usu}"/> 
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="3" cellpadding="3">
+                                        <h:outputText value="Observaciones" style="font-weight:bold;"/>
+                                        <h:outputText value="" style="font-weight:bold;"/>
+                                        <h:outputText value="" style="font-weight:bold;"/>
+                                        <p:inputText maxlength="200" size="108" value="#{manMaestroMan.gen_det_obs}" />
+                                        <p:commandButton title="Agregar" icon="ui-icon-plus" style="width:30px;" 
+                                                         actionListener="#{manMaestroMan.agregargeneral()}"
+                                                         update=":frmIntegralIni"
+                                                         />
+                                        <p:commandButton title="Eliminar" icon="ui-icon-minus" style="width:30px;" 
+                                                         actionListener="#{manMaestroMan.eliminargeneral()}"
+                                                         update=":frmIntegralIni"
+                                                         />
+                                    </h:panelGrid>
+                                </p:panel>
+                                <p:dataTable id="dtDetTecIni" var="vDetTecIni" 
+                                             value="#{manMaestroMan.general}" 
+                                             emptyMessage="No se encontraron resultados" 
+                                             selection="#{manMaestroMan.catmantenimientosgen}" 
+                                             selectionMode="single"
+                                             rowKey="#{vDetTecIni.det_man}"
+                                             editable="false"
+                                             scrollable="true"
+                                             scrollHeight="80"
+                                             style="width:800px"
+                                             >
+                                    <p:ajax event="rowSelect" listener="#{manMaestroMan.onRowSelectGen}" update=":frmIntegralIni"/>
+                                    <p:column style="width:12px;" headerText="Fecha y Hora">
+                                        <h:outputText value="#{vDetTecIni.fec_man}" />
+                                    </p:column>
+                                    <p:column style="width:80px" headerText="Acción">
+                                        <h:outputText value="#{vDetTecIni.nomope}" />
+                                    </p:column>
+                                    <p:column style="width:80px" headerText="Observaciones">
+                                        <h:outputText value="#{vDetTecIni.det_obs}" />
+                                    </p:column>
+                                    <p:column style="width:50px" headerText="Realizó">
+                                        <h:outputText value="#{vDetTecIni.nomusu}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab id="tabPIEini" title="Piezas">
+                                <p:panel>
+                                    <h:panelGrid columns="3" cellpadding="5">
+                                        <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
+                                        <h:outputText value="Responsable" style="font-weight:bold;"/>
+                                        <h:outputText value="Almacén" style="font-weight:bold;"/>
+
+                                        <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
+                                                     readonlyInput="true" showOn="button" size="16"
+                                                     value="#{manMaestroMan.dfecha2}"
+                                                     >
+                                            <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedPiezas}" />
+                                        </p:calendar>  
+
+                                        <p:selectOneMenu style=" width: 180px;" value="#{manMaestroMan.pie_cod_usu}">
+                                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.usuarios}" var="iniusumanpie"
+                                                           itemLabel="#{iniusumanpie.det_nom}" itemValue="#{iniusumanpie.cod_usu}"/> 
+                                        </p:selectOneMenu>
+
+                                        <p:selectOneMenu style=" width: 180px;" value="#{manMaestroMan.pie_cod_pai}">
+                                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.paises}" var="inipaimanpie"
+                                                           itemLabel="#{inipaimanpie.nom_pai}" itemValue="#{inipaimanpie.cod_pai}"/> 
+                                        </p:selectOneMenu>
+
+                                    </h:panelGrid>
+
+                                    <h:panelGrid columns="5" cellpadding="5">
+                                        <h:outputText value="Cantidad" style="font-weight:bold;"/>
+                                        <h:outputText value="Pieza Entrante" style="font-weight:bold;"/>
+                                        <h:outputText value="Números de Serie" style="font-weight:bold;"/>
+                                        <h:outputText value="" style="font-weight:bold;"/>
+                                        <h:outputText value="" style="font-weight:bold;"/>
+                                        <p:inputText maxlength="12" size="10" value="#{manMaestroMan.pie_det_can}" />
+                                        <p:selectOneMenu id="sompiemanpieini" style=" width: 270px;" 
+                                                         filter="true" filterMatchMode="contains" 
+                                                         value="#{manMaestroMan.pie_cod_pie}">
+                                            <f:selectItem itemLabel="Seleccione Una" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.existenciareal}" var="lpiemanpieini"
+                                                           itemLabel="#{lpiemanpieini.cod_ref} - #{lpiemanpieini.nom_pie}" itemValue="#{lpiemanpieini.cod_pie}"/> 
+                                        </p:selectOneMenu>
+                                        <p:inputText maxlength="200" size="40" value="#{manMaestroMan.pie_num_ser}" />
+                                        <p:commandButton title="Agregar" icon="ui-icon-plus" style="width:30px;" 
+                                                         actionListener="#{manMaestroMan.agregarpiezas()}"
+                                                         update=":frmIntegralIni"
+                                                         />
+                                        <p:commandButton title="Eliminar" icon="ui-icon-minus" style="width:30px;" 
+                                                         actionListener="#{manMaestroMan.eliminarpiezas()}"
+                                                         update=":frmIntegralIni"
+                                                         />
+                                    </h:panelGrid>
+                                </p:panel>
+                                <p:dataTable id="dtDetPie2ini" var="vDetPieini" 
+                                             value="#{manMaestroMan.piezas}" 
+                                             emptyMessage="No se encontraron resultados" 
+                                             selection="#{manMaestroMan.catmantenimientospie}" 
+                                             selectionMode="single"
+                                             rowKey="#{vDetPieini.det_man}"
+                                             editable="false"
+                                             scrollable="true"
+                                             scrollHeight="80"
+                                             style="width:800px"
+                                             >
+                                    <p:ajax event="rowSelect" listener="#{manMaestroMan.onRowSelectPie}" update=":frmIntegralIni"/>
+
+
+                                    <p:column style="width:30px;" headerText="Fecha">
+                                        <h:outputText value="#{vDetPieini.fec_man}" />
+                                    </p:column>
+                                    <p:column style="width:30px;" headerText="Almacén">
+                                        <h:outputText value="#{vDetPieini.nompai}" />
+                                    </p:column>
+                                    <p:column style="width:10px" headerText="Cant">
+                                        <h:outputText value="#{vDetPieini.det_can}" />
+                                    </p:column>
+                                    <p:column style="width:100px;" headerText="Pieza">
+                                        <h:outputText value="#{vDetPieini.nompie}" />
+                                    </p:column>
+                                    <p:column style="width:60px" headerText="Series">
+                                        <h:outputText value="#{vDetPieini.num_ser}" />
+                                    </p:column>
+                                    <p:column style="width:70px" headerText="Responsable">
+                                        <h:outputText value="#{vDetPieini.nomusu}" />
+                                    </p:column>
+
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab id="tabACCini" title="Accesorios">
+                                <p:panel>
+                                    <h:panelGrid columns="3" cellpadding="5">
+                                        <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
+                                        <h:outputText value="Responsable" style="font-weight:bold;"/>
+                                        <h:outputText value="Almacén" style="font-weight:bold;"/>
+
+                                        <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
+                                                     readonlyInput="true" showOn="button" size="16"
+                                                     value="#{manMaestroMan.dfecha3}"
+                                                     >
+                                            <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedAccesorios}" />
+                                        </p:calendar>  
+
+                                        <p:selectOneMenu style=" width: 180px;" value="#{manMaestroMan.acc_cod_usu}">
+                                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.usuarios}" var="iniusumanacc"
+                                                           itemLabel="#{iniusumanacc.det_nom}" itemValue="#{iniusumanacc.cod_usu}"/> 
+                                        </p:selectOneMenu>
+
+                                        <p:selectOneMenu style=" width: 180px;" value="#{manMaestroMan.acc_cod_pai}">
+                                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.paises}" var="inipaimanacc"
+                                                           itemLabel="#{inipaimanacc.nom_pai}" itemValue="#{inipaimanacc.cod_pai}"/> 
+                                        </p:selectOneMenu>
+
+                                    </h:panelGrid>
+
+                                    <h:panelGrid columns="4" cellpadding="5">
+                                        <h:outputText value="Cantidad" style="font-weight:bold;"/>
+                                        <h:outputText value="Item" style="font-weight:bold;"/>
+                                        <h:outputText value="" style="font-weight:bold;"/>
+                                        <h:outputText value="" style="font-weight:bold;"/>
+                                        <p:inputText maxlength="12" size="10" value="#{manMaestroMan.acc_det_can}" />
+                                        <p:inputText maxlength="200" size="90" value="#{manMaestroMan.acc_des_ite}" />
+                                        <p:commandButton title="Agregar" icon="ui-icon-plus" style="width:30px;" 
+                                                         actionListener="#{manMaestroMan.agregaraccesorios()}"
+                                                         update=":frmIntegralIni"
+                                                         />
+                                        <p:commandButton title="Eliminar" icon="ui-icon-minus" style="width:30px;" 
+                                                         actionListener="#{manMaestroMan.eliminarAccesorio()}"
+                                                         update=":frmIntegralIni"
+                                                         />
+                                    </h:panelGrid>
+                                </p:panel>
+                                <p:dataTable id="dtDetAccIni" var="vDetAccIni" 
+                                             value="#{manMaestroMan.accesorios}" 
+                                             emptyMessage="No se encontraron resultados" 
+                                             selection="#{manMaestroMan.catmantenimientosacc}" 
+                                             selectionMode="single"
+                                             rowKey="#{vDetAccIni.det_man}"
+                                             editable="false"
+                                             scrollable="true"
+                                             scrollHeight="80"
+                                             style="width:800px"
+                                             >
+                                    <p:ajax event="rowSelect" listener="#{manMaestroMan.onRowSelectAcc}" update=":frmIntegralIni"/>
+
+
+                                    <p:column style="width:110px;" headerText="Fecha">
+                                        <h:outputText value="#{vDetAccIni.fec_man}" />
+                                    </p:column>
+                                    <p:column style="width:100px;" headerText="Almacén">
+                                        <h:outputText value="#{vDetAccIni.nompai}" />
+                                    </p:column>
+                                    <p:column style="width:50px" headerText="Cantidad">
+                                        <h:outputText value="#{vDetAccIni.det_can}" />
+                                    </p:column>
+                                    <p:column style="width:400px" headerText="Descripción">
+                                        <h:outputText value="#{vDetAccIni.des_ite}" />
+                                    </p:column>
+
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab id="tabANEini" title="Anexos">
+                                <p:panel>
+                                    <h:panelGrid columns="5" cellpadding="5" >
+                                        <h:outputText value="Tipo" style="font-weight:bold;"/>
+                                        <h:outputText value="Compartido por" style="font-weight:bold;"/>
+                                        <h:outputText value="Observaciones" style="font-weight:bold;"/>
+                                        <h:outputText value="" style="font-weight:bold;"/>
+                                        <h:outputText value="" style="font-weight:bold;"/>
+                                        <p:selectOneMenu style=" width: 120px;" value="#{manMaestroMan.ane_tip_ane}">
+                                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0"/>
+                                            <f:selectItem itemLabel="PDF" itemValue="1"/>
+                                            <f:selectItem itemLabel="IMAGEN" itemValue="2"/>
+                                            <f:selectItem itemLabel="OTRO" itemValue="3"/>
+                                        </p:selectOneMenu>
+                                        <p:selectOneMenu style=" width: 180px;" value="#{manMaestroMan.ane_cod_usu}">
+                                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.usuarios}" var="usumananeini"
+                                                           itemLabel="#{usumananeini.det_nom}" itemValue="#{usumananeini.cod_usu}"/> 
+                                        </p:selectOneMenu>
+                                        <p:inputText value="#{manMaestroMan.ane_det_obs}" style="font-weight:bold;" size="50" maxlength="200"/>
+                                        <p:commandButton title="Agregar" icon="ui-icon-plus" style="width:30px;" 
+                                                         actionListener="#{manMaestroMan.agregaranexo()}"
+                                                         update=":frmIntegralIni"
+                                                         />
+                                        <p:commandButton title="Eliminar" icon="ui-icon-minus" style="width:30px;" 
+                                                         actionListener="#{manMaestroMan.eliminarAnexos()}"
+                                                         update=":frmIntegralIni"
+                                                         />
+                                    </h:panelGrid>
+                                    <p:fileUpload id="fupman2ini" 
+                                                  fileUploadListener="#{manMaestroMan.upload}" 
+                                                  mode="advanced" dragDropSupport="true"
+                                                  fileLimit="1" 
+                                                  label="Seleccionar" cancelLabel="Cancelar" uploadLabel="Subir" 
+                                                  value="#{manMaestroMan.file}"
+                                                  />
+                                </p:panel>
+                                <p:dataTable id="dtDetAne2ini" var="vDetAneIni" 
+                                             value="#{manMaestroMan.anexos}" 
+                                             emptyMessage="No se encontraron resultados" 
+                                             selection="#{manMaestroMan.catmantenimientosane}" 
+                                             selectionMode="single"
+                                             rowKey="#{vDetAneIni.det_man}"
+                                             editable="false"
+                                             scrollable="true"
+                                             scrollHeight="90"
+                                             style="width:800px"
+                                             >
+                                    <p:ajax event="rowSelect" listener="#{manMaestroMan.onRowSelectAne}" update=":frmIntegralIni"/>
+
+                                    <p:column style="width:10px;" headerText="Tipo">
+                                        <p:link href="#{vDetAneIni.rut_ane}" value="#{vDetAneIni.nomtip}" target="_blank"/>
+                                    </p:column>
+                                    <p:column style="width:150px" headerText="Observaciones">
+                                        <h:outputText value="#{vDetAneIni.det_obs}" />
+                                    </p:column>
+                                    <p:column style="width:60px" headerText="Compartido por">
+                                        <h:outputText value="#{vDetAneIni.nomusu}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                        </p:tabView>
+                    </p:tab>
+                </p:tabView>
+            </h:form>
+        </p:dialog>
+
 
         <!--******************************************************************** 
         *********************** Plantillas Mantenimiento ***********************
@@ -6310,10 +6915,10 @@
                                                  id="txtjefeper" 
                                                  style="width:225px;text-align:right;"
                                                  immediate="false">
-                                    
+
                                     <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                                     <f:selectItems value="#{manPersonas.jefes}" var="mjefeper"
-                                     itemLabel="#{mjefeper.nombres} #{mjefeper.apellidos}" itemValue="#{mjefeper.id_per}"/>
+                                                   itemLabel="#{mjefeper.nombres} #{mjefeper.apellidos}" itemValue="#{mjefeper.id_per}"/>
                                 </p:selectOneMenu>
                                 <p:spacer width="20"/>
                                 <h:outputText value="Fecha Ingreso" style="font-weight:bold;"/>
@@ -7166,7 +7771,7 @@
                             <f:selectItems value="#{manEvaluacionDetalle.criterios}" var="mcridet"
                                            itemLabel="#{mcridet.nom_cri}" itemValue="#{mcridet.id_cri}"/>
                         </p:selectOneMenu>
-                        
+
                     </h:panelGrid>
                     <p:dataTable id="dtDetEva" var="vDetEva" 
                                  value="#{manEvaluacionDetalle.evaluaciondetalle}" 
@@ -7197,7 +7802,7 @@
 
             </h:form>
         </p:dialog>  
-        
+
         <!-- *******************************************************************
         *********************** Pantalla Lista Específica **********************
         *********************************************************************-->
@@ -7268,7 +7873,7 @@
                             <f:selectItems value="#{manListaEspecifica.usuarios}" var="vusulisesp"
                                            itemLabel="#{vusulisesp.det_nom}" itemValue="#{vusulisesp.cod_usu}"/>
                         </p:selectOneMenu>
-                        
+
                     </h:panelGrid>
                     <p:dataTable id="dtDetLisEsp" var="vDetLisEsp" 
                                  value="#{manListaEspecifica.lista}" 
@@ -7290,7 +7895,7 @@
 
             </h:form>
         </p:dialog>  
- 
+
         <!-- *******************************************************************
         **************** Pantalla mantenimiento de Alertas          ********
         *********************************************************************-->
@@ -7346,16 +7951,16 @@
                         <p:selectOneMenu value="#{manAlertas.cod_dep}" 
                                          style="width:200px;text-align:right;"
                                          immediate="false">  
-                                <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
-                                <f:selectItems value="#{manAlertas.departamentos}" var="mdepale"
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                            <f:selectItems value="#{manAlertas.departamentos}" var="mdepale"
                                            itemLabel="#{mdepale.nom_dep}" itemValue="#{mdepale.cod_dep}"/>
                         </p:selectOneMenu>
                         <h:outputText value="Tipo de alerta" style="font-weight:bold;" />
                         <p:selectOneMenu value="#{manAlertas.id_tip_ale}" 
                                          style="width:300px;text-align:right;"
                                          immediate="false">  
-                                <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
-                                <f:selectItems value="#{manAlertas.tiposalertas}" var="mtipale"
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                            <f:selectItems value="#{manAlertas.tiposalertas}" var="mtipale"
                                            itemLabel="#{mtipale.nom_tip_ale}" itemValue="#{mtipale.id_tip_ale}"/>
                         </p:selectOneMenu>
                         <h:outputText value="Dias antes para aviso" style="font-weight:bold;" />
@@ -7370,53 +7975,53 @@
                         </h:panelGroup>             
                     </h:panelGrid>
                     <h:panelGrid columns="2" cellpadding="5">
-                    <p:fieldset id="usudis" legend="Usuarios Disponibles" style="width:270px">
-                        <p:dataTable id="usuariosDisponibles" var="usudis" value="#{manAlertas.usuarios}" style="width:260px" scrollHeight="150">
-                            <p:column style="width:20px">
-                                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
-                                <p:draggable for="dragIcon" revert="true" helper="clone"/>
-                            </p:column>
-
-                            <p:column headerText="Id">
-                                <h:outputText value="#{usudis.cod_usu}" />
-                            </p:column>
-
-                            <p:column headerText="Usuario">
-                                <h:outputText value="#{usudis.nom_usu}" />
-                            </p:column>
-                        </p:dataTable>                        
-                    </p:fieldset>
-                    
-                    <p:fieldset id="ususel" legend="Usuarios Seleccionados" style="width:270px ">
-                        <p:outputPanel id="dropArea">
-                            <h:outputText value="Area de asignación." rendered="#{empty manAlertas.usuariosel}" style="font-size:24px;" />
-                            <p:dataTable id="usuariosSeleccionados" var="ususel" value="#{manAlertas.usuariosel}" 
-                                         rendered="#{not empty manAlertas.usuariosel}" style="width:260px" scrollHeight="150">
+                        <p:fieldset id="usudis" legend="Usuarios Disponibles" style="width:270px">
+                            <p:dataTable id="usuariosDisponibles" var="usudis" value="#{manAlertas.usuarios}" style="width:260px" scrollHeight="150">
                                 <p:column style="width:20px">
                                     <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
                                     <p:draggable for="dragIcon" revert="true" helper="clone"/>
                                 </p:column>
+
                                 <p:column headerText="Id">
-                                    <h:outputText value="#{ususel.cod_usu}" />
+                                    <h:outputText value="#{usudis.cod_usu}" />
                                 </p:column>
 
                                 <p:column headerText="Usuario">
-                                    <h:outputText value="#{ususel.nom_usu}" />
+                                    <h:outputText value="#{usudis.nom_usu}" />
                                 </p:column>
-                            </p:dataTable>
-                        </p:outputPanel>                    
-                    </p:fieldset>
-                        
+                            </p:dataTable>                        
+                        </p:fieldset>
+
+                        <p:fieldset id="ususel" legend="Usuarios Seleccionados" style="width:270px ">
+                            <p:outputPanel id="dropArea">
+                                <h:outputText value="Area de asignación." rendered="#{empty manAlertas.usuariosel}" style="font-size:24px;" />
+                                <p:dataTable id="usuariosSeleccionados" var="ususel" value="#{manAlertas.usuariosel}" 
+                                             rendered="#{not empty manAlertas.usuariosel}" style="width:260px" scrollHeight="150">
+                                    <p:column style="width:20px">
+                                        <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+                                        <p:draggable for="dragIcon" revert="true" helper="clone"/>
+                                    </p:column>
+                                    <p:column headerText="Id">
+                                        <h:outputText value="#{ususel.cod_usu}" />
+                                    </p:column>
+
+                                    <p:column headerText="Usuario">
+                                        <h:outputText value="#{ususel.nom_usu}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:outputPanel>                    
+                        </p:fieldset>
+
                     </h:panelGrid>
-                    
+
                     <p:droppable for="ususel" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosDisponibles" onDrop="handleDrop">
-                             <p:ajax listener="#{manAlertas.onUsuDrop}" update="dropArea usuariosDisponibles" />
+                        <p:ajax listener="#{manAlertas.onUsuDrop}" update="dropArea usuariosDisponibles" />
                     </p:droppable>
-                    
+
                     <p:droppable for="usudis" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosSeleccionados" onDrop="handleDrop">
-                             <p:ajax listener="#{manAlertas.onUsuDropRet}" update="dropArea usuariosDisponibles" />
+                        <p:ajax listener="#{manAlertas.onUsuDropRet}" update="dropArea usuariosDisponibles" />
                     </p:droppable>
-                                        
+
                     <p:dataTable id="dtAlertas" var="vAlertas" 
                                  value="#{manAlertas.alertas}" 
                                  rows ="3"
@@ -7450,8 +8055,8 @@
 
             </h:form>
         </p:dialog>  
-  
-         <script type="text/javascript">
+
+        <script type="text/javascript">
             PrimeFaces.locales['es'] = {
                 closeText: 'Cerrar',
                 prevText: 'Previo',
@@ -7474,12 +8079,12 @@
                 day: 'Dia',
                 allDayText: 'Todo el dia'
             };
-            
+
             function handleDrop(event, ui) {
                 var droppedCar = ui.draggable;
                 droppedCar.fadeOut('fast');
             }
-            
+
         </script>
 
     </h:body>

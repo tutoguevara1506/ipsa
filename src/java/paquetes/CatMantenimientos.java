@@ -5,12 +5,12 @@ import java.io.Serializable;
 public class CatMantenimientos implements Serializable {
 
     private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta,
-            cod_usu, nomtip, status, datraso, color, cod_per, periodo, flg_ext, cod_sup, turno, cod_pri, cod_dep, cod_alt, obs_tec, otr_per;
+            cod_usu, nomtip, status, datraso, color, cod_per, periodo, flg_ext, cod_sup, turno, cod_pri, cod_dep, cod_alt, obs_tec, otr_per, nomequ;
 
     public CatMantenimientos() {
     }
 
-    public CatMantenimientos(String cod_lis_equ, String cod_man, String cod_tip, String det_obs, String fec_ini, String fec_fin, String det_sta, String cod_usu, String nomtip, String status, String datraso, String color, String cod_per, String periodo, String flg_ext, String cod_sup, String turno, String cod_pri, String cod_dep, String cod_alt, String obs_tec, String otr_per) {
+    public CatMantenimientos(String cod_lis_equ, String cod_man, String cod_tip, String det_obs, String fec_ini, String fec_fin, String det_sta, String cod_usu, String nomtip, String status, String datraso, String color, String cod_per, String periodo, String flg_ext, String cod_sup, String turno, String cod_pri, String cod_dep, String cod_alt, String obs_tec, String otr_per, String nomequ) {
         this.cod_lis_equ = cod_lis_equ;
         this.cod_man = cod_man;
         this.cod_tip = cod_tip;
@@ -33,6 +33,7 @@ public class CatMantenimientos implements Serializable {
         this.cod_alt = cod_alt;
         this.obs_tec = obs_tec;
         this.otr_per = otr_per;
+        this.nomequ = nomequ;
     }
 
     public String getCod_lis_equ() {
@@ -209,6 +210,14 @@ public class CatMantenimientos implements Serializable {
 
     public void setOtr_per(String otr_per) {
         this.otr_per = otr_per;
+    }
+
+    public String getNomequ() {
+        return nomequ;
+    }
+
+    public void setNomequ(String nomequ) {
+        this.nomequ = nomequ;
     }
 
 }

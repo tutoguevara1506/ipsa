@@ -118,7 +118,7 @@ public class ManMaestroMan implements Serializable {
     private String ane_det_man, ane_det_obs, ane_tip_ane, ane_rut_ane, ane_cod_usu;
     private String acc_det_man, acc_fec_man, acc_cod_pai, acc_det_can, acc_des_ite, acc_cod_usu;
 
-    private String tabindex, buscar_serie, nompai, nombod, nomubi, cod_gru_fal, cod_fal, otr_fal, mmensaje, panindex;
+    private String tabindex, buscar_serie, nompai, nombod, nomubi, cod_gru_fal, cod_fal, otr_fal, mmensaje, panindex, vlimit, tabindex2;
     private Date dfecha1, dfecha2, dfecha3, dfecfinF, dfecini;
     private TreeNode root, selectednode;
 
@@ -953,6 +953,22 @@ public class ManMaestroMan implements Serializable {
         this.panindex = panindex;
     }
 
+    public String getVlimit() {
+        return vlimit;
+    }
+
+    public void setVlimit(String vlimit) {
+        this.vlimit = vlimit;
+    }
+
+    public String getTabindex2() {
+        return tabindex2;
+    }
+
+    public void setTabindex2(String tabindex2) {
+        this.tabindex2 = tabindex2;
+    }
+
     public CatCalendario getCatcalendario() {
         return catcalendario;
     }
@@ -1337,6 +1353,113 @@ public class ManMaestroMan implements Serializable {
         acc.Desconectar();
     }
 
+    public void iniciarventanaintegral() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        dfecha1 = Date.from(Instant.now());
+        dfecha2 = Date.from(Instant.now());
+        dfecha3 = Date.from(Instant.now());
+
+        tabindex = "0";
+
+        cod_lis_equ = "";
+        cod_man = "";
+        cod_tip = "";
+        det_obs = "";
+        fec_ini = format.format(dfecha1);
+        fec_fin = format.format(dfecha1);
+        det_sta = "";
+        cod_usu = "0";
+        cod_per = "0";
+        flg_ext = "0";
+        cod_sup = cbean.getCod_usu();
+        turno = "0";
+        cod_pri = "";
+        cod_dep = "0";
+        gen_det_man = "";
+        gen_fec_man = format.format(dfecha1);
+        gen_cod_ope = "";
+        gen_det_obs = "";
+        gen_cod_usu = cbean.getCod_usu();
+        gen_det_min = "";
+        pie_det_man = "";
+        pie_fec_man = format.format(dfecha1);
+        pie_cod_pai = "0";
+        pie_cod_bod = "0";
+        pie_cod_ubi = "0";
+        pie_det_can = "";
+        pie_cod_pie = "";
+        pie_num_ser = "";
+        pie_cod_usu = cbean.getCod_usu();
+        ane_det_man = "";
+        ane_det_obs = "";
+        ane_tip_ane = "";
+        ane_rut_ane = "";
+        ane_cod_usu = cbean.getCod_usu();
+        acc_det_man = "";
+        acc_fec_man = format.format(dfecha3);
+        acc_cod_pai = "0";
+        acc_det_can = "";
+        acc_des_ite = "";
+        acc_cod_usu = cbean.getCod_usu();
+        buscar_serie = "";
+        mmensaje = "";
+        root = null;
+        selectednode = null;
+        catmantenimientos = new CatMantenimientos();
+        mantenimientos = new ArrayList<>();
+        general = new ArrayList<>();
+        piezas = new ArrayList<>();
+        anexos = new ArrayList<>();
+        accesorios = new ArrayList<>();
+
+        llenarUsuarios();
+        llenarOperaciones();
+        llenarPaises();
+        llenarCatalogoPiezas();
+        //llenarTipos();
+        //llenarPeriodos();
+        //llenarDepartamentos();
+        llenarListaEquipos();
+
+        dfecini = Date.from(Instant.now());
+        dfecfinF = Date.from(Instant.now());
+        panindex = "0";
+        cod_tip = "0";
+        det_obs = "";
+        fec_ini = format.format(dfecini);
+        fec_fin = format.format(dfecfinF);
+        det_sta = "0";
+        cod_usu = "0";
+        cod_per = "0";
+        flg_ext = "0";
+        cod_sup = "0";
+        turno = "0";
+        cod_pri = "";
+        cod_dep = "0";
+        Accesos acc = new Accesos();
+        acc.Conectar();
+        cod_alt = acc.strQuerySQLvariable("select ifnull(max(cod_alt),0)+1 from tbl_mae_man;");
+        acc.Desconectar();
+        obs_tec = "";
+        otr_per = "";
+        cod_gru_fal = "0";
+        cod_fal = "0";
+        otr_fal = "";
+        llenarSupervisores();
+        llenarTipos();
+        llenarPeriodos();
+        llenarGrupoFallas();
+        llenarDepartamentos();
+        catmantenimientosfal = new CatMantenimientosFal();
+        fallas = new ArrayList<>();
+
+        vlimit = "25";
+        tabindex2 = "0";
+
+        llenarMantenimientosintegral();
+    }
+
     public void buscarexistencia() {
         String mQuery = "";
 
@@ -1441,6 +1564,107 @@ public class ManMaestroMan implements Serializable {
         }
     }
 
+    public void llenarMantenimientosintegral() {
+        String mQuery = "";
+        RequestContext.getCurrentInstance().execute("PF('wvEncManIni').clearFilters()");
+        try {
+            cod_man = "";
+            catmantenimientosgen = new CatMantenimientosGen();
+            general = new ArrayList<>();
+            catmantenimientospie = new CatMantenimientosPie();
+            piezas = new ArrayList<>();
+            catmantenimientosacc = new CatMantenimientosAcc();
+            accesorios = new ArrayList<>();
+            catmantenimientosane = new CatMantenimientosAne();
+            anexos = new ArrayList<>();
+            catmantenimientos = new CatMantenimientos();
+            mantenimientos = new ArrayList<>();
+
+            if ("".equals(vlimit)) {
+                vlimit = "25";
+            }
+
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            mQuery = "select "
+                    + "mm.cod_lis_equ, "
+                    + "mm.cod_man, "
+                    + "mm.cod_tip, "
+                    + "mm.det_obs, "
+                    + "date_format(mm.fec_ini,'%d/%m/%Y %H:%i'), "
+                    + "date_format(mm.fec_fin,'%d/%m/%Y %H:%i'), "
+                    + "mm.det_sta, "
+                    + "mm.cod_usu,"
+                    + "tip.nom_tip,"
+                    + "case mm.det_sta "
+                    + "when 1 then 'PENDIENTE' "
+                    + "when 2 then 'CANCELADO' "
+                    + "when 3 then 'EN PROCESO' "
+                    + "when 4 then 'FINALIZADO' "
+                    + "end as status, "
+                    + "case mm.det_sta "
+                    + "when 1 then "
+                    + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<2,0,(TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))) "
+                    + "when 2 then 0 "
+                    + "when 3 then "
+                    + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<2,0,(TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))) "
+                    + "when 4 then 0 "
+                    + "end as dr, "
+                    + "case mm.det_sta "
+                    + "when 1 then "
+                    + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=2,'yellow','red')) "
+                    + "when 2 then 'lime' "
+                    + "when 3 then "
+                    + "if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,mm.fec_ini,now()))<=2,'yellow','red')) "
+                    + "when 4 then 'lime' "
+                    + "end as color,"
+                    + "mm.cod_per, "
+                    + "per.nom_per, "
+                    + "mm.flg_ext,mm.cod_sup, mm.turno, mm.cod_pri, mm.cod_dep,mm.cod_alt,mm.obs_tec,mm.otr_per,lis.des_equ "
+                    + "from tbl_mae_man as mm "
+                    + "left join cat_tip as tip on mm.cod_tip = tip.cod_tip "
+                    + "left join cat_per as per on mm.cod_per = per.cod_per "
+                    + "left join lis_equ as lis on mm.cod_lis_equ = lis.cod_lis_equ "
+                    + "order by mm.cod_alt desc limit " + vlimit + ";";
+
+            ResultSet resVariable;
+
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                mantenimientos.add(new CatMantenimientos(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10),
+                        resVariable.getString(11),
+                        resVariable.getString(12),
+                        resVariable.getString(13),
+                        resVariable.getString(14),
+                        resVariable.getString(15),
+                        resVariable.getString(16),
+                        resVariable.getString(17),
+                        resVariable.getString(18),
+                        resVariable.getString(19),
+                        resVariable.getString(20),
+                        resVariable.getString(21),
+                        resVariable.getString(22),
+                        resVariable.getString(23)
+                ));
+
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Mantenimientos en ManMaestroMan. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+
     public void llenarMantenimientos() {
         String mQuery = "";
         try {
@@ -1494,10 +1718,11 @@ public class ManMaestroMan implements Serializable {
                         + "end as color,"
                         + "mm.cod_per, "
                         + "per.nom_per,"
-                        + "mm.flg_ext,mm.cod_sup, mm.turno, mm.cod_pri, mm.cod_dep,mm.cod_alt,mm.obs_tec,mm.otr_per "
+                        + "mm.flg_ext,mm.cod_sup, mm.turno, mm.cod_pri, mm.cod_dep,mm.cod_alt,mm.obs_tec,mm.otr_per,lis.des_equ "
                         + "from tbl_mae_man as mm "
                         + "left join cat_tip as tip on mm.cod_tip = tip.cod_tip "
                         + "left join cat_per as per on mm.cod_per = per.cod_per "
+                        + "left join lis_equ as lis on mm.cod_lis_equ = lis.cod_lis_equ "
                         + "where "
                         + "mm.det_sta IN (1,2,3,4) "
                         + "and mm.cod_lis_equ =" + buscar_serie + " "
@@ -1529,7 +1754,8 @@ public class ManMaestroMan implements Serializable {
                             resVariable.getString(19),
                             resVariable.getString(20),
                             resVariable.getString(21),
-                            resVariable.getString(22)
+                            resVariable.getString(22),
+                            resVariable.getString(23)
                     ));
 
                 }
@@ -2089,6 +2315,204 @@ public class ManMaestroMan implements Serializable {
         }
     }
 
+    public void guardarintegral() {
+        String mQuery = "";
+        boolean mvalidar = true;
+        if ("".equals(cod_lis_equ) || "0".equals(cod_lis_equ)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Escoger un Equipo.", 2);
+        }
+        if ("0".equals(cod_tip)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Escoger un Tipo de Mantenimiento.", 2);
+        }
+        if (mvalidar) {
+            try {
+                RequestContext.getCurrentInstance().execute("PF('wvEncManIni').clearFilters()");
+                Accesos mAccesos = new Accesos();
+                mAccesos.Conectar();
+                if ("".equals(cod_man)) {
+                    mQuery = "select ifnull(max(cod_man),0)+1 as codigo from tbl_mae_man where cod_lis_equ = " + cod_lis_equ + ";";
+                    cod_man = mAccesos.strQuerySQLvariable(mQuery);
+                    mQuery = "insert into tbl_mae_man (cod_lis_equ,cod_man,"
+                            + "cod_tip,det_obs,fec_ini,fec_fin,det_sta,cod_usu,"
+                            + "cod_per,flg_ext,cod_sup,turno,cod_pri,cod_dep,"
+                            + "cod_alt,obs_tec,otr_per) "
+                            + "VALUES (" + cod_lis_equ + "," + cod_man + ","
+                            + cod_tip + ",'" + det_obs.replace("'", " ") + "',"
+                            + "str_to_date('" + fec_ini + "','%d/%m/%Y %H:%i'),str_to_date('" + fec_fin + "','%d/%m/%Y %H:%i'),1,"
+                            + cod_usu + "," + cod_per + "," + flg_ext + ","
+                            + cod_sup + "," + turno + ",'" + cod_pri + "'," + cod_dep + ","
+                            + cod_alt + ",'" + obs_tec + "','" + otr_per + "');";
+                } else {
+                    mQuery = "delete from tbl_det_man_fal where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                    mQuery = "update tbl_mae_man set "
+                            + "cod_tip= " + cod_tip + ","
+                            + "det_obs= '" + det_obs.replace("'", " ") + "',"
+                            + "fec_ini = str_to_date('" + fec_ini + "','%d/%m/%Y %H:%i'),"
+                            + "fec_fin = str_to_date('" + fec_fin + "','%d/%m/%Y %H:%i'),"
+                            + "cod_usu = " + cod_usu + ","
+                            + "cod_per= " + cod_per + ","
+                            + "flg_ext= " + flg_ext + ","
+                            + "cod_sup = " + cod_sup + ","
+                            + "turno= " + turno + ","
+                            + "cod_pri= '" + cod_pri + "',"
+                            + "cod_dep= " + cod_dep + ", "
+                            + "cod_alt= " + cod_alt + ", "
+                            + "obs_tec='" + obs_tec + "', "
+                            + "otr_per='" + otr_per + "' "
+                            + "where cod_lis_equ = " + cod_lis_equ + " "
+                            + "and cod_man = " + cod_man + ";";
+                }
+                mAccesos.dmlSQLvariable(mQuery);
+                String mValues = "";
+                mQuery = "";
+
+                for (int i = 0; i < fallas.size(); i++) {
+                    mValues = mValues + ",(" + cod_lis_equ + "," + cod_man + ","
+                            + (i + 1) + "," + fallas.get(i).getCod_gru_fal() + "," + fallas.get(i).getCod_fal() + ",'" + fallas.get(i).getDet_obs() + "')";
+                }
+
+                if (!"".equals(mValues)) {
+                    mQuery = "insert into tbl_det_man_fal (cod_lis_equ,cod_man,det_man,cod_gru_fal,cod_fal,det_obs) VALUES" + mValues.substring(1) + ";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                }
+
+                mAccesos.Desconectar();
+
+                int correlativo = 0;
+                Double mItems = 0.0;
+                String mValoresGeneral = "", mValoresPiezas = "", mValoresAccesorios = "", mValoresAnexos = "";
+                try {
+                    for (int i = 0; i < general.size(); i++) {
+                        mValoresGeneral = mValoresGeneral + ",(" + cod_lis_equ + "," + cod_man + "," + (i + 1)
+                                + ",str_to_date('" + general.get(i).getFec_man() + "', '%d/%m/%Y %H:%i'),"
+                                + general.get(i).getCod_ope() + ",'" + general.get(i).getDet_obs() + "',"
+                                + general.get(i).getCod_usu() + "," + general.get(i).getDet_min() + ")";
+                    }
+
+                    for (int i = 0; i < piezas.size(); i++) {
+                        mValoresPiezas = mValoresPiezas + ",(" + cod_lis_equ + "," + cod_man + "," + (i + 1)
+                                + ",str_to_date('" + piezas.get(i).getFec_man() + "', '%d/%m/%Y %H:%i'),"
+                                + piezas.get(i).getCod_pai() + ",0,0," + piezas.get(i).getDet_can() + ","
+                                + piezas.get(i).getCod_pie() + ",'" + piezas.get(i).getNum_ser() + "',"
+                                + piezas.get(i).getCod_usu() + "," + piezas.get(i).getFlg_sol() + ")";
+
+                        if ("0".equals(piezas.get(i).getFlg_sol())) {
+                            mItems = mItems + Double.valueOf(piezas.get(i).getDet_can());
+                        }
+
+                    }
+
+                    for (int i = 0; i < accesorios.size(); i++) {
+                        mValoresAccesorios = mValoresAccesorios + ",(" + cod_lis_equ + "," + cod_man + "," + (i + 1)
+                                + ",str_to_date('" + accesorios.get(i).getFec_man() + "', '%d/%m/%Y %H:%i'),"
+                                + accesorios.get(i).getCod_pai() + "," + accesorios.get(i).getDet_can() + ",'"
+                                + accesorios.get(i).getDes_ite() + "'," + accesorios.get(i).getCod_usu() + ","
+                                + accesorios.get(i).getFlg_sol() + ")";
+
+                        if ("0".equals(accesorios.get(i).getFlg_sol())) {
+                            mItems = mItems + Double.valueOf(accesorios.get(i).getDet_can());
+                        }
+
+                    }
+
+                    mAccesos.Conectar();
+                    for (int i = 0; i < anexos.size(); i++) {
+                        if ("0".equals(mAccesos.strQuerySQLvariable("select count(det_man) from tbl_det_man_ane where cod_lis_equ =" + cod_lis_equ
+                                + " and cod_man = " + cod_man + " and tip_ane = " + anexos.get(i).getTip_ane()
+                                + " and rut_ane = '" + anexos.get(i).getRut_ane() + "';"))) {
+
+                            mValoresAnexos = mValoresAnexos + ",(" + cod_lis_equ + "," + cod_man + "," + (i + 1) + ",'"
+                                    + anexos.get(i).getDet_obs() + "'," + anexos.get(i).getTip_ane() + ",'"
+                                    + anexos.get(i).getRut_ane().replace("/resources/images/temp/", "/resources/images/anexos/") + "'," + anexos.get(i).getCod_usu() + ")";
+
+                            String nTemporal = anexos.get(i).getRut_ane().replace("/resources/images/temp/", "");
+
+                            File mIMGFile = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/temp/config.xml"));
+                            String destinationO = mIMGFile.getPath().replace("config.xml", "");
+
+                            File mIMGFile2 = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/anexos/config.xml"));
+                            String destinationD = mIMGFile2.getPath().replace("config.xml", "");
+
+                            //Mueve el nuevo archivo
+                            try {
+                                Path Origen = Paths.get(destinationO + nTemporal);
+                                Path Destino = Paths.get(destinationD + nTemporal);
+                                Files.move(Origen, Destino, StandardCopyOption.REPLACE_EXISTING);
+                            } catch (Exception e) {
+                                System.out.println("Error en mover Archivo: " + nTemporal + ". " + e.getMessage());
+                            }
+                            correlativo = correlativo + 1;
+
+                        } else {
+                            mAccesos.dmlSQLvariable("update tbl_det_man_ane set det_man =" + (i + 1) + " where cod_lis_equ =" + cod_lis_equ
+                                    + " and cod_man = " + cod_man + " and tip_ane = " + anexos.get(i).getTip_ane()
+                                    + " and rut_ane = '" + anexos.get(i).getRut_ane() + "';");
+                        }
+
+                    }
+
+                    mQuery = "delete from tbl_det_man_gen where cod_lis_equ =" + cod_lis_equ + " and cod_man= " + cod_man + "; ";
+                    mAccesos.dmlSQLvariable(mQuery);
+                    mQuery = "delete from tbl_det_man_pie where cod_lis_equ =" + cod_lis_equ + " and cod_man= " + cod_man + "; ";
+                    mAccesos.dmlSQLvariable(mQuery);
+                    mQuery = "delete from tbl_det_man_acc where cod_lis_equ =" + cod_lis_equ + " and cod_man= " + cod_man + "; ";
+                    mAccesos.dmlSQLvariable(mQuery);
+
+                    if (general.size() > 0) {
+                        mValoresGeneral = "insert into tbl_det_man_gen (cod_lis_equ,cod_man,det_man,fec_man,cod_ope,det_obs,cod_usu,det_min) VALUES "
+                                + mValoresGeneral.substring(1) + ";";
+                        mAccesos.dmlSQLvariable(mValoresGeneral);
+                    }
+                    if (piezas.size() > 0) {
+                        mValoresPiezas = "insert into tbl_det_man_pie (cod_lis_equ,cod_man,det_man,fec_man,cod_pai,"
+                                + "cod_bod,cod_ubi,det_can,cod_pie,num_ser,cod_usu,flg_sol) VALUES " + mValoresPiezas.substring(1) + ";";
+                        mAccesos.dmlSQLvariable(mValoresPiezas);
+                    }
+                    if (accesorios.size() > 0) {
+                        mValoresAccesorios = "insert into tbl_det_man_acc (cod_lis_equ,cod_man,det_man,fec_man,cod_pai,"
+                                + "det_can,des_ite,cod_usu,flg_sol) VALUES " + mValoresAccesorios.substring(1) + ";";
+                        mAccesos.dmlSQLvariable(mValoresAccesorios);
+                    }
+                    if (correlativo > 0) {
+                        mValoresAnexos = "insert into tbl_det_man_ane (cod_lis_equ,cod_man,det_man,det_obs,tip_ane,"
+                                + "rut_ane,cod_usu) VALUES " + mValoresAnexos.substring(1) + ";";
+                        mAccesos.dmlSQLvariable(mValoresAnexos);
+                    }
+
+                    mAccesos.dmlSQLvariable("update tbl_mae_man set det_sta = 3 where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";");
+
+                    mAccesos.Desconectar();
+
+                    addMessage("Guardar Detalles Mantenimiento", "La Información ha sido almacenada con éxito.", 1);
+                    if (mItems > 0) {
+                        mmensaje = "Existen " + mItems + " Items sin solicitar. ¿Desea que el Sistema Genere automáticamente las respectivas solicitudes?";
+                        RequestContext.getCurrentInstance().update("frmAutoSolReq");
+                        RequestContext.getCurrentInstance().execute("PF('wAutoSolReq').show()");
+                    }
+                } catch (Exception e) {
+                    addMessage("Guardar Detalles Mantenimiento", "Error en el almacenamiento de la información.", 2);
+                    System.out.println("Error en guardar Detalles Mantenimiento en ManMaestroMan." + e.getMessage() + " Query: " + mQuery);
+                    System.out.println(" General: " + mValoresGeneral);
+                    System.out.println(" Piezas: " + mValoresPiezas);
+                    System.out.println(" Accesorios: " + mValoresAccesorios);
+                    System.out.println(" Anexos: " + mValoresAnexos);
+
+                }
+
+                //addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);
+            } catch (Exception e) {
+                addMessage("Guardar Mantenimiento", "Error al momento de guardar la información. " + e.getMessage(), 2);
+                System.out.println("Error al Guardar Mantenimiento. " + e.getMessage() + " Query: " + mQuery);
+            }
+
+            iniciarventanaintegral();
+        }
+
+    }
+
     public void guardarencabezado() {
         String mQuery = "";
         if (validarencabezado()) {
@@ -2156,6 +2580,72 @@ public class ManMaestroMan implements Serializable {
         }
     }
 
+    public void guardarencabezadoIntegral() {
+        String mQuery = "";
+        if (validarencabezado()) {
+            try {
+                Accesos mAccesos = new Accesos();
+                mAccesos.Conectar();
+                if ("".equals(cod_man)) {
+                    mQuery = "select ifnull(max(cod_man),0)+1 as codigo from tbl_mae_man where cod_lis_equ = " + cod_lis_equ + ";";
+                    cod_man = mAccesos.strQuerySQLvariable(mQuery);
+                    mQuery = "insert into tbl_mae_man (cod_lis_equ,cod_man,"
+                            + "cod_tip,det_obs,fec_ini,fec_fin,det_sta,cod_usu,"
+                            + "cod_per,flg_ext,cod_sup,turno,cod_pri,cod_dep,"
+                            + "cod_alt,obs_tec,otr_per) "
+                            + "VALUES (" + cod_lis_equ + "," + cod_man + ","
+                            + cod_tip + ",'" + det_obs.replace("'", " ") + "',"
+                            + "str_to_date('" + fec_ini + "','%d/%m/%Y %H:%i'),str_to_date('" + fec_fin + "','%d/%m/%Y %H:%i'),1,"
+                            + cod_usu + "," + cod_per + "," + flg_ext + ","
+                            + cod_sup + "," + turno + ",'" + cod_pri + "'," + cod_dep + ","
+                            + cod_alt + ",'" + obs_tec + "','" + otr_per + "');";
+                } else {
+                    mQuery = "delete from tbl_det_man_fal where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                    mQuery = "update tbl_mae_man set "
+                            + "cod_tip= " + cod_tip + ","
+                            + "det_obs= '" + det_obs.replace("'", " ") + "',"
+                            + "fec_ini = str_to_date('" + fec_ini + "','%d/%m/%Y %H:%i'),"
+                            + "fec_fin = str_to_date('" + fec_fin + "','%d/%m/%Y %H:%i'),"
+                            + "cod_usu = " + cod_usu + ","
+                            + "cod_per= " + cod_per + ","
+                            + "flg_ext= " + flg_ext + ","
+                            + "cod_sup = " + cod_sup + ","
+                            + "turno= " + turno + ","
+                            + "cod_pri= '" + cod_pri + "',"
+                            + "cod_dep= " + cod_dep + ", "
+                            + "cod_alt= " + cod_alt + ", "
+                            + "obs_tec='" + obs_tec + "', "
+                            + "otr_per='" + otr_per + "' "
+                            + "where cod_lis_equ = " + cod_lis_equ + " "
+                            + "and cod_man = " + cod_man + ";";
+                }
+                mAccesos.dmlSQLvariable(mQuery);
+                String mValues = "";
+                mQuery = "";
+
+                for (int i = 0; i < fallas.size(); i++) {
+                    mValues = mValues + ",(" + cod_lis_equ + "," + cod_man + ","
+                            + (i + 1) + "," + fallas.get(i).getCod_gru_fal() + "," + fallas.get(i).getCod_fal() + ",'" + fallas.get(i).getDet_obs() + "')";
+                }
+
+                if (!"".equals(mValues)) {
+                    mQuery = "insert into tbl_det_man_fal (cod_lis_equ,cod_man,det_man,cod_gru_fal,cod_fal,det_obs) VALUES" + mValues.substring(1) + ";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                }
+
+                mAccesos.Desconectar();
+
+                addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);
+            } catch (Exception e) {
+                addMessage("Guardar Mantenimiento", "Error al momento de guardar la información. " + e.getMessage(), 2);
+                System.out.println("Error al Guardar Mantenimiento. " + e.getMessage() + " Query: " + mQuery);
+            }
+            RequestContext.getCurrentInstance().execute("PF('wvEncManIni').clearFilters()");
+
+        }
+    }
+
     public boolean validarencabezado() {
         boolean mvalidar = true;
         if ("".equals(cod_lis_equ)) {
@@ -2174,8 +2664,10 @@ public class ManMaestroMan implements Serializable {
         String mQuery = "";
         Accesos mAccesos = new Accesos();
         mAccesos.Conectar();
-        if ("".equals(cod_lis_equ) == false && "".equals(cod_man) == false) {
+        if ("".equals(cod_lis_equ) == false && "0".equals(cod_lis_equ) == false && "".equals(cod_man) == false) {
             try {
+                mQuery = "delete from tbl_det_man_fal where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
+                mAccesos.dmlSQLvariable(mQuery);
                 mQuery = "delete from tbl_det_man_ane where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
                 mAccesos.dmlSQLvariable(mQuery);
                 mQuery = "delete from tbl_det_man_acc where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
@@ -2192,6 +2684,37 @@ public class ManMaestroMan implements Serializable {
                 System.out.println("Error al Eliminar Equipo. " + e.getMessage() + " Query: " + mQuery);
             }
             llenarMantenimientos();
+
+        } else {
+            addMessage("Eliminar Mantenimiento", "Debe elegir un Registro.", 2);
+        }
+        mAccesos.Desconectar();
+    }
+    
+    public void eliminarencabezadoInt() {
+        String mQuery = "";
+        Accesos mAccesos = new Accesos();
+        mAccesos.Conectar();
+        if ("".equals(cod_lis_equ) == false && "0".equals(cod_lis_equ) == false && "".equals(cod_man) == false) {
+            try {
+                mQuery = "delete from tbl_det_man_fal where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
+                mAccesos.dmlSQLvariable(mQuery);
+                mQuery = "delete from tbl_det_man_ane where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
+                mAccesos.dmlSQLvariable(mQuery);
+                mQuery = "delete from tbl_det_man_acc where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
+                mAccesos.dmlSQLvariable(mQuery);
+                mQuery = "delete from tbl_det_man_pie where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
+                mAccesos.dmlSQLvariable(mQuery);
+                mQuery = "delete from tbl_det_man_gen where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
+                mAccesos.dmlSQLvariable(mQuery);
+                mQuery = "delete from tbl_mae_man where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
+                mAccesos.dmlSQLvariable(mQuery);
+                addMessage("Eliminar Mantenimiento", "Información Eliminada con éxito.", 1);
+            } catch (Exception e) {
+                addMessage("Eliminar Mantenimiento", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
+                System.out.println("Error al Eliminar Equipo. " + e.getMessage() + " Query: " + mQuery);
+            }
+            iniciarventanaintegral();
 
         } else {
             addMessage("Eliminar Mantenimiento", "Debe elegir un Registro.", 2);
@@ -2249,7 +2772,7 @@ public class ManMaestroMan implements Serializable {
         if ("".equals(gen_det_min)) {
             gen_det_min = "0.0";
         }
-        if ("0".equals(gen_cod_ope) && "0".equals(gen_cod_ope)) {
+        if ("0".equals(gen_cod_ope) && "".equals(gen_det_obs)) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Ingresar almenos una Operación o una Observación.", 2);
         }
@@ -2261,10 +2784,10 @@ public class ManMaestroMan implements Serializable {
         if ("".equals(cod_lis_equ)) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Seleccionar un Equipo.", 2);
-        } else if ("".equals(cod_man)) {
+        }/* else if ("".equals(cod_man)) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Seleccionar un Mantenimiento.", 2);
-        }
+        }*/
         try {
             Accesos macc = new Accesos();
             macc.Conectar();
@@ -2387,10 +2910,11 @@ public class ManMaestroMan implements Serializable {
         if ("".equals(cod_lis_equ)) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Seleccionar un Equipo.", 2);
-        } else if ("".equals(cod_man)) {
+        }
+        /*else if ("".equals(cod_man)) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Seleccionar un Mantenimiento.", 2);
-        }
+        }*/
         try {
             Accesos macc = new Accesos();
             macc.Conectar();
@@ -2501,10 +3025,10 @@ public class ManMaestroMan implements Serializable {
         if ("".equals(cod_lis_equ)) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Seleccionar un Equipo.", 2);
-        } else if ("".equals(cod_man)) {
+        }/* else if ("".equals(cod_man)) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Seleccionar un Mantenimiento.", 2);
-        }
+        }*/
         try {
             Accesos macc = new Accesos();
             macc.Conectar();
@@ -2622,10 +3146,11 @@ public class ManMaestroMan implements Serializable {
         if ("".equals(cod_lis_equ)) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Seleccionar un Equipo.", 2);
-        } else if ("".equals(cod_man)) {
+        }
+        /*else if ("".equals(cod_man)) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Seleccionar un Mantenimiento.", 2);
-        }
+        }*/
 
         return mvalidar;
 
@@ -3201,7 +3726,8 @@ public class ManMaestroMan implements Serializable {
                 macc.dmlSQLvariable(mQuery);
 
                 if (general.size() > 0) {
-                    mValoresGeneral = "insert into tbl_det_man_gen (cod_lis_equ,cod_man,det_man,fec_man,cod_ope,det_obs,cod_usu,det_min) VALUES " + mValoresGeneral.substring(1) + ";";
+                    mValoresGeneral = "insert into tbl_det_man_gen (cod_lis_equ,cod_man,det_man,fec_man,cod_ope,det_obs,cod_usu,det_min) VALUES "
+                            + mValoresGeneral.substring(1) + ";";
                     macc.dmlSQLvariable(mValoresGeneral);
                 }
                 if (piezas.size() > 0) {
@@ -3505,6 +4031,76 @@ public class ManMaestroMan implements Serializable {
 
     }
 
+    public void onRowSelectEncInt(SelectEvent event) {
+        cod_lis_equ = ((CatMantenimientos) event.getObject()).getCod_lis_equ();
+        cod_man = ((CatMantenimientos) event.getObject()).getCod_man();
+        cod_tip = ((CatMantenimientos) event.getObject()).getCod_tip();
+        det_obs = ((CatMantenimientos) event.getObject()).getDet_obs();
+        fec_ini = ((CatMantenimientos) event.getObject()).getFec_ini();
+        fec_fin = ((CatMantenimientos) event.getObject()).getFec_fin();
+        det_sta = ((CatMantenimientos) event.getObject()).getDet_sta();
+        cod_usu = ((CatMantenimientos) event.getObject()).getCod_usu();
+        cod_per = ((CatMantenimientos) event.getObject()).getCod_per();
+        flg_ext = ((CatMantenimientos) event.getObject()).getFlg_ext();
+        cod_sup = ((CatMantenimientos) event.getObject()).getCod_sup();
+        cod_dep = ((CatMantenimientos) event.getObject()).getCod_dep();
+        turno = ((CatMantenimientos) event.getObject()).getTurno();
+        cod_pri = ((CatMantenimientos) event.getObject()).getCod_pri();
+        cod_alt = ((CatMantenimientos) event.getObject()).getCod_alt();
+        obs_tec = ((CatMantenimientos) event.getObject()).getObs_tec();
+        otr_per = ((CatMantenimientos) event.getObject()).getOtr_per();
+        if ("00/00/0000".equals(fec_ini)) {
+            fec_ini = "";
+        }
+        if ("00/00/0000".equals(fec_fin)) {
+            fec_fin = "";
+        }
+
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        dfecha1 = Date.from(Instant.now());
+        gen_fec_man = format.format(dfecha1);
+
+        gen_cod_ope = "0";
+        gen_det_obs = "";
+        gen_cod_usu = cbean.getCod_usu();
+
+        dfecha2 = Date.from(Instant.now());
+        pie_fec_man = format.format(dfecha1);
+        pie_cod_pai = cbean.getCod_pai();
+        pie_cod_bod = "0";
+        pie_cod_ubi = "0";
+        pie_det_can = "";
+        pie_cod_pie = "";
+        pie_num_ser = "";
+        pie_cod_usu = cbean.getCod_usu();
+
+        dfecha3 = Date.from(Instant.now());
+        acc_fec_man = format.format(dfecha3);
+        acc_cod_pai = cbean.getCod_pai();
+        acc_det_can = "";
+        acc_des_ite = "";
+        acc_cod_usu = cbean.getCod_usu();
+
+        ane_det_obs = "";
+        ane_tip_ane = "0";
+        ane_rut_ane = "";
+        ane_cod_usu = cbean.getCod_usu();
+
+        try {
+            dfecini = format.parse(fec_ini);
+            dfecfinF = format.parse(fec_fin);
+        } catch (Exception ex) {
+            System.out.println("Error en convertir fechas encabezado." + ex.getMessage() + " fec_ini: " + fec_ini + " fec_fin: " + fec_fin);
+        }
+
+        llenarFallas();
+        llenarGeneral();
+        llenarPiezas();
+        llenarAccesorios();
+        llenarAnexos();
+
+    }
+
     public void onRowUnSelectEnc(SelectEvent event) {
         cod_lis_equ = "";
         cod_man = "";
@@ -3624,6 +4220,23 @@ public class ManMaestroMan implements Serializable {
         //RequestContext.getCurrentInstance().update(":frmListaEquipos:tvLE");
     }
 
+    public void onTabChangeIni(TabChangeEvent event) {
+        switch (event.getTab().getId()) {
+            case "listagenini":
+                tabindex = "0";
+                break;
+            case "genini":
+                tabindex = "1";
+                break;
+            case "detintini":
+                tabindex = "2";
+                break;
+
+        }
+        //System.out.println(tabindex);
+        //RequestContext.getCurrentInstance().update(":frmListaEquipos:tvLE");
+    }
+
     public void onTabPanChange(TabChangeEvent event) {
         switch (event.getTab().getId()) {
             case "tabOBSTEC":
@@ -3631,6 +4244,26 @@ public class ManMaestroMan implements Serializable {
                 break;
             case "tabFALL":
                 panindex = "1";
+                break;
+
+        }
+        //System.out.println(tabindex);
+        //RequestContext.getCurrentInstance().update(":frmListaEquipos:tvLE");
+    }
+
+    public void onTab2Change(TabChangeEvent event) {
+        switch (event.getTab().getId()) {
+            case "tabGENini":
+                tabindex = "0";
+                break;
+            case "tabPIEini":
+                tabindex = "1";
+                break;
+            case "tabACCini":
+                tabindex = "2";
+                break;
+            case "tabANEini":
+                tabindex = "3";
                 break;
 
         }
