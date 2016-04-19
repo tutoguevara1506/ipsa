@@ -1,24 +1,32 @@
 package paquetes;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 
 @Named
 @ConversationScoped
-public class ManListaEquipos implements Serializable {
+public class ManListaEquipos extends Conexion implements Serializable {
 
     private static final long serialVersionUID = 8774836761534938L;
     @Inject
@@ -1824,6 +1832,103 @@ public class ManListaEquipos implements Serializable {
         }
 
         FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
+    //******************** REPORTES ***********************************************
+    public void onRowSelectHis(SelectEvent event) {
+        //cod_lis_equ = ((CatMantenimientos) event.getObject()).getCod_lis_equ();
+        m_cod_man = ((CatMantenimientos) event.getObject()).getCod_man();
+    }
+
+    private String nombrereporte, nombreexportar;
+    private Map<String, Object> parametros;
+
+    public String getNombrereporte() {
+        return nombrereporte;
+    }
+
+    public void setNombrereporte(String nombrereporte) {
+        this.nombrereporte = nombrereporte;
+    }
+
+    public String getNombreexportar() {
+        return nombreexportar;
+    }
+
+    public void setNombreexportar(String nombreexportar) {
+        this.nombreexportar = nombreexportar;
+    }
+
+    public Map<String, Object> getParametros() {
+        return parametros;
+    }
+
+    public void setParametros(Map<String, Object> parametros) {
+        this.parametros = parametros;
+    }
+
+    public void ejecutarreporte() {
+        try {
+            if (!"".equals(cod_lis_equ) && !"0".equals(cod_lis_equ)) {
+                paramRepVarios();
+                verPDF();
+            } else {
+                addMessage("Imprimir Ficha", "Debe elegir un Equipo.", 2);
+            }
+        } catch (Exception e) {
+            System.out.println("Error en EjecutarReporte Lista Equipos." + e.getMessage());
+        }
+
+    }
+
+    public void paramRepVarios() {
+        parametros = new HashMap<>();
+        parametros.put("codequipo", cod_lis_equ);
+        nombrereporte = "/reportes/fichaequipo.jasper";
+        nombreexportar = "Ficha_Equipo_" + cod_lis_equ;
+
+    }
+
+    public void ejecutarreporte2() {
+        try {
+            if (!"".equals(cod_lis_equ) && !"0".equals(cod_lis_equ) && !"".equals(m_cod_man) && !"0".equals(m_cod_man)) {
+                paramRepVarios2();
+                verPDF();
+            } else {
+                addMessage("Detalle Mantenimiento", "Debe elegir un Equipo y un Mantenimiento.", 2);
+            }
+        } catch (Exception e) {
+            System.out.println("Error en EjecutarReporte Lista Equipos." + e.getMessage());
+        }
+
+    }
+
+    public void paramRepVarios2() {
+        parametros = new HashMap<>();
+        parametros.put("codequipo", cod_lis_equ);
+        parametros.put("codman", m_cod_man);
+        nombrereporte = "/reportes/manequipodetalle.jasper";
+        nombreexportar = "Detalle_Mantenimiento_" + cod_lis_equ + "_" + m_cod_man;
+
+    }
+
+    public void verPDF() {
+        try {
+            File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath(nombrereporte));
+            byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), parametros, Conectar());
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.setContentType("application/pdf");
+            response.setContentLength(bytes.length);
+            ServletOutputStream outStream = response.getOutputStream();
+            outStream.write(bytes, 0, bytes.length);
+            outStream.flush();
+            outStream.close();
+
+            FacesContext.getCurrentInstance().responseComplete();
+            Desconectar();
+        } catch (JRException | IOException e) {
+            System.out.println("Error en verPDF en Lista Equipo." + e.getMessage());
+        }
     }
 
 }

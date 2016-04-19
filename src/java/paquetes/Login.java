@@ -141,7 +141,7 @@ public class Login extends Conexion implements Serializable {
                         perfil = "7";
                         break;
                 }*/
-                return "totaltracking?faces-redirect=true";
+                return "ipsa?faces-redirect=true";
 
             } else {
                 addMessage("Fallo en Login", "Nombre de Usuario o Clave Incorrecta.", 2);
@@ -159,7 +159,7 @@ public class Login extends Conexion implements Serializable {
     public void redireccionarlogin() {
         try {
             FacesContext contex = FacesContext.getCurrentInstance();
-            contex.getExternalContext().redirect("/totaltracking/faces/login.xhtml");
+            contex.getExternalContext().redirect("/ipsa/faces/login.xhtml");
 
         } catch (Exception e) {
             System.out.println("Error en redireccionar a login " + e.getMessage());
@@ -169,7 +169,7 @@ public class Login extends Conexion implements Serializable {
     public void redireccionarlogout() {
         try {
             FacesContext contex = FacesContext.getCurrentInstance();
-            contex.getExternalContext().redirect("/totaltracking/faces/timeout.xhtml");
+            contex.getExternalContext().redirect("/ipsa/faces/timeout.xhtml");
 
         } catch (Exception e) {
             System.out.println("Error en redireccionar a login " + e.getMessage());

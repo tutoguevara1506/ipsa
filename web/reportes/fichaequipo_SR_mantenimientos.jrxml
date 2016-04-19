@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fichaequipo_SR_mantenimientos" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="eb70697a-d3b4-454f-a927-53110010cb1b">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="codequipo" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select
+tip.nom_tip, 
+mm.det_obs, 
+mm.fec_ini, 
+mm.fec_fin, 
+case mm.det_sta when 1 then 'PENDIENTE' when 2 then 'CANCELADO' when 3 then 'EN PROCESO' when 4 then 'FINALIZADO' end as estadoman, 
+mm.cod_alt  
+FROM tbl_mae_man as mm
+left join cat_tip as tip on mm.cod_tip = tip.cod_tip
+where mm.cod_lis_equ = $P{codequipo}]]>
+	</queryString>
+	<field name="nom_tip" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="det_obs" class="java.lang.String">
+		<fieldDescription><![CDATA[Observaciones]]></fieldDescription>
+	</field>
+	<field name="fec_ini" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[Fecha Inicio]]></fieldDescription>
+	</field>
+	<field name="fec_fin" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[Fecha Fin]]></fieldDescription>
+	</field>
+	<field name="estadoman" class="java.lang.String"/>
+	<field name="cod_alt" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="2" width="44" height="15" uuid="9a8c81ea-32ed-4b13-a7c7-b31f8eba30b5"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Orden]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="129" y="2" width="100" height="15" uuid="8a7a465d-0037-48c7-b131-e97064ff69e4"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observaciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="2" width="53" height="15" uuid="f659e6cd-34a5-401b-aa2a-f06decc05939"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Inicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="2" width="53" height="15" uuid="5cbc62a5-8b6e-45f7-8bc8-d658502f02a9"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Fin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="485" y="2" width="57" height="15" uuid="6e6bbed7-d074-43b1-8c42-2b5547655782"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="2" width="36" height="15" uuid="0006d76e-67a4-4e65-b996-ae2150658067"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="11" y="17" width="543" height="1" uuid="115b2d85-913d-4e61-87d2-f683f09e5651"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="11" y="1" width="44" height="15" uuid="de1583c1-86e8-49d0-aa1b-700186666e11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cod_alt}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="129" y="1" width="240" height="15" uuid="70ed9de4-3c10-4d72-b77f-841936d6dd94"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{det_obs}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="375" y="0" width="53" height="15" uuid="98ef8c38-fb62-43cd-9490-681988a24088"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fec_ini}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="428" y="0" width="53" height="15" uuid="6d2a57b1-4864-466d-b141-b1174ca2d4b7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fec_fin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="485" y="0" width="69" height="15" uuid="44c515b7-9449-4d39-8797-dc3bcb18f62e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estadoman}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="1" width="63" height="15" uuid="39d26122-ce85-46a7-9115-42989c9ca845"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nom_tip}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

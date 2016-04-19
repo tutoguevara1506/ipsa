@@ -3805,9 +3805,10 @@
                                        message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
-                        <p:button value="Imprimir" style=" width: 100px;"
-                                  target="_blank" href="/EQUIPO.pdf"
-                                  icon="ui-icon-print"
+                        <h:commandButton value="Imprimir" style=" width: 100px;" 
+                                  actionListener="#{manListaEquipos.ejecutarreporte()}"
+                                             onclick="this.form.target = '_blank'"
+                                  disabled="#{manSeguridad.disableOpt('botonLisEquImprimir')}"
                                   />
                         <p:commandButton value="Buscar" style=" width: 100px;"
                                          onclick="PF('wSearchLE').show()"
@@ -3924,13 +3925,14 @@
                     </p:tab>
                     <p:tab title="Historia" id="tabHistoria">
                         <div style=" background-color: #ebf8fe;">
-                            <h:panelGrid columns="6" cellpadding="5">
+                            <h:panelGrid columns="7" cellpadding="5">
                                 <h:outputText value="Fabricacion" style="font-weight:bold;"/>
                                 <h:outputText value="Compra" style="font-weight:bold;"/>
                                 <h:outputText value="Adquisición" style="font-weight:bold;"/>
                                 <h:outputText value="Puesta en Servicio" style="font-weight:bold;"/>
                                 <h:outputText value="Último Mantenimiento" style="font-weight:bold;"/>
                                 <h:outputText value="Retiro" style="font-weight:bold;"/>
+                                <h:outputText value="" style="font-weight:bold;"/>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                              readonlyInput="true" showOn="button" size="10"
                                              style="width: 10px"
@@ -3973,6 +3975,10 @@
                                              >
                                     <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecret}" />
                                 </p:calendar> 
+                                <h:commandButton value="Detalle" style=" width: 80px;" 
+                                  actionListener="#{manListaEquipos.ejecutarreporte2()}"
+                                             onclick="this.form.target = '_blank'"
+                                  />
                             </h:panelGrid>
 
                         </div>
@@ -3986,6 +3992,8 @@
                                      scrollHeight="240"
                                      style="width:781px"
                                      >
+                            <p:ajax event="rowSelect" listener="#{manListaEquipos.onRowSelectHis}" 
+                                />
 
                             <p:column style="width:80px;" headerText="Tipo">
                                 <h:outputText value="#{vEncManH.nomtip}" />
