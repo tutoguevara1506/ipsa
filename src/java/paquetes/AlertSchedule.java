@@ -73,10 +73,12 @@ public class AlertSchedule {
                         email.setSmtpPort(Integer.parseInt(this.smtp_port));
                         email.setAuthenticator(new DefaultAuthenticator(this.user, this.pass));
                         // TLS agregado para server AWS Se quita comentario a setSSL.
-                        //email.setStartTLSEnabled(true);
-                        //email.setStartTLSRequired(true);
+                        email.setStartTLSEnabled(true);
+                        email.setStartTLSRequired(true);
                         
-                        email.setSSLOnConnect(true);
+                        // Comentariado para funcionar con Gmail
+                        //email.setSSLOnConnect(true);
+                        
                         email.setFrom(this.remitente);
                         email.setSubject(nom_tip_ale);
                         email.setMsg(lgal.getAle_des());
