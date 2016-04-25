@@ -7122,18 +7122,27 @@
         *********************************************************************-->
 
         <p:dialog  id="dlgPronosticoMtto" widgetVar="wPronosticoMtto" modal="true" 
-                   width="800" height="540" closable="true" resizable="false" 
+                   width="900" height="540" closable="true" resizable="false" 
                    header="Pronostico de Calendario de Mantenimientos" rendered="true" 
                    dynamic="false" visible="false" 
                    >
 
             <h:form id="frmPronosticoMtto">
                 <p:growl id="messProMtto" showDetail="true" />
-                <p:schedule id="schedule" value="#{manPronosticoMtto.mttoModel}" widgetVar="promtto" timeZone="GMT+2" locale="es" aspectRatio="1.7">
-                    <p:ajax event="eventSelect" listener="#{manPronosticoMtto.onEventSelect}" update="frmObsPronosMtto" oncomplete="PF('wMaestra').show();" />
-                    <p:ajax event="eventMove" listener="#{manPronosticoMtto.onEventMove}" update="messProMtto" />
-                    <p:ajax event="eventResize" listener="#{manPronosticomtto.onEventResize}" update="messProMtto" />
-                </p:schedule>
+                <pe:timeline id="PronosticoTimeline" value="#{manPronosticoMtto.modelTimeLine}" height="500px" 
+                                     zoomable="true"  
+                                     selectable="true"
+                                     editable="true"                                               
+                                     moveable="true"  
+                                     stackEvents="true"  
+                                     axisOnTop="false"
+                                     eventStyle="box"
+                                     showCurrentTime="true"  
+                                     showNavigation="true"
+                                     timeChangeable="true">
+                            <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="@form" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
+                            <p:ajax  event="changed" listener="#{manPronosticoMtto.onChange}" process="@form"/> 
+                        </pe:timeline>  
             </h:form>
         </p:dialog>
 

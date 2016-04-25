@@ -16,7 +16,6 @@ import javax.inject.Named;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
 import org.primefaces.extensions.event.timeline.TimelineModificationEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.model.timeline.TimelineModel;
@@ -42,9 +41,7 @@ public class ManPronosticoMtto implements Serializable {
     private CatCalendario catcalendario;
     private List<CatCalendario> listaMttos;
     private List<CatCalendario> listaMttosPre;
-    private ScheduleModel mttoModel;
-    private ScheduleEvent mtto = new DefaultScheduleEvent();
-     private String buscar_serie;
+    private String buscar_serie;
 
     // Variables para timeline
     private TimelineModel modelTimeLine;
@@ -56,8 +53,6 @@ public class ManPronosticoMtto implements Serializable {
 
     @PostConstruct
     public void init() {
-        catcalendario = new CatCalendario();
-        mttoModel = new DefaultScheduleModel();
         modelTimeLine = new TimelineModel();
         Date now = new Date();
 
@@ -68,8 +63,8 @@ public class ManPronosticoMtto implements Serializable {
             TimelineEvent tle = new TimelineEvent();
             tle.setData(cm.getDes_equ());
             tle.setStartDate(cm.getFec_ini());
-            tle.setEndDate(cm.getFec_fin());
-            tle.setGroup(cm.getDes_equ());
+            //tle.setEndDate(cm.getFec_fin());
+            //tle.setGroup(cm.getDes_equ());
 
             String status ="";
             String color = cm.getColor();
@@ -151,14 +146,6 @@ public class ManPronosticoMtto implements Serializable {
         this.catcalendario = catcalendario;
     }
 
-    public ScheduleModel getMttoModel() {
-        return mttoModel;
-    }
-
-    public void setMttoModel(ScheduleModel mttoModel) {
-        this.mttoModel = mttoModel;
-    }
-
     public TimelineModel getModelTimeLine() {
         return modelTimeLine;
     }
@@ -167,14 +154,7 @@ public class ManPronosticoMtto implements Serializable {
         this.modelTimeLine = modelTimeLine;
     }
 
-    public ScheduleEvent getMtto() {
-        return mtto;
-    }
-
-    public void setMtto(ScheduleEvent mtto) {
-        this.mtto = mtto;
-    }
-
+    
     public TimelineEvent getEventTimeLine() {
         return eventTimeLine;
     }
