@@ -259,74 +259,7 @@ public class ManPronosticoMtto implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
-    // ********************************* Ver Solicitudes ************************************
-    private CatSolicitudes catmaestro;
-    private List<CatSolicitudes> maestro;
-    private CatSolicitudesDetalle catdetalles;
-    private List<CatSolicitudesDetalle> detalles;
-
-    private String mansolreq, flagsolreq;
-
-    public CatSolicitudes getCatmaestro() {
-        return catmaestro;
-    }
-
-    public void setCatmaestro(CatSolicitudes catmaestro) {
-        this.catmaestro = catmaestro;
-    }
-
-    public List<CatSolicitudes> getMaestro() {
-        return maestro;
-    }
-
-    public void setMaestro(List<CatSolicitudes> maestro) {
-        this.maestro = maestro;
-    }
-
-    public CatSolicitudesDetalle getCatdetalles() {
-        return catdetalles;
-    }
-
-    public void setCatdetalles(CatSolicitudesDetalle catdetalles) {
-        this.catdetalles = catdetalles;
-    }
-
-    public List<CatSolicitudesDetalle> getDetalles() {
-        return detalles;
-    }
-
-    public void setDetalles(List<CatSolicitudesDetalle> detalles) {
-        this.detalles = detalles;
-    }
-
-    public String getFlagsolreq() {
-        return flagsolreq;
-    }
-
-    public void setFlagsolreq(String flagsolreq) {
-        this.flagsolreq = flagsolreq;
-    }
-
-    public String getMansolreq() {
-        return mansolreq;
-    }
-
-    public void setMansolreq(String mansolreq) {
-        this.mansolreq = mansolreq;
-    }
-
     
-    public void cerrarventanaSolicitudes() {
-        mansolreq = "";
-        flagsolreq = "";
-        maestro = new ArrayList<>();
-        detalles = new ArrayList<>();
-    }
-
-    public void onRowUnselect(UnselectEvent event) {
-        detalles = new ArrayList<>();
-    }
-
     public void onEventSelect(SelectEvent selectEvent) {
 
         ScheduleEvent smtto = (ScheduleEvent) selectEvent.getObject();
