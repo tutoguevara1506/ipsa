@@ -114,7 +114,7 @@ order by mm.cod_man]]>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[GENERAL INFORMATION]]></text>
+					<text><![CDATA[INFORMACIÓN GENERAL]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="0" y="13" width="54" height="13" uuid="8c860f66-f785-4a79-9cda-0fa951c48113"/>

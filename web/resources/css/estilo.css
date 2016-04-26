@@ -162,7 +162,7 @@ div.timeline-event {
 }  
   
 div.timeline-event-content {  
-    padding: 2px;
+    padding: 4px;
     height: 6px !important;
     text-shadow: none;  
 }  

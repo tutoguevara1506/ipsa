@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
@@ -56,7 +58,7 @@ import org.primefaces.model.UploadedFile;
 @Named
 @ConversationScoped
 
-public class ManMaestroMan implements Serializable {
+public class ManMaestroMan extends Conexion implements Serializable {
 
     private static final long serialVersionUID = 8774297541534938L;
     @Inject
@@ -150,7 +152,7 @@ public class ManMaestroMan implements Serializable {
             //tle.setGroup(cm.getDes_equ());
 
             //Verifica condicion del mantenimiento
-            now = new Date();
+            /*now = new Date();
 
             long r = (cm.getFec_ini().getTime()) - now.getTime();
             double dias = Math.floor(r / (1000 * 60 * 60 * 24));
@@ -163,8 +165,20 @@ public class ManMaestroMan implements Serializable {
                 color = "atrasoleve";
             } else if ("1".equals(estado) && dias < -30) {
                 color = "atrazado";
+            }*/
+            
+            String status ="";
+            String color = cm.getColor();
+            
+            if ("lime".equals(color)) {
+                status = "entiempo";
+            } else if ("yellow".equals(color)) {
+                status = "atrasoleve";
+            } else if ("red".equals(color)) {
+                status = "atrazado";
             }
-            tle.setStyleClass(color);
+                        
+            tle.setStyleClass(status);
             cmt.setId(cm.getCod_man());
             cmt.setDescription(cm.getDet_obs());
             cmt.setTitle(cm.getDes_equ());
@@ -4822,6 +4836,99 @@ public class ManMaestroMan implements Serializable {
 
         Accesos racc = new Accesos();
         return JasperRunManager.runReportToPdf(reportPath + File.separator + "FMAN004.jasper", param, racc.Conectar());
+    }
+    
+    //******************** REPORTES ***********************************************
+  
+    private String nombrereporte, nombreexportar;
+    private Map<String, Object> parametros;
+
+    public String getNombrereporte() {
+        return nombrereporte;
+    }
+
+    public void setNombrereporte(String nombrereporte) {
+        this.nombrereporte = nombrereporte;
+    }
+
+    public String getNombreexportar() {
+        return nombreexportar;
+    }
+
+    public void setNombreexportar(String nombreexportar) {
+        this.nombreexportar = nombreexportar;
+    }
+
+    public Map<String, Object> getParametros() {
+        return parametros;
+    }
+
+    public void setParametros(Map<String, Object> parametros) {
+        this.parametros = parametros;
+    }
+
+    public void ejecutarreporte() {
+        try {
+            if (!"".equals(cod_lis_equ) && !"0".equals(cod_lis_equ)) {
+                paramRepVarios();
+                verPDF();
+            } else {
+                addMessage("Imprimir Detalle", "Debe elegir un Equipo.", 2);
+            }
+        } catch (Exception e) {
+            System.out.println("Error en EjecutarReporte Lista Equipos." + e.getMessage());
+        }
+
+    }
+
+    public void paramRepVarios() {
+        parametros = new HashMap<>();
+        parametros.put("codequipo", cod_lis_equ);
+        nombrereporte = "/reportes/fichaequipo.jasper";
+        nombreexportar = "Ficha_Equipo_" + cod_lis_equ;
+
+    }
+
+    public void ejecutarreporte2() {
+        try {
+            if (!"".equals(cod_lis_equ) && !"0".equals(cod_lis_equ) && !"".equals(cod_man) && !"0".equals(cod_man)) {
+                paramRepVarios2();
+                verPDF();
+            } else {
+                addMessage("Detalle Mantenimiento", "Debe elegir un Equipo y un Mantenimiento.", 2);
+            }
+        } catch (Exception e) {
+            System.out.println("Error en EjecutarReporte Lista Equipos." + e.getMessage());
+        }
+
+    }
+
+    public void paramRepVarios2() {
+        parametros = new HashMap<>();
+        parametros.put("codequipo", cod_lis_equ);
+        parametros.put("codman", cod_man);
+        nombrereporte = "/reportes/manequipodetalle.jasper";
+        nombreexportar = "Detalle_Mantenimiento_" + cod_lis_equ + "_" + cod_man;
+
+    }
+
+    public void verPDF() {
+        try {
+            File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath(nombrereporte));
+            byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), parametros, Conectar());
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.setContentType("application/pdf");
+            response.setContentLength(bytes.length);
+            ServletOutputStream outStream = response.getOutputStream();
+            outStream.write(bytes, 0, bytes.length);
+            outStream.flush();
+            outStream.close();
+
+            FacesContext.getCurrentInstance().responseComplete();
+            Desconectar();
+        } catch (JRException | IOException e) {
+            System.out.println("Error en verPDF en MaestraMan." + e.getMessage());
+        }
     }
 
 }
