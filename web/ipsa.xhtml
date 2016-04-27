@@ -394,7 +394,8 @@
                                      eventStyle="dot"
                                      showCurrentTime="true"  
                                      showNavigation="true"
-                                     timeChangeable="true">
+                                     timeChangeable="true"
+                                     locale="es">
                             <p:ajax  event="edit" listener="#{manMaestroMan.onEdit}" process="@form" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
                             <p:ajax  event="changed" listener="#{manMaestroMan.onChange}" process="@form"/> 
                         </pe:timeline>  
@@ -7159,7 +7160,8 @@
                                      eventStyle="box"
                                      showCurrentTime="true"  
                                      showNavigation="true"
-                                     timeChangeable="true">
+                                     timeChangeable="true"
+                                     locale="es">
                             <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="@form" update="frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
                             <p:ajax  event="changed" listener="#{manPronosticoMtto.onChange}" process="@form"/> 
                         </pe:timeline>  
