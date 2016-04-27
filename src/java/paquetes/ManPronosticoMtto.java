@@ -196,6 +196,12 @@ public class ManPronosticoMtto implements Serializable {
 
     public void nuevo() {
     }
+    
+    public void guardar() {
+    }
+    
+    public void eliminar() {
+    }
 
     public void iniciarventananew() {
     }

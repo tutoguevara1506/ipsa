@@ -7147,9 +7147,51 @@
                    header="Pronostico de Calendario de Mantenimientos" rendered="true" 
                    dynamic="false" visible="false" 
                    >
-
+            
             <h:form id="frmPronosticoMtto">
                 <p:growl id="messProMtto" showDetail="true" />
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Crear Nueva Planificacion" style=" width: 150px;"
+                                             actionListener="#{manPronosticoMtto.nuevo()}"
+                                         update=":frmCargo"
+                                         icon="ui-icon-document"
+                                         />
+                        <p:commandButton value="Guardar Planificación" style=" width: 150px;"
+                                         actionListener="#{manPronosticoMtto.guardar()}"
+                                         update=":frmCargo"
+                                         icon="ui-icon-disk"
+                                         > 
+                            <p:confirm header="Guardar Registro" 
+                                       message="¿Realmente desea Guardar este Registro?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Eliminar planificación" style=" width: 150px;"
+                                         actionListener="#{manPronosticoMtto.eliminar()}"
+                                         update=":frmCargo"
+                                         icon="ui-icon-trash"
+                                         >
+                            <p:confirm header="Eliminar Planificación" 
+                                       message="¿Realmente desea eliminar la planificación?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wPronosticoMtto').hide()"
+                                         actionListener="#{manPronosticoMtto.cerrarventana()}"
+                                         update=":frmCargo"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+
                 <pe:timeline id="PronosticoTimeline" value="#{manPronosticoMtto.modelTimeLine}" height="500px" 
                                      zoomable="true"  
                                      selectable="true"
