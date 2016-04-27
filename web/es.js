@@ -25,7 +25,7 @@ PrimeFaces.locales['es'] = {
     allDayText : 'Todo el dia'
 };
 
-PrimeFacesExt.locales['es'] = {
+PrimeFacesExt.locales.Timeline['es'] = {
         'MONTHS': ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
         'MONTHS_SHORT': ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
         'DAYS': ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
@@ -34,6 +34,6 @@ PrimeFacesExt.locales['es'] = {
         'ZOOM_OUT': "Disminuir zoom",
         'MOVE_LEFT': "Mover izquierda",
         'MOVE_RIGHT': "Mover derecha",
-        'NEW': "Nuevo Mtto.",
+        'NEW': "NUEVO MANTENIMIENTO",
         'CREATE_NEW_EVENT': "Crear nuevo mantenimiento"
     };
