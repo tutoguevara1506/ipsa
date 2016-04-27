@@ -19,10 +19,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.event.timeline.TimelineModificationEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.model.timeline.TimelineModel;
-import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
-import org.primefaces.model.ScheduleModel;
 
 @Named
 @ConversationScoped
@@ -41,7 +38,7 @@ public class ManPronosticoMtto implements Serializable {
     private CatCalendario catcalendario;
     private List<CatCalendario> listaMttos;
     private List<CatCalendario> listaMttosPre;
-    private String buscar_serie;
+    private String buscar_serie, startDate, endDate, observacion;
 
     // Variables para timeline
     private TimelineModel modelTimeLine;
@@ -64,20 +61,7 @@ public class ManPronosticoMtto implements Serializable {
             tle.setData(cm.getDes_equ());
             tle.setStartDate(cm.getFec_ini());
             //tle.setEndDate(cm.getFec_fin());
-            //tle.setGroup(cm.getDes_equ());
-
-            String status ="";
-            String color = cm.getColor();
-            
-            if ("lime".equals(color)) {
-                status = "entiempo";
-            } else if ("yellow".equals(color)) {
-                status = "atrasoleve";
-            } else if ("red".equals(color)) {
-                status = "atrazado";
-            }
-                        
-            tle.setStyleClass(status);
+            //tle.setGroup(cm.getDes_equ());                        
             modelTimeLine.add(tle);
         }
     }
@@ -89,7 +73,31 @@ public class ManPronosticoMtto implements Serializable {
     public void setBuscar_serie(String buscar_serie) {
         this.buscar_serie = buscar_serie;
     }
- 
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+     
     public CatMantenimientos getCatmantenimientos() {
         return catmantenimientos;
     }

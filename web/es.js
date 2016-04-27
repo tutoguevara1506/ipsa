@@ -4,7 +4,7 @@ PrimeFaces.locales['es'] = {
     nextText: 'Siguiente',
     monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
     monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
-    dayNames: ['Domingo','Lunes','Martes','MiÃ©rcoles','Jueves','Viernes','SÃ¡bado'],
+    dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
     dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
     dayNamesMin: ['D','L','M','M','J','V','S'],
     weekHeader: 'Semana',
@@ -12,7 +12,7 @@ PrimeFaces.locales['es'] = {
     isRTL: false,
     showMonthAfterYear: false,
     yearSuffix: '',
-    timeOnlyTitle: 'SÃ³lo hora',
+    timeOnlyTitle: 'Solo hora',
     timeText: 'Tiempo',
     hourText: 'Hora',
     minuteText: 'Minuto',
@@ -21,8 +21,19 @@ PrimeFaces.locales['es'] = {
     ampm: false,
     month: 'Mes',
     week: 'Semana',
-    day: 'DÃ­a',
-    allDayText : 'Todo el dÃ­a'
+    day: 'Dia',
+    allDayText : 'Todo el dia'
 };
 
-
+PrimeFacesExt.locales['es'] = {
+        'MONTHS': ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+        'MONTHS_SHORT': ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+        'DAYS': ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+        'DAYS_SHORT': ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+        'ZOOM_IN': "Aumentar zoom",
+        'ZOOM_OUT': "Disminuir zoom",
+        'MOVE_LEFT': "Mover izquierda",
+        'MOVE_RIGHT': "Mover derecha",
+        'NEW': "Nuevo Mtto.",
+        'CREATE_NEW_EVENT': "Crear nuevo mantenimiento"
+    };

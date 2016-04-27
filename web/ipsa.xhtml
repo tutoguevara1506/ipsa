@@ -127,6 +127,14 @@
                                 style="width: 190px;"
                                 disabled="#{manSeguridad.disableOpt('menuCalendMtto')}"
                                 />
+                    <p:menuitem value="Pronostico de Mantenimientos" icon="ui-icon-calendar" 
+                                id="menuPronosticoMtto"
+                                onclick="PF('wPronosticoMtto').show()"
+                                update=":frmPronosticoMtto"
+                                actionListener="#{manPronosticoMtto.iniciarventana()}"
+                                style="width: 190px;"
+                                disabled="#{manSeguridad.disableOpt('menuPronosticoMtto')}"
+                                />
                 </p:submenu>
                 <p:submenu label="Compras" icon="ui-icon-cart">
                     <p:submenu label="Solicitudes" icon="ui-icon-pencil">
@@ -7128,6 +7136,53 @@
                 </p:schedule>
             </h:form>
         </p:dialog>
+        
+         <!--******************************************************************** 
+        **************** Pantalla Pronostico de mantenimientos ************
+        *********************************************************************-->
+
+        <p:dialog  id="dlgPronosticoMtto" widgetVar="wPronosticoMtto" modal="true" 
+                   width="900" height="540" closable="true" resizable="false" 
+                   header="Pronostico de Calendario de Mantenimientos" rendered="true" 
+                   dynamic="false" visible="false" 
+                   >
+
+            <h:form id="frmPronosticoMtto">
+                <p:growl id="messProMtto" showDetail="true" />
+                <pe:timeline id="PronosticoTimeline" value="#{manPronosticoMtto.modelTimeLine}" height="500px" 
+                                     zoomable="true"  
+                                     selectable="true"
+                                     editable="true"                                               
+                                     moveable="true"  
+                                     stackEvents="true"  
+                                     axisOnTop="false"
+                                     eventStyle="box"
+                                     showCurrentTime="true"  
+                                     showNavigation="true"
+                                     timeChangeable="true">
+                            <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="@form" update="frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
+                            <p:ajax  event="changed" listener="#{manPronosticoMtto.onChange}" process="@form"/> 
+                        </pe:timeline>  
+            </h:form>
+        </p:dialog>
+         
+         <p:dialog widgetVar="mttoDialog" header="Observaciones" showEffect="clip" hideEffect="clip">
+            <h:form id="frmMttoDialog">
+                <h:panelGrid id="grdMttoDialog" columns="2">
+                    <p:outputLabel for="desde" value="Desde:" />
+                    <p:calendar id="desde" value="#{manPronosticoMtto.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+
+                    <p:outputLabel for="hasta" value="Hasta:" />
+                    <p:calendar id="hasta" value="#{manPronosticoMtto.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+
+                    <p:outputLabel for="obs" value="Observacion:" />
+                    <p:inputTextarea rows="6" cols="33" autoResize="false" id="obs" value="#{manPronosticoMtto.observacion}" required="true"/>
+
+                    <p:commandButton type="reset" value="Limpiar" />
+                    <p:commandButton id="addButton" value="Guardar" actionListener="#{manPronosticoMtto.addEvent}" oncomplete="PF('wPronosticoMtto').update();PF('mttoDialog').hide();" />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>    
 
         <!-- *******************************************************************
         **************** Pantalla mantenimiento de Almacenes *******************
