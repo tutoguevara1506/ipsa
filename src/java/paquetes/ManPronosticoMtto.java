@@ -61,7 +61,8 @@ public class ManPronosticoMtto implements Serializable {
             tle.setData(cm.getDes_equ());
             tle.setStartDate(cm.getFec_ini());
             //tle.setEndDate(cm.getFec_fin());
-            //tle.setGroup(cm.getDes_equ());                        
+            //tle.setGroup(cm.getDes_equ()); 
+            tle.setStyleClass("pronostico");
             modelTimeLine.add(tle);
         }
     }
