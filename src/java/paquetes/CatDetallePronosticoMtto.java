@@ -10,7 +10,7 @@ public class CatDetallePronosticoMtto implements Serializable {
     public CatDetallePronosticoMtto() {
     }
 
-    public CatDetallePronosticoMtto(String id_det_pro_mtto, String id_pro_mtto, String cod_lis_equ, String cod_man, String cod_tip, String det_obs, String fec_ini, String fec_fin, String det_sta, String cod_usu, String nomtip, String status, String datraso, String color, String cod_per, String periodo, String flg_ext, String cod_sup, String turno, String cod_pri, String cod_dep, String cod_alt, String obs_tec, String otr_per, String nomequ) {
+    public CatDetallePronosticoMtto(String id_det_pro_mtto, String id_pro_mtto, String cod_lis_equ, String cod_man, String cod_tip, String det_obs, String fec_ini, String fec_fin, String det_sta, String cod_usu, String nomtip, String status, String datraso, String color, String cod_per, String periodo, String flg_ext, String cod_sup, String turno, String cod_pri, String cod_dep, String cod_alt, String obs_tec) {
         this.id_det_pro_mtto = id_det_pro_mtto;
         this.id_pro_mtto = id_pro_mtto;
         this.cod_lis_equ = cod_lis_equ;
@@ -34,8 +34,6 @@ public class CatDetallePronosticoMtto implements Serializable {
         this.cod_dep = cod_dep;
         this.cod_alt = cod_alt;
         this.obs_tec = obs_tec;
-        this.otr_per = otr_per;
-        this.nomequ = nomequ;
     }
 
     public String getId_det_pro_mtto() {

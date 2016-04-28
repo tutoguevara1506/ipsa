@@ -2,6 +2,7 @@ package paquetes;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -101,6 +102,39 @@ public class ManPronosticoMtto implements Serializable {
                     id_pro_mtto = mAccesos.strQuerySQLvariable(mQuery);
                     mQuery = "insert into cat_pro_mtto (id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_pro_mtto) "
                             + "values (" + id_pro_mtto + ",'" + nom_pro_mtto + "', str_to_date('" + fecha_pro_mtto + "','%d/%m/%Y')," + anho_pro_mtto+");";
+                    
+                    llenarMttosPreventivos();
+                    
+                    listaMttosPre.stream().forEach((mpdet) -> {
+                        SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+                        String mQuery2="";
+
+                        mQuery2 = "SELECT ifnull(max(id_det_pro_mtto),0)+1 as codigo FROM ipsa.det_pro_mtto;";
+                        id_det_pro_mtto = mAccesos.strQuerySQLvariable(mQuery2);
+                        cod_lis_equ = mpdet.getCod_lis_equ();
+                        cod_man = mpdet.getCod_man();
+                        cod_tip= mpdet.getCod_tip();
+                        cod_usu = mpdet.getCod_usu();
+                        color = mpdet.getColor();
+                        det_obs = mpdet.getDet_obs();
+                        det_sta = mpdet.getDet_sta();
+                        fec_ini = fmt.format(mpdet.getFec_ini());
+                        fec_fin = fmt.format(mpdet.getFec_fin());                                                               
+                        
+                                                
+                        mQuery2 = "INSERT INTO ipsa.det_pro_mtto " +
+                                  "(id_det_pro_mtto, cod_lis_equ, cod_man, cod_tip, cod_usu, color, det_obs, det_sta, fec_ini, fec_fin ) " +
+                                  "VALUES ("+id_det_pro_mtto+","+cod_lis_equ+","+cod_man+","+ cod_tip+","+ cod_usu+","+ color +",'"+ det_obs +"',"+ det_sta +","+ fec_ini+","+ fec_fin+");";
+
+                        // Evaluar todas las variables adicionales necesarias para  aplicar mtto
+                        // Fecha de inicio con cambio de año
+                        // cambio en el correlativo del cod_man
+                                                
+                        mAccesos.dmlSQLvariable(mQuery2);
+                    }); 
+                    
+                    
+                    
                 } else {
                     mQuery = "update cat_pro_mtto SET "
                             + " nom_pro_mtto = '" + nom_pro_mtto + "', "
@@ -179,16 +213,18 @@ public class ManPronosticoMtto implements Serializable {
     
     public void dateSelected(SelectEvent f) {
         Date date = (Date) f.getObject();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         fecha_pro_mtto = format.format(date);
     }
 
     
-    public void onRowSelect(SelectEvent event) {
+    public void onRowSelect(SelectEvent event) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         id_pro_mtto = ((CatPronosticoMtto) event.getObject()).getId_pro_mtto();
         nom_pro_mtto = ((CatPronosticoMtto) event.getObject()).getNom_pro_mtto();
         fecha_pro_mtto = ((CatPronosticoMtto) event.getObject()).getFecha_pro_mtto();
         anho_pro_mtto = ((CatPronosticoMtto) event.getObject()).getAnho_pro_mtto();
+        mfecha = format.parse(fecha_pro_mtto);
     }
     
     public void llenarPronosticos() {
@@ -197,7 +233,7 @@ public class ManPronosticoMtto implements Serializable {
             catpronosticomtto = new CatPronosticoMtto();
             pronosticomtto = new ArrayList<>();
 
-            mQuery = "SELECT id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_pro_mtto FROM ipsa.cat_pro_mtto;";
+            mQuery = "SELECT id_pro_mtto, nom_pro_mtto, DATE_FORMAT(fecha_pro_mtto, '%d/%m/%Y'), anho_pro_mtto FROM ipsa.cat_pro_mtto;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
