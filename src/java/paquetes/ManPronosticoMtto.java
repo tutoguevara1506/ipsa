@@ -23,7 +23,6 @@ import org.primefaces.model.ScheduleEvent;
 
 @Named
 @ConversationScoped
-
 public class ManPronosticoMtto implements Serializable {
 
     private static final long serialVersionUID = 8774297541534938L;
@@ -48,24 +47,6 @@ public class ManPronosticoMtto implements Serializable {
     public ManPronosticoMtto() {
     }
 
-    @PostConstruct
-    public void init() {
-        modelTimeLine = new TimelineModel();
-        Date now = new Date();
-
-        llenarMttosPreventivos();
-        llenarListaEquipos();
-
-        for (CatCalendario cm : listaMttosPre) {
-            TimelineEvent tle = new TimelineEvent();
-            tle.setData(cm.getDes_equ());
-            tle.setStartDate(cm.getFec_ini());
-            //tle.setEndDate(cm.getFec_fin());
-            //tle.setGroup(cm.getDes_equ()); 
-            tle.setStyleClass("pronostico");
-            modelTimeLine.add(tle);
-        }
-    }
 
     public String getBuscar_serie() {
         return buscar_serie;
@@ -195,6 +176,22 @@ public class ManPronosticoMtto implements Serializable {
     }
 
     public void nuevo() {
+        modelTimeLine = new TimelineModel();
+        Date now = new Date();
+
+        llenarMttosPreventivos();
+        llenarListaEquipos();
+
+        for (CatCalendario cm : listaMttosPre) {
+            TimelineEvent tle = new TimelineEvent();
+            tle.setData(cm.getDes_equ());
+            tle.setStartDate(cm.getFec_ini());
+            //tle.setEndDate(cm.getFec_fin());
+            //tle.setGroup(cm.getDes_equ()); 
+            tle.setStyleClass("pronostico");
+            modelTimeLine.add(tle);
+        }
+
     }
     
     public void guardar() {
