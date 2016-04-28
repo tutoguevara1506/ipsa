@@ -7141,44 +7141,121 @@
          <!--******************************************************************** 
         **************** Pantalla Pronostico de mantenimientos ************
         *********************************************************************-->
-
+         
         <p:dialog  id="dlgPronosticoMtto" widgetVar="wPronosticoMtto" modal="true" 
-                   width="900" height="540" closable="true" resizable="false" 
+                   width="570" height="380" closable="false" resizable="false" 
                    header="Pronostico de Calendario de Mantenimientos" rendered="true" 
-                   dynamic="false" visible="false" 
+                   dynamic="true" visible="false" 
                    >
-            
-            <h:form id="frmPronosticoMtto">
-                <p:growl id="messProMtto" showDetail="true" />
+
+            <h:form id="frmPronosticoMtto"> 
+                <p:growl id="messProMtto" showDetail="true" life="4500"/>
                 <p:toolbar>
                     <f:facet name="left">
-                        <p:commandButton value="Crear Nueva Planificacion" style=" width: 150px;"
-                                             actionListener="#{manPronosticoMtto.nuevo()}"
-                                         update=":frmCargo"
+                        <p:commandButton value="Nuevo" style=" width: 100px;"
+                                         actionListener="#{manPronosticoMtto.nuevo()}"
+                                         update=":frmPronosticoMtto"
                                          icon="ui-icon-document"
                                          />
-                        <p:commandButton value="Guardar Planificación" style=" width: 150px;"
-                                         actionListener="#{manPronosticoMtto.guardar()}"
-                                         update=":frmCargo"
+                        <p:commandButton value="Guardar" style=" width: 100px;"
+                                         action="#{manPronosticoMtto.guardar()}"
+                                         update=":frmPronosticoMtto"
                                          icon="ui-icon-disk"
-                                         > 
-                            <p:confirm header="Guardar Registro" 
-                                       message="¿Realmente desea Guardar este Registro?" 
-                                       icon="ui-icon-alert"/>
-                        </p:commandButton>
-                        <p:commandButton value="Eliminar planificación" style=" width: 150px;"
+                                         />
+                        <p:commandButton value="Eliminar" style=" width: 100px;"
                                          actionListener="#{manPronosticoMtto.eliminar()}"
-                                         update=":frmCargo"
+                                         update=":frmPronosticoMtto"
                                          icon="ui-icon-trash"
                                          >
-                            <p:confirm header="Eliminar Planificación" 
-                                       message="¿Realmente desea eliminar la planificación?" 
+                            <p:confirm header="Eliminar Registro" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
                                          onclick="PF('wPronosticoMtto').hide()"
+                                         action="#{manPronosticoMtto.cerrarventana()}" 
+                                         update=":frmPronosticoMtto"
+                                         icon="ui-icon-close"
+                                         />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Sí" type="button" 
+                                             styleClass="ui-confirmdialog-yes" 
+                                             icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" 
+                                             styleClass="ui-confirmdialog-no" 
+                                             icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </f:facet>
+                </p:toolbar>
+                <div style=" background-color: #ebf8fe;">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Nombre de Pronostico" style="font-weight:bold;"/>
+                        <p:inputText maxlength="250" size="50" value="#{manPronosticoMtto.nom_pro_mtto}" 
+                                     onfocus="this.select()"/>
+                        
+                        <h:outputText value="Fecha de pronostico" style="font-weight:bold;"/>
+                        <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fecing"
+                                     readonlyInput="true" 
+                                     showOn="button" size="16"
+                                     value="#{manPronosticoMtto.mfecha}"
+                                     >
+                                <p:ajax event="dateSelect" listener="#{manPronosticoMtto.dateSelected}" />
+                        </p:calendar>
+                        <h:outputText value="Año a pronosticar" style="font-weight:bold;"/>
+                        <p:inputText maxlength="15" size="17" value="#{manPronosticoMtto.anho_pro_mtto}" 
+                                     onfocus="this.select()" onkeypress="return valida(event)"/>                        
+                    </h:panelGrid>
+                    <p:dataTable id="dtProMtto" var="vProMtto" 
+                                 value="#{manPronosticoMtto.pronosticomtto}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manPronosticoMtto.catpronosticomtto}" 
+                                 rowKey="#{vProMtto.id_pro_mtto}"
+                                 editable="false" 
+                                 style="width:540px"
+                                 scrollable="true"
+                                 scrollHeight="190"
+                                 widgetVar="proMttoCabecera"
+                                 rowIndexVar="proIndex"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manPronosticoMtto.onRowSelect}" 
+                                update=":frmPronosticoMtto" />
+                        <p:column style="width:20px" headerText="ID">
+                            <h:outputText value="#{vProMtto.id_pro_mtto}" />
+                        </p:column>                    
+                        <p:column style="width:80px" headerText="Nombre">
+                            <h:outputText value="#{vProMtto.nom_pro_mtto}" />
+                        </p:column>
+                        <p:column style="width:30px" headerText="Fecha Evaluacion">
+                            <h:outputText value="#{vProMtto.fecha_pro_mtto}" />
+                        </p:column>
+                        <p:column style="width:30px" headerText="Año">
+                            <h:outputText value="#{vProMtto.anho_pro_mtto}" />
+                        </p:column>
+                        <p:column style="width:32px;text-align: center">
+                            <p:commandButton update=":frmDetalleProMtto" oncomplete="PF('wDetalleProMtto').show()" onclick="PF('proMttoCabecera').selectRow(#{proIndex})" icon="ui-icon-search" title="View" action="#{manPronosticoMtto.llenarDetallePronosticoMtto}">
+                                <f:setPropertyActionListener value="#{vProMtto}" target="#{manPronosticoMtto.catpronosticomtto}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </h:form>
+        </p:dialog> 
+         
+         
+        <p:dialog  id="dlgDetalleProMtto" widgetVar="wDetalleProMtto" modal="true" 
+                   width="900" height="540" closable="true" resizable="false" 
+                   header="Detalle Pronostico de Calendario de Mantenimientos" rendered="true" 
+                   dynamic="false" visible="false" 
+                   >
+            
+            <h:form id="frmDetalleProMtto">
+                <p:growl id="messDetalleProMtto" showDetail="true" />
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wDetalleProMtto').hide()"
                                          actionListener="#{manPronosticoMtto.cerrarventana()}"
-                                         update=":frmCargo"
+                                         update=":frmDetalleProMtto"
                                          icon="ui-icon-close"
                                          />
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -7214,16 +7291,16 @@
             <h:form id="frmMttoDialog">
                 <h:panelGrid id="grdMttoDialog" columns="2">
                     <p:outputLabel for="desde" value="Desde:" />
-                    <p:calendar id="desde" value="#{manPronosticoMtto.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+                    <p:calendar id="desde" value="#{manPronosticoMtto.fec_ini}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
 
                     <p:outputLabel for="hasta" value="Hasta:" />
-                    <p:calendar id="hasta" value="#{manPronosticoMtto.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+                    <p:calendar id="hasta" value="#{manPronosticoMtto.fec_fin}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
 
                     <p:outputLabel for="obs" value="Observacion:" />
-                    <p:inputTextarea rows="6" cols="33" autoResize="false" id="obs" value="#{manPronosticoMtto.observacion}" required="true"/>
+                    <p:inputTextarea rows="6" cols="33" autoResize="false" id="obs" value="#{manPronosticoMtto.det_obs}" required="true"/>
 
                     <p:commandButton type="reset" value="Limpiar" />
-                    <p:commandButton id="addButton" value="Guardar" actionListener="#{manPronosticoMtto.addEvent}" oncomplete="PF('wPronosticoMtto').update();PF('mttoDialog').hide();" />
+                    <p:commandButton id="addButton" value="Guardar" actionListener="#{manPronosticoMtto.addEvent}" oncomplete="PF('wDetalleProMtto').update();PF('mttoDialog').hide();" />
                 </h:panelGrid>
             </h:form>
         </p:dialog>    
