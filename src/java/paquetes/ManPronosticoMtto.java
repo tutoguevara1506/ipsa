@@ -74,6 +74,11 @@ public class ManPronosticoMtto implements Serializable {
         anho_pro_mtto = "";
         pronosticomtto = new ArrayList<>();
     }
+    
+    public void cerrardetalle() {
+        guardarDetalleMttos();
+        pronosticomtto = new ArrayList<>();
+    }
 
      public void nuevo() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -114,6 +119,11 @@ public class ManPronosticoMtto implements Serializable {
         }
         nuevo();
 
+    }
+    
+    public void guardarDetalleMttos(){
+        System.out.println("entra");
+    
     }
 
     public void eliminar() {
