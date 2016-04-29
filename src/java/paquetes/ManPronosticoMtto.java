@@ -42,7 +42,7 @@ public class ManPronosticoMtto implements Serializable {
     private CatCalendario catcalendario;
     private List<CatCalendario> listaMttos;
     private List<CatCalendario> listaMttosPre;
-    private String id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_pro_mtto;
+    private String id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_origen, anho_pro_mtto;
     private String id_det_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta,
             cod_usu, nomtip, status, datraso, color, cod_per, periodo, flg_ext, cod_sup, turno, cod_pri, cod_dep, cod_alt, obs_tec, otr_per, nomequ;
     private Date mfecha;
@@ -119,16 +119,16 @@ public class ManPronosticoMtto implements Serializable {
                         det_obs = mpdet.getDet_obs();
                         det_sta = mpdet.getDet_sta();
                         fec_ini = fmt.format(mpdet.getFec_ini());
-                        fec_fin = fmt.format(mpdet.getFec_fin());                                                               
+                        fec_fin = fmt.format(mpdet.getFec_fin());
+                         
+                        // Evaluar todas las variables adicionales necesarias para  aplicar mtto
+                        // Fecha de inicio con cambio de año
+                        // cambio en el correlativo del cod_man
                         
                                                 
                         mQuery2 = "INSERT INTO ipsa.det_pro_mtto " +
                                   "(id_det_pro_mtto, cod_lis_equ, cod_man, cod_tip, cod_usu, color, det_obs, det_sta, fec_ini, fec_fin ) " +
                                   "VALUES ("+id_det_pro_mtto+","+cod_lis_equ+","+cod_man+","+ cod_tip+","+ cod_usu+","+ color +",'"+ det_obs +"',"+ det_sta +","+ fec_ini+","+ fec_fin+");";
-
-                        // Evaluar todas las variables adicionales necesarias para  aplicar mtto
-                        // Fecha de inicio con cambio de año
-                        // cambio en el correlativo del cod_man
                                                 
                         mAccesos.dmlSQLvariable(mQuery2);
                     }); 
@@ -233,7 +233,7 @@ public class ManPronosticoMtto implements Serializable {
             catpronosticomtto = new CatPronosticoMtto();
             pronosticomtto = new ArrayList<>();
 
-            mQuery = "SELECT id_pro_mtto, nom_pro_mtto, DATE_FORMAT(fecha_pro_mtto, '%d/%m/%Y'), anho_pro_mtto FROM ipsa.cat_pro_mtto;";
+            mQuery = "SELECT id_pro_mtto, nom_pro_mtto, DATE_FORMAT(fecha_pro_mtto, '%d/%m/%Y'), anho_origen, anho_pro_mtto FROM ipsa.cat_pro_mtto;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -243,7 +243,8 @@ public class ManPronosticoMtto implements Serializable {
                         resVariable.getString(1),
                         resVariable.getString(2),
                         resVariable.getString(3),
-                        resVariable.getString(4)                        
+                        resVariable.getString(4),
+                        resVariable.getString(5)
                 ));
             }
             mAccesos.Desconectar();
@@ -307,15 +308,12 @@ public class ManPronosticoMtto implements Serializable {
 
             listaMttosPre = new ArrayList<>();
 
-            mQuery = " select tbl_mae_man.cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, des_equ, "
-                    + "case det_sta when 1 then if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=2,'yellow','red')) "
-                    + "when 2 then 'lime' when 3 then if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=1,'lime',if((TIMESTAMPDIFF(MONTH,fec_ini,now()))<=2,'yellow','red')) " 
-                    + "when 4 then 'lime' end as color,"
-                    + " week(fec_ini,1) as semana "
-                    + " from tbl_mae_man inner join lis_equ on "
-                    + " tbl_mae_man.cod_lis_equ = lis_equ.cod_lis_equ "
-                    + " where cod_tip = 1 order by cod_man;";
-
+            mQuery = " select cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, des_equ, '', ''"
+                    + " from det_pro_mtto det inner join cat_pro_mtto pro on "
+                    + " det.id_pro_mtto = pro.id_pro_mtto"
+                    + " where cod_tip = 1 and anho_origen ="+ anho_origen +" order by cod_man;";
+          
+            
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -811,6 +809,14 @@ public class ManPronosticoMtto implements Serializable {
 
     public void setDetallepronosticomtto(List<CatDetallePronosticoMtto> detallepronosticomtto) {
         this.detallepronosticomtto = detallepronosticomtto;
+    }
+
+    public String getAnho_origen() {
+        return anho_origen;
+    }
+
+    public void setAnho_origen(String anho_origen) {
+        this.anho_origen = anho_origen;
     }
     
 
