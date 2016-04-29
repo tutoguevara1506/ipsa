@@ -310,7 +310,7 @@ public class ManPronosticoMtto implements Serializable {
 
             mQuery = " select cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, des_equ, '', ''"
                     + " from det_pro_mtto det inner join cat_pro_mtto pro on "
-                    + " det.id_pro_mtto = pro.id_pro_mtto"
+                    + " det.id_pro_mtto = pro.id_pro_mtto inner join lis_equ lis on det.cod_lis_equ = lis.cod_lis_equ"
                     + " where cod_tip = 1 and anho_origen ="+ anho_origen +" order by cod_man;";
           
             
