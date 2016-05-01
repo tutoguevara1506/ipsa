@@ -63,6 +63,7 @@ public class ManPronosticoMtto implements Serializable {
         id_pro_mtto= "";
         nom_pro_mtto = "";
         fecha_pro_mtto = format.format(mfecha);
+        anho_origen = "";
         anho_pro_mtto = "";
         llenarPronosticos();
     }
@@ -72,6 +73,7 @@ public class ManPronosticoMtto implements Serializable {
         id_pro_mtto= "";
         nom_pro_mtto = "";
         fecha_pro_mtto = "";
+        anho_origen = "";
         anho_pro_mtto = "";
         pronosticomtto = new ArrayList<>();
     }
@@ -100,8 +102,8 @@ public class ManPronosticoMtto implements Serializable {
                 if ("".equals(id_pro_mtto)) {
                     mQuery = "select ifnull(max(id_pro_mtto),0)+1 as codigo from cat_pro_mtto;";
                     id_pro_mtto = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into cat_pro_mtto (id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_pro_mtto) "
-                            + "values (" + id_pro_mtto + ",'" + nom_pro_mtto + "', str_to_date('" + fecha_pro_mtto + "','%d/%m/%Y')," + anho_pro_mtto+");";
+                    mQuery = "insert into cat_pro_mtto (id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_origen, anho_pro_mtto) "
+                            + "values (" + id_pro_mtto + ",'" + nom_pro_mtto + "', str_to_date('" + fecha_pro_mtto + "','%d/%m/%Y'),"+ anho_origen +", "+ anho_pro_mtto+");";
                     
                     llenarMttosPreventivos();
                     
@@ -139,6 +141,7 @@ public class ManPronosticoMtto implements Serializable {
                     mQuery = "update cat_pro_mtto SET "
                             + " nom_pro_mtto = '" + nom_pro_mtto + "', "
                             + " fecha_pro_mtto = str_to_date('" + fecha_pro_mtto + "','%d/%m/%Y %h:%i'), "
+                            + " anho_origen = " + anho_origen + ", " 
                             + " anho_pro_mtto = " + anho_pro_mtto + " " 
                             + " WHERE id_pro_mtto = " + id_pro_mtto + ";";
                 }
@@ -223,6 +226,7 @@ public class ManPronosticoMtto implements Serializable {
         id_pro_mtto = ((CatPronosticoMtto) event.getObject()).getId_pro_mtto();
         nom_pro_mtto = ((CatPronosticoMtto) event.getObject()).getNom_pro_mtto();
         fecha_pro_mtto = ((CatPronosticoMtto) event.getObject()).getFecha_pro_mtto();
+        anho_origen = ((CatPronosticoMtto) event.getObject()).getAnho_origen();
         anho_pro_mtto = ((CatPronosticoMtto) event.getObject()).getAnho_pro_mtto();
         mfecha = format.parse(fecha_pro_mtto);
     }
@@ -307,12 +311,11 @@ public class ManPronosticoMtto implements Serializable {
         try {
 
             listaMttosPre = new ArrayList<>();
-
-            mQuery = " select cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, des_equ, '', ''"
-                    + " from det_pro_mtto det inner join cat_pro_mtto pro on "
-                    + " det.id_pro_mtto = pro.id_pro_mtto inner join lis_equ lis on det.cod_lis_equ = lis.cod_lis_equ"
-                    + " where cod_tip = 1 and anho_origen ="+ anho_origen +" order by cod_man;";
-          
+            
+            mQuery = " select det.cod_lis_equ, det.cod_man, det.cod_tip, det.det_obs, det.fec_ini, det.fec_fin, det.det_sta, det.cod_usu, lis.des_equ, '', ''"
+                + " from det_pro_mtto det inner join cat_pro_mtto pro on "
+                + " det.id_pro_mtto = pro.id_pro_mtto inner join lis_equ lis on det.cod_lis_equ = lis.cod_lis_equ"
+                + " where det.cod_tip = 1 and pro.id_pro_mtto ="+ id_pro_mtto +" order by cod_man;";                 
             
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
