@@ -41,7 +41,6 @@ public class ManPronosticoMtto implements Serializable {
     private List<CatListaEquipos> lequipos;
     private CatCalendario catcalendario;
     private List<CatCalendario> listaMttos;
-    private List<CatCalendario> listaMttosPre;
     private String id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_origen, anho_pro_mtto;
     private String id_det_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta,
             cod_usu, nomtip, status, datraso, color, cod_per, periodo, flg_ext, cod_sup, turno, cod_pri, cod_dep, cod_alt, obs_tec, otr_per, nomequ;
@@ -89,6 +88,7 @@ public class ManPronosticoMtto implements Serializable {
         id_pro_mtto= "";
         nom_pro_mtto = "";
         fecha_pro_mtto = format.format(mfecha);
+        anho_origen = "";
         anho_pro_mtto = "";
         catpronosticomtto = new CatPronosticoMtto();
     }
@@ -105,9 +105,10 @@ public class ManPronosticoMtto implements Serializable {
                     mQuery = "insert into cat_pro_mtto (id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_origen, anho_pro_mtto) "
                             + "values (" + id_pro_mtto + ",'" + nom_pro_mtto + "', str_to_date('" + fecha_pro_mtto + "','%d/%m/%Y'),"+ anho_origen +", "+ anho_pro_mtto+");";
                     
-                    llenarMttosPreventivos();
+                    //llenamos los mantenimientos preventivos del anho origen (tipo 1)
+                    llenarMttosPreventivos(1);
                     
-                    listaMttosPre.stream().forEach((mpdet) -> {
+                    detallepronosticomtto.stream().forEach((mpdet) -> {
                         SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
                         String mQuery2="";
 
@@ -115,13 +116,18 @@ public class ManPronosticoMtto implements Serializable {
                         id_det_pro_mtto = mAccesos.strQuerySQLvariable(mQuery2);
                         cod_lis_equ = mpdet.getCod_lis_equ();
                         cod_man = mpdet.getCod_man();
-                        cod_tip= mpdet.getCod_tip();
-                        cod_usu = mpdet.getCod_usu();
-                        color = mpdet.getColor();
+                        cod_tip = mpdet.getCod_tip();
                         det_obs = mpdet.getDet_obs();
-                        det_sta = mpdet.getDet_sta();
                         fec_ini = fmt.format(mpdet.getFec_ini());
                         fec_fin = fmt.format(mpdet.getFec_fin());
+                        det_sta = mpdet.getDet_sta();
+                        cod_usu = mpdet.getCod_usu();
+                        cod_per = mpdet.getCod_per();
+                        flg_ext = mpdet.getFlg_ext();
+                        cod_pri = mpdet.getCod_pri();
+                        cod_sup = mpdet.getCod_sup();
+                        cod_dep = mpdet.getCod_dep();
+                        turno = mpdet.getTurno();
                          
                         // Evaluar todas las variables adicionales necesarias para  aplicar mtto
                         // Fecha de inicio con cambio de año
@@ -129,12 +135,11 @@ public class ManPronosticoMtto implements Serializable {
                         
                                                 
                         mQuery2 = "INSERT INTO ipsa.det_pro_mtto " +
-                                  "(id_det_pro_mtto, cod_lis_equ, cod_man, cod_tip, cod_usu, color, det_obs, det_sta, fec_ini, fec_fin ) " +
-                                  "VALUES ("+id_det_pro_mtto+","+cod_lis_equ+","+cod_man+","+ cod_tip+","+ cod_usu+","+ color +",'"+ det_obs +"',"+ det_sta +","+ fec_ini+","+ fec_fin+");";
+                                  "(id_det_pro_mtto, id_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_pri, cod_sup, cod_dep, turno) " +
+                                  "VALUES ("+id_det_pro_mtto+","+id_pro_mtto+","+cod_lis_equ+","+cod_man+","+ cod_tip +",'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',"+ det_sta +","+ cod_usu +","+ cod_per +","+ flg_ext + ",'"+ cod_pri +"',"+ cod_sup +","+ cod_dep + "," + turno + ");";
                                                 
                         mAccesos.dmlSQLvariable(mQuery2);
-                    }); 
-                    
+                    });             
                     
                     
                 } else {
@@ -165,11 +170,14 @@ public class ManPronosticoMtto implements Serializable {
 
     public void eliminar() {
         String mQuery = "";
+        String mQuery2 = "";
         Accesos mAccesos = new Accesos();
         mAccesos.Conectar();
         if ("".equals(id_pro_mtto) == false) {
             try {
+                mQuery2 = "delete from det_pro_mtto where id_pro_mtto=" + id_pro_mtto + ";";
                 mQuery = "delete from cat_pro_mtto where id_pro_mtto=" + id_pro_mtto + ";";
+                mAccesos.dmlSQLvariable(mQuery2);
                 mAccesos.dmlSQLvariable(mQuery);
                 addMessage("Eliminar Evaluacion", "Información Eliminada con éxito.", 1);
             } catch (Exception e) {
@@ -262,10 +270,10 @@ public class ManPronosticoMtto implements Serializable {
         modelTimeLine = new TimelineModel();
         Date now = new Date();
 
-        llenarMttosPreventivos();
+        llenarMttosPreventivos(2);
         llenarListaEquipos();
 
-        for (CatCalendario cm : listaMttosPre) {
+        for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
             TimelineEvent tle = new TimelineEvent();
             tle.setData(cm.getDes_equ());
             tle.setStartDate(cm.getFec_ini());
@@ -306,34 +314,46 @@ public class ManPronosticoMtto implements Serializable {
         }
     }
     
-    public void llenarMttosPreventivos() {
+    public void llenarMttosPreventivos(int tipo) {
         String mQuery = "";
         try {
 
-            listaMttosPre = new ArrayList<>();
+            detallepronosticomtto = new ArrayList<>();
             
-            mQuery = " select det.cod_lis_equ, det.cod_man, det.cod_tip, det.det_obs, det.fec_ini, det.fec_fin, det.det_sta, det.cod_usu, lis.des_equ, '', ''"
-                + " from det_pro_mtto det inner join cat_pro_mtto pro on "
-                + " det.id_pro_mtto = pro.id_pro_mtto inner join lis_equ lis on det.cod_lis_equ = lis.cod_lis_equ"
-                + " where det.cod_tip = 1 and pro.id_pro_mtto ="+ id_pro_mtto +" order by cod_man;";                 
-            
+            if (tipo == 1){
+                mQuery = " select det.id_det_pro_mtto, det.id_pro_mtto, det.cod_lis_equ, det.cod_man, det.cod_tip, det.det_obs, det.fec_ini, det.fec_fin, det.det_sta, det.cod_usu, det.cod_per, det.flg_ext, det.cod_pri, det.cod_sup, det.cod_dep, det.turno, lis.des_equ"
+                    + " from det_pro_mtto det inner join cat_pro_mtto pro on "
+                    + " det.id_pro_mtto = pro.id_pro_mtto inner join lis_equ lis on det.cod_lis_equ = lis.cod_lis_equ"
+                    + " where det.cod_tip = 1 and pro.anho_origen ="+ anho_origen +" order by cod_man;";                 
+            }else{
+                mQuery = " select det.id_det_pro_mtto, det.id_pro_mtto, det.cod_lis_equ, det.cod_man, det.cod_tip, det.det_obs, det.fec_ini, det.fec_fin, det.det_sta, det.cod_usu, det.cod_per, det.flg_ext, det.cod_pri, det.cod_sup, det.cod_dep, det.turno, lis.des_equ"
+                    + " from det_pro_mtto det inner join cat_pro_mtto pro on "
+                    + " det.id_pro_mtto = pro.id_pro_mtto inner join lis_equ lis on det.cod_lis_equ = lis.cod_lis_equ"
+                    + " where det.cod_tip = 1 and pro.id_pro_mtto ="+ id_pro_mtto +" order by cod_man;";                 
+            }
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
             resVariable = mAccesos.querySQLvariable(mQuery);
             while (resVariable.next()) {
-                listaMttosPre.add(new CatCalendario(
+                detallepronosticomtto.add(new CatDetallePronosticoMtto(
                         resVariable.getString(1),
                         resVariable.getString(2),
                         resVariable.getString(3),
                         resVariable.getString(4),
-                        resVariable.getDate(5),
-                        resVariable.getDate(6),
-                        resVariable.getString(7),
-                        resVariable.getString(8),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getDate(7),
+                        resVariable.getDate(8),
                         resVariable.getString(9),
                         resVariable.getString(10),
-                        resVariable.getString(11)
+                        resVariable.getString(11),
+                        resVariable.getString(12),
+                        resVariable.getString(13),
+                        resVariable.getString(14),
+                        resVariable.getString(15),
+                        resVariable.getString(16),
+                        resVariable.getString(17)
                 ));
             }
             mAccesos.Desconectar();
@@ -367,12 +387,12 @@ public class ManPronosticoMtto implements Serializable {
 
         ScheduleEvent smtto = (ScheduleEvent) selectEvent.getObject();
 
-        for (CatCalendario cm : listaMttosPre) {
+        for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
             if (cm.getCod_man() == smtto.getData()) {
-                catcalendario = cm;
-                cod_lis_equ = catcalendario.getCod_lis_equ();
-                cod_man = catcalendario.getCod_man();
-                llenarMttosPreventivos();
+                catdetallepronosticomtto = cm;
+                cod_lis_equ = catdetallepronosticomtto.getCod_lis_equ();
+                cod_man = catdetallepronosticomtto.getCod_man();
+                llenarMttosPreventivos(2);
                 break;
             }
         }
@@ -380,14 +400,14 @@ public class ManPronosticoMtto implements Serializable {
 
     public void onMttoSelect(String cod_lis_equ) {
         this.cod_lis_equ = cod_lis_equ;
-        llenarMttosPreventivos();
+        llenarMttosPreventivos(2);
     }   
     
     public void onEventMove(ScheduleEntryMoveEvent mttoMove) {
 
-        for (CatCalendario cm : listaMttosPre) {
+        for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
             if (cm.getCod_man() == mttoMove.getScheduleEvent().getData()) {
-                catcalendario = cm;
+                catdetallepronosticomtto = cm;
                 actualizar();
                 break;
             }
@@ -396,9 +416,9 @@ public class ManPronosticoMtto implements Serializable {
     }
 
     public void onEventResize(ScheduleEntryResizeEvent mttoResize) {
-        for (CatCalendario cm : listaMttosPre) {
+        for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
             if (cm.getCod_man() == mttoResize.getScheduleEvent().getData()) {
-                catcalendario = cm;
+                catdetallepronosticomtto = cm;
                 actualizar();
                 break;
             }
@@ -408,12 +428,12 @@ public class ManPronosticoMtto implements Serializable {
     public void onEdit(TimelineModificationEvent e) {
         TimelineEvent tlmtto = e.getTimelineEvent();
 
-        for (CatCalendario cm : listaMttosPre) {
+        for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
             if (cm.getDes_equ() == tlmtto.getData()) {
-                catcalendario = cm;
-                cod_lis_equ = catcalendario.getCod_lis_equ();
-                cod_man = catcalendario.getCod_man();
-                llenarMttosPreventivos();
+                catdetallepronosticomtto = cm;
+                cod_lis_equ = catdetallepronosticomtto.getCod_lis_equ();
+                cod_man = catdetallepronosticomtto.getCod_man();
+                llenarMttosPreventivos(2);
                 break;
             }
         }
@@ -421,7 +441,7 @@ public class ManPronosticoMtto implements Serializable {
 
     public void onChange(TimelineModificationEvent e) {
 
-        for (CatCalendario cm : listaMttosPre) {
+        for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
             if (cm.getDes_equ() == e.getTimelineEvent().getData()) {
                 Calendar calendar = Calendar.getInstance();
 
@@ -431,7 +451,7 @@ public class ManPronosticoMtto implements Serializable {
                 calendar.setTime(e.getTimelineEvent().getStartDate());
                 calendar.add(Calendar.DAY_OF_YEAR, (int) difDias);
 
-                catcalendario = cm;
+                catdetallepronosticomtto = cm;
                 cm.setFec_ini(e.getTimelineEvent().getStartDate());
                 cm.setFec_fin(calendar.getTime());
 
@@ -772,14 +792,6 @@ public class ManPronosticoMtto implements Serializable {
 
     public void setListaMttos(List<CatCalendario> listaMttos) {
         this.listaMttos = listaMttos;
-    }
-
-    public List<CatCalendario> getListaMttosPre() {
-        return listaMttosPre;
-    }
-
-    public void setListaMttosPre(List<CatCalendario> listaMttosPre) {
-        this.listaMttosPre = listaMttosPre;
     }
 
     public CatPronosticoMtto getCatpronosticomtto() {
