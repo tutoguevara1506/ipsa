@@ -1,16 +1,17 @@
 package paquetes;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class CatDetallePronosticoMtto implements Serializable {
 
-    private String id_det_pro_mtto, id_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta,
-            cod_usu, nomtip, status, datraso, color, cod_per, periodo, flg_ext, cod_sup, turno, cod_pri, cod_dep, cod_alt, obs_tec, otr_per, nomequ;
-
+    private String id_det_pro_mtto, id_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, det_sta, cod_usu, cod_per, flg_ext, cod_pri, cod_sup, cod_dep, turno, des_equ;
+    private Date fec_ini, fec_fin;
+    
     public CatDetallePronosticoMtto() {
     }
 
-    public CatDetallePronosticoMtto(String id_det_pro_mtto, String id_pro_mtto, String cod_lis_equ, String cod_man, String cod_tip, String det_obs, String fec_ini, String fec_fin, String det_sta, String cod_usu, String nomtip, String status, String datraso, String color, String cod_per, String periodo, String flg_ext, String cod_sup, String turno, String cod_pri, String cod_dep, String cod_alt, String obs_tec) {
+    public CatDetallePronosticoMtto(String id_det_pro_mtto, String id_pro_mtto, String cod_lis_equ, String cod_man, String cod_tip, String det_obs, Date fec_ini, Date fec_fin, String det_sta, String cod_usu, String cod_per, String flg_ext, String cod_pri, String cod_sup, String cod_dep, String turno, String des_equ) {
         this.id_det_pro_mtto = id_det_pro_mtto;
         this.id_pro_mtto = id_pro_mtto;
         this.cod_lis_equ = cod_lis_equ;
@@ -21,19 +22,13 @@ public class CatDetallePronosticoMtto implements Serializable {
         this.fec_fin = fec_fin;
         this.det_sta = det_sta;
         this.cod_usu = cod_usu;
-        this.nomtip = nomtip;
-        this.status = status;
-        this.datraso = datraso;
-        this.color = color;
         this.cod_per = cod_per;
-        this.periodo = periodo;
         this.flg_ext = flg_ext;
-        this.cod_sup = cod_sup;
-        this.turno = turno;
         this.cod_pri = cod_pri;
+        this.cod_sup = cod_sup;
         this.cod_dep = cod_dep;
-        this.cod_alt = cod_alt;
-        this.obs_tec = obs_tec;
+        this.turno = turno;
+        this.des_equ = des_equ;
     }
 
     public String getId_det_pro_mtto() {
@@ -84,19 +79,19 @@ public class CatDetallePronosticoMtto implements Serializable {
         this.det_obs = det_obs;
     }
 
-    public String getFec_ini() {
+    public Date getFec_ini() {
         return fec_ini;
     }
 
-    public void setFec_ini(String fec_ini) {
+    public void setFec_ini(Date fec_ini) {
         this.fec_ini = fec_ini;
     }
 
-    public String getFec_fin() {
+    public Date getFec_fin() {
         return fec_fin;
     }
 
-    public void setFec_fin(String fec_fin) {
+    public void setFec_fin(Date fec_fin) {
         this.fec_fin = fec_fin;
     }
 
@@ -116,52 +111,12 @@ public class CatDetallePronosticoMtto implements Serializable {
         this.cod_usu = cod_usu;
     }
 
-    public String getNomtip() {
-        return nomtip;
-    }
-
-    public void setNomtip(String nomtip) {
-        this.nomtip = nomtip;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getDatraso() {
-        return datraso;
-    }
-
-    public void setDatraso(String datraso) {
-        this.datraso = datraso;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public String getCod_per() {
         return cod_per;
     }
 
     public void setCod_per(String cod_per) {
         this.cod_per = cod_per;
-    }
-
-    public String getPeriodo() {
-        return periodo;
-    }
-
-    public void setPeriodo(String periodo) {
-        this.periodo = periodo;
     }
 
     public String getFlg_ext() {
@@ -203,37 +158,12 @@ public class CatDetallePronosticoMtto implements Serializable {
     public void setCod_dep(String cod_dep) {
         this.cod_dep = cod_dep;
     }
-
-    public String getCod_alt() {
-        return cod_alt;
+    
+    public String getDes_equ() {
+        return des_equ;
     }
 
-    public void setCod_alt(String cod_alt) {
-        this.cod_alt = cod_alt;
+    public void setDes_equ(String des_equ) {
+        this.des_equ = des_equ;
     }
-
-    public String getObs_tec() {
-        return obs_tec;
-    }
-
-    public void setObs_tec(String obs_tec) {
-        this.obs_tec = obs_tec;
-    }
-
-    public String getOtr_per() {
-        return otr_per;
-    }
-
-    public void setOtr_per(String otr_per) {
-        this.otr_per = otr_per;
-    }
-
-    public String getNomequ() {
-        return nomequ;
-    }
-
-    public void setNomequ(String nomequ) {
-        this.nomequ = nomequ;
-    }
-
 }
