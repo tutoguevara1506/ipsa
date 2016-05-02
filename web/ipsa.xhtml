@@ -7242,7 +7242,7 @@
                             <h:outputText value="#{vProMtto.anho_pro_mtto}" />
                         </p:column>
                         <p:column style="width:32px;text-align: center">
-                            <p:commandButton update=":frmDetalleProMtto" oncomplete="PF('wDetalleProMtto').show()" onclick="PF('proMttoCabecera').selectRow(#{proIndex})" icon="ui-icon-search" title="View" action="#{manPronosticoMtto.llenarDetallePronosticoMtto}">
+                            <p:commandButton update=":dlgDetalleProMtto" oncomplete="PF('wDetalleProMtto').show()" onclick="PF('proMttoCabecera').selectRow(#{proIndex})" icon="ui-icon-search" title="View" action="#{manPronosticoMtto.llenarDetallePronosticoMtto}">
                                 <f:setPropertyActionListener value="#{vProMtto}" target="#{manPronosticoMtto.catpronosticomtto}" />
                             </p:commandButton>
                         </p:column>
@@ -7278,7 +7278,6 @@
                         </p:confirmDialog>
                     </f:facet>
                 </p:toolbar>
-
                 <pe:timeline id="PronosticoTimeline" value="#{manPronosticoMtto.modelTimeLine}" height="500px" 
                                      zoomable="true"  
                                      selectable="true"
@@ -7290,10 +7289,11 @@
                                      showCurrentTime="true"  
                                      showNavigation="true"
                                      timeChangeable="true"
-                                     locale="es">
-                    <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="dlgDetalleProMtto" update="frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
-                            <p:ajax  event="changed" listener="#{manPronosticoMtto.onChange}" process="dlgDetalleProMtto"/> 
-                        </pe:timeline>  
+                                     locale="es"
+                                     widgetVar="pronoTL">
+                    <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="@form" update="frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
+                    <p:ajax  event="changed" listener="#{manPronosticoMtto.onChange}" process="@form"/> 
+                </pe:timeline>  
             </h:form>
         </p:dialog>
         

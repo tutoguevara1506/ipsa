@@ -359,10 +359,10 @@ public class ManPronosticoMtto implements Serializable {
         Accesos mAccesos = new Accesos();
         mAccesos.Conectar();
 
-        mQuery = "update tbl_mae_man SET "
-                + " fec_ini = '" + fmt.format(catcalendario.getFec_ini()) + "', "
-                + " fec_fin = '" + fmt.format(catcalendario.getFec_fin()) + "' "
-                + "WHERE cod_man = " + catcalendario.getCod_man() + " AND cod_lis_equ = '" + catcalendario.getCod_lis_equ() + "';";
+        mQuery = "update det_pro_mtto SET "
+                + " fec_ini = '" + fmt.format(catdetallepronosticomtto.getFec_ini()) + "', "
+                + " fec_fin = '" + fmt.format(catdetallepronosticomtto.getFec_fin()) + "' "
+                + "WHERE cod_man = " + catdetallepronosticomtto.getCod_man() + " AND cod_lis_equ = '" + catdetallepronosticomtto.getCod_lis_equ() + "' AND id_pro_mtto = "+ catdetallepronosticomtto.getId_pro_mtto()+";";
 
         mAccesos.dmlSQLvariable(mQuery);
         mAccesos.Desconectar();
@@ -390,48 +390,11 @@ public class ManPronosticoMtto implements Serializable {
     }
     
     
-    public void onEventSelect(SelectEvent selectEvent) {
-
-        ScheduleEvent smtto = (ScheduleEvent) selectEvent.getObject();
-
-        for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
-            if (cm.getCod_man() == smtto.getData()) {
-                catdetallepronosticomtto = cm;
-                cod_lis_equ = catdetallepronosticomtto.getCod_lis_equ();
-                cod_man = catdetallepronosticomtto.getCod_man();
-                llenarMttosPreventivos(2);
-                break;
-            }
-        }
-    }
-
     public void onMttoSelect(String cod_lis_equ) {
         this.cod_lis_equ = cod_lis_equ;
         llenarMttosPreventivos(2);
     }   
     
-    public void onEventMove(ScheduleEntryMoveEvent mttoMove) {
-
-        for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
-            if (cm.getCod_man() == mttoMove.getScheduleEvent().getData()) {
-                catdetallepronosticomtto = cm;
-                actualizar();
-                break;
-            }
-        }
-
-    }
-
-    public void onEventResize(ScheduleEntryResizeEvent mttoResize) {
-        for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
-            if (cm.getCod_man() == mttoResize.getScheduleEvent().getData()) {
-                catdetallepronosticomtto = cm;
-                actualizar();
-                break;
-            }
-        }
-    }
-
     public void onEdit(TimelineModificationEvent e) {
         System.out.println("entra al edit");
         TimelineEvent tlmtto = e.getTimelineEvent();
@@ -449,6 +412,7 @@ public class ManPronosticoMtto implements Serializable {
 
     public void onChange(TimelineModificationEvent e) {
         System.out.println("entra al change");
+        
         for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
             if (cm.getDes_equ() == e.getTimelineEvent().getData()) {
                 Calendar calendar = Calendar.getInstance();
