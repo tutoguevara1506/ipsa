@@ -74,51 +74,51 @@ where pie.cod_lis_equ=$P{codequipo} and pie.cod_man = $P{codman}]]>
 	</columnHeader>
 	<detail>
 		<band height="15" splitType="Stretch">
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="7" y="0" width="26" height="13" uuid="390d5e8e-2209-4e9b-8566-a4a624f1e341"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{itempie}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy h:mm a">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy h:mm a" isBlankWhenNull="true">
 				<reportElement x="33" y="0" width="46" height="13" uuid="0bf266a3-eab2-4bec-b639-7ba3ab9b4608"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecpie}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="93" y="0" width="30" height="13" uuid="29b54d43-2200-468f-9ec9-38212efc37e4"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cantidadpie}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="133" y="0" width="37" height="13" uuid="dc460087-00ca-44a1-844e-baeb1a8c27ea"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{codigopie}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="174" y="0" width="198" height="13" uuid="d5d03640-ac44-426c-be28-a16ff878b001"/>
-				<textElement>
+				<textElement textAlignment="Justified">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombrepie}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="377" y="0" width="90" height="13" uuid="904299eb-f725-46b1-8dd3-239df777a0bb"/>
-				<textElement>
+				<textElement textAlignment="Justified">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{seriepie}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="472" y="0" width="90" height="13" uuid="9dd7789b-c1ee-45aa-9c41-fda59ee1b764"/>
-				<textElement>
+				<textElement textAlignment="Justified">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{usupie}]]></textFieldExpression>

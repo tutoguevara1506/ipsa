@@ -22,14 +22,18 @@ where fal.cod_lis_equ = $P{codequipo} and fal.cod_man = $P{codman}]]>
 		<groupHeader>
 			<band height="19">
 				<staticText>
-					<reportElement x="127" y="2" width="100" height="13" uuid="db98f1f5-9023-4ef5-88c0-001f35ef1d21"/>
+					<reportElement x="127" y="2" width="100" height="13" uuid="db98f1f5-9023-4ef5-88c0-001f35ef1d21">
+						<printWhenExpression><![CDATA[$F{itemfal}==89458752654562359]]></printWhenExpression>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Falla]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="347" y="2" width="100" height="13" uuid="f77d91d5-0e1e-4338-ba7c-e69538ec6198"/>
+					<reportElement x="347" y="2" width="100" height="13" uuid="f77d91d5-0e1e-4338-ba7c-e69538ec6198">
+						<printWhenExpression><![CDATA[$F{itemfal}==89458752654562359]]></printWhenExpression>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -67,7 +71,7 @@ where fal.cod_lis_equ = $P{codequipo} and fal.cod_man = $P{codman}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombrefal}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="7" y="0" width="115" height="13" uuid="83a0c4aa-c3cf-470b-885a-7a60917aba84"/>
 				<textElement>
 					<font size="8" isBold="false"/>

@@ -6,12 +6,12 @@ public class CatListaEquipos implements Serializable {
 
     private String cod_lis_equ, cod_pai, cod_equ, cod_pro, cod_cli, num_mod, num_ser, des_equ,
             des_ubi, fec_fab, fec_com, fec_adq, fec_pue_ser, fec_ult_man, fec_ret, cod_bar,
-            nompai, nomequ, nompro, nomcli;
+            nompai, nomequ, nompro, nomcli, det_pot, det_vol;
 
     public CatListaEquipos() {
     }
 
-    public CatListaEquipos(String cod_lis_equ, String cod_pai, String cod_equ, String cod_pro, String cod_cli, String num_mod, String num_ser, String des_equ, String des_ubi, String fec_fab, String fec_com, String fec_adq, String fec_pue_ser, String fec_ult_man, String fec_ret, String cod_bar, String nompai, String nomequ, String nompro, String nomcli) {
+    public CatListaEquipos(String cod_lis_equ, String cod_pai, String cod_equ, String cod_pro, String cod_cli, String num_mod, String num_ser, String des_equ, String des_ubi, String fec_fab, String fec_com, String fec_adq, String fec_pue_ser, String fec_ult_man, String fec_ret, String cod_bar, String nompai, String nomequ, String nompro, String nomcli, String det_pot, String det_vol) {
         this.cod_lis_equ = cod_lis_equ;
         this.cod_pai = cod_pai;
         this.cod_equ = cod_equ;
@@ -32,6 +32,8 @@ public class CatListaEquipos implements Serializable {
         this.nomequ = nomequ;
         this.nompro = nompro;
         this.nomcli = nomcli;
+        this.det_pot = det_pot;
+        this.det_vol = det_vol;
     }
 
     public String getCod_lis_equ() {
@@ -192,6 +194,22 @@ public class CatListaEquipos implements Serializable {
 
     public void setNomcli(String nomcli) {
         this.nomcli = nomcli;
+    }
+
+    public String getDet_pot() {
+        return det_pot;
+    }
+
+    public void setDet_pot(String det_pot) {
+        this.det_pot = det_pot;
+    }
+
+    public String getDet_vol() {
+        return det_vol;
+    }
+
+    public void setDet_vol(String det_vol) {
+        this.det_vol = det_vol;
     }
 
 }

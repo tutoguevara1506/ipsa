@@ -70,37 +70,37 @@ where pie.cod_lis_equ = $P{codequipo}]]>
 	</columnHeader>
 	<detail>
 		<band height="19" splitType="Stretch">
-			<textField pattern="dd/MM/yyyy">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="10" y="0" width="60" height="15" uuid="526e063d-2376-4b1c-9d35-2b7c561bc2b3"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fec_man}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="76" y="0" width="40" height="15" uuid="337b189e-bd78-4a8c-b38e-39e93c189427"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{det_can}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="116" y="0" width="67" height="15" uuid="b0d24cf0-3484-4d9c-b823-e67a207d062b"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cod_ref}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="183" y="0" width="280" height="15" uuid="b8eafca5-54a5-431d-84e4-caf48ca8a5ea"/>
-				<textElement>
+				<textElement textAlignment="Justified">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nom_pie}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="468" y="0" width="96" height="15" uuid="c94e7d81-464b-4299-b3c8-6119e3484406"/>
-				<textElement>
+				<textElement textAlignment="Justified">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{num_ser}]]></textFieldExpression>

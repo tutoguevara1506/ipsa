@@ -16,9 +16,9 @@ des_equ,
 cod_pri, 
 fec_ini, 
 fec_fin, 
-(select det_nom from cat_usu as tecni where tecni.cod_usu= mm.cod_usu) as tecnico, 
-(select det_nom from cat_usu as superv where superv.cod_usu=mm.cod_sup) as supervisor, 
-dep.nom_dep, 
+ifnull((select det_nom from cat_usu as tecni where tecni.cod_usu= mm.cod_usu limit 1),'') as tecnico, 
+ifnull((select det_nom from cat_usu as superv where superv.cod_usu=mm.cod_sup limit 1),'') as supervisor, 
+pai.nom_pai as nom_dep, 
 mm.turno, 
 det_obs as falla_reportada,concat(mm.obs_tec ,' ',
 ifnull((select 
@@ -30,22 +30,20 @@ WHERE mf.cod_lis_equ = mm.cod_lis_equ AND mf.cod_man = mm.cod_man),'')) as falla
 if((select count(dmf.cod_gru_fal) from tbl_det_man_fal as dmf where dmf.cod_lis_equ=mm.cod_lis_equ and dmf.cod_man=mm.cod_man and dmf.cod_gru_fal in (1,3))=0,'','X') as meca,
 if((select count(dmf.cod_gru_fal) from tbl_det_man_fal as dmf where dmf.cod_lis_equ=mm.cod_lis_equ and dmf.cod_man=mm.cod_man and dmf.cod_gru_fal in (2,3))=0,'','X') as elec,
 (select 
-group_concat(concat(ifnull(co.nom_ope,''),' ',mg.det_obs) separator ',')
+group_concat(concat(ifnull(if(UPPER(co.nom_ope)='ACCIÓN PERSONALIZADA','',co.nom_ope),''),' ',mg.det_obs) separator ',')
 as Resultado 
 from tbl_det_man_gen as mg
 left join cat_ope as co on mg.cod_ope = co.cod_ope
 WHERE mg.cod_lis_equ = mm.cod_lis_equ AND mg.cod_man = mm.cod_man) as tareas,
-(select 
+ifnull((select 
 group_concat(concat(ifnull(mp.det_can,''),' ',ifnull(cp.nom_pie,'')) separator ',')
 as Resultado 
 from tbl_det_man_pie as mp
 left join cat_pie as cp on mp.cod_pie = cp.cod_pie
-WHERE mp.cod_lis_equ = mm.cod_lis_equ AND mp.cod_man = mm.cod_man) as repuestos
+WHERE mp.cod_lis_equ = mm.cod_lis_equ AND mp.cod_man = mm.cod_man),'') as repuestos
 FROM tbl_mae_man as mm
 left join  lis_equ as lequ on mm.cod_lis_equ = lequ.cod_lis_equ 
 left join cat_pai as pai on lequ.cod_pai = pai.cod_pai 
-left join cat_persona as persona on mm.cod_usu = persona.cod_usu 
-left join cat_dep as dep on dep.cod_dep = mm.cod_dep
 WHERE mm.cod_lis_equ = $P{cod_lis_equ} 
 AND mm.cod_man = $P{cod_man}]]>
 	</queryString>
@@ -84,7 +82,7 @@ AND mm.cod_man = $P{cod_man}]]>
 	<detail>
 		<band height="354" splitType="Stretch">
 			<elementGroup>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="63" y="74" width="20" height="12" uuid="75ad6b6c-1629-44da-8def-17eaab3e9f92"/>
 					<textElement>
 						<font size="8"/>
@@ -98,14 +96,14 @@ AND mm.cod_man = $P{cod_man}]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{supervisor}]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="540" y="62" width="22" height="11" uuid="930e67f8-0c66-4fb8-8e62-8f3747f244b9"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cod_pri}.equals("A") ? "X" : ""]]></textFieldExpression>
 				</textField>
-				<textField pattern="dd/MM/yyyy">
+				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 					<reportElement x="56" y="59" width="100" height="12" uuid="e0f37de2-30c3-47e9-91e7-7dc432b0db50"/>
 					<textElement>
 						<font size="8"/>
@@ -114,26 +112,26 @@ AND mm.cod_man = $P{cod_man}]]>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement x="65" y="98" width="444" height="26" uuid="7287ee5c-1fc2-42bb-8f48-8413e3fa7371"/>
-					<textElement>
+					<textElement textAlignment="Justified">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{falla_reportada}]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="133" y="73" width="18" height="13" uuid="a1462978-7175-46d5-99b3-9f9e2b9f97ae"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{turno}.equals(1) ? "X" : ""]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="540" y="78" width="22" height="11" uuid="c50506a3-9119-4847-b4f6-43c9b5366742"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{cod_pri}.equals("B") ? "X" : ""]]></textFieldExpression>
 				</textField>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="279" y="75" width="177" height="13" uuid="f3bee198-c4b3-4a23-96ea-0d3f67194f8a"/>
 					<textElement>
 						<font size="8"/>
@@ -141,7 +139,7 @@ AND mm.cod_man = $P{cod_man}]]>
 					<textFieldExpression><![CDATA[$F{des_equ}]]></textFieldExpression>
 				</textField>
 			</elementGroup>
-			<textField pattern="HH:mm a">
+			<textField pattern="HH:mm a" isBlankWhenNull="true">
 				<reportElement x="65" y="85" width="59" height="12" uuid="9f4440cc-d41c-4cbf-93ad-4b96d8b0e66f"/>
 				<textElement>
 					<font size="8"/>
@@ -150,12 +148,12 @@ AND mm.cod_man = $P{cod_man}]]>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="134" y="136" width="372" height="48" uuid="8918ee6c-b54f-4014-aaf9-0445a0f5495c"/>
-				<textElement>
+				<textElement textAlignment="Justified">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fallas}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="280" y="61" width="177" height="13" uuid="769b6866-e002-423b-aeaf-0d238b14158c"/>
 				<textElement>
 					<font size="8"/>
@@ -185,40 +183,40 @@ AND mm.cod_man = $P{cod_man}]]>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="81" y="224" width="425" height="26" uuid="b6165aa3-da7a-4ee7-8490-155b7c778f7b"/>
-				<textElement>
+				<textElement textAlignment="Justified">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tareas}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="83" y="250" width="425" height="23" uuid="d79095a7-88fc-461c-9d61-5d610f210ee0"/>
-				<textElement>
+				<textElement textAlignment="Justified">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{repuestos}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="341" y="277" width="100" height="13" uuid="d297dfcc-18fe-4dd9-b996-cb40fcf2a250"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fec_ini}]]></textFieldExpression>
 			</textField>
-			<textField pattern="HH:mm a">
+			<textField pattern="HH:mm a" isBlankWhenNull="true">
 				<reportElement x="447" y="277" width="59" height="13" uuid="107500bf-9dbc-4e9b-ae52-fca99a74014b"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fec_ini}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="45" y="275" width="100" height="13" uuid="e40fc8fa-9f66-45fc-9be3-9c06998900aa"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fec_fin}]]></textFieldExpression>
 			</textField>
-			<textField pattern="HH:mm a">
+			<textField pattern="HH:mm a" isBlankWhenNull="true">
 				<reportElement x="153" y="276" width="54" height="13" uuid="02e68924-3887-4ab1-9518-634127d4cacb"/>
 				<textElement>
 					<font size="8"/>

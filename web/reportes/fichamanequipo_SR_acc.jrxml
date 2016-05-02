@@ -63,37 +63,37 @@ from tbl_det_man_acc as acc where acc.cod_lis_equ = $P{codequipo} and acc.cod_ma
 	</columnHeader>
 	<detail>
 		<band height="16" splitType="Stretch">
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="7" y="0" width="26" height="13" uuid="47f85f03-6ba1-470f-8bbf-898999b26fad"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{itemacc}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy h:mm a">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy h:mm a" isBlankWhenNull="true">
 				<reportElement x="33" y="0" width="46" height="13" uuid="18370f14-a7f5-4f6a-9ef9-40632acf4ad4"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecacc}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="93" y="0" width="36" height="13" uuid="193cb6c6-a27e-467c-907e-9ace4f5c3946"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cantidadacc}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="133" y="0" width="327" height="13" uuid="21e2e76b-a939-4144-9572-f400af93058a"/>
-				<textElement>
+				<textElement textAlignment="Justified">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{descripcionacc}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="472" y="0" width="87" height="13" uuid="939ba4c5-05ab-45f0-a4dc-2b3e19e9655b"/>
-				<textElement>
+				<textElement textAlignment="Justified">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{usuacc}]]></textFieldExpression>

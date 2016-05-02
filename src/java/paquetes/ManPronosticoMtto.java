@@ -292,7 +292,7 @@ public class ManPronosticoMtto implements Serializable {
                         resVariable.getString(6),
                         resVariable.getString(7),
                         resVariable.getString(8),
-                        "", "", "", "", "", "", "", "", "", "", "", ""
+                        "", "", "", "", "", "", "", "", "", "", "", "", "", ""
                 ));
             }
             mAccesos.Desconectar();

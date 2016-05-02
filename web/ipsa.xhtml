@@ -371,6 +371,20 @@
                                      />
                 </f:facet>
             </p:menubar>
+            
+            
+            
+            <!--****************** ConfirmDialog Global *********************-->
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="Sí" type="button" 
+                                                     styleClass="ui-confirmdialog-yes" 
+                                                     icon="ui-icon-check" />
+                                    <p:commandButton value="No" type="button" 
+                                                     styleClass="ui-confirmdialog-no" 
+                                                     icon="ui-icon-close" />
+                                </p:confirmDialog>
+            
+            
         </h:form>
 
         <!--******************************************************************** 
@@ -454,7 +468,7 @@
 
         <h:form id="frmNB"> 
             <p:notificationBar id="nbMadre" position="bottom" effect="slide"
-                               widgetVar="bar" style="height: 40px;">
+                               widgetVar="bar" style="height: 50px;">
 
                 <h:panelGrid  columns="1" cellpadding="1">
                     <h:outputText value="Usuario: &lt;font color='red'&gt; #{login.det_nom} &lt;/font&gt;&lt;br /&gt;Departamento: &lt;font color='red'&gt; #{login.nomdep} &lt;/font&gt;"
@@ -465,7 +479,7 @@
                     <h:graphicImage  id="cclogo" value="/nube.gif" width="60" height="55" 
                                      style=" position: absolute; top:0;right:10%;bottom:0;margin: auto; "/>
 
-                    <h:graphicImage  id="ipsalogo" value="/logo.png" width="170" height="55" 
+                    <h:graphicImage  id="ipsalogo" value="/logo2.png" width="110" height="55" 
                                      style=" position: absolute; top:0;right:80%;bottom:0;margin: auto; "/>
                 </h:panelGrid>
             </p:notificationBar>
@@ -510,14 +524,7 @@
                                          update=":frmUsuarios"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -614,14 +621,7 @@
                                          update=":frmPaises"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -693,14 +693,7 @@
                                          icon="ui-icon-close"
                                          />
 
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -775,14 +768,7 @@
                                          update=":frmMarca"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -870,14 +856,7 @@
                                          update=":frmUniMed"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
 
                 </p:toolbar>
@@ -971,14 +950,7 @@
                                          update=":frmTipMan"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
 
                 </p:toolbar>
@@ -1067,14 +1039,7 @@
                                          update=":frmCatPie"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
 
                 </p:toolbar>
@@ -1158,14 +1123,7 @@
                                          update=":frmOpe"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -1253,14 +1211,7 @@
                                          update=":frmMov"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -1353,14 +1304,7 @@
                                          update=":frmBod"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -1457,14 +1401,7 @@
                                          update=":frmUbi"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -1574,14 +1511,7 @@
                                          update=":frmCli"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -1691,14 +1621,7 @@
                                          update=":frmPro"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -1806,14 +1729,7 @@
                                          update=":frmEquipos"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -1941,14 +1857,7 @@
                                          update=":frmPiezas"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -2095,14 +2004,7 @@
                                          icon="ui-icon-search"
                                          />
 
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                     <f:facet name="right">
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -2383,14 +2285,7 @@
                                          update=":frmEstado"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
 
                 </p:toolbar>
@@ -2512,14 +2407,7 @@
                                                  update=":frmSeguimiento"
                                                  icon="ui-icon-close"
                                                  />
-                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                    <p:commandButton value="Sí" type="button" 
-                                                     styleClass="ui-confirmdialog-yes" 
-                                                     icon="ui-icon-check" />
-                                    <p:commandButton value="No" type="button" 
-                                                     styleClass="ui-confirmdialog-no" 
-                                                     icon="ui-icon-close" />
-                                </p:confirmDialog>
+                                
                             </f:facet>
                         </p:toolbar>
 
@@ -2696,14 +2584,7 @@
                                                  icon="ui-icon-close"
                                                  />
 
-                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                    <p:commandButton value="Sí" type="button" 
-                                                     styleClass="ui-confirmdialog-yes" 
-                                                     icon="ui-icon-check" />
-                                    <p:commandButton value="No" type="button" 
-                                                     styleClass="ui-confirmdialog-no" 
-                                                     icon="ui-icon-close" />
-                                </p:confirmDialog>
+                                
                             </f:facet>
                             <f:facet name="right">
                                 <h:outputText value="Aprobada por:&nbsp;&nbsp;" style="font-weight:bold;"/>
@@ -2969,14 +2850,7 @@
                                          icon="ui-icon-search"
                                          />
 
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                     <f:facet name="right">
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -3230,14 +3104,7 @@
                                          update=":frmEstadoReq"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
 
                 </p:toolbar>
@@ -3356,14 +3223,7 @@
                                                  update=":frmSeguimientoReq"
                                                  icon="ui-icon-close"
                                                  />
-                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                    <p:commandButton value="Sí" type="button" 
-                                                     styleClass="ui-confirmdialog-yes" 
-                                                     icon="ui-icon-check" />
-                                    <p:commandButton value="No" type="button" 
-                                                     styleClass="ui-confirmdialog-no" 
-                                                     icon="ui-icon-close" />
-                                </p:confirmDialog>
+                                
                             </f:facet>
                         </p:toolbar>
 
@@ -3528,14 +3388,7 @@
                                                  icon="ui-icon-close"
                                                  />
 
-                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                    <p:commandButton value="Sí" type="button" 
-                                                     styleClass="ui-confirmdialog-yes" 
-                                                     icon="ui-icon-check" />
-                                    <p:commandButton value="No" type="button" 
-                                                     styleClass="ui-confirmdialog-no" 
-                                                     icon="ui-icon-close" />
-                                </p:confirmDialog>
+                                
                             </f:facet>
                             <f:facet name="right">
                                 <h:outputText value="Aprobada por:&nbsp;&nbsp;" style="font-weight:bold;"/>
@@ -3784,7 +3637,7 @@
 
         <p:dialog  id="dlgListaEquipos" widgetVar="wListaEquipos" modal="true" 
                    width="850" height="500" closable="false" resizable="false" 
-                   header="Detalle de Equipo" rendered="true" 
+                   header="Inventario de Equipos" rendered="true" 
                    dynamic="true" visible="false"  
                    >
             <h:form id="frmListaEquipos">
@@ -3814,25 +3667,19 @@
                                        message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
-                        <h:commandButton value="Imprimir" style=" width: 100px;" 
-                                  actionListener="#{manListaEquipos.ejecutarreporte()}"
-                                             onclick="this.form.target = '_blank'"
-                                  disabled="#{manSeguridad.disableOpt('botonLisEquImprimir')}"
-                                  />
-                        <p:commandButton value="Buscar" style=" width: 100px;"
-                                         onclick="PF('wSearchLE').show()"
-                                         update=":frmSearchLE"
-                                         icon="ui-icon-search"
-                                         actionListener="#{manListaEquipos.iniciarventanabuscar()}"
-                                         />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        <p:commandButton value="Ficha" icon="ui-icon-print"
+                                         style=" width: 100px;"
+                                         onclick="this.form.target = '_blank';" 
+                                         action="#{manListaEquipos.ejecutarreporte()}"
+                                         disabled="#{manSeguridad.disableOpt('botonLisEquImprimir')}"
+                                         ajax="false"/>
+                        <p:commandButton value="FMAN003" icon="ui-icon-print"
+                                         style=" width: 100px;"
+                                         onclick="this.form.target = '_blank';" 
+                                         action="#{manListaEquipos.ejecutarFMAN003()}"
+                                         disabled="#{manSeguridad.disableOpt('botonLisEquImprimir')}"
+                                         ajax="false"/>
+                        
                     </f:facet>
                     <f:facet name="right">
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -3846,17 +3693,64 @@
 
                 <p:tabView id="tvLE" activeIndex="#{manListaEquipos.tabindex}">
                     <p:ajax event="tabChange" listener="#{manListaEquipos.onTabChange}" />
+                        <p:tab title="Lista" id="tabLista">
+                            <p:dataTable id="dtSLE" var="vSLE" 
+                                     value="#{manListaEquipos.lequipos}" 
+                                     emptyMessage="No se encontraron resultados" 
+                                     selectionMode="single" selection="#{manListaEquipos.catlistaequipos}" 
+                                     rowKey="#{vSLE.cod_lis_equ}"
+                                     editable="false"
+                                     scrollable="true"
+                                     scrollHeight="340"
+                                     style="width:790px"
+                                     widgetVar="wvSLE"
+                                     >
+                                 <f:facet name="header">
+                                    <p:outputPanel style=" text-align: right;">
+                                        <h:panelGroup>
+                                            <h:outputText value="Filtrar:&nbsp;&nbsp;" />
+                                            <p:inputText id="globalFilter" 
+                                                         onkeyup="PF('wvSLE').filter()" 
+                                                         style="width:200px;" 
+                                                         placeholder="Nombre, Serie"/>
+                                        </h:panelGroup>
+
+                                    </p:outputPanel>
+                                </f:facet>
+                                <p:ajax event="rowSelect" listener="#{manListaEquipos.onRowSelectListaEquipo}" 
+                                    update=":frmListaEquipos"/>
+                                <p:column style="width:70px" headerText="Nombre Equipo" filterBy="#{vSLE.des_equ}" filterMatchMode="contains"  
+                                      filterStyle="display:none; visibility:hidden;">
+                                    <h:outputText value="#{vSLE.des_equ}" />
+                                </p:column>
+                                <p:column style="width:30px;" headerText="Tipo Equipo">
+                                    <h:outputText value="#{vSLE.nomequ}" />
+                                </p:column>
+                                <p:column style="width:30px;" headerText="Proceso">
+                                    <h:outputText value="#{vSLE.nompai}" />
+                                </p:column>
+                                <p:column style="width:70px" headerText="Serie" filterBy="#{vSLE.num_ser}" filterMatchMode="contains"  
+                                      filterStyle="display:none; visibility:hidden;">
+                                    <h:outputText value="#{vSLE.num_ser}" />
+                                </p:column>
+
+                        </p:dataTable>
+                    </p:tab>
                     <p:tab title="General" id="tabGeneral">
                         <div style=" background-color: #ebf8fe;">
                             <p:focus for="cmbEquipolis" />
                             <p:panel header="Identificación">
-                                <h:panelGrid columns="4" cellpadding="5">
-                                    <h:outputText value="Equipo" style="font-weight:bold;"/>
+                                <h:panelGrid columns="3" cellpadding="5">
+                                    <h:outputText value="Nombre de Equipo" style="font-weight:bold;"/>
+                                    <h:outputText value="Tipo de Equipo" style="font-weight:bold;"/>
                                     <h:outputText value="Proceso" style="font-weight:bold;"/>
-                                    <h:outputText value="Proveedor" style="font-weight:bold;"/>
-                                    <h:outputText value="" style="font-weight:bold;"/>
+                                    <p:inputText size="40"
+                                                 maxlength="50"
+                                                 value="#{manListaEquipos.des_equ}"
+                                                 onfocus="this.select()"
+                                                 />
                                     <p:selectOneMenu id ="cmbEquipolis" value="#{manListaEquipos.cod_equ}" 
-                                                     style=" width: 150px;"
+                                                     style=" width: 200px;"
                                                      filter="true" filterMatchMode="contains" 
                                                      >
                                         <f:selectItem itemLabel="Ninguno" itemValue="0"/>
@@ -3864,66 +3758,106 @@
                                                        itemLabel="#{lstequ.nom_equ}" itemValue="#{lstequ.cod_equ}"/> 
                                     </p:selectOneMenu>
                                     <p:selectOneMenu value="#{manListaEquipos.cod_pai}" 
-                                                     style=" width: 150px;">
-                                        <p:ajax event="change" listener="#{manListaEquipos.onPaisChange()}" update="somproequ" />
+                                                     style=" width: 200px;">
                                         <f:selectItem itemLabel="Ninguno" itemValue="0"/>
                                         <f:selectItems value="#{manListaEquipos.paises}" var="lstequpai"
                                                        itemLabel="#{lstequpai.nom_pai}" itemValue="#{lstequpai.cod_pai}"/> 
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu  value="#{manListaEquipos.cod_pro}" 
-                                                      style=" width: 150px;" id="somproequ">
-                                        <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                                        <f:selectItems value="#{manListaEquipos.proveedores}" var="lstpro"
-                                                       itemLabel="#{lstpro.nom_pro}" itemValue="#{lstpro.cod_pro}"/> 
-                                    </p:selectOneMenu>
-                                    <h:outputText value="" style="font-weight:bold;"/>
-
-                                    <h:outputText value="Modelo" style="font-weight:bold;"/>
-                                    <h:outputText value="Serie" style="font-weight:bold;"/>
-                                    <h:outputText value="Nombre Clave" style="font-weight:bold;"/>
+                                    <h:outputText value="Marca" style="font-weight:bold;"/>
                                     <h:outputText value="Ubicación" style="font-weight:bold;"/>
-                                    <p:inputText size="25"
-                                                 maxlength="25"
-                                                 value="#{manListaEquipos.num_mod}"
-                                                 onfocus="this.select()"
-                                                 />
-                                    <p:inputText size="25"
-                                                 maxlength="25"
-                                                 value="#{manListaEquipos.num_ser}"
-                                                 onfocus="this.select()"
-                                                 />
-                                    <p:inputText size="25"
-                                                 maxlength="25"
-                                                 value="#{manListaEquipos.des_equ}"
-                                                 onfocus="this.select()"
-                                                 />
-                                    <p:inputText size="25"
-                                                 maxlength="25"
+                                    <h:outputText value="Modelo" style="font-weight:bold;"/>
+                                    <p:selectOneMenu  value="#{manListaEquipos.cod_pro}" 
+                                                      style=" width: 245px;" id="somproequ">
+                                        <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                        <f:selectItems value="#{manListaEquipos.marcas}" var="lstpro"
+                                                       itemLabel="#{lstpro.nom_mar}" itemValue="#{lstpro.id_mar}"/> 
+                                    </p:selectOneMenu>
+                                    <p:inputText size="33"
+                                                 maxlength="150"
                                                  value="#{manListaEquipos.des_ubi}"
                                                  onfocus="this.select()"
                                                  />
+                                    <p:inputText size="33"
+                                                 maxlength="20"
+                                                 value="#{manListaEquipos.num_mod}"
+                                                 onfocus="this.select()"
+                                                 />
+                                    <h:outputText value="Serie" style="font-weight:bold;"/>
+                                    <h:outputText value="Potencia" style="font-weight:bold;"/>
+                                    <h:outputText value="Voltaje" style="font-weight:bold;"/>
+                                    <p:inputText size="40"
+                                                 maxlength="30"
+                                                 value="#{manListaEquipos.num_ser}"
+                                                 onfocus="this.select()"
+                                                 />
+                                    <p:inputText size="33"
+                                                 maxlength="20"
+                                                 value="#{manListaEquipos.det_pot}"
+                                                 onfocus="this.select()"
+                                                 />
+                                    <p:inputText size="33"
+                                                 maxlength="20"
+                                                 value="#{manListaEquipos.det_vol}"
+                                                 onfocus="this.select()"
+                                                 />
+                                    <h:outputText value="Código Interno" style="font-weight:bold;"/>
+                                    <h:outputText value="" style="font-weight:bold;"/>
+                                    <h:outputText value="" style="font-weight:bold;"/>
+                                    <p:inputText size="40"
+                                                 maxlength="30"
+                                                 value="#{manListaEquipos.cod_bar}"
+                                                 onfocus="this.select()"
+                                                 />
                                 </h:panelGrid>
-                            </p:panel>
-                            <p:panel header="Garantía">
-                                <h:panelGrid columns="3" cellpadding="5">
-                                    <h:outputText value="Fecha Inicio" style="font-weight:bold;"/>
-                                    <h:outputText value="Fecha Fin" style="font-weight:bold;"/>
+                                <h:panelGrid columns="1" cellpadding="5">
                                     <h:outputText value="Observaciones" style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500"
+                                                     value="#{manListaEquipos.cod_cli}"
+                                                     rows="2"
+                                                     cols="110"
+                                                 />
+                                </h:panelGrid>    
+                                
+                            </p:panel>
+                            
+                        </div>
+                    </p:tab>
+                    <p:tab title="Garantía" id="tabGarantia">
+                        <div style=" background-color: #ebf8fe;">
+                            <p:panel header="Garantía">
+                                <h:panelGrid columns="5" cellpadding="5">
+                                    <h:outputText value="Fecha Inicio" style="font-weight:bold;"/>
+                                    <h:outputText value="" style="font-weight:bold;"/>
+                                    <h:outputText value="Fecha Fin" style="font-weight:bold;"/>
+                                    <h:outputText value="" style="font-weight:bold;"/>
+                                    <h:outputText value="Detalle Garantía" style="font-weight:bold;"/>
+                                   
+                                        <p:calendar  pattern="dd/MM/yyyy" locale="es" 
+                                                     readonlyInput="true" showOn="button" size="10"
+                                                     style="width: 10px"
+                                                     value="#{manListaEquipos.dfecini}" 
+                                                     disabled="#{!manListaEquipos.edfecini}"
+                                                     id="ledfecini"
+                                                     >
+                                            <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecgarini}" />
+                                        </p:calendar> 
+                                        <p:selectBooleanCheckbox value="#{manListaEquipos.edfecini}" >
+                                            <p:ajax event="change" update="ledfecini"  />
+                                        </p:selectBooleanCheckbox>
+                          
                                     <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                                  readonlyInput="true" showOn="button" size="10"
                                                  style="width: 10px"
-                                                 value="#{manListaEquipos.dfecini}" 
-                                                 >
-                                        <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecgarini}" />
-                                    </p:calendar> 
-                                    <p:calendar  pattern="dd/MM/yyyy" locale="es" 
-                                                 readonlyInput="true" showOn="button" size="10"
-                                                 style="width: 10px"
-                                                 value="#{manListaEquipos.dfecini}"
+                                                 value="#{manListaEquipos.dfecfin}"
+                                                 disabled="#{!manListaEquipos.edfecfin}"
+                                                 id="ledfecfin"
                                                  >
                                         <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecgarfin}" />
                                     </p:calendar> 
-                                    <p:inputText size="80"
+                                    <p:selectBooleanCheckbox value="#{manListaEquipos.edfecfin}" >
+                                            <p:ajax event="change" update="ledfecfin"  />
+                                        </p:selectBooleanCheckbox>
+                                    <p:inputText size="70"
                                                  maxlength="200"
                                                  value="#{manListaEquipos.gar_obs}"
                                                  onfocus="this.select()"
@@ -3934,60 +3868,84 @@
                     </p:tab>
                     <p:tab title="Historia" id="tabHistoria">
                         <div style=" background-color: #ebf8fe;">
-                            <h:panelGrid columns="7" cellpadding="5">
-                                <h:outputText value="Fabricacion" style="font-weight:bold;"/>
+                            <h:panelGrid columns="6" cellpadding="5">
+                                <h:outputText value="Fabricación" style="font-weight:bold;"/>
+                                <h:outputText value="" style="font-weight:bold;"/>
                                 <h:outputText value="Compra" style="font-weight:bold;"/>
+                                <h:outputText value="" style="font-weight:bold;"/>
                                 <h:outputText value="Adquisición" style="font-weight:bold;"/>
-                                <h:outputText value="Puesta en Servicio" style="font-weight:bold;"/>
-                                <h:outputText value="Último Mantenimiento" style="font-weight:bold;"/>
-                                <h:outputText value="Retiro" style="font-weight:bold;"/>
                                 <h:outputText value="" style="font-weight:bold;"/>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                              readonlyInput="true" showOn="button" size="10"
                                              style="width: 10px"
                                              value="#{manListaEquipos.dfecfab}"
+                                             disabled="#{!manListaEquipos.edfecfab}"
+                                             id="ledfecfab"
                                              >
                                     <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecfab}" />
                                 </p:calendar> 
+                                <p:selectBooleanCheckbox value="#{manListaEquipos.edfecfab}" >
+                                            <p:ajax event="change" update="ledfecfab"  />
+                                </p:selectBooleanCheckbox>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                              readonlyInput="true" showOn="button" size="10"
                                              style="width: 10px"
                                              value="#{manListaEquipos.dfeccom}"
+                                             disabled="#{!manListaEquipos.edfeccom}"
+                                             id="ledfeccom"
                                              >
                                     <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFeccom}" />
-                                </p:calendar> 
+                                </p:calendar>
+                                <p:selectBooleanCheckbox value="#{manListaEquipos.edfeccom}" >
+                                            <p:ajax event="change" update="ledfeccom"  />
+                                </p:selectBooleanCheckbox>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                              readonlyInput="true" showOn="button" size="10"
                                              style="width: 10px"
                                              value="#{manListaEquipos.dfecadq}"
+                                             disabled="#{!manListaEquipos.edfecadq}"
+                                             id="ledfecadq"
                                              >
                                     <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecadq}" />
-                                </p:calendar> 
+                                </p:calendar>
+                                <p:selectBooleanCheckbox value="#{manListaEquipos.edfecadq}" >
+                                            <p:ajax event="change" update="ledfecadq"  />
+                                </p:selectBooleanCheckbox>
+                                <h:outputText value="Puesta en Servicio" style="font-weight:bold;"/>
+                                <h:outputText value="" style="font-weight:bold;"/>
+                                <h:outputText value="Retiro" style="font-weight:bold;"/>
+                                <h:outputText value="" style="font-weight:bold;"/>
+                                <h:outputText value="" style="font-weight:bold;"/>
+                                <h:outputText value="" style="font-weight:bold;"/>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                              readonlyInput="true" showOn="button" size="10"
                                              style="width: 10px"
                                              value="#{manListaEquipos.dfecpueser}"
+                                             disabled="#{!manListaEquipos.edfecpueser}"
+                                             id="ledfecpueser"
                                              >
-                                    <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecpueser}" />
+                                            <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecpueser}" />
                                 </p:calendar> 
-                                <p:calendar  pattern="dd/MM/yyyy" locale="es" 
-                                             readonlyInput="true" showOn="button" size="10"
-                                             style="width: 10px"
-                                             value="#{manListaEquipos.dfecultman}"
-                                             >
-                                    <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecultman}" />
-                                </p:calendar> 
+                                <p:selectBooleanCheckbox value="#{manListaEquipos.edfecpueser}" >
+                                            <p:ajax event="change" update="ledfecpueser"  />
+                                </p:selectBooleanCheckbox>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                              readonlyInput="true" showOn="button" size="10"
                                              style="width: 10px"
                                              value="#{manListaEquipos.dfecret}"
+                                             disabled="#{!manListaEquipos.edfecret}"
+                                             id="ledfecret"
                                              >
                                     <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecret}" />
-                                </p:calendar> 
-                                <h:commandButton value="Detalle" style=" width: 80px;" 
-                                  actionListener="#{manListaEquipos.ejecutarreporte2()}"
-                                             onclick="this.form.target = '_blank'"
-                                  />
+                                </p:calendar>
+                                <p:selectBooleanCheckbox value="#{manListaEquipos.edfecret}" >
+                                            <p:ajax event="change" update="ledfecret"  />
+                                </p:selectBooleanCheckbox>
+                                <p:commandButton value="Detalle" icon="ui-icon-print"
+                                         style=" width: 80px;"
+                                         onclick="this.form.target = '_blank';" 
+                                         action="#{manListaEquipos.ejecutarreporte2()}"
+                                         ajax="false"/>
                             </h:panelGrid>
 
                         </div>
@@ -4001,7 +3959,7 @@
                                      scrollHeight="240"
                                      style="width:781px"
                                      >
-                            <p:ajax event="rowSelect" listener="#{manListaEquipos.onRowSelectHis}" 
+                            <p:ajax event="rowSelect" listener="#{manListaEquipos.onRowSelectMantenimiento}" 
                                 />
 
                             <p:column style="width:80px;" headerText="Tipo">
@@ -4030,12 +3988,13 @@
                             </f:facet>
                         </p:toolbar>
                         <p:panel id="panelsoftware">
-                            <h:panelGrid columns="4" cellpadding="5">
+                            <h:panelGrid columns="5" cellpadding="5">
                                 <h:outputText value="Sistema" style="font-weight:bold;"/>
                                 <h:outputText value="Versión Anterior" style="font-weight:bold;"/>
                                 <h:outputText value="Versión Actual" style="font-weight:bold;"/>
                                 <h:outputText value="Fecha Actualización" style="font-weight:bold;"/>
-                                <p:inputText size="50"
+                                <h:outputText value="" style="font-weight:bold;"/>
+                                <p:inputText size="45"
                                              maxlength="200"
                                              value="#{manListaEquipos.s_det_obs}"
                                              onfocus="this.select()"
@@ -4054,9 +4013,14 @@
                                              readonlyInput="true" showOn="button" size="10"
                                              style="width: 10px"
                                              value="#{manListaEquipos.dfecact}"
+                                             disabled="#{!manListaEquipos.edfecact}"
+                                             id="ledfecact"
                                              >
-                                    <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecact}" />
+                                            <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecact}" />
                                 </p:calendar> 
+                                <p:selectBooleanCheckbox value="#{manListaEquipos.edfecact}" >
+                                            <p:ajax event="change" update="ledfecact"  />
+                                </p:selectBooleanCheckbox>
                             </h:panelGrid>
                         </p:panel>
 
@@ -4097,10 +4061,7 @@
                                 </p:cellEditor>
                             </p:column>
                             <p:column style="width:100px" headerText="Fecha Actualización">
-                                <p:cellEditor>
-                                    <f:facet name="output"><h:outputText value="#{vSys.fec_act}" /></f:facet>
-                                    <f:facet name="input"><p:inputText value="#{vSys.fec_act}" style="width:100%" required="true" maxlength="10"/></f:facet>
-                                </p:cellEditor>
+                                <h:outputText value="#{vSys.fec_act}" />
                             </p:column>
                             <p:column style="width:32px">
                                 <p:rowEditor />
@@ -4118,17 +4079,19 @@
                             </f:facet>
                         </p:toolbar>
                         <p:panel id="panelcontratos">
-                            <h:panelGrid columns="4" cellpadding="5">
+                            <h:panelGrid columns="6" cellpadding="5">
                                 <h:outputText value="Número" style="font-weight:bold;"/>
                                 <h:outputText value="Observaciones" style="font-weight:bold;"/>
                                 <h:outputText value="Fecha Inicio" style="font-weight:bold;"/>
+                                <h:outputText value="" style="font-weight:bold;"/>
                                 <h:outputText value="Fecha Expiración" style="font-weight:bold;"/>
+                                <h:outputText value="" style="font-weight:bold;"/>
                                 <p:inputText size="20"
                                              maxlength="20"
                                              value="#{manListaEquipos.c_cod_ref}"
                                              onfocus="this.select()"
                                              />
-                                <p:inputText size="50"
+                                <p:inputText size="40"
                                              maxlength="200"
                                              value="#{manListaEquipos.c_des_inf}"
                                              onfocus="this.select()"
@@ -4137,16 +4100,26 @@
                                              readonlyInput="true" showOn="button" size="10"
                                              style="width: 10px"
                                              value="#{manListaEquipos.dfeccon}"
+                                             disabled="#{!manListaEquipos.edfeccon}"
+                                             id="ledfeccon"
                                              >
                                     <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFeccon}" />
-                                </p:calendar> 
+                                </p:calendar>
+                                <p:selectBooleanCheckbox value="#{manListaEquipos.edfeccon}" >
+                                            <p:ajax event="change" update="ledfeccon"  />
+                                </p:selectBooleanCheckbox>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                              readonlyInput="true" showOn="button" size="10"
                                              style="width: 10px"
                                              value="#{manListaEquipos.dfecexp}"
+                                             disabled="#{!manListaEquipos.edfecexp}"
+                                             id="ledfecexp"
                                              >
                                     <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecexp}" />
-                                </p:calendar> 
+                                </p:calendar>
+                                <p:selectBooleanCheckbox value="#{manListaEquipos.edfecexp}" >
+                                            <p:ajax event="change" update="ledfecexp"  />
+                                </p:selectBooleanCheckbox>
                             </h:panelGrid>
                         </p:panel>
 
@@ -4180,114 +4153,21 @@
                                 </p:cellEditor>
                             </p:column>
                             <p:column style="width:70px" headerText="Fecha Contrato">
-                                <p:cellEditor>
-                                    <f:facet name="output"><h:outputText value="#{vCon.fec_con}" /></f:facet>
-                                    <f:facet name="input"><p:inputText value="#{vCon.fec_con}" style="width:100%" required="true"/></f:facet>
-                                </p:cellEditor>
+                                <h:outputText value="#{vCon.fec_con}" />
                             </p:column>
                             <p:column style="width:70px" headerText="Fecha Expiración">
-                                <p:cellEditor>
-                                    <f:facet name="output"><h:outputText value="#{vCon.fec_exp}" /></f:facet>
-                                    <f:facet name="input"><p:inputText value="#{vCon.fec_exp}" style="width:100%" required="true"/></f:facet>
-                                </p:cellEditor>
+                                <h:outputText value="#{vCon.fec_exp}" />
                             </p:column>
                             <p:column style="width:32px">
                                 <p:rowEditor />
                             </p:column>
                         </p:dataTable>
                     </p:tab>
-
                 </p:tabView>
             </h:form>
         </p:dialog>
 
-        <!--******************************************************************** 
-        *********************** Pantalla Buscar Lista Equipo *******************
-        *********************************************************************-->
-
-        <p:dialog  id="dlgSearchLE" widgetVar="wSearchLE" modal="true" 
-                   width="850" height="400" closable="false" resizable="false" 
-                   header="Buscar Equipos" rendered="true" 
-                   dynamic="false" visible="false" 
-                   >
-            <h:form id="frmSearchLE">
-                <p:growl id="msgSearchLE" showDetail="true" life="4500"/>
-                <p:toolbar>
-                    <f:facet name="right">
-                        <p:commandButton value="Buscar" 
-                                         icon="ui-icon-search" 
-                                         update="dtSLE" 
-                                         actionListener="#{manListaEquipos.llenarLequipos()}"/>
-                        <p:commandButton value="Cerrar" 
-                                         icon="ui-icon-close" 
-                                         update="dtSLE" 
-                                         onclick="PF('wSearchLE').hide()"
-                                         actionListener="#{manListaEquipos.cerrarventanabuscar()}"/>
-                    </f:facet>
-                </p:toolbar>
-                <p:panel>
-                    <h:panelGrid columns="4" cellpadding="5">
-                        <h:outputText value="Número Serie" style="font-weight:bold;"/>
-                        <h:outputText value="Proceso" style="font-weight:bold;"/>
-                        <h:outputText value="Equipo" style="font-weight:bold;"/>
-                        <h:outputText value="Cliente" style="font-weight:bold;"/>
-                        <p:inputText size="20"
-                                     maxlength="20"
-                                     value="#{manListaEquipos.num_ser_b}"
-                                     onfocus="this.select()"
-                                     />
-                        <p:selectOneMenu value="#{manListaEquipos.cod_pai_b}" 
-                                         style=" width: 160px;">
-                            <p:ajax event="change" listener="#{manListaEquipos.onPaisBusChange()}" update="somclibus" />
-                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                            <f:selectItems value="#{manListaEquipos.paises}" var="lstpaibus"
-                                           itemLabel="#{lstpaibus.nom_pai}" itemValue="#{lstpaibus.cod_pai}"/> 
-                        </p:selectOneMenu>
-                        <p:selectOneMenu value="#{manListaEquipos.cod_equ_b}" 
-                                         style=" width: 160px;">
-                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                            <f:selectItems value="#{manListaEquipos.equipos}" var="lstequ2"
-                                           itemLabel="#{lstequ2.nom_equ}" itemValue="#{lstequ2.cod_equ}"/> 
-                        </p:selectOneMenu>
-                        <p:selectOneMenu  value="#{manListaEquipos.cod_cli_b}" 
-                                          style=" width: 200px;" id="somclibus">
-                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                            <f:selectItems value="#{manListaEquipos.clientesb}" var="lstcli2"
-                                           itemLabel="#{lstcli2.nom_cli}" itemValue="#{lstcli2.cod_cli}"/> 
-                        </p:selectOneMenu>
-                    </h:panelGrid>
-
-                    <p:dataTable id="dtSLE" var="vSLE" 
-                                 value="#{manListaEquipos.lequipos}" 
-                                 emptyMessage="No se encontraron resultados" 
-                                 selectionMode="single" selection="#{manListaEquipos.catlistaequipos}" 
-                                 rowKey="#{vSLE.cod_lis_equ}"
-                                 editable="false"
-                                 scrollable="true"
-                                 scrollHeight="220"
-                                 style="width:790px"
-                                 >
-                        <p:ajax event="rowSelect" listener="#{manListaEquipos.onRowSelect}" 
-                                update=":frmSearchLE"/>
-                        <p:column style="width:30px;" headerText="Proceso">
-                            <h:outputText value="#{vSLE.nompai}" />
-                        </p:column>
-                        <p:column style="width:30px;" headerText="Equipo">
-                            <h:outputText value="#{vSLE.nomequ}" />
-                        </p:column>
-                        <p:column style="width:70px" headerText="Nombre Equipo">
-                            <h:outputText value="#{vSLE.des_equ}" />
-                        </p:column>
-                        <p:column style="width:70px" headerText="Serie">
-                            <h:outputText value="#{vSLE.num_ser}" />
-                        </p:column>
-
-                    </p:dataTable>
-                </p:panel>
-            </h:form>
-
-
-        </p:dialog>
+       
 
         <!--******************************************************************** 
         ************************ Pantalla Almacén Piezas ***********************
@@ -4326,14 +4206,7 @@
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
 
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                     <f:facet name="right">
                         <p:commandButton value="Modificar" style=" width: 100px;"
@@ -4744,16 +4617,7 @@
                     <p:layoutUnit position="center" id="lumanc">
                         <p:toolbar>
                             <f:facet name="left">
-                                <p:commandButton value="Nuevo" style=" width: 90px;"
-                                                 actionListener="#{manMaestroMan.iniciarventananew()}"
-                                                 update=":frmMaestraNew"
-                                                 icon="ui-icon-document"
-                                                 /> 
-                                <p:commandButton value="Modificar" style=" width: 90px;"
-                                                 actionListener="#{manMaestroMan.iniciarventanaedit()}"
-                                                 update=":frmMaestraNew"
-                                                 icon="ui-icon-pencil"
-                                                 />
+                                
                                 <p:commandButton value="Guardar" style=" width: 90px;"
                                                  actionListener="#{manMaestroMan.guardarmantenimiento()}"
                                                  update=":frmMaestra"
@@ -4763,40 +4627,17 @@
                                                message="¿Realmente desea Guardar Todos Los Cambios de este Mantenimiento?" 
                                                icon="ui-icon-alert"/>
                                 </p:commandButton>
-                                <p:commandButton value="Eliminar" style=" width: 90px;"
-                                                 actionListener="#{manMaestroMan.eliminarencabezado()}"
-                                                 update=":frmMaestra"
-                                                 icon="ui-icon-trash"
-                                                 > 
-                                    <p:confirm header="Eliminar Mantenimiento" 
-                                               message="¿Realmente desea Eliminar este Mantenimiento?" 
-                                               icon="ui-icon-alert"/>
-                                </p:commandButton>
+                                
 
-                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                    <p:commandButton value="Sí" type="button" 
-                                                     styleClass="ui-confirmdialog-yes" 
-                                                     icon="ui-icon-check" />
-                                    <p:commandButton value="No" type="button" 
-                                                     styleClass="ui-confirmdialog-no" 
-                                                     icon="ui-icon-close" />
-                                </p:confirmDialog>
+                                
                             </f:facet>
                             <f:facet name="right">
                                 <p:commandButton value="Actualizar" style=" width: 90px;"
                                                  update=":frmMaestra"
                                                  icon="ui-icon-refresh"
                                                  />
-                                <p:commandButton value="Solicitudes" style=" width: 90px;"
-                                                 actionListener="#{manMaestroMan.iniciarventanaSolicitudes()}"
-                                                 update=":frmSolReqMan"
-                                                 icon="ui-icon-search"
-                                                 />
-                                <p:commandButton value="Finalizar" style=" width: 90px;"
-                                                 onclick="PF('wMaestraFin').show()"
-                                                 update=":frmMaestraFin"
-                                                 icon="ui-icon-check"
-                                                 />  
+                                
+                                
                                 <p:commandButton value="Cerrar" style=" width: 90px;"
                                                  onclick="PF('wMaestra').hide()"
                                                  actionListener="#{manMaestroMan.cerrarventana()}"
@@ -5364,7 +5205,7 @@
         </p:dialog>
 
         <p:dialog  id="dlgMaestraFin" widgetVar="wMaestraFin" modal="true" 
-                   width="460" height="180" closable="false" resizable="false" 
+                   width="460" height="140" closable="false" resizable="false" 
                    header="Finalizar Mantenimiento" rendered="true" 
                    dynamic="false" visible="false" 
                    >
@@ -5374,7 +5215,7 @@
                     <f:facet name="right">
                         <p:commandButton value="Aceptar" style=" width: 100px;"
                                          actionListener="#{manMaestroMan.finalizarmantenimiento()}"
-                                         update=":frmMaestra,:frmMaestraFin"
+                                         update=":frmMaestra,:frmIntegralIni,:frmMaestraFin"
                                          icon="ui-icon-disk"
                                          onclick="PF('wMaestraFin').hide()"
                                          >
@@ -5383,35 +5224,15 @@
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cancelar" style=" width: 100px;"
-                                         update=":frmMaestra"
+                                         update=":frmMaestra,:frmIntegralIni"
                                          icon="ui-icon-close" 
                                          onclick="PF('wMaestraFin').hide()"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
                 <p:panel>
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputText value="Fecha y Hora" style="font-weight:bold;"/>
-                        <h:outputText value="Recibe Conforme" style="font-weight:bold;"/>
-                        <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
-                                     readonlyInput="true" showOn="button" 
-                                     size="16"
-                                     value="#{manMaestroMan.dfecfinF}"
-                                     /> 
-                        <p:selectOneMenu value="#{manMaestroMan.cod_usu}" 
-                                         style=" width: 200px;">
-                            <f:selectItems value="#{manMaestroMan.usuarios}" var="usumanman"
-                                           itemLabel="#{usumanman.det_nom}" itemValue="#{usumanman.cod_usu}"/> 
-                        </p:selectOneMenu>
-                    </h:panelGrid>
+                    
                     <h:panelGrid columns="1" cellpadding="5" style=" text-align: center;">
                         <h:outputText value="Al FINALIZAR EL MANTENIMIENTO, se removerá toda la información de la lista de Trabajo y no podrán realizarse más cambios en él." 
                                       style="font-weight:bold; color: red;"/>
@@ -5642,7 +5463,6 @@
             </h:form>
         </p:dialog>
 
-
         <!--********************************************************************
         ************************** Pantalla Fátima *****************************
         *********************************************************************-->
@@ -5655,7 +5475,7 @@
             <h:form id="frmIntegralIni" >
                 <p:growl id="msgIntegralIni" showDetail="true" life="4500"/>
                 <p:toolbar>
-                    <f:facet name="right">
+                    <f:facet name="left">
                         <p:commandButton value="Nuevo" style=" width: 100px;"
                                          update=":frmIntegralIni"
                                          icon="ui-icon-document" 
@@ -5679,31 +5499,33 @@
                                                message="¿Realmente desea Eliminar este Mantenimiento?" 
                                                icon="ui-icon-alert"/>
                         </p:commandButton> 
+                        <p:commandButton value="Finalizar" style=" width: 100px;"
+                                                 onclick="PF('wMaestraFin').show()"
+                                                 update=":frmMaestraFin"
+                                                 icon="ui-icon-check"
+                                                 />  
                         <p:commandButton value="Orden" icon="ui-icon-print"
+                                         style=" width: 100px;"
                                          onclick="this.form.target = '_blank';" 
                                          action="#{manMaestroMan.imprimir_f_man_004}" 
-                                         ajax="false">
-                        </p:commandButton>
+                                         ajax="false"/>
                         <p:commandButton value="Detalle" icon="ui-icon-print"
+                                         style=" width: 100px;"
                                          onclick="this.form.target = '_blank';" 
                                          action="#{manMaestroMan.ejecutarreporte2()}" 
-                                         ajax="false">
-                        </p:commandButton>
-
+                                         ajax="false"/>
+                        <p:commandButton value="F-MAN005" icon="ui-icon-print"
+                                         style=" width: 100px;"
+                                         onclick="this.form.target = '_blank';" 
+                                         action="#{manMaestroMan.ejecutarreporteFMAN005()}" 
+                                         ajax="false"/>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
                                          icon="ui-icon-close" 
-                                         actionListener="#{manMaestroMan.cerrarventananew()}"
+                                         actionListener="#{manMaestroMan.cerrarventanaintegral()}"
                                          onclick="PF('wIntegralIni').hide()"
                                          update=":frmIntegralIni"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                    <p:commandButton value="Sí" type="button" 
-                                                     styleClass="ui-confirmdialog-yes" 
-                                                     icon="ui-icon-check" />
-                                    <p:commandButton value="No" type="button" 
-                                                     styleClass="ui-confirmdialog-no" 
-                                                     icon="ui-icon-close" />
-                                </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
                 <p:tabView activeIndex="#{manMaestroMan.tabindex}" >
@@ -5754,10 +5576,11 @@
                             <p:column style="width:50px" headerText="Estado">
                                 <h:outputText value="#{vEncManInit.status}" />
                             </p:column>
+                            
 
                         </p:dataTable>
                         <h:panelGrid columns="3" cellpadding="5" style=" text-align: right;">
-                            <h:outputText value="Registros a Buscar: Últimos" style="font-weight:bold;"/>
+                            <h:outputText value="Año Solicitado (yyyy)" style="font-weight:bold;"/>
                             <p:inputText id="cmdlimit" value="#{manMaestroMan.vlimit}" size="7" maxlength="11"/>
                             <p:commandButton value="Cargar" actionListener="#{manMaestroMan.llenarMantenimientosintegral()}" update="dtEncManInit,cmdlimit"/>
                         </h:panelGrid>
@@ -5878,27 +5701,12 @@
                                         <h:outputText value="Grupo Falla" style="font-weight:bold;"/>
                                         <p:selectOneMenu value="#{manMaestroMan.cod_gru_fal}" 
                                                          style=" width: 140px;">
-                                            <p:ajax event="change" listener="#{manMaestroMan.llenarListaFallas()}" update="somfallasint" />
+                                            <p:ajax event="change" listener="#{manMaestroMan.llenarListaFallas()}"  />
                                             <f:selectItem itemLabel="Ninguno" itemValue="0"/>
                                             <f:selectItems value="#{manMaestroMan.grupofallas}" var="somgrufalint"
                                                            itemLabel="#{somgrufalint.nom_gru_fal}" itemValue="#{somgrufalint.cod_gru_fal}"/> 
                                         </p:selectOneMenu>
 
-                                        <h:outputText value="Diagnóstico Falla" style="font-weight:bold;"/>
-                                        <p:selectOneMenu value="#{manMaestroMan.cod_fal}" 
-                                                         style=" width: 200px;"
-                                                         id="somfallasint"
-                                                         filter="true"
-                                                         filterMatchMode="contains"
-                                                         >
-                                            <f:selectItem itemLabel="Otra" itemValue="0"/>
-                                            <f:selectItems value="#{manMaestroMan.listafallas}" var="somfalint"
-                                                           itemLabel="#{somfalint.nom_fal}" itemValue="#{somfalint.cod_fal}"/> 
-                                        </p:selectOneMenu>
-                                    </h:panelGrid>
-                                    <h:panelGrid columns="4" cellpadding="5">
-                                        <h:outputText value="Otra Falla" style="font-weight:bold;"/>
-                                        <p:inputText value="#{manMaestroMan.otr_fal}" size="78" maxlength="300"/>
                                         <p:commandButton title="Agregar" icon="ui-icon-plus" style="width:30px;" 
                                                          actionListener="#{manMaestroMan.agregarfalla()}"
                                                          update=":frmIntegralIni"
@@ -5930,12 +5738,7 @@
                                         <p:column style="width:100px;" headerText="Grupo">
                                             <h:outputText value="#{vFallInt.nomgrup}" />
                                         </p:column>
-                                        <p:column style="width:200px;" headerText="Falla">
-                                            <h:outputText value="#{vFallInt.nomfal}" />
-                                        </p:column>
-                                        <p:column style="width:200px;" headerText="Personalizada">
-                                            <h:outputText value="#{vFallInt.det_obs}" />
-                                        </p:column>
+                                        
 
                                     </p:dataTable>
                                 </p:tab>
@@ -6239,12 +6042,132 @@
                                     </p:column>
                                 </p:dataTable>
                             </p:tab>
+                            <p:tab id="tab001rec" title="M-001-Rec" titleStyleClass=" ">
+                                
+                                    <h:panelGrid columns="2" cellpadding="5" >
+                                        <h:outputText value="" style="font-weight:bold;"/>
+                                        <p:commandButton value="Imprimir" icon="ui-icon-print"
+                                                         style=" width: 100px;"
+                                                         onclick="this.form.target = '_blank';" 
+                                                         action="#{manMaestroMan.ejecutarreporteFMAN001(1)}" 
+                                                         ajax="false"/>
+                                        <h:outputText value="Sistema Neumático" style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_001}"/>
+                                        <h:outputText value="Sistema Eléctrico, Tableros, Tomas, Acometidas, Sensores, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_002}"/>
+                                        <h:outputText value="Sistema de Lubricación: Chumaceras, Graseras, Rodamientos, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_003}"/>
+                                        <h:outputText value="Sistema de Enfriamiento: Mangueras, Válvulas, Adaptadores, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_004}"/>
+                                        <h:outputText value="Transmisión de Potencia: Motor, Fajas, Poleas, Reductores, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_005}"/>
+                                        <h:outputText value="Unidad de Tratamiento: Rodillos, Fundas, Rodamientos, Etc. " style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_006}"/>
+                                        <h:outputText value="Sistema Embobinador, Desembobinador." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_007}"/>
+                                        <h:outputText value="Calandra." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_008}"/>
+                                        <h:outputText value="Cabezal y Tornillo Extrusor." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_009}"/>
+                                        <h:outputText value="Mesa de Bandas, Fajas, Rodillos, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_010}"/>
+                                        <h:outputText value="Sellador: Soportes, Termocuplas, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_011}"/>
+                                        <h:outputText value="Conjunto Alineador: Pistón, Mangueras, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_012}"/>
+                                        <h:outputText value="Conjunto de Unidades Impresoras." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_013}"/>
+                                        <h:outputText value="Brazos Portabobinas Refilador: Rachet, Mangueras, Rodamientos." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_014}"/>
+                                        <h:outputText value="Sistema Visualizador de Producción: Displa, Contómetro, Monitor, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_015}"/>
+                                        <h:outputText value="Sistema de Calefacción, Mangueras, Blower, Horno, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_016}"/>
+                                        <h:outputText value="Observaciones" style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_017}"/>
+                                        <h:outputText value="Responsable Producción" style="font-weight:bold;"/>
+                                        <p:selectOneMenu value="#{manMaestroMan.fm1_rec_usu_pro}" 
+                                                 style=" width: 320px;">
+                                                 <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                                 <f:selectItems value="#{manMaestroMan.supervisores}" var="suppro001rec"
+                                                   itemLabel="#{suppro001rec.det_nom}" itemValue="#{suppro001rec.cod_usu}"/> 
+                                        </p:selectOneMenu>
+                                        <h:outputText value="Responsable Mantenimiento" style="font-weight:bold;"/>
+                                        <p:selectOneMenu style=" width: 320px;" 
+                                                         value="#{manMaestroMan.fm1_rec_usu_man}">
+                                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.usuarios}" var="tecman001rec"
+                                                           itemLabel="#{tecman001rec.det_nom}" itemValue="#{tecman001rec.cod_usu}"/> 
+                                        </p:selectOneMenu>
+                                        
+                                    </h:panelGrid>
+                                
+                            </p:tab>
+                            <p:tab id="tab001ent" title="M-001-Ent">
+                                <div style=" background-color: #d3f2ff;">
+                                    <h:panelGrid columns="2" cellpadding="5" >
+                                        <h:outputText value="" style="font-weight:bold;"/>
+                                        <p:commandButton value="Imprimir" icon="ui-icon-print"
+                                                         style=" width: 100px;"
+                                                         onclick="this.form.target = '_blank';" 
+                                                         action="#{manMaestroMan.ejecutarreporteFMAN001(2)}" 
+                                                         ajax="false"/>
+                                        <h:outputText value="Sistema Neumático" style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_001}"/>
+                                        <h:outputText value="Sistema Eléctrico, Tableros, Tomas, Acometidas, Sensores, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_002}"/>
+                                        <h:outputText value="Sistema de Lubricación: Chumaceras, Graseras, Rodamientos, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_003}"/>
+                                        <h:outputText value="Sistema de Enfriamiento: Mangueras, Válvulas, Adaptadores, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_004}"/>
+                                        <h:outputText value="Transmisión de Potencia: Motor, Fajas, Poleas, Reductores, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_005}"/>
+                                        <h:outputText value="Unidad de Tratamiento: Rodillos, Fundas, Rodamientos, Etc. " style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_006}"/>
+                                        <h:outputText value="Sistema Embobinador, Desembobinador." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_007}"/>
+                                        <h:outputText value="Calandra." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_008}"/>
+                                        <h:outputText value="Cabezal y Tornillo Extrusor." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_009}"/>
+                                        <h:outputText value="Mesa de Bandas, Fajas, Rodillos, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_010}"/>
+                                        <h:outputText value="Sellador: Soportes, Termocuplas, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_011}"/>
+                                        <h:outputText value="Conjunto Alineador: Pistón, Mangueras, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_012}"/>
+                                        <h:outputText value="Conjunto de Unidades Impresoras." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_013}"/>
+                                        <h:outputText value="Brazos Portabobinas Refilador: Rachet, Mangueras, Rodamientos." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_014}"/>
+                                        <h:outputText value="Sistema Visualizador de Producción: Displa, Contómetro, Monitor, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_015}"/>
+                                        <h:outputText value="Sistema de Calefacción, Mangueras, Blower, Horno, Etc." style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_016}"/>
+                                        <h:outputText value="Observaciones" style="font-weight:bold;"/>
+                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_017}"/>
+                                        <h:outputText value="Responsable Producción" style="font-weight:bold;"/>
+                                        <p:selectOneMenu value="#{manMaestroMan.fm1_ent_usu_pro}" 
+                                                 style=" width: 320px;">
+                                                 <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                                 <f:selectItems value="#{manMaestroMan.supervisores}" var="suppro001ent"
+                                                   itemLabel="#{suppro001ent.det_nom}" itemValue="#{suppro001ent.cod_usu}"/> 
+                                        </p:selectOneMenu>
+                                        <h:outputText value="Responsable Mantenimiento" style="font-weight:bold;"/>
+                                        <p:selectOneMenu style=" width: 320px;" 
+                                                         value="#{manMaestroMan.fm1_ent_usu_man}">
+                                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.usuarios}" var="tecman001ent"
+                                                           itemLabel="#{tecman001ent.det_nom}" itemValue="#{tecman001ent.cod_usu}"/> 
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                            </div>
+                            </p:tab>
                         </p:tabView>
                     </p:tab>
                 </p:tabView>
             </h:form>
         </p:dialog>
-
 
         <!--******************************************************************** 
         *********************** Plantillas Mantenimiento ***********************
@@ -6283,14 +6206,7 @@
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
 
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                     <f:facet name="right">
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -6381,14 +6297,7 @@
                                          update=":frmGrupo"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -6476,14 +6385,7 @@
                                          update=":frmControl"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -6590,14 +6492,7 @@
                                          update=":frmUsrGrp"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -6696,14 +6591,7 @@
                                          update=":frmSecurity"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                       
                     </f:facet>
                 </p:toolbar>
 
@@ -6826,14 +6714,7 @@
                                          update=":frmPersonal"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -7066,14 +6947,7 @@
                                          update=":frmCargo"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -7177,14 +7051,7 @@
                                          update=":frmPronosticoMtto"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7250,7 +7117,7 @@
                 </div>
             </h:form>
         </p:dialog> 
-         
+        
          
         <p:dialog  id="dlgDetalleProMtto" widgetVar="wDetalleProMtto" modal="true" 
                    width="900" height="540" closable="true" resizable="false" 
@@ -7268,14 +7135,7 @@
                                          update=":frmDetalleProMtto"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -7354,14 +7214,7 @@
                                          update=":frmAlmacenes"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7431,14 +7284,7 @@
                                          update=":frmGruPie"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                       
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7507,14 +7353,7 @@
                                          update=":frmEval"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7584,14 +7423,7 @@
                                          update=":frmFacEval"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7661,14 +7493,7 @@
                                          update=":frmCriEval"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7756,14 +7581,7 @@
                                          update=":frmGruFal"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
 
@@ -7847,14 +7665,7 @@
                                          update=":frmFallas"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7934,14 +7745,7 @@
                                          update=":frmDetEva"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                       
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -8048,14 +7852,7 @@
                                          update=":frmEvaPer"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -8232,14 +8029,7 @@
                                          update=":frmLisEsp"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -8325,14 +8115,7 @@
                                          update=":frmAlertas"
                                          icon="ui-icon-close"
                                          />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                        
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -8444,7 +8227,8 @@
                 </div>
 
             </h:form>
-        </p:dialog>  
+        </p:dialog>
+        
     </h:body>
 
 </html>

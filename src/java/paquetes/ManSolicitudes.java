@@ -548,7 +548,7 @@ public class ManSolicitudes implements Serializable {
                     + "cpai.nom_pai as nompai,"
                     + "cequ.nom_equ as nomequ, "
                     + "cpro.nom_pro as nompro, "
-                    + "ccli.nom_cli as nomcli "
+                    + "ccli.nom_cli as nomcli, lequ.det_pot,lequ.det_vol "
                     + "from lis_equ as lequ "
                     + "left join cat_pai as cpai on lequ.cod_pai = cpai.cod_pai "
                     + "left join cat_equ as cequ on lequ.cod_equ = cequ.cod_equ "
@@ -582,7 +582,9 @@ public class ManSolicitudes implements Serializable {
                         resVariable.getString(17),
                         resVariable.getString(18),
                         resVariable.getString(19),
-                        resVariable.getString(20)
+                        resVariable.getString(20),
+                        resVariable.getString(21),
+                        resVariable.getString(22)
                 ));
             }
             mAccesos.Desconectar();

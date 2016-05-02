@@ -31,59 +31,46 @@ public class ManListaEquipos extends Conexion implements Serializable {
     private static final long serialVersionUID = 8774836761534938L;
     @Inject
     Login cbean;
-    private CatTipos cattipos;
+
     private List<CatTipos> tipos;
+
+    private List<CatMarcas> marcas;
+    private List<CatEquipos> equipos;
+    private List<CatPaises> paises;
     private CatMantenimientos catmantenimientos;
     private List<CatMantenimientos> mantenimientos;
-    private CatProveedores catproveedores;
-    private List<CatProveedores> proveedores;
-    private CatClientes catclientes;
-    private List<CatClientes> clientes;
-    private CatClientes catclientesb;
-    private List<CatClientes> clientesb;
-    private CatPaises catpaises;
-    private List<CatPaises> paises;
-    private CatUsuarios catusuarios;
-    private List<CatUsuarios> usuarios;
     private CatContratos catcontratos;
     private List<CatContratos> contratos;
-    private CatGarantias catgarantias;
     private List<CatGarantias> garantias;
     private CatSistemas catsistemas;
     private List<CatSistemas> sistemas;
-    private CatEquipos catequipos;
-    private List<CatEquipos> equipos;
     private CatListaEquipos catlistaequipos;
     private List<CatListaEquipos> lequipos;
 
-    private String cod_lis_equ, cod_pai, cod_equ, cod_pro, cod_cli, num_mod, num_ser, des_equ,
-            des_ubi, fec_fab, fec_com, fec_adq, fec_pue_ser, fec_ult_man, fec_ret, cod_bar;
+    private String cod_lis_equ, cod_pai, cod_equ, cod_pro, cod_cli, num_mod, num_ser, des_equ, des_ubi,
+            fec_fab, fec_com, fec_adq, fec_pue_ser, fec_ult_man, fec_ret,
+            cod_bar, det_pot, det_vol;
 
-    private String gar_fec_ini, gar_fec_fin, gar_obs;
+    private String gar_fec_ini, gar_fec_fin,
+            gar_obs;
 
-    private String cod_equ_b, cod_cli_b, cod_pai_b, num_ser_b;
+    private String s_cod_sys, s_det_obs, s_ver_ant, s_ver_act,
+            s_fec_act;
 
-    private String tabindex;
+    private String c_cod_con, c_cod_ref, c_des_inf,
+            c_fec_con, c_fec_exp;
 
-    private String s_cod_sys, s_det_obs, s_ver_ant, s_ver_act, s_fec_act;
-
-    private String c_cod_con, c_cod_ref, c_des_inf, c_fec_con, c_fec_exp;
-
-    private String m_cod_man, m_cod_tip, m_det_obs, m_fec_ini, m_fec_fin, m_det_sta, m_nomtip, m_estado;
-
-    private String nombre_mantenimiento;
+    private String m_cod_man, m_cod_tip, m_det_obs,
+            m_fec_ini, m_fec_fin,
+            m_det_sta, m_nomtip, m_estado;
 
     private Date dfecfab, dfeccom, dfecadq, dfecpueser, dfecultman, dfecret, dfecini, dfecfin, dfecact, dfeccon, dfecexp;
 
+    private boolean edfecfab, edfeccom, edfecadq, edfecpueser, edfecultman, edfecret, edfecini, edfecfin, edfecact, edfeccon, edfecexp;
+
+    private String tabindex;
+
     public ManListaEquipos() {
-    }
-
-    public CatTipos getCattipos() {
-        return cattipos;
-    }
-
-    public void setCattipos(CatTipos cattipos) {
-        this.cattipos = cattipos;
     }
 
     public List<CatTipos> getTipos() {
@@ -92,6 +79,30 @@ public class ManListaEquipos extends Conexion implements Serializable {
 
     public void setTipos(List<CatTipos> tipos) {
         this.tipos = tipos;
+    }
+
+    public List<CatMarcas> getMarcas() {
+        return marcas;
+    }
+
+    public void setMarcas(List<CatMarcas> marcas) {
+        this.marcas = marcas;
+    }
+
+    public List<CatEquipos> getEquipos() {
+        return equipos;
+    }
+
+    public void setEquipos(List<CatEquipos> equipos) {
+        this.equipos = equipos;
+    }
+
+    public List<CatPaises> getPaises() {
+        return paises;
+    }
+
+    public void setPaises(List<CatPaises> paises) {
+        this.paises = paises;
     }
 
     public CatMantenimientos getCatmantenimientos() {
@@ -110,86 +121,6 @@ public class ManListaEquipos extends Conexion implements Serializable {
         this.mantenimientos = mantenimientos;
     }
 
-    public CatProveedores getCatproveedores() {
-        return catproveedores;
-    }
-
-    public void setCatproveedores(CatProveedores catproveedores) {
-        this.catproveedores = catproveedores;
-    }
-
-    public List<CatProveedores> getProveedores() {
-        return proveedores;
-    }
-
-    public void setProveedores(List<CatProveedores> proveedores) {
-        this.proveedores = proveedores;
-    }
-
-    public CatClientes getCatclientes() {
-        return catclientes;
-    }
-
-    public void setCatclientes(CatClientes catclientes) {
-        this.catclientes = catclientes;
-    }
-
-    public List<CatClientes> getClientes() {
-        return clientes;
-    }
-
-    public void setClientes(List<CatClientes> clientes) {
-        this.clientes = clientes;
-    }
-
-    public CatClientes getCatclientesb() {
-        return catclientesb;
-    }
-
-    public void setCatclientesb(CatClientes catclientesb) {
-        this.catclientesb = catclientesb;
-    }
-
-    public List<CatClientes> getClientesb() {
-        return clientesb;
-    }
-
-    public void setClientesb(List<CatClientes> clientesb) {
-        this.clientesb = clientesb;
-    }
-
-    public CatPaises getCatpaises() {
-        return catpaises;
-    }
-
-    public void setCatpaises(CatPaises catpaises) {
-        this.catpaises = catpaises;
-    }
-
-    public List<CatPaises> getPaises() {
-        return paises;
-    }
-
-    public void setPaises(List<CatPaises> paises) {
-        this.paises = paises;
-    }
-
-    public CatUsuarios getCatusuarios() {
-        return catusuarios;
-    }
-
-    public void setCatusuarios(CatUsuarios catusuarios) {
-        this.catusuarios = catusuarios;
-    }
-
-    public List<CatUsuarios> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<CatUsuarios> usuarios) {
-        this.usuarios = usuarios;
-    }
-
     public CatContratos getCatcontratos() {
         return catcontratos;
     }
@@ -204,14 +135,6 @@ public class ManListaEquipos extends Conexion implements Serializable {
 
     public void setContratos(List<CatContratos> contratos) {
         this.contratos = contratos;
-    }
-
-    public CatGarantias getCatgarantias() {
-        return catgarantias;
-    }
-
-    public void setCatgarantias(CatGarantias catgarantias) {
-        this.catgarantias = catgarantias;
     }
 
     public List<CatGarantias> getGarantias() {
@@ -236,22 +159,6 @@ public class ManListaEquipos extends Conexion implements Serializable {
 
     public void setSistemas(List<CatSistemas> sistemas) {
         this.sistemas = sistemas;
-    }
-
-    public CatEquipos getCatequipos() {
-        return catequipos;
-    }
-
-    public void setCatequipos(CatEquipos catequipos) {
-        this.catequipos = catequipos;
-    }
-
-    public List<CatEquipos> getEquipos() {
-        return equipos;
-    }
-
-    public void setEquipos(List<CatEquipos> equipos) {
-        this.equipos = equipos;
     }
 
     public CatListaEquipos getCatlistaequipos() {
@@ -398,6 +305,22 @@ public class ManListaEquipos extends Conexion implements Serializable {
         this.cod_bar = cod_bar;
     }
 
+    public String getDet_pot() {
+        return det_pot;
+    }
+
+    public void setDet_pot(String det_pot) {
+        this.det_pot = det_pot;
+    }
+
+    public String getDet_vol() {
+        return det_vol;
+    }
+
+    public void setDet_vol(String det_vol) {
+        this.det_vol = det_vol;
+    }
+
     public String getGar_fec_ini() {
         return gar_fec_ini;
     }
@@ -420,46 +343,6 @@ public class ManListaEquipos extends Conexion implements Serializable {
 
     public void setGar_obs(String gar_obs) {
         this.gar_obs = gar_obs;
-    }
-
-    public String getCod_equ_b() {
-        return cod_equ_b;
-    }
-
-    public void setCod_equ_b(String cod_equ_b) {
-        this.cod_equ_b = cod_equ_b;
-    }
-
-    public String getCod_cli_b() {
-        return cod_cli_b;
-    }
-
-    public void setCod_cli_b(String cod_cli_b) {
-        this.cod_cli_b = cod_cli_b;
-    }
-
-    public String getCod_pai_b() {
-        return cod_pai_b;
-    }
-
-    public void setCod_pai_b(String cod_pai_b) {
-        this.cod_pai_b = cod_pai_b;
-    }
-
-    public String getNum_ser_b() {
-        return num_ser_b;
-    }
-
-    public void setNum_ser_b(String num_ser_b) {
-        this.num_ser_b = num_ser_b;
-    }
-
-    public String getTabindex() {
-        return tabindex;
-    }
-
-    public void setTabindex(String tabindex) {
-        this.tabindex = tabindex;
     }
 
     public String getS_cod_sys() {
@@ -606,14 +489,6 @@ public class ManListaEquipos extends Conexion implements Serializable {
         this.m_estado = m_estado;
     }
 
-    public String getNombre_mantenimiento() {
-        return nombre_mantenimiento;
-    }
-
-    public void setNombre_mantenimiento(String nombre_mantenimiento) {
-        this.nombre_mantenimiento = nombre_mantenimiento;
-    }
-
     public Date getDfecfab() {
         return dfecfab;
     }
@@ -702,9 +577,106 @@ public class ManListaEquipos extends Conexion implements Serializable {
         this.dfecexp = dfecexp;
     }
 
-    public void iniciarventana() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+    public boolean isEdfecfab() {
+        return edfecfab;
+    }
 
+    public void setEdfecfab(boolean edfecfab) {
+        this.edfecfab = edfecfab;
+    }
+
+    public boolean isEdfeccom() {
+        return edfeccom;
+    }
+
+    public void setEdfeccom(boolean edfeccom) {
+        this.edfeccom = edfeccom;
+    }
+
+    public boolean isEdfecadq() {
+        return edfecadq;
+    }
+
+    public void setEdfecadq(boolean edfecadq) {
+        this.edfecadq = edfecadq;
+    }
+
+    public boolean isEdfecpueser() {
+        return edfecpueser;
+    }
+
+    public void setEdfecpueser(boolean edfecpueser) {
+        this.edfecpueser = edfecpueser;
+    }
+
+    public boolean isEdfecultman() {
+        return edfecultman;
+    }
+
+    public void setEdfecultman(boolean edfecultman) {
+        this.edfecultman = edfecultman;
+    }
+
+    public boolean isEdfecret() {
+        return edfecret;
+    }
+
+    public void setEdfecret(boolean edfecret) {
+        this.edfecret = edfecret;
+    }
+
+    public boolean isEdfecini() {
+        return edfecini;
+    }
+
+    public void setEdfecini(boolean edfecini) {
+        this.edfecini = edfecini;
+    }
+
+    public boolean isEdfecfin() {
+        return edfecfin;
+    }
+
+    public void setEdfecfin(boolean edfecfin) {
+        this.edfecfin = edfecfin;
+    }
+
+    public boolean isEdfecact() {
+        return edfecact;
+    }
+
+    public void setEdfecact(boolean edfecact) {
+        this.edfecact = edfecact;
+    }
+
+    public boolean isEdfeccon() {
+        return edfeccon;
+    }
+
+    public void setEdfeccon(boolean edfeccon) {
+        this.edfeccon = edfeccon;
+    }
+
+    public boolean isEdfecexp() {
+        return edfecexp;
+    }
+
+    public void setEdfecexp(boolean edfecexp) {
+        this.edfecexp = edfecexp;
+    }
+
+    public String getTabindex() {
+        return tabindex;
+    }
+
+    public void setTabindex(String tabindex) {
+        this.tabindex = tabindex;
+    }
+
+    // ************************ Funciones Cargar Datos iniciales ***************
+    public void iniciarventana() {
+        //SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        /*
         dfecfab = Date.from(Instant.now());
         dfeccom = dfecfab;
         dfecadq = dfecfab;
@@ -716,6 +688,30 @@ public class ManListaEquipos extends Conexion implements Serializable {
         dfecact = dfecfab;
         dfeccon = dfecfab;
         dfecexp = dfecfab;
+         */
+        dfecfab = null;
+        dfeccom = null;
+        dfecadq = null;
+        dfecpueser = null;
+        dfecultman = null;
+        dfecini = null;
+        dfecfin = null;
+        dfecret = null;
+        dfecact = null;
+        dfeccon = null;
+        dfecexp = null;
+
+        edfecfab = false;
+        edfeccom = false;
+        edfecadq = false;
+        edfecpueser = false;
+        edfecultman = false;
+        edfecini = false;
+        edfecfin = false;
+        edfecret = false;
+        edfecact = false;
+        edfeccon = false;
+        edfecexp = false;
 
         tabindex = "0";
 
@@ -728,26 +724,28 @@ public class ManListaEquipos extends Conexion implements Serializable {
         num_ser = "";
         des_equ = "";
         des_ubi = "";
-        fec_fab = format.format(dfecfab);
-        fec_com = format.format(dfeccom);
-        fec_adq = format.format(dfecadq);
-        fec_pue_ser = format.format(dfecpueser);
-        fec_ult_man = format.format(dfecultman);
-        fec_ret = format.format(dfecret);
+        fec_fab = "";
+        fec_com = "";
+        fec_adq = "";
+        fec_pue_ser = "";
+        fec_ult_man = "";
+        fec_ret = "";
         cod_bar = "";
-        gar_fec_ini = format.format(dfecini);
-        gar_fec_fin = format.format(dfecfin);
+        det_pot = "";
+        det_vol = "";
+        gar_fec_ini = "";
+        gar_fec_fin = "";
         gar_obs = "";
         s_cod_sys = "";
         s_det_obs = "";
         s_ver_ant = "";
         s_ver_act = "";
-        s_fec_act = format.format(dfecact);
+        s_fec_act = "";
         c_cod_con = "";
         c_cod_ref = "";
         c_des_inf = "";
-        c_fec_con = format.format(dfeccon);
-        c_fec_exp = format.format(dfecexp);
+        c_fec_con = "";
+        c_fec_exp = "";
         m_cod_man = "";
         m_cod_tip = "";
         m_det_obs = "";
@@ -756,13 +754,16 @@ public class ManListaEquipos extends Conexion implements Serializable {
         m_det_sta = "";
         m_nomtip = "";
         m_estado = "";
-        nombre_mantenimiento = "Equipo sin Guardar";
-        llenarTipos();
-        llenarPaises();
-        llenarEquipos();
-        llenarUsuarios();
+
+        mantenimientos = new ArrayList<>();
         sistemas = new ArrayList<>();
         contratos = new ArrayList<>();
+
+        llenarPaises();  // Procesos
+        llenarEquipos(); // Tipos de Equipo
+        llenarMarcas();
+
+        llenarLequipos(); // Inventario de Equipo
 
     }
 
@@ -801,15 +802,6 @@ public class ManListaEquipos extends Conexion implements Serializable {
         m_cod_man = "";
         m_cod_tip = "";
         m_det_obs = "";
-        m_fec_ini = "";
-        m_fec_fin = "";
-        m_det_sta = "";
-        m_nomtip = "";
-        m_estado = "";
-        nombre_mantenimiento = "Equipo sin Guardar";
-        catsistemas = null;
-        catcontratos = null;
-        catgarantias = null;
         catmantenimientos = null;
         mantenimientos = new ArrayList<>();
         sistemas = new ArrayList<>();
@@ -818,25 +810,45 @@ public class ManListaEquipos extends Conexion implements Serializable {
     }
 
     public void nuevo() {
+        RequestContext.getCurrentInstance().execute("PF('wvSLE').clearFilters()");
 
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        //SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        dfecfab = null;
+        dfeccom = null;
+        dfecadq = null;
+        dfecpueser = null;
+        dfecultman = null;
+        dfecini = null;
+        dfecfin = null;
+        dfecret = null;
+        dfecact = null;
+        dfeccon = null;
+        dfecexp = null;
 
-        dfecfab = Date.from(Instant.now());
-        dfeccom = Date.from(Instant.now());
-        dfecadq = Date.from(Instant.now());
-        dfecpueser = Date.from(Instant.now());
-        dfecultman = Date.from(Instant.now());
-        dfecini = Date.from(Instant.now());
-        dfecfin = Date.from(Instant.now());
-        dfecret = Date.from(Instant.now());
-        dfecact = Date.from(Instant.now());
-        dfeccon = Date.from(Instant.now());
-        dfecexp = Date.from(Instant.now());
+        edfecfab = false;
+        edfeccom = false;
+        edfecadq = false;
+        edfecpueser = false;
+        edfecultman = false;
+        edfecini = false;
+        edfecfin = false;
+        edfecret = false;
+        edfecact = false;
+        edfeccon = false;
+        edfecexp = false;
 
-        tabindex = "0";
+        tabindex = "1";
 
         cod_lis_equ = "";
         cod_pai = cbean.getCod_pai();
+        m_fec_ini = "";
+        m_fec_fin = "";
+        m_det_sta = "";
+        m_nomtip = "";
+        m_estado = "";
+
+        catsistemas = null;
+        catcontratos = null;
         cod_equ = "";
         cod_pro = "";
         cod_cli = "";
@@ -844,26 +856,28 @@ public class ManListaEquipos extends Conexion implements Serializable {
         num_ser = "";
         des_equ = "";
         des_ubi = "";
-        fec_fab = format.format(dfecfab);
-        fec_com = format.format(dfeccom);
-        fec_adq = format.format(dfecadq);
-        fec_pue_ser = format.format(dfecpueser);
-        fec_ult_man = format.format(dfecultman);
-        fec_ret = format.format(dfecret);
+        fec_fab = "";
+        fec_com = "";
+        fec_adq = "";
+        fec_pue_ser = "";
+        fec_ult_man = "";
+        fec_ret = "";
         cod_bar = "";
-        gar_fec_ini = format.format(dfecini);
-        gar_fec_fin = format.format(dfecfin);
+        det_pot = "";
+        det_vol = "";
+        gar_fec_ini = "";
+        gar_fec_fin = "";
         gar_obs = "";
         s_cod_sys = "";
         s_det_obs = "";
         s_ver_ant = "";
         s_ver_act = "";
-        s_fec_act = format.format(dfecact);
+        s_fec_act = "";
         c_cod_con = "";
         c_cod_ref = "";
         c_des_inf = "";
-        c_fec_con = format.format(dfeccon);
-        c_fec_exp = format.format(dfecexp);
+        c_fec_con = "";
+        c_fec_exp = "";
         m_cod_man = "";
         m_cod_tip = "";
         m_det_obs = "";
@@ -872,59 +886,42 @@ public class ManListaEquipos extends Conexion implements Serializable {
         m_det_sta = "";
         m_nomtip = "";
         m_estado = "";
-        nombre_mantenimiento = "Equipo sin Guardar";
-        llenarTipos();
+
         llenarPaises();
         llenarEquipos();
-        llenarProveedores();
-        llenarClientes();
-        llenarUsuarios();
+        llenarMarcas();
+
         catsistemas = null;
         catcontratos = null;
-        catgarantias = null;
         catmantenimientos = null;
+        catlistaequipos = null;
         mantenimientos = new ArrayList<>();
         sistemas = new ArrayList<>();
         contratos = new ArrayList<>();
     }
 
-    public void iniciarventanabuscar() {
-        cod_equ_b = "0";
-        cod_cli_b = "0";
-        cod_pai_b = "0";
-        num_ser_b = "";
-        lequipos = new ArrayList<>();
-    }
-
-    public void cerrarventanabuscar() {
-        cod_equ_b = "";
-        cod_cli_b = "";
-        cod_pai_b = "0";
-        num_ser_b = "";
-        nombre_mantenimiento = "";
-    }
-
-    public void llenarTipos() {
+    // ********** Llenado de Catálogos ********************************
+    public void llenarMarcas() {
         String mQuery = "";
         try {
-            tipos = new ArrayList<>();
+            marcas = new ArrayList<>();
 
-            mQuery = "select cod_tip, nom_tip,flg_urg from cat_tip order by cod_tip;";
+            mQuery = "select id_mar,nom_mar  "
+                    + "from cat_mar order by id_mar;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
             resVariable = mAccesos.querySQLvariable(mQuery);
             while (resVariable.next()) {
-                tipos.add(new CatTipos(
+                marcas.add(new CatMarcas(
                         resVariable.getString(1),
-                        resVariable.getString(2),
-                        resVariable.getString(3)
+                        resVariable.getString(2)
                 ));
             }
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Tipos ManListaEquipos" + e.getMessage() + " Query: " + mQuery);
+            System.out.println("Error en el llenado de Marcas en Lista Equipos. " + e.getMessage() + " Query: " + mQuery);
         }
     }
 
@@ -947,7 +944,7 @@ public class ManListaEquipos extends Conexion implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Países en Lista Equipos. " + e.getMessage());
+            System.out.println("Error en el llenado de Países (Procesos) en Lista Equipos. " + e.getMessage());
         }
     }
 
@@ -979,113 +976,57 @@ public class ManListaEquipos extends Conexion implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Equipos en Lista Equipos. " + e.getMessage() + " Query: " + mQuery);
+            System.out.println("Error en el llenado de Equipos (Tipo Equipo) en Lista Equipos. " + e.getMessage() + " Query: " + mQuery);
         }
     }
 
-    public void llenarProveedores() {
-        String mQuery = "";
+    public void llenarLequipos() {
         try {
-            proveedores = new ArrayList<>();
-
-            mQuery = "select cod_pro,cod_pai,nom_pro,per_con,tel_con,det_mai  "
-                    + "from cat_pro order by cod_pro;";
-            ResultSet resVariable;
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            resVariable = mAccesos.querySQLvariable(mQuery);
-            while (resVariable.next()) {
-                proveedores.add(new CatProveedores(
-                        resVariable.getString(1),
-                        resVariable.getString(2),
-                        resVariable.getString(3),
-                        resVariable.getString(4),
-                        resVariable.getString(5),
-                        resVariable.getString(6)
-                ));
+            RequestContext.getCurrentInstance().execute("PF('wvSLE').clearFilters()");
+            catlistaequipos = new CatListaEquipos();
+            lequipos = new ArrayList<>();
+            String mAnexo = "";
+            /*if (!"0".equals(cod_cli_b)) {
+                mAnexo = "and lequ.cod_cli = " + cod_cli_b;
             }
-            mAccesos.Desconectar();
-
-        } catch (Exception e) {
-            System.out.println("Error en el llenado de Proveedores en Lista Equipos. " + e.getMessage() + " Query: " + mQuery);
-        }
-    }
-
-    public void llenarClientes() {
-        String mQuery = "";
-        try {
-            clientes = new ArrayList<>();
-
-            mQuery = "select cod_cli,cod_pai, nom_cli,per_con,tel_con,det_mai  "
-                    + "from cat_cli order by cod_cli;";
-            ResultSet resVariable;
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            resVariable = mAccesos.querySQLvariable(mQuery);
-            while (resVariable.next()) {
-                clientes.add(new CatClientes(
-                        resVariable.getString(1),
-                        resVariable.getString(2),
-                        resVariable.getString(3),
-                        resVariable.getString(4),
-                        resVariable.getString(5),
-                        resVariable.getString(6)
-                ));
+            if (!"0".equals(cod_equ_b)) {
+                mAnexo = mAnexo + " and lequ.cod_equ =" + cod_equ_b;
             }
-            mAccesos.Desconectar();
-
-        } catch (Exception e) {
-            System.out.println("Error en el llenado de Clientes en Lista Equipos. " + e.getMessage() + " Query: " + mQuery);
-        }
-    }
-
-    public void llenarClientesB() {
-        String mQuery = "";
-        try {
-            clientesb = new ArrayList<>();
-
-            mQuery = "select cod_cli,cod_pai, nom_cli,per_con,tel_con,det_mai  "
-                    + "from cat_cli where cod_pai = " + cod_pai_b + " order by cod_cli;";
-            ResultSet resVariable;
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            resVariable = mAccesos.querySQLvariable(mQuery);
-            while (resVariable.next()) {
-                clientesb.add(new CatClientes(
-                        resVariable.getString(1),
-                        resVariable.getString(2),
-                        resVariable.getString(3),
-                        resVariable.getString(4),
-                        resVariable.getString(5),
-                        resVariable.getString(6)
-                ));
+            if (!"0".equals(cod_pai_b)) {
+                mAnexo = mAnexo + " and lequ.cod_pai =" + cod_pai_b;
             }
-            mAccesos.Desconectar();
+            if (!"".equals(num_ser_b)) {
+                mAnexo = mAnexo + " and lequ.num_ser ='" + num_ser_b + "'";
+            }*/
 
-        } catch (Exception e) {
-            System.out.println("Error en el llenado de Clientes Busqueda en Lista Equipos. " + e.getMessage() + " Query: " + mQuery);
-        }
-    }
-
-    public void llenarUsuarios() {
-        try {
-            usuarios = new ArrayList<>();
-
-            String mQuery = "select usu.cod_usu, usu.nom_usu, usu.des_pas, "
-                    + "usu.tip_usu, usu.cod_pai, "
-                    + "usu.cod_dep, usu.det_nom, usu.det_mai,ifnull(pai.nom_pai,'') as nom_pai, "
-                    + "ifnull(dep.nom_dep,'') as nom_dep "
-                    + "from cat_usu as usu "
-                    + "left join cat_dep as dep on usu.cod_dep = dep.cod_dep "
-                    + "and usu.cod_pai = dep.cod_pai "
-                    + "left join cat_pai as pai on usu.cod_pai = pai.cod_pai "
-                    + "order by cod_usu;";
+            String mQuery = "select lequ.cod_lis_equ, lequ.cod_pai, lequ.cod_equ, lequ.cod_pro, "
+                    + "lequ.cod_cli, lequ.num_mod, lequ.num_ser, lequ.des_equ, lequ.des_ubi, "
+                    + "DATE_FORMAT(lequ.fec_fab,'%d/%m/%Y') as ffab, "
+                    + "DATE_FORMAT(lequ.fec_com,'%d/%m/%Y') as fcom, "
+                    + "DATE_FORMAT(lequ.fec_adq,'%d/%m/%Y') as fadq,"
+                    + "DATE_FORMAT(lequ.fec_pue_ser,'%d/%m/%Y') as fps,"
+                    + "DATE_FORMAT(lequ.fec_ult_man,'%d/%m/%Y') as fum, "
+                    + "DATE_FORMAT(lequ.fec_ret,'%d/%m/%Y') as fret,"
+                    + "lequ.cod_bar,"
+                    + "cpai.nom_pai as nompai,"
+                    + "cequ.nom_equ as nomequ, "
+                    + "cpro.nom_pro as nompro, "
+                    + "ccli.nom_cli as nomcli,lequ.det_pot,lequ.det_vol "
+                    + "from lis_equ as lequ "
+                    + "left join cat_pai as cpai on lequ.cod_pai = cpai.cod_pai "
+                    + "left join cat_equ as cequ on lequ.cod_equ = cequ.cod_equ "
+                    + "left join cat_pro as cpro on lequ.cod_pro = cpro.cod_pro and lequ.cod_pai = cpro.cod_pai "
+                    + "left join cat_cli as ccli on lequ.cod_cli = ccli.cod_cli and lequ.cod_pai = ccli.cod_pai "
+                    + "where "
+                    + "lequ.cod_lis_equ <> 0 "
+                    + mAnexo
+                    + " order by lequ.cod_pai, lequ.cod_equ, lequ.num_ser,lequ.des_equ,lequ.cod_lis_equ;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
             resVariable = mAccesos.querySQLvariable(mQuery);
             while (resVariable.next()) {
-                usuarios.add(new CatUsuarios(
+                lequipos.add(new CatListaEquipos(
                         resVariable.getString(1),
                         resVariable.getString(2),
                         resVariable.getString(3),
@@ -1095,350 +1036,78 @@ public class ManListaEquipos extends Conexion implements Serializable {
                         resVariable.getString(7),
                         resVariable.getString(8),
                         resVariable.getString(9),
-                        resVariable.getString(10)
+                        resVariable.getString(10),
+                        resVariable.getString(11),
+                        resVariable.getString(12),
+                        resVariable.getString(13),
+                        resVariable.getString(14),
+                        resVariable.getString(15),
+                        resVariable.getString(16),
+                        resVariable.getString(17),
+                        resVariable.getString(18),
+                        resVariable.getString(19),
+                        resVariable.getString(20),
+                        resVariable.getString(21),
+                        resVariable.getString(22)
                 ));
             }
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Usuarios en Lista Equipos. " + e.getMessage());
+            System.out.println("Error en el llenado de Lista Equipos ManListaEquipos. " + e.getMessage());
         }
     }
 
-    public boolean validardatos() {
-        boolean mValidar = true;
-        if ("".equals(cod_equ) || "0".equals(cod_equ)) {
-            mValidar = false;
-            addMessage("Validar Datos", "Debe Escoger un Equipo.", 2);
-        }
-        return mValidar;
-
-    }
-
-    public void guardar() {
-        String mQuery = "", mvalores = "";
-        if (validardatos()) {
-            try {
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-
-                fec_fab = format.format(dfecfab);
-                fec_com = format.format(dfeccom);
-                fec_adq = format.format(dfecadq);
-                fec_pue_ser = format.format(dfecpueser);
-                fec_ult_man = format.format(dfecultman);
-                fec_ret = format.format(dfecret);
-                gar_fec_ini = format.format(dfecini);
-                gar_fec_fin = format.format(dfecfin);
-
-                Accesos mAccesos = new Accesos();
-                mAccesos.Conectar();
-                if ("".equals(cod_lis_equ)) {
-                    mQuery = "select ifnull(max(cod_lis_equ),0)+1 as codigo from lis_equ;";
-                    cod_lis_equ = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into lis_equ ("
-                            + "cod_lis_equ,"
-                            + "cod_pai,cod_equ,cod_pro,cod_cli,num_mod,num_ser,des_equ,"
-                            + "des_ubi,fec_fab,fec_com,fec_adq,fec_pue_ser,fec_ult_man,"
-                            + "fec_ret,cod_bar"
-                            + ") VALUES ("
-                            + cod_lis_equ + ","
-                            + cod_pai + ","
-                            + cod_equ + ","
-                            + cod_pro + ","
-                            + cod_cli + ",'"
-                            + num_mod + "','"
-                            + num_ser + "','"
-                            + des_equ + "','"
-                            + des_ubi + "',str_to_date('"
-                            + fec_fab + "','%d/%m/%Y'),str_to_date('"
-                            + fec_com + "','%d/%m/%Y'),str_to_date('"
-                            + fec_adq + "','%d/%m/%Y'),str_to_date('"
-                            + fec_pue_ser + "','%d/%m/%Y'),str_to_date('"
-                            + fec_ult_man + "','%d/%m/%Y'),str_to_date('"
-                            + fec_ret + "','%d/%m/%Y'),'"
-                            + cod_bar
-                            + "')";
-
-                    mAccesos.dmlSQLvariable("insert into tbl_gar (cod_lis_equ,cod_gar,det_obs,fec_ini,fec_exp) values "
-                            + "(" + cod_lis_equ + "," + cod_lis_equ + ",'" + gar_obs + "',str_to_date('" + gar_fec_ini + "','%d/%m/%Y'),"
-                            + "str_to_date('" + gar_fec_fin + "','%d/%m/%Y'));");
-
-                } else {
-                    mQuery = "update lis_equ SET "
-                            + "cod_pai=" + cod_pai
-                            + ",cod_equ=" + cod_equ
-                            + ",cod_pro=" + cod_pro
-                            + ",cod_cli=" + cod_cli
-                            + ",num_mod='" + num_mod + "' "
-                            + ",num_ser='" + num_ser + "' "
-                            + ",des_equ='" + des_equ + "' "
-                            + ",des_ubi='" + des_ubi + "' "
-                            + ",fec_fab=str_to_date('" + fec_fab + "','%d/%m/%Y')"
-                            + ",fec_com=str_to_date('" + fec_com + "','%d/%m/%Y')"
-                            + ",fec_adq=str_to_date('" + fec_adq + "','%d/%m/%Y')"
-                            + ",fec_pue_ser=str_to_date('" + fec_pue_ser + "','%d/%m/%Y')"
-                            + ",fec_ult_man=str_to_date('" + fec_ult_man + "','%d/%m/%Y')"
-                            + ",fec_ret=str_to_date('" + fec_ret + "','%d/%m/%Y')"
-                            + ",cod_bar='" + cod_bar + "' "
-                            + " WHERE cod_lis_equ = " + cod_lis_equ + ";";
-
-                    mAccesos.dmlSQLvariable("update tbl_gar set "
-                            + "det_obs = '" + gar_obs + "' "
-                            + ",fec_ini = str_to_date('" + gar_fec_ini + "','%d/%m/%Y') "
-                            + ",fec_exp = str_to_date('" + gar_fec_fin + "','%d/%m/%Y') "
-                            + "where cod_lis_equ =" + cod_lis_equ + ";");
-
-                }
-                mAccesos.dmlSQLvariable(mQuery);
-
-                // ********************* Sistemas ******************************************
-                mQuery = "delete from tbl_sys where cod_lis_equ=" + cod_lis_equ + ";";
-                mAccesos.dmlSQLvariable(mQuery);
-                for (int i = 0; i < sistemas.size(); i++) {
-                    mvalores = mvalores + "," + "("
-                            + cod_lis_equ + ","
-                            + (i + 1) + ",'"
-                            + sistemas.get(i).getDet_obs() + "','"
-                            + sistemas.get(i).getVer_ant() + "','"
-                            + sistemas.get(i).getVer_act() + "', str_to_date('"
-                            + sistemas.get(i).getFec_act() + "','%d/%m/%Y')"
-                            + ")";
-                }
-                if (!"".equals(mvalores)) {
-                    mvalores = mvalores.substring(1);
-                    mQuery = " insert into tbl_sys (cod_lis_equ,cod_sys,det_obs,ver_ant,ver_act,fec_act) values " + mvalores + ";";
-                    mAccesos.dmlSQLvariable(mQuery);
-                }
-
-                // ********************** Contratos ****************************************
-                mQuery = "delete from tbl_con where cod_lis_equ=" + cod_lis_equ + ";";
-                mAccesos.dmlSQLvariable(mQuery);
-
-                mvalores = "";
-                for (int i = 0; i < contratos.size(); i++) {
-                    mvalores = mvalores + "," + "("
-                            + cod_lis_equ + ","
-                            + (i + 1) + ",'"
-                            + contratos.get(i).getCod_ref() + "','"
-                            + contratos.get(i).getDes_inf() + "', str_to_date('"
-                            + contratos.get(i).getFec_con() + "','%d/%m/%Y'), str_to_date('"
-                            + contratos.get(i).getFec_exp() + "','%d/%m/%Y')"
-                            + ")";
-                }
-                if (!"".equals(mvalores)) {
-                    mvalores = mvalores.substring(1);
-                    mQuery = " insert into tbl_con (cod_lis_equ,cod_con,cod_ref,des_inf,fec_con,fec_exp) values " + mvalores + ";";
-                    mAccesos.dmlSQLvariable(mQuery);
-                }
-
-                mAccesos.Desconectar();
-                addMessage("Guardar Lista Equipos", "Información Almacenada con éxito.", 1);
-            } catch (Exception e) {
-                addMessage("Guardar Lista Equipos", "Error al momento de guardar la información. " + e.getMessage(), 2);
-                System.out.println("Error al Guardar Lista Equipos. " + e.getMessage() + " Query: " + mQuery);
-            }
-            llenarLequipos();
-        }
-        nuevo();
-
-    }
-
-    public void eliminar() {
+    public void llenarGarantias() {
         String mQuery = "";
-        Accesos mAccesos = new Accesos();
-        mAccesos.Conectar();
-        if ("".equals(cod_lis_equ) == false) {
+        try {
+            gar_obs = "";
+            gar_fec_ini = "";
+            gar_fec_fin = "";
+
+            mQuery = "select cod_lis_equ, cod_gar, det_obs, "
+                    + "date_format(fec_ini,'%d/%m/%Y'), "
+                    + "date_format(fec_exp,'%d/%m/%Y') "
+                    + "from tbl_gar "
+                    + "where cod_lis_equ=" + cod_lis_equ + " "
+                    + "order by cod_lis_equ;";
+
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                gar_obs = resVariable.getString(3);
+                gar_fec_ini = resVariable.getString(4);
+                gar_fec_fin = resVariable.getString(5);
+            }
+            mAccesos.Desconectar();
+
+            if ("00/00/0000".equals(gar_fec_ini) || "".equals(gar_fec_ini)) {
+                gar_fec_ini = "";
+            } else {
+                edfecini = true;
+            }
+            if ("00/00/0000".equals(gar_fec_fin) || "".equals(gar_fec_fin)) {
+                gar_fec_fin = "";
+            } else {
+                edfecfin = true;
+            }
+
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             try {
-                mQuery = "delete from tbl_con where cod_lis_equ=" + cod_lis_equ + ";";
-                mAccesos.dmlSQLvariable(mQuery);
-                mQuery = "delete from tbl_sys where cod_lis_equ=" + cod_lis_equ + ";";
-                mAccesos.dmlSQLvariable(mQuery);
-                mQuery = "delete from tbl_gar where cod_lis_equ=" + cod_lis_equ + ";";
-                mAccesos.dmlSQLvariable(mQuery);
-                mQuery = "delete from lis_equ where cod_lis_equ=" + cod_lis_equ + ";";
-                mAccesos.dmlSQLvariable(mQuery);
-                addMessage("Eliminar Equipo", "Información Eliminada con éxito.", 1);
-            } catch (Exception e) {
-                addMessage("Eliminar Equipo", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
-                System.out.println("Error al Eliminar Equipo. " + e.getMessage() + " Query: " + mQuery);
+                dfecini = format.parse(gar_fec_ini);
+                dfecfin = format.parse(gar_fec_fin);
+            } catch (Exception ex) {
+
             }
-            llenarLequipos();
-            nuevo();
-        } else {
-            addMessage("Eliminar Equipo", "Debe elegir un Registro.", 2);
-        }
-        mAccesos.Desconectar();
 
-    }
-
-    public void onRowSelectMan(SelectEvent event) {
-        m_cod_man = ((CatMantenimientos) event.getObject()).getCod_man();
-        m_cod_tip = ((CatMantenimientos) event.getObject()).getCod_tip();
-        m_det_obs = ((CatMantenimientos) event.getObject()).getDet_obs();
-        m_fec_ini = ((CatMantenimientos) event.getObject()).getFec_ini();
-        m_fec_fin = ((CatMantenimientos) event.getObject()).getFec_fin();
-        m_det_sta = ((CatMantenimientos) event.getObject()).getDet_sta();
-        m_nomtip = ((CatMantenimientos) event.getObject()).getNomtip();
-        m_estado = ((CatMantenimientos) event.getObject()).getStatus();
-    }
-
-    /**
-     * ************************* SISTEMAS *************************************
-     */
-    public void agregarsistema() {
-        if (validarsistema()) {
-            int correlativo = 0, insert = 0;
-            try {
-                for (int i = 0; i < sistemas.size(); i++) {
-                    if (Integer.valueOf(sistemas.get(i).getCod_sys()) > correlativo) {
-                        correlativo = Integer.valueOf(sistemas.get(i).getCod_sys());
-                    }
-                }
-
-                if (insert == 0) {
-                    sistemas.add(new CatSistemas(
-                            cod_lis_equ,
-                            String.valueOf(correlativo),
-                            s_det_obs,
-                            s_ver_ant,
-                            s_ver_act,
-                            s_fec_act
-                    ));
-
-                    s_det_obs = "";
-                    s_ver_ant = "";
-                    s_ver_act = "";
-                    s_fec_act = "";
-
-                }
-
-            } catch (Exception e) {
-                System.out.println("Error en Agregar Sistemas ManListaEquipos." + e.getMessage());
-            }
-        }
-
-    }
-
-    public boolean validarsistema() {
-        boolean mvalidar = true;
-        if ("".equals(s_det_obs)) {
-            mvalidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un Nombre de Sistema.", 2);
-        }
-        if ("".equals(s_ver_act)) {
-            mvalidar = false;
-            addMessage("Validar Datos", "Debe Ingresar La Versión Actual del Software.", 2);
-        }
-        if ("".equals(s_fec_act)) {
-            mvalidar = false;
-            addMessage("Validar Datos", "Debe Ingresar La Fecha de Actualización.", 2);
-        }
-        if (s_ver_ant.equals(s_ver_act)) {
-            mvalidar = false;
-            addMessage("Validar Datos", "Debe Ingresar La Versión Actual del Software Distinta a la Anterior.", 2);
-        }
-
-        return mvalidar;
-
-    }
-
-    public void eliminarsistema() {
-        s_cod_sys = catsistemas.getCod_sys();
-        catsistemas = null;
-        if ("".equals(s_cod_sys)) {
-            addMessage("Eliminar Detalles", "Debe Seleccionar un Sistema para Remover.", 2);
-        } else {
-            for (int i = 0; i < sistemas.size(); i++) {
-                if (s_cod_sys.equals(sistemas.get(i).getCod_sys())) {
-                    sistemas.remove(i);
-                }
-            }
-            s_cod_sys = "";
-            s_det_obs = "";
-            s_ver_ant = "";
-            s_ver_act = "";
-            s_fec_act = "";
-            //catlistaequipos = new CatListaEquipos();
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Garantías en Lista Equipos. "
+                    + e.getMessage() + " Query: " + mQuery);
         }
     }
 
-    /**
-     * ************** CONTRATOS ***********************
-     */
-    public void agregarcontrato() {
-        if (validarcontrato()) {
-            int correlativo = 0, insert = 0;
-            try {
-                for (int i = 0; i < contratos.size(); i++) {
-                    if (Integer.valueOf(contratos.get(i).getCod_con()) > correlativo) {
-                        correlativo = Integer.valueOf(contratos.get(i).getCod_con());
-                    }
-                }
-
-                if (insert == 0) {
-                    contratos.add(new CatContratos(
-                            cod_lis_equ,
-                            String.valueOf(correlativo),
-                            c_cod_ref,
-                            c_des_inf,
-                            c_fec_con,
-                            c_fec_exp
-                    ));
-
-                    c_cod_con = "";
-                    c_cod_ref = "";
-                    c_des_inf = "";
-                    c_fec_con = "";
-                    c_fec_exp = "";
-
-                }
-
-            } catch (Exception e) {
-                System.out.println("Error en Agregar Contratos ManListaEquipos." + e.getMessage());
-            }
-        }
-
-    }
-
-    public boolean validarcontrato() {
-        boolean mvalidar = true;
-        if ("".equals(c_cod_ref)) {
-            mvalidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un Número de Contrato.", 2);
-        }
-        if ("".equals(c_fec_con)) {
-            mvalidar = false;
-            addMessage("Validar Datos", "Debe Ingresar La Fecha de Inicio del Contrato.", 2);
-        }
-        if ("".equals(c_fec_exp)) {
-            mvalidar = false;
-            addMessage("Validar Datos", "Debe Ingresar La Fecha de Expiración del Contrato.", 2);
-        }
-
-        return mvalidar;
-
-    }
-
-    public void eliminarcontrato() {
-        c_cod_con = catcontratos.getCod_con();
-        catcontratos = null;
-        if ("".equals(c_cod_con)) {
-            addMessage("Eliminar Detalles", "Debe Seleccionar un Contrato para Remover.", 2);
-        } else {
-            for (int i = 0; i < contratos.size(); i++) {
-                if (c_cod_con.equals(contratos.get(i).getCod_con())) {
-                    contratos.remove(i);
-                }
-            }
-            c_cod_con = "";
-            c_cod_ref = "";
-            c_des_inf = "";
-            c_fec_con = "";
-            c_fec_exp = "";
-        }
-    }
-
-    // ******************************** BUSCAR *******************************************
     public void llenarSistemas() {
         String mQuery = "";
         try {
@@ -1503,43 +1172,232 @@ public class ManListaEquipos extends Conexion implements Serializable {
         }
     }
 
-    public void llenarGarantias() {
-        String mQuery = "";
-        try {
-            gar_obs = "";
-            gar_fec_ini = "";
-            gar_fec_fin = "";
+    // ********** Funciones Mantenimiento Tablas de Registro equipos *************
+    public void guardar() {
+        String mQuery = "", mvalores = "";
+        if (validardatos()) {
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-            mQuery = "select cod_lis_equ, cod_gar, det_obs, "
-                    + "date_format(fec_ini,'%d/%m/%Y'), "
-                    + "date_format(fec_exp,'%d/%m/%Y') "
-                    + "from tbl_gar "
-                    + "where cod_lis_equ=" + cod_lis_equ + " "
-                    + "order by cod_lis_equ;";
+                if (edfecfab == false || dfecfab == null) {
+                    dfecfab = null;
+                    fec_fab = "";
+                } else {
+                    fec_fab = format.format(dfecfab);
+                }
+                if (edfeccom == false || dfeccom == null) {
+                    dfeccom = null;
+                    fec_com = "";
+                } else {
+                    fec_com = format.format(dfeccom);
+                }
+                if (edfecadq == false || dfecadq == null) {
+                    dfecadq = null;
+                    fec_adq = "";
+                } else {
+                    fec_adq = format.format(dfecadq);
+                }
+                if (edfecpueser == false || dfecpueser == null) {
+                    dfecpueser = null;
+                    fec_pue_ser = "";
+                } else {
+                    fec_pue_ser = format.format(dfecpueser);
+                }
+                fec_ult_man = "";
+                if (edfecret == false || dfecret == null) {
+                    dfecret = null;
+                    fec_ret = "";
+                } else {
+                    fec_ret = format.format(dfecret);
+                }
+                if (edfecini == false || dfecini == null) {
+                    dfecini = null;
+                    gar_fec_ini = "";
+                } else {
+                    gar_fec_ini = format.format(dfecini);
+                }
+                if (edfecfin == false || dfecfin == null) {
+                    dfecfin = null;
+                    gar_fec_fin = "";
+                } else {
+                    gar_fec_fin = format.format(dfecfin);
+                }
 
-            ResultSet resVariable;
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            resVariable = mAccesos.querySQLvariable(mQuery);
-            while (resVariable.next()) {
-                gar_obs = resVariable.getString(3);
-                gar_fec_ini = resVariable.getString(4);
-                gar_fec_fin = resVariable.getString(5);
-            }
-            mAccesos.Desconectar();
+                Accesos mAccesos = new Accesos();
+                mAccesos.Conectar();
+                if ("".equals(cod_lis_equ)) {
+                    mQuery = "select ifnull(max(cod_lis_equ),0)+1 as codigo from lis_equ;";
+                    cod_lis_equ = mAccesos.strQuerySQLvariable(mQuery);
+                    mQuery = "insert into lis_equ ("
+                            + "cod_lis_equ,"
+                            + "cod_pai,cod_equ,cod_pro,cod_cli,num_mod,num_ser,des_equ,"
+                            + "des_ubi,fec_fab,fec_com,fec_adq,fec_pue_ser,fec_ult_man,"
+                            + "fec_ret,cod_bar,det_pot,det_vol"
+                            + ") VALUES ("
+                            + cod_lis_equ + ","
+                            + cod_pai + ","
+                            + cod_equ + ","
+                            + cod_pro + ",'"
+                            + cod_cli + "','"
+                            + num_mod + "','"
+                            + num_ser + "','"
+                            + des_equ + "','"
+                            + des_ubi + "',str_to_date('"
+                            + fec_fab + "','%d/%m/%Y'),str_to_date('"
+                            + fec_com + "','%d/%m/%Y'),str_to_date('"
+                            + fec_adq + "','%d/%m/%Y'),str_to_date('"
+                            + fec_pue_ser + "','%d/%m/%Y'),str_to_date('"
+                            + fec_ult_man + "','%d/%m/%Y'),str_to_date('"
+                            + fec_ret + "','%d/%m/%Y'),'"
+                            + cod_bar + "','"
+                            + det_pot + "','"
+                            + det_vol + "')";
 
-            if ("00/00/0000".equals(gar_fec_ini)) {
-                gar_fec_ini = "";
+                    mAccesos.dmlSQLvariable("insert into tbl_gar (cod_lis_equ,cod_gar,det_obs,fec_ini,fec_exp) values "
+                            + "(" + cod_lis_equ + "," + cod_lis_equ + ",'" + gar_obs + "',str_to_date('" + gar_fec_ini + "','%d/%m/%Y'),"
+                            + "str_to_date('" + gar_fec_fin + "','%d/%m/%Y'));");
+
+                } else {
+                    mQuery = "update lis_equ SET "
+                            + "cod_pai=" + cod_pai
+                            + ",cod_equ=" + cod_equ
+                            + ",cod_pro=" + cod_pro
+                            + ",cod_cli='" + cod_cli + "' "
+                            + ",num_mod='" + num_mod + "' "
+                            + ",num_ser='" + num_ser + "' "
+                            + ",des_equ='" + des_equ + "' "
+                            + ",des_ubi='" + des_ubi + "' "
+                            + ",fec_fab=str_to_date('" + fec_fab + "','%d/%m/%Y')"
+                            + ",fec_com=str_to_date('" + fec_com + "','%d/%m/%Y')"
+                            + ",fec_adq=str_to_date('" + fec_adq + "','%d/%m/%Y')"
+                            + ",fec_pue_ser=str_to_date('" + fec_pue_ser + "','%d/%m/%Y')"
+                            + ",fec_ult_man=str_to_date('" + fec_ult_man + "','%d/%m/%Y')"
+                            + ",fec_ret=str_to_date('" + fec_ret + "','%d/%m/%Y')"
+                            + ",cod_bar='" + cod_bar + "' "
+                            + ",det_pot='" + det_pot + "' "
+                            + ",det_vol='" + det_vol + "' "
+                            + " WHERE cod_lis_equ = " + cod_lis_equ + ";";
+
+                    if ("0".equals(mAccesos.strQuerySQLvariable("select count(cod_lis_equ) from tbl_gar where cod_lis_equ=" + cod_lis_equ + ";"))) {
+
+                        mAccesos.dmlSQLvariable("insert into tbl_gar (cod_lis_equ,cod_gar,det_obs,fec_ini,fec_exp) values "
+                                + "(" + cod_lis_equ + "," + cod_lis_equ + ",'" + gar_obs + "',str_to_date('" + gar_fec_ini + "','%d/%m/%Y'),"
+                                + "str_to_date('" + gar_fec_fin + "','%d/%m/%Y'));");
+                    } else {
+
+                        mAccesos.dmlSQLvariable("update tbl_gar set "
+                                + "det_obs = '" + gar_obs + "' "
+                                + ",fec_ini = str_to_date('" + gar_fec_ini + "','%d/%m/%Y') "
+                                + ",fec_exp = str_to_date('" + gar_fec_fin + "','%d/%m/%Y') "
+                                + "where cod_lis_equ =" + cod_lis_equ + ";");
+                    }
+
+                }
+                mAccesos.dmlSQLvariable(mQuery);
+
+                // ********************* Sistemas ******************************************
+                mQuery = "delete from tbl_sys where cod_lis_equ=" + cod_lis_equ + ";";
+                mAccesos.dmlSQLvariable(mQuery);
+                for (int i = 0; i < sistemas.size(); i++) {
+                    mvalores = mvalores + "," + "("
+                            + cod_lis_equ + ","
+                            + (i + 1) + ",'"
+                            + sistemas.get(i).getDet_obs() + "','"
+                            + sistemas.get(i).getVer_ant() + "','"
+                            + sistemas.get(i).getVer_act() + "', str_to_date('"
+                            + sistemas.get(i).getFec_act() + "','%d/%m/%Y')"
+                            + ")";
+                }
+                if (!"".equals(mvalores)) {
+                    mvalores = mvalores.substring(1);
+                    mQuery = " insert into tbl_sys (cod_lis_equ,cod_sys,det_obs,ver_ant,ver_act,fec_act) values " + mvalores + ";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                }
+
+                // ********************** Contratos ****************************************
+                mQuery = "delete from tbl_con where cod_lis_equ=" + cod_lis_equ + ";";
+                mAccesos.dmlSQLvariable(mQuery);
+
+                mvalores = "";
+                for (int i = 0; i < contratos.size(); i++) {
+                    mvalores = mvalores + "," + "("
+                            + cod_lis_equ + ","
+                            + (i + 1) + ",'"
+                            + contratos.get(i).getCod_ref() + "','"
+                            + contratos.get(i).getDes_inf() + "', str_to_date('"
+                            + contratos.get(i).getFec_con() + "','%d/%m/%Y'), str_to_date('"
+                            + contratos.get(i).getFec_exp() + "','%d/%m/%Y')"
+                            + ")";
+                }
+                if (!"".equals(mvalores)) {
+                    mvalores = mvalores.substring(1);
+                    mQuery = " insert into tbl_con (cod_lis_equ,cod_con,cod_ref,des_inf,fec_con,fec_exp) values " + mvalores + ";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                }
+
+                mAccesos.Desconectar();
+                addMessage("Guardar Lista Equipos", "Información Almacenada con éxito.", 1);
+            } catch (Exception e) {
+                addMessage("Guardar Lista Equipos", "Error al momento de guardar la información. " + e.getMessage(), 2);
+                System.out.println("Error al Guardar Lista Equipos. " + e.getMessage() + " Query: " + mQuery);
             }
-            if ("00/00/0000".equals(gar_fec_fin)) {
-                gar_fec_fin = "";
-            }
-        } catch (Exception e) {
-            System.out.println("Error en el llenado de Garantías en Lista Equipos. "
-                    + e.getMessage() + " Query: " + mQuery);
+            llenarLequipos();
+            catlistaequipos = null;
         }
+        RequestContext.getCurrentInstance().execute("PF('wvSLE').clearFilters()");
+        //nuevo();
+
     }
 
+    public boolean validardatos() {
+        boolean mValidar = true;
+        if ("".equals(cod_equ) || "0".equals(cod_equ)) {
+            mValidar = false;
+            addMessage("Validar Datos", "Debe Escoger un Tipo de Equipo.", 2);
+        }
+        if ("".equals(des_equ)) {
+            mValidar = false;
+            addMessage("Validar Datos", "Debe Ingresar un Nombre para el Equipo.", 2);
+        }
+        return mValidar;
+
+    }
+
+    public void eliminar() {
+        String mQuery = "";
+        Accesos mAccesos = new Accesos();
+        mAccesos.Conectar();
+
+        if ("".equals(cod_lis_equ) == false && "0".equals(cod_lis_equ) == false) {
+            String nman = mAccesos.strQuerySQLvariable("select count(cod_lis_equ) from tbl_mae_man where cod_lis_equ =" + cod_lis_equ + ";");
+            if ("0".equals(nman)) {
+                try {
+                    mQuery = "delete from tbl_con where cod_lis_equ=" + cod_lis_equ + ";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                    mQuery = "delete from tbl_sys where cod_lis_equ=" + cod_lis_equ + ";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                    mQuery = "delete from tbl_gar where cod_lis_equ=" + cod_lis_equ + ";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                    mQuery = "delete from lis_equ where cod_lis_equ=" + cod_lis_equ + ";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                    addMessage("Eliminar Equipo", "Información Eliminada con éxito.", 1);
+                } catch (Exception e) {
+                    addMessage("Eliminar Equipo", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
+                    System.out.println("Error al Eliminar Equipo. " + e.getMessage() + " Query: " + mQuery);
+                }
+                llenarLequipos();
+                nuevo();
+            } else {
+                addMessage("Eliminar Equipo", "No puede Eliminar este Equipo porque Existen " + nman + " Mantenimientos Relacionados.", 2);
+            }
+        } else {
+            addMessage("Eliminar Equipo", "Debe elegir un Registro.", 2);
+        }
+        mAccesos.Desconectar();
+        RequestContext.getCurrentInstance().execute("PF('wvSLE').clearFilters()");
+    }
+
+    //**************** Historia Mantenimientos ********************************
     public void llenarMantenimientos() {
         String mQuery = "";
         try {
@@ -1582,7 +1440,7 @@ public class ManListaEquipos extends Conexion implements Serializable {
                         resVariable.getString(7),
                         resVariable.getString(8),
                         resVariable.getString(9),
-                        resVariable.getString(10), "", "", "", "", "", "", "", "", "", "", "", "",""                        
+                        resVariable.getString(10), "", "", "", "", "", "", "", "", "", "", "", "", ""
                 ));
             }
             mAccesos.Desconectar();
@@ -1592,86 +1450,196 @@ public class ManListaEquipos extends Conexion implements Serializable {
         }
     }
 
-    public void llenarLequipos() {
-        try {
-            catlistaequipos = new CatListaEquipos();
-            lequipos = new ArrayList<>();
-            String mAnexo = "";
-            if (!"0".equals(cod_cli_b)) {
-                mAnexo = "and lequ.cod_cli = " + cod_cli_b;
-            }
-            if (!"0".equals(cod_equ_b)) {
-                mAnexo = mAnexo + " and lequ.cod_equ =" + cod_equ_b;
-            }
-            if (!"0".equals(cod_pai_b)) {
-                mAnexo = mAnexo + " and lequ.cod_pai =" + cod_pai_b;
-            }
-            if (!"".equals(num_ser_b)) {
-                mAnexo = mAnexo + " and lequ.num_ser ='" + num_ser_b+ "'";
-            }
+    /*
+    public void onRowSelectHis(SelectEvent event) {
+        //cod_lis_equ = ((CatMantenimientos) event.getObject()).getCod_lis_equ();
+        m_cod_man = ((CatMantenimientos) event.getObject()).getCod_man();
+    }*/
+    public void onRowSelectMantenimiento(SelectEvent event) {
+        m_cod_man = ((CatMantenimientos) event.getObject()).getCod_man();
+        m_cod_tip = ((CatMantenimientos) event.getObject()).getCod_tip();
+        m_det_obs = ((CatMantenimientos) event.getObject()).getDet_obs();
+        m_fec_ini = ((CatMantenimientos) event.getObject()).getFec_ini();
+        m_fec_fin = ((CatMantenimientos) event.getObject()).getFec_fin();
+        m_det_sta = ((CatMantenimientos) event.getObject()).getDet_sta();
+        m_nomtip = ((CatMantenimientos) event.getObject()).getNomtip();
+        m_estado = ((CatMantenimientos) event.getObject()).getStatus();
+    }
 
-            String mQuery = "select lequ.cod_lis_equ, lequ.cod_pai, lequ.cod_equ, lequ.cod_pro, "
-                    + "lequ.cod_cli, lequ.num_mod, lequ.num_ser, lequ.des_equ, lequ.des_ubi, "
-                    + "DATE_FORMAT(lequ.fec_fab,'%d/%m/%Y') as ffab, "
-                    + "DATE_FORMAT(lequ.fec_com,'%d/%m/%Y') as fcom, "
-                    + "DATE_FORMAT(lequ.fec_adq,'%d/%m/%Y') as fadq,"
-                    + "DATE_FORMAT(lequ.fec_pue_ser,'%d/%m/%Y') as fps,"
-                    + "DATE_FORMAT(lequ.fec_ult_man,'%d/%m/%Y') as fum, "
-                    + "DATE_FORMAT(lequ.fec_ret,'%d/%m/%Y') as fret,"
-                    + "lequ.cod_bar,"
-                    + "cpai.nom_pai as nompai,"
-                    + "cequ.nom_equ as nomequ, "
-                    + "cpro.nom_pro as nompro, "
-                    + "ccli.nom_cli as nomcli "
-                    + "from lis_equ as lequ "
-                    + "left join cat_pai as cpai on lequ.cod_pai = cpai.cod_pai "
-                    + "left join cat_equ as cequ on lequ.cod_equ = cequ.cod_equ "
-                    + "left join cat_pro as cpro on lequ.cod_pro = cpro.cod_pro and lequ.cod_pai = cpro.cod_pai "
-                    + "left join cat_cli as ccli on lequ.cod_cli = ccli.cod_cli and lequ.cod_pai = ccli.cod_pai "
-                    + "where "
-                    + "lequ.cod_lis_equ <> 0 "
-                    + mAnexo
-                    + " order by lequ.cod_pai, lequ.cod_equ, lequ.num_ser ,lequ.cod_lis_equ;";
-            ResultSet resVariable;
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            resVariable = mAccesos.querySQLvariable(mQuery);
-            while (resVariable.next()) {
-                lequipos.add(new CatListaEquipos(
-                        resVariable.getString(1),
-                        resVariable.getString(2),
-                        resVariable.getString(3),
-                        resVariable.getString(4),
-                        resVariable.getString(5),
-                        resVariable.getString(6),
-                        resVariable.getString(7),
-                        resVariable.getString(8),
-                        resVariable.getString(9),
-                        resVariable.getString(10),
-                        resVariable.getString(11),
-                        resVariable.getString(12),
-                        resVariable.getString(13),
-                        resVariable.getString(14),
-                        resVariable.getString(15),
-                        resVariable.getString(16),
-                        resVariable.getString(17),
-                        resVariable.getString(18),
-                        resVariable.getString(19),
-                        resVariable.getString(20)
-                ));
-            }
-            mAccesos.Desconectar();
+    // ************************* SISTEMAS *************************************
+    public void agregarsistema() {
+        if (validarsistema()) {
+            int correlativo = 0, insert = 0;
+            try {
+                for (int i = 0; i < sistemas.size(); i++) {
+                    if (Integer.valueOf(sistemas.get(i).getCod_sys()) > correlativo) {
+                        correlativo = Integer.valueOf(sistemas.get(i).getCod_sys());
+                    }
+                }
 
-        } catch (Exception e) {
-            System.out.println("Error en el llenado de Lista Equipos ManListaEquipos. " + e.getMessage());
+                if (insert == 0) {
+                    sistemas.add(new CatSistemas(
+                            cod_lis_equ,
+                            String.valueOf(correlativo),
+                            s_det_obs,
+                            s_ver_ant,
+                            s_ver_act,
+                            s_fec_act
+                    ));
+
+                    s_det_obs = "";
+                    s_ver_ant = "";
+                    s_ver_act = "";
+                    s_fec_act = "";
+                    dfecact = null;
+                    edfecact = false;
+
+                }
+
+            } catch (Exception e) {
+                System.out.println("Error en Agregar Sistemas ManListaEquipos." + e.getMessage());
+            }
+        }
+
+    }
+
+    public boolean validarsistema() {
+        boolean mvalidar = true;
+        if (edfecact == false) {
+            dfecact = null;
+            s_fec_act = "";
+        }
+        if ("".equals(s_det_obs)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Ingresar un Nombre de Sistema.", 2);
+        }
+        if ("".equals(s_ver_act)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Ingresar La Versión Actual del Software.", 2);
+        }
+        if ("".equals(s_fec_act) || dfecact == null) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Ingresar La Fecha de Actualización.", 2);
+        }
+        if (s_ver_ant.equals(s_ver_act)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Ingresar La Versión Actual del Software Distinta a la Anterior.", 2);
+        }
+
+        return mvalidar;
+
+    }
+
+    public void eliminarsistema() {
+        s_cod_sys = catsistemas.getCod_sys();
+        catsistemas = null;
+        if ("".equals(s_cod_sys)) {
+            addMessage("Eliminar Detalles", "Debe Seleccionar un Sistema para Remover.", 2);
+        } else {
+            for (int i = 0; i < sistemas.size(); i++) {
+                if (s_cod_sys.equals(sistemas.get(i).getCod_sys())) {
+                    sistemas.remove(i);
+                }
+            }
+            s_cod_sys = "";
+            s_det_obs = "";
+            s_ver_ant = "";
+            s_ver_act = "";
+            s_fec_act = "";
+            //catlistaequipos = new CatListaEquipos();
         }
     }
 
-    public void onRowSelect(SelectEvent event) {
+    //************** CONTRATOS ***********************
+    public void agregarcontrato() {
+        if (validarcontrato()) {
+            int correlativo = 0, insert = 0;
+            try {
+                for (int i = 0; i < contratos.size(); i++) {
+                    if (Integer.valueOf(contratos.get(i).getCod_con()) > correlativo) {
+                        correlativo = Integer.valueOf(contratos.get(i).getCod_con());
+                    }
+                }
+
+                if (insert == 0) {
+                    contratos.add(new CatContratos(
+                            cod_lis_equ,
+                            String.valueOf(correlativo),
+                            c_cod_ref,
+                            c_des_inf,
+                            c_fec_con,
+                            c_fec_exp
+                    ));
+
+                    c_cod_con = "";
+                    c_cod_ref = "";
+                    c_des_inf = "";
+                    c_fec_con = "";
+                    c_fec_exp = "";
+                    dfeccon = null;
+                    edfeccon = false;
+                    dfecexp = null;
+                    edfecexp = false;
+
+                }
+
+            } catch (Exception e) {
+                System.out.println("Error en Agregar Contratos ManListaEquipos." + e.getMessage());
+            }
+        }
+
+    }
+
+    public boolean validarcontrato() {
+        boolean mvalidar = true;
+        if (edfeccon == false) {
+            dfeccon = null;
+            c_fec_con = "";
+        }
+        if (edfecexp == false) {
+            dfecexp = null;
+            c_fec_exp = "";
+        }
+        if ("".equals(c_cod_ref)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Ingresar un Número de Contrato.", 2);
+        }
+        if ("".equals(c_fec_con) || dfeccon == null) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Ingresar La Fecha de Inicio del Contrato.", 2);
+        }
+        if ("".equals(c_fec_exp) || dfecexp == null) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Ingresar La Fecha de Expiración del Contrato.", 2);
+        }
+
+        return mvalidar;
+
+    }
+
+    public void eliminarcontrato() {
+        c_cod_con = catcontratos.getCod_con();
+        catcontratos = null;
+        if ("".equals(c_cod_con)) {
+            addMessage("Eliminar Detalles", "Debe Seleccionar un Contrato para Remover.", 2);
+        } else {
+            for (int i = 0; i < contratos.size(); i++) {
+                if (c_cod_con.equals(contratos.get(i).getCod_con())) {
+                    contratos.remove(i);
+                }
+            }
+            c_cod_con = "";
+            c_cod_ref = "";
+            c_des_inf = "";
+            c_fec_con = "";
+            c_fec_exp = "";
+        }
+    }
+
+    //************************* Selección de Controles ***********************************
+    public void onRowSelectListaEquipo(SelectEvent event) {
         cod_lis_equ = ((CatListaEquipos) event.getObject()).getCod_lis_equ();
         cod_pai = ((CatListaEquipos) event.getObject()).getCod_pai();
-        llenarProveedores();
-        llenarClientes();
         cod_equ = ((CatListaEquipos) event.getObject()).getCod_equ();
         cod_pro = ((CatListaEquipos) event.getObject()).getCod_pro();
         cod_cli = ((CatListaEquipos) event.getObject()).getCod_cli();
@@ -1686,72 +1654,130 @@ public class ManListaEquipos extends Conexion implements Serializable {
         fec_ult_man = ((CatListaEquipos) event.getObject()).getFec_ult_man();
         fec_ret = ((CatListaEquipos) event.getObject()).getFec_ret();
         cod_bar = ((CatListaEquipos) event.getObject()).getCod_bar();
-        if ("00/00/0000".equals(fec_fab)) {
-            fec_fab = "";
-        }
-        if ("00/00/0000".equals(fec_com)) {
-            fec_com = "";
-        }
-        if ("00/00/0000".equals(fec_adq)) {
-            fec_adq = "";
-        }
-        if ("00/00/0000".equals(fec_pue_ser)) {
-            fec_pue_ser = "";
-        }
-        if ("00/00/0000".equals(fec_ult_man)) {
-            fec_ult_man = "";
-        }
-        if ("00/00/0000".equals(fec_ret)) {
-            fec_ret = "";
-        }
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            dfecfab = format.parse(fec_fab);
-            dfeccom = format.parse(fec_com);
-            dfecadq = format.parse(fec_adq);
-            dfecpueser = format.parse(fec_pue_ser);
-            dfecultman = format.parse(fec_ult_man);
-        } catch (Exception ex) {
+        det_pot = ((CatListaEquipos) event.getObject()).getDet_pot();
+        det_vol = ((CatListaEquipos) event.getObject()).getDet_vol();
 
+        dfecfab = null;
+        dfeccom = null;
+        dfecadq = null;
+        dfecpueser = null;
+        dfecultman = null;
+        dfecini = null;
+        dfecfin = null;
+        dfecret = null;
+        dfecact = null;
+        dfeccon = null;
+        dfecexp = null;
+
+        edfecfab = false;
+        edfeccom = false;
+        edfecadq = false;
+        edfecpueser = false;
+        edfecultman = false;
+        edfecini = false;
+        edfecfin = false;
+        edfecret = false;
+        edfecact = false;
+        edfeccon = false;
+        edfecexp = false;
+
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+        if ("00/00/0000".equals(fec_fab) || "".equals(fec_fab)) {
+            fec_fab = "";
+        } else {
+            edfecfab = true;
+            try {
+                dfecfab = format.parse(fec_fab);
+            } catch (Exception ex) {
+
+            }
         }
-        nombre_mantenimiento = ((CatListaEquipos) event.getObject()).getNomequ() + " " + num_ser;
+        if ("00/00/0000".equals(fec_com) || "".equals(fec_com)) {
+            fec_com = "";
+        } else {
+            edfeccom = true;
+            try {
+                dfeccom = format.parse(fec_com);
+            } catch (Exception ex) {
+
+            }
+        }
+        if ("00/00/0000".equals(fec_adq) || "".equals(fec_adq)) {
+            fec_adq = "";
+        } else {
+            edfecadq = true;
+            try {
+                dfecadq = format.parse(fec_adq);
+            } catch (Exception ex) {
+
+            }
+        }
+        if ("00/00/0000".equals(fec_pue_ser) || "".equals(fec_pue_ser)) {
+            fec_pue_ser = "";
+        } else {
+            edfecpueser = true;
+            try {
+                dfecpueser = format.parse(fec_pue_ser);
+            } catch (Exception ex) {
+
+            }
+        }
+        if ("00/00/0000".equals(fec_ult_man) || "".equals(fec_ult_man)) {
+            fec_ult_man = "";
+        } else {
+            edfecultman = true;
+            try {
+                dfecultman = format.parse(fec_ult_man);
+            } catch (Exception ex) {
+
+            }
+        }
+        if ("00/00/0000".equals(fec_ret) || "".equals(fec_ret)) {
+            fec_ret = "";
+
+        } else {
+            edfecret = true;
+            try {
+                dfecret = format.parse(fec_ret);
+            } catch (Exception ex) {
+
+            }
+        }
+
+        llenarGarantias();
         llenarSistemas();
         llenarContratos();
-        llenarGarantias();
         llenarMantenimientos();
-        lequipos = null;
+        /*lequipos = null;
         RequestContext.getCurrentInstance().update("frmListaEquipos");
         RequestContext.getCurrentInstance().execute("PF('wSearchLE').hide()");
+         */
     }
 
-    public void onPaisBusChange() {
-        llenarClientesB();
-    }
-
-    //************************* GENERALES ***********************************
     public void onTabChange(TabChangeEvent event) {
         switch (event.getTab().getId()) {
-            case "tabGeneral":
+            case "tabLista":
                 tabindex = "0";
                 break;
-            case "tabHistoria":
+            case "tabGeneral":
                 tabindex = "1";
                 break;
-            case "tabSoftware":
+            case "tabGarantia":
                 tabindex = "2";
                 break;
-            case "tabContratos":
+            case "tabHistoria":
                 tabindex = "3";
+                break;
+            case "tabSoftware":
+                tabindex = "4";
+                break;
+            case "tabContratos":
+                tabindex = "5";
                 break;
         }
         //System.out.println(tabindex);
         //RequestContext.getCurrentInstance().update(":frmListaEquipos:tvLE");
-    }
-
-    public void onPaisChange() {
-        llenarProveedores();
-        llenarClientes();
-
     }
 
     public void dateSelectedFecfab(SelectEvent f) {
@@ -1833,13 +1859,8 @@ public class ManListaEquipos extends Conexion implements Serializable {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-    
-    //******************** REPORTES ***********************************************
-    public void onRowSelectHis(SelectEvent event) {
-        //cod_lis_equ = ((CatMantenimientos) event.getObject()).getCod_lis_equ();
-        m_cod_man = ((CatMantenimientos) event.getObject()).getCod_man();
-    }
 
+    //******************** REPORTES ***********************************************
     private String nombrereporte, nombreexportar;
     private Map<String, Object> parametros;
 
@@ -1909,6 +1930,19 @@ public class ManListaEquipos extends Conexion implements Serializable {
         parametros.put("codman", m_cod_man);
         nombrereporte = "/reportes/manequipodetalle.jasper";
         nombreexportar = "Detalle_Mantenimiento_" + cod_lis_equ + "_" + m_cod_man;
+
+    }
+
+    public void ejecutarFMAN003() {
+        try {
+            parametros = new HashMap<>();
+            nombrereporte = "/reportes/FMAN003.jasper";
+            nombreexportar = "FMAN003";
+            verPDF();
+
+        } catch (Exception e) {
+            System.out.println("Error en EjecutarReporte FMAN003." + e.getMessage());
+        }
 
     }
 
