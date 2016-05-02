@@ -7251,7 +7251,7 @@
             </h:form>
         </p:dialog> 
          
-         
+      
         <p:dialog  id="dlgDetalleProMtto" widgetVar="wDetalleProMtto" modal="true" 
                    width="900" height="540" closable="false" resizable="false" 
                    header="Detalle Pronostico de Calendario de Mantenimientos" rendered="true" 
@@ -7291,11 +7291,12 @@
                                      showNavigation="true"
                                      timeChangeable="true"
                                      locale="es">
-                            <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="@form" update="frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
-                            <p:ajax  event="changed" listener="#{manPronosticoMtto.onChange}" process="@form"/> 
+                    <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="PronosticoTimeline" update="frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
+                            <p:ajax  event="changed" listener="#{manPronosticoMtto.onChange}" process="PronosticoTimeline"/> 
                         </pe:timeline>  
             </h:form>
         </p:dialog>
+        
          
          <p:dialog widgetVar="mttoDialog" header="Observaciones" showEffect="clip" hideEffect="clip">
             <h:form id="frmMttoDialog">

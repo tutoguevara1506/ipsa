@@ -79,7 +79,6 @@ public class ManPronosticoMtto implements Serializable {
     
     public void cerrardetalle() {
         guardarDetalleMttos();
-        pronosticomtto = new ArrayList<>();
     }
 
      public void nuevo() {
@@ -129,6 +128,12 @@ public class ManPronosticoMtto implements Serializable {
                         cod_dep = mpdet.getCod_dep();
                         turno = mpdet.getTurno();
                          
+                        //cambio de anho de la fecha de inicio y fin
+                        
+                        fec_ini = fec_ini.replaceAll(anho_origen, anho_pro_mtto);
+                        fec_fin = fec_fin.replaceAll(anho_origen, anho_pro_mtto);
+                        
+                        
                         // Evaluar todas las variables adicionales necesarias para  aplicar mtto
                         // Fecha de inicio con cambio de año
                         // cambio en el correlativo del cod_man
@@ -222,23 +227,7 @@ public class ManPronosticoMtto implements Serializable {
 
     }
     
-    public void dateSelected(SelectEvent f) {
-        Date date = (Date) f.getObject();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        fecha_pro_mtto = format.format(date);
-    }
-
-    
-    public void onRowSelect(SelectEvent event) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        id_pro_mtto = ((CatPronosticoMtto) event.getObject()).getId_pro_mtto();
-        nom_pro_mtto = ((CatPronosticoMtto) event.getObject()).getNom_pro_mtto();
-        fecha_pro_mtto = ((CatPronosticoMtto) event.getObject()).getFecha_pro_mtto();
-        anho_origen = ((CatPronosticoMtto) event.getObject()).getAnho_origen();
-        anho_pro_mtto = ((CatPronosticoMtto) event.getObject()).getAnho_pro_mtto();
-        mfecha = format.parse(fecha_pro_mtto);
-    }
-    
+   
     public void llenarPronosticos() {
         String mQuery = "";
         try {
@@ -383,6 +372,24 @@ public class ManPronosticoMtto implements Serializable {
 
     // Eventos
     
+     public void dateSelected(SelectEvent f) {
+        Date date = (Date) f.getObject();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        fecha_pro_mtto = format.format(date);
+    }
+
+    
+    public void onRowSelect(SelectEvent event) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        id_pro_mtto = ((CatPronosticoMtto) event.getObject()).getId_pro_mtto();
+        nom_pro_mtto = ((CatPronosticoMtto) event.getObject()).getNom_pro_mtto();
+        fecha_pro_mtto = ((CatPronosticoMtto) event.getObject()).getFecha_pro_mtto();
+        anho_origen = ((CatPronosticoMtto) event.getObject()).getAnho_origen();
+        anho_pro_mtto = ((CatPronosticoMtto) event.getObject()).getAnho_pro_mtto();
+        mfecha = format.parse(fecha_pro_mtto);
+    }
+    
+    
     public void onEventSelect(SelectEvent selectEvent) {
 
         ScheduleEvent smtto = (ScheduleEvent) selectEvent.getObject();
@@ -426,6 +433,7 @@ public class ManPronosticoMtto implements Serializable {
     }
 
     public void onEdit(TimelineModificationEvent e) {
+        System.out.println("entra al edit");
         TimelineEvent tlmtto = e.getTimelineEvent();
 
         for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
@@ -440,7 +448,7 @@ public class ManPronosticoMtto implements Serializable {
     }
 
     public void onChange(TimelineModificationEvent e) {
-
+        System.out.println("entra al change");
         for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
             if (cm.getDes_equ() == e.getTimelineEvent().getData()) {
                 Calendar calendar = Calendar.getInstance();
