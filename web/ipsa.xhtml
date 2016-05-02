@@ -7291,8 +7291,8 @@
                                      showNavigation="true"
                                      timeChangeable="true"
                                      locale="es">
-                    <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="PronosticoTimeline" update="frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
-                            <p:ajax  event="changed" listener="#{manPronosticoMtto.onChange}" process="PronosticoTimeline"/> 
+                    <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="dlgDetalleProMtto" update="frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
+                            <p:ajax  event="changed" listener="#{manPronosticoMtto.onChange}" process="dlgDetalleProMtto"/> 
                         </pe:timeline>  
             </h:form>
         </p:dialog>
