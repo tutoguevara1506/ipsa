@@ -7171,20 +7171,32 @@
                                        message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
-                        <p:commandButton value="Cerrar" style=" width: 100px;"
-                                         onclick="PF('wPronosticoMtto').hide()"
-                                         action="#{manPronosticoMtto.cerrarventana()}" 
+                        <p:commandButton value="Autorizar" style=" width: 100px;"
+                                         actionListener="#{manPronosticoMtto.autorizar()}"
                                          update=":frmPronosticoMtto"
-                                         icon="ui-icon-close"
-                                         />
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Sí" type="button" 
-                                             styleClass="ui-confirmdialog-yes" 
-                                             icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" 
-                                             styleClass="ui-confirmdialog-no" 
-                                             icon="ui-icon-close" />
-                        </p:confirmDialog>
+                                         icon="ui-icon-check"
+                                         >
+                            <p:confirm header="Autorizar Registro" 
+                                       message="NOTA IMPORTANTE: Este proceso no se podrá revertir ¿Realmente desea Autorizar este Pronostico?" 
+                                       icon="ui-icon-alert"
+                                       />
+                        </p:commandButton>
+                        <f:facet name="right">
+                            <p:commandButton value="Cerrar" style=" width: 100px;"
+                                            onclick="PF('wPronosticoMtto').hide()"
+                                            action="#{manPronosticoMtto.cerrarventana()}" 
+                                            update=":frmPronosticoMtto"
+                                            icon="ui-icon-close"
+                                            />
+                           <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                               <p:commandButton value="Sí" type="button" 
+                                                styleClass="ui-confirmdialog-yes" 
+                                                icon="ui-icon-check" />
+                               <p:commandButton value="No" type="button" 
+                                                styleClass="ui-confirmdialog-no" 
+                                                icon="ui-icon-close" />
+                           </p:confirmDialog>
+                        </f:facet>
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">

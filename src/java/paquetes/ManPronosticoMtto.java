@@ -132,10 +132,7 @@ public class ManPronosticoMtto implements Serializable {
                         
                         fec_ini = fec_ini.replaceAll(anho_origen, anho_pro_mtto);
                         fec_fin = fec_fin.replaceAll(anho_origen, anho_pro_mtto);
-                        
-                        
-                        // Evaluar todas las variables adicionales necesarias para  aplicar mtto
-                        // Fecha de inicio con cambio de año
+                                                
                         // cambio en el correlativo del cod_man
                         
                                                 
@@ -197,34 +194,49 @@ public class ManPronosticoMtto implements Serializable {
         mAccesos.Desconectar();
 
     }
+    
+    public void autorizar() {
+        Accesos mAccesos = new Accesos();
+        mAccesos.Conectar();
+        if ("".equals(id_pro_mtto) == false) {
+                         
+            llenarMttosPreventivos(2);
+                    
+            detallepronosticomtto.stream().forEach((mpdet) -> {
+                String mQuery = "";
+                SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+                cod_lis_equ = mpdet.getCod_lis_equ();
+                
+                // Genera cod_man para cod_lis_equ de acuerdo al correlativo existente.
+                mQuery = "SELECT ifnull(max(cod_man),0)+1 as codigo FROM ipsa.tbl_mae_man WHERE cod_lis_equ ="+ cod_lis_equ +";";
+                cod_man = mAccesos.strQuerySQLvariable(mQuery);
+                
+                cod_tip = mpdet.getCod_tip();
+                det_obs = mpdet.getDet_obs();
+                fec_ini = fmt.format(mpdet.getFec_ini());
+                fec_fin = fmt.format(mpdet.getFec_fin());
+                det_sta = mpdet.getDet_sta();
+                cod_usu = mpdet.getCod_usu();
+                cod_per = mpdet.getCod_per();
+                flg_ext = mpdet.getFlg_ext();
+                cod_pri = mpdet.getCod_pri();
+                cod_sup = mpdet.getCod_sup();
+                cod_dep = mpdet.getCod_dep();
+                turno = mpdet.getTurno();
 
-    public boolean validardatos() {
-        boolean mValidar = true;
-        if ("".equals(nom_pro_mtto) == true) {
-            mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un Nombre para el pronostico de mantenimiento.", 2);
-        }
-        
-        if ("".equals(fecha_pro_mtto) == true) {
-            mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar una fecha de pronostico de mantenimiento.", 2);
-        }
-        
-        if ("".equals(anho_pro_mtto) == true) {
-            mValidar = false;
-            addMessage("Validar Datos", "Debe Ingresar un año a pronosticar.", 2);
-        }
-        
-        Accesos maccesos = new Accesos();
-        maccesos.Conectar();
-        if ("0".equals(maccesos.strQuerySQLvariable("select count(id_pro_mtto) from cat_pro_mtto "
-                + "where upper(nom_pro_mtto)='" + nom_pro_mtto.toUpperCase() + "';")) == false && "".equals(id_pro_mtto)) {
-            mValidar = false;
-            addMessage("Validar Datos", "El Nombre de Pronostico ya existe.", 2);
-        }
-        maccesos.Desconectar();
-        return mValidar;
 
+                mQuery = "INSERT INTO ipsa.tbl_mae_man " +
+                          "(cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_pri, cod_sup, cod_dep, turno) " +
+                          "VALUES ("+cod_lis_equ+","+cod_man+","+ cod_tip +",'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',"+ det_sta +","+ cod_usu +","+ cod_per +","+ flg_ext + ",'"+ cod_pri +"',"+ cod_sup +","+ cod_dep + "," + turno + ");";
+
+                mAccesos.dmlSQLvariable(mQuery);
+                
+            });
+     
+        } else {
+            addMessage("Autorizar Programa", "Debe elegir un Registro de pronostico.", 2);
+        }
+        mAccesos.Desconectar();
     }
     
    
@@ -434,6 +446,41 @@ public class ManPronosticoMtto implements Serializable {
     }
     
     // Mensajes
+    
+     public boolean validardatos() {
+        boolean mValidar = true;
+        if ("".equals(nom_pro_mtto) == true) {
+            mValidar = false;
+            addMessage("Validar Datos", "Debe Ingresar un Nombre para el pronostico de mantenimiento.", 2);
+        }
+        
+        if ("".equals(fecha_pro_mtto) == true) {
+            mValidar = false;
+            addMessage("Validar Datos", "Debe Ingresar una fecha de pronostico de mantenimiento.", 2);
+        }
+        
+        if ("".equals(anho_pro_mtto) == true) {
+            mValidar = false;
+            addMessage("Validar Datos", "Debe Ingresar un año  pronosticar.", 2);
+        }else{
+            int anho = Integer.parseInt(anho_pro_mtto);
+            if (anho < 2017){
+                mValidar = false;
+                addMessage("Validar Datos", "Debe Ingresar un año valido mayor a 2016.", 2);
+            }
+        }
+        
+        Accesos maccesos = new Accesos();
+        maccesos.Conectar();
+        if ("0".equals(maccesos.strQuerySQLvariable("select count(id_pro_mtto) from cat_pro_mtto "
+                + "where upper(nom_pro_mtto)='" + nom_pro_mtto.toUpperCase() + "';")) == false && "".equals(id_pro_mtto)) {
+            mValidar = false;
+            addMessage("Validar Datos", "El Nombre de Pronostico ya existe.", 2);
+        }
+        maccesos.Desconectar();
+        return mValidar;
+
+    }
     
     public void addMessage(String summary, String detail, int tipo) {
         FacesMessage message = new FacesMessage();
