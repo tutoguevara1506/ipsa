@@ -7274,6 +7274,11 @@
                 <p:growl id="messDetalleProMtto" showDetail="true" />
                 <p:toolbar>
                     <f:facet name="left">
+                        <p:commandButton value="Imprimir" icon="ui-icon-print"
+                                         onclick="this.form.target = '_blank';" 
+                                         action="#{manPronosticoMtto.imprimir()}" 
+                                         ajax="false"
+                                         />
                         <p:commandButton value="Cerrar" style=" width: 100px;"
                                          onclick="PF('wDetalleProMtto').hide()"
                                          actionListener="#{manPronosticoMtto.cerrardetalle()}"
