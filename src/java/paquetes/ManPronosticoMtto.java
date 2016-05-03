@@ -116,7 +116,7 @@ public class ManPronosticoMtto implements Serializable {
                         cod_lis_equ = mpdet.getCod_lis_equ();
                         cod_man = mpdet.getCod_man();
                         cod_tip = mpdet.getCod_tip();
-                        det_obs = mpdet.getDet_obs();
+                        det_obs = mpdet.getDet_obs().replace("'", " ");
                         fec_ini = fmt.format(mpdet.getFec_ini());
                         fec_fin = fmt.format(mpdet.getFec_fin());
                         det_sta = mpdet.getDet_sta();
@@ -212,7 +212,7 @@ public class ManPronosticoMtto implements Serializable {
                 cod_man = mAccesos.strQuerySQLvariable(mQuery);
                 
                 cod_tip = mpdet.getCod_tip();
-                det_obs = mpdet.getDet_obs();
+                det_obs = mpdet.getDet_obs().replace("'", " ");
                 fec_ini = fmt.format(mpdet.getFec_ini());
                 fec_fin = fmt.format(mpdet.getFec_fin());
                 det_sta = mpdet.getDet_sta();
