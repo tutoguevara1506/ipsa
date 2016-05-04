@@ -6390,7 +6390,7 @@
                 </p:toolbar>
 
                 <p:panel>
-                    <div style=" background-color:  #666666;">
+                    <div style=" background-color:  #d3f2ff;">
                         <p:focus for="ommodulocontrol" />
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputText value="Modulo" style="font-weight:bold;" />
@@ -6408,7 +6408,7 @@
                                          />
                             <h:outputText value="Descripción" style="font-weight:bold;"/>
                             <p:inputText id="txtdescripcioncontrol" 
-                                         size="70"
+                                         size="50"
                                          maxlength="150"
                                          value="#{manControles.ctrl_desc}"
                                          onfocus="this.select()"
@@ -6425,7 +6425,7 @@
                                  rowKey="#{vControl.cod_ctrl}"
                                  editable="false" 
                                  scrollable="true"
-                                 scrollHeight="120"
+                                 scrollHeight="160"
                                  style="width:480px"
                                  >
                         <p:ajax event="rowSelect" listener="#{manControles.onRowSelect}" 
@@ -7673,14 +7673,14 @@
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Grupo Falla" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manFallas.cod_gru_fal}" 
-                                         style="width:455px;text-align:right;"
+                                         style="width:450px;text-align:right;"
                                          immediate="false">  
                             <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                             <f:selectItems value="#{manFallas.grupofallas}" var="mgrufal"
                                            itemLabel="#{mgrufal.nom_gru_fal}" itemValue="#{mgrufal.cod_gru_fal}"/>
                         </p:selectOneMenu>
                         <h:outputText value="Falla" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="95" value="#{manFallas.nom_fal}" 
+                        <p:inputText maxlength="200" size="72" value="#{manFallas.nom_fal}" 
                                      onfocus="this.select()"/>
                     </h:panelGrid>
                     <p:dataTable id="dtFallas" var="vFallas" 

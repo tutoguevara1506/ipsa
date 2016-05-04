@@ -505,7 +505,8 @@ public class ManSolicitudes implements Serializable {
                     + "ifnull(dep.nom_dep,'') as nom_dep "
                     + "from cat_usu as usu "
                     + "left join cat_dep as dep on usu.cod_dep = dep.cod_dep and usu.cod_pai = dep.cod_pai "
-                    + "left join cat_pai as pai on usu.cod_pai = pai.cod_pai order by cod_usu;";
+                    + "left join cat_pai as pai on usu.cod_pai = pai.cod_pai "
+                    + "order by cod_usu;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -555,7 +556,6 @@ public class ManSolicitudes implements Serializable {
                     + "left join cat_pro as cpro on lequ.cod_pro = cpro.cod_pro and lequ.cod_pai = cpro.cod_pai "
                     + "left join cat_cli as ccli on lequ.cod_cli = ccli.cod_cli and lequ.cod_pai = ccli.cod_pai "
                     + "where "
-                    + "lequ.cod_pai = " + cod_pai + " "
                     + "order by lequ.cod_pai, lequ.cod_equ, lequ.num_ser ,lequ.cod_lis_equ;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -600,7 +600,8 @@ public class ManSolicitudes implements Serializable {
             departamentos = new ArrayList<>();
 
             String mQuery = "select cod_dep, cod_pai, nom_dep "
-                    + "from cat_dep where cod_pai = " + cod_pai + " order by cod_dep;";
+                    + "from cat_dep "
+                    + " order by cod_dep;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -862,10 +863,10 @@ public class ManSolicitudes implements Serializable {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Ingresar una Descripción o Escoger un Repuesto.", 2);
         }
-        if ("0".equals(cod_pai)) {
+        /*if ("0".equals(cod_pai)) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Seleccionar un País.", 2);
-        }
+        }*/
 
         if ("".equals(det_det_can_sol)) {
             mvalidar = false;
@@ -1061,7 +1062,6 @@ public class ManSolicitudes implements Serializable {
 
     }
 
-    
     public void onChangeNonStock() {
         if ("0".equals(det_non_sto)) {
             boolNS = "true";
