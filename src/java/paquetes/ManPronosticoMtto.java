@@ -24,13 +24,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
-import org.primefaces.event.ScheduleEntryMoveEvent;
-import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.extensions.event.timeline.TimelineAddEvent;
 import org.primefaces.extensions.event.timeline.TimelineModificationEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.model.timeline.TimelineModel;
-import org.primefaces.model.ScheduleEvent;
 
 @Named
 @ConversationScoped
@@ -58,7 +56,7 @@ public class ManPronosticoMtto implements Serializable {
 
     // Variables para timeline
     private TimelineModel modelTimeLine;
-    private TimelineEvent eventTimeLine;
+    private TimelineEvent tlevent;
 
     
     public ManPronosticoMtto() {
@@ -75,6 +73,7 @@ public class ManPronosticoMtto implements Serializable {
         anho_origen = "";
         anho_pro_mtto = "";
         llenarPronosticos();
+        llenarListaEquipos();
     }
 
     public void cerrarventana() {
@@ -85,13 +84,10 @@ public class ManPronosticoMtto implements Serializable {
         anho_origen = "";
         anho_pro_mtto = "";
         pronosticomtto = new ArrayList<>();
+        lequipos = new ArrayList<>();
     }
     
-    public void cerrardetalle() {
-        guardarDetalleMttos();
-    }
-
-     public void nuevo() {
+    public void nuevo() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         mfecha = Date.from(Instant.now());
         id_pro_mtto= "";
@@ -100,6 +96,7 @@ public class ManPronosticoMtto implements Serializable {
         anho_origen = "";
         anho_pro_mtto = "";
         catpronosticomtto = new CatPronosticoMtto();
+        llenarListaEquipos();
     }
 
     public void guardar() {
@@ -175,9 +172,22 @@ public class ManPronosticoMtto implements Serializable {
 
     }
     
-    public void guardarDetalleMttos(){
-        System.out.println("entra");
-    
+    public void guardarNuevoMtto(){
+        
+        String mQuery;
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+
+        Accesos mAccesos = new Accesos();
+        mAccesos.Conectar();
+
+        mQuery = "insert into det_pro_mtto SET "
+                + " fec_ini = '" + fmt.format(catdetallepronosticomtto.getFec_ini()) + "', "
+                + " fec_fin = '" + fmt.format(catdetallepronosticomtto.getFec_fin()) + "' "
+                + "WHERE cod_man = " + catdetallepronosticomtto.getCod_man() + " AND cod_lis_equ = '" + catdetallepronosticomtto.getCod_lis_equ() + "' AND id_pro_mtto = "+ catdetallepronosticomtto.getId_pro_mtto()+";";
+
+        mAccesos.dmlSQLvariable(mQuery);
+        mAccesos.Desconectar();
+        addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);    
     }
 
     public void eliminar() {
@@ -351,7 +361,7 @@ public class ManPronosticoMtto implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Equipos MaestroMan. " + e.getMessage());
+            System.out.println("Error en el llenado de Equipos ManpronosticoMtto " + e.getMessage());
         }
     }
     
@@ -448,7 +458,6 @@ public class ManPronosticoMtto implements Serializable {
     }   
     
     public void onEdit(TimelineModificationEvent e) {
-        System.out.println("entra al edit");
         TimelineEvent tlmtto = e.getTimelineEvent();
 
         for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
@@ -463,7 +472,6 @@ public class ManPronosticoMtto implements Serializable {
     }
 
     public void onChange(TimelineModificationEvent e) {
-        System.out.println("entra al change");
         
         for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
             if (cm.getDes_equ() == e.getTimelineEvent().getData()) {
@@ -485,6 +493,11 @@ public class ManPronosticoMtto implements Serializable {
         }
     }
     
+     public void onAdd(TimelineAddEvent e) {  
+        tlevent = new TimelineEvent(new CatCalendario(), e.getStartDate(), e.getEndDate(), true, e.getGroup());
+        tlevent.setStyleClass("pronostico");            
+        modelTimeLine.add(tlevent);
+    }   
     // Mensajes
     
      public boolean validardatos() {
@@ -836,14 +849,15 @@ public class ManPronosticoMtto implements Serializable {
         this.modelTimeLine = modelTimeLine;
     }
 
-    
-    public TimelineEvent getEventTimeLine() {
-        return eventTimeLine;
+    public TimelineEvent getTlevent() {
+        return tlevent;
     }
 
-    public void setEventTimeLine(TimelineEvent eventTimeLine) {
-        this.eventTimeLine = eventTimeLine;
+    public void setTlevent(TimelineEvent tlevent) {
+        this.tlevent = tlevent;
     }
+
+   
 
     public List<CatCalendario> getListaMttos() {
         return listaMttos;

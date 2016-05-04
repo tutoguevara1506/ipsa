@@ -7281,7 +7281,6 @@
                                          />
                         <p:commandButton value="Cerrar" style=" width: 100px;"
                                          onclick="PF('wDetalleProMtto').hide()"
-                                         actionListener="#{manPronosticoMtto.cerrardetalle()}"
                                          update=":frmDetalleProMtto"
                                          icon="ui-icon-close"
                                          />
@@ -7308,8 +7307,9 @@
                                      timeChangeable="true"
                                      locale="es"
                                      widgetVar="pronoTL">
-                    <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="@form" update="frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
+                    <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="@form" update=":frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
                     <p:ajax  event="changed" listener="#{manPronosticoMtto.onChange}" process="@form"/> 
+                    <p:ajax  event="add" update=":frmMttoDialog"  listener="#{manPronosticoMtto.onAdd}" oncomplete="PF('mttoDialog').show()"/>  
                 </pe:timeline>  
             </h:form>
         </p:dialog>
@@ -7318,17 +7318,27 @@
          <p:dialog widgetVar="mttoDialog" header="Observaciones" showEffect="clip" hideEffect="clip">
             <h:form id="frmMttoDialog">
                 <h:panelGrid id="grdMttoDialog" columns="2">
-                    <p:outputLabel for="desde" value="Desde:" />
-                    <p:calendar id="desde" value="#{manPronosticoMtto.fec_ini}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+                    <p:outputLabel for="equlist" value="Equipo:" />
+                    <p:selectOneMenu value="#{manPronosticoMtto.tlevent.data.cod_lis_equ}" 
+                                     style="width:180px;text-align:right;"
+                                     immediate="false"
+                                     id ="equlist"
+                                    >  
+                        <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                        <f:selectItems value="#{manPronosticoMtto.lequipos}" var="mlequ"
+                                       itemLabel="#{mlequ.des_equ}" itemValue="#{mlequ.cod_lis_equ}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Desde:" />
+                    <p:calendar value="#{manPronosticoMtto.tlevent.startDate}"  pattern="dd/MM/yyyy"/>
 
-                    <p:outputLabel for="hasta" value="Hasta:" />
-                    <p:calendar id="hasta" value="#{manPronosticoMtto.fec_fin}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+                    <p:outputLabel value="Hasta:" />
+                    <p:calendar value="#{manPronosticoMtto.tlevent.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy"/>
 
                     <p:outputLabel for="obs" value="Observacion:" />
-                    <p:inputTextarea rows="6" cols="33" autoResize="false" id="obs" value="#{manPronosticoMtto.det_obs}" required="true"/>
+                    <p:inputTextarea rows="6" cols="33" autoResize="false" id="obs" value="#{manPronosticoMtto.tlevent.data.det_obs}" required="true"/>
 
                     <p:commandButton type="reset" value="Limpiar" />
-                    <p:commandButton id="addButton" value="Guardar" actionListener="#{manPronosticoMtto.addEvent}" oncomplete="PF('wDetalleProMtto').update();PF('mttoDialog').hide();" />
+                    <p:commandButton id="addButton" value="Guardar" actionListener="#{manPronosticoMtto.guardarNuevoMtto()}" oncomplete="PF('mttoDialog').hide();" />
                 </h:panelGrid>
             </h:form>
         </p:dialog>    
