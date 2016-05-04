@@ -240,14 +240,15 @@ public class ManPronosticoMtto implements Serializable {
                           "VALUES ("+cod_lis_equ+","+cod_man+","+ cod_tip +",'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',"+ det_sta +","+ cod_usu +","+ cod_per +","+ flg_ext + ",'"+ cod_pri +"',"+ cod_sup +","+ cod_dep + "," + turno + ");";
 
                 mAccesos.dmlSQLvariable(mQuery);
-                addMessage("Autorizar Programa", "La Actualización de mantenimientos fue satisfactoria.", 1);
                 
             });
      
         } else {
             addMessage("Autorizar Programa", "Debe elegir un Registro de pronostico.", 2);
         }
+        
         mAccesos.Desconectar();
+        addMessage("Autorizar Programa", "La Actualización de mantenimientos fue satisfactoria.", 1);
     }
     
     public void imprimir() {
