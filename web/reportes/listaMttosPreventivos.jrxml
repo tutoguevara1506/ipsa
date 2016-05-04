@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="deb953d2-5917-4eac-ae43-db8dbce51c5f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idProMtto" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT det.id_det_pro_mtto, det.id_pro_mtto, det.cod_lis_equ, det.cod_man, det.cod_tip, det.det_obs, det.fec_ini, det.fec_fin, det.det_sta, det.cod_usu, det.cod_per, det.flg_ext, det.cod_pri, det.cod_sup, det.cod_dep, det.turno, equ.des_equ, pro.anho_pro_mtto
+FROM ipsa.det_pro_mtto det inner join lis_equ equ on det.cod_lis_equ = equ.cod_lis_equ 
+inner join cat_pro_mtto pro on det.id_pro_mtto = pro.id_pro_mtto
+WHERE det.id_pro_mtto = $P{idProMtto}
+order by det.fec_ini;]]>
+	</queryString>
+	<field name="id_det_pro_mtto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_pro_mtto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_lis_equ" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_man" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_tip" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="det_obs" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fec_ini" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fec_fin" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="det_sta" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_usu" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_per" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="flg_ext" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_pri" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_sup" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cod_dep" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="turno" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="des_equ" class="java.lang.String">
+		<fieldDescription><![CDATA[Descripción equipo]]></fieldDescription>
+	</field>
+	<field name="anho_pro_mtto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="FILE_NUMBER" class="java.lang.String" calculation="Count"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="56">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="70" backcolor="#006699" uuid="f0a4f73a-1faf-444f-8e57-7695d7bb9be2"/>
+				<staticText>
+					<reportElement x="20" y="20" width="540" height="24" forecolor="#FFFFFF" uuid="1a5399f9-3395-4745-bb29-c38c714ee307"/>
+					<textElement>
+						<font size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Industrias Plasticas S.A. de C.V.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="20" y="44" width="480" height="20" forecolor="#FFFFFF" uuid="e361d8b0-ec24-40a7-97ef-770a97f2f373"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Mantenimientos Preventivos para el año ]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="505" y="44" width="55" height="20" forecolor="#FFFFFF" uuid="f7366ab4-b6c0-4a3a-9d7f-07d4511704fc"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{anho_pro_mtto}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement mode="Opaque" x="378" y="0" width="85" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="18c787c9-cbee-4d59-962e-7d2fc08632be"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Inicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="479" y="0" width="90" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6cf68786-d33d-4d84-886a-a175d50c32e0"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="5" y="0" width="357" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="e7cae08d-9094-46bf-96f1-7c7f1df22c5d"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre de Equipo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="18" width="555" height="1" uuid="7a50149d-c66a-448d-bfd6-e345f6109c07"/>
+			</line>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement x="378" y="0" width="85" height="16" uuid="f06c89ba-1d6e-4dbe-82a0-6a6cf3bd7b0f"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fec_ini}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="40" y="0" width="320" height="16" uuid="22dbb5c6-371a-4910-898b-c873ad725d0e"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{des_equ}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement x="479" y="0" width="90" height="16" uuid="0a6070c7-0a7e-428a-a7c7-a3a94636decd"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fec_fin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="0" width="100" height="20" uuid="f93d4f04-f9b8-40bb-96fb-0daa6a646607"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="0c7ae164-fd57-4fca-bc35-b0e643e01026"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="5db6c3c7-f1f6-48b8-8df1-564707bfd232"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="3c6559c0-2a86-49e1-9109-08bd7e94f66e"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
