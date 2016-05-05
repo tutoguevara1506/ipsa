@@ -50,7 +50,7 @@ public class ManPronosticoMtto implements Serializable {
     private List<CatListaEquipos> lequipos;
     private CatCalendario catcalendario;
     private List<CatCalendario> listaMttos;
-    private String id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_origen, anho_pro_mtto;
+    private String id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_origen, anho_pro_mtto, aprobado;
     private String id_det_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta,
             cod_usu, nomtip, status, datraso, color, cod_per, periodo, flg_ext, cod_sup, turno, cod_pri, cod_dep, cod_alt, obs_tec, otr_per, nomequ;
     private Date mfecha, mfec_fin;
@@ -242,46 +242,63 @@ public class ManPronosticoMtto implements Serializable {
         Accesos mAccesos = new Accesos();
         mAccesos.Conectar();
         if ("".equals(id_pro_mtto) == false) {
-                         
-            llenarMttosPreventivos(2);
+            
+            String mQuery2="";
+            mQuery2 = "SELECT ifnull(aprobado,0) FROM ipsa.cat_pro_mtto WHERE anho_pro_mtto ="+ anho_pro_mtto +";";
+            aprobado = mAccesos.strQuerySQLvariable(mQuery2);
+            
+            if("".equals(aprobado) == true){
+            
+                llenarMttosPreventivos(2);
                     
-            detallepronosticomtto.stream().forEach((mpdet) -> {
-                String mQuery = "";
-                SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-                cod_lis_equ = mpdet.getCod_lis_equ();
-                
-                // Genera cod_man para cod_lis_equ de acuerdo al correlativo existente.
-                mQuery = "SELECT ifnull(max(cod_man),0)+1 as codigo FROM ipsa.tbl_mae_man WHERE cod_lis_equ ="+ cod_lis_equ +";";
-                cod_man = mAccesos.strQuerySQLvariable(mQuery);
-                
-                cod_tip = mpdet.getCod_tip();
-                det_obs = mpdet.getDet_obs().replace("'", " ");
-                fec_ini = fmt.format(mpdet.getFec_ini());
-                fec_fin = fmt.format(mpdet.getFec_fin());
-                det_sta = mpdet.getDet_sta();
-                cod_usu = mpdet.getCod_usu();
-                cod_per = mpdet.getCod_per();
-                flg_ext = mpdet.getFlg_ext();
-                cod_pri = mpdet.getCod_pri();
-                cod_sup = mpdet.getCod_sup();
-                cod_dep = mpdet.getCod_dep();
-                turno = mpdet.getTurno();
+                detallepronosticomtto.stream().forEach((mpdet) -> {
+                    String mQuery = "";
+                    SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+                    cod_lis_equ = mpdet.getCod_lis_equ();
+
+                    // Genera cod_man para cod_lis_equ de acuerdo al correlativo existente.
+                    mQuery = "SELECT ifnull(max(cod_man),0)+1 as codigo FROM ipsa.tbl_mae_man WHERE cod_lis_equ ="+ cod_lis_equ +";";
+                    cod_man = mAccesos.strQuerySQLvariable(mQuery);
+
+                    cod_tip = mpdet.getCod_tip();
+                    det_obs = mpdet.getDet_obs().replace("'", " ");
+                    fec_ini = fmt.format(mpdet.getFec_ini());
+                    fec_fin = fmt.format(mpdet.getFec_fin());
+                    det_sta = mpdet.getDet_sta();
+                    cod_usu = mpdet.getCod_usu();
+                    cod_per = mpdet.getCod_per();
+                    flg_ext = mpdet.getFlg_ext();
+                    cod_pri = mpdet.getCod_pri();
+                    cod_sup = mpdet.getCod_sup();
+                    cod_dep = mpdet.getCod_dep();
+                    turno = mpdet.getTurno();
 
 
-                mQuery = "INSERT INTO ipsa.tbl_mae_man " +
-                          "(cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_pri, cod_sup, cod_dep, turno) " +
-                          "VALUES ("+cod_lis_equ+","+cod_man+","+ cod_tip +",'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',"+ det_sta +","+ cod_usu +","+ cod_per +","+ flg_ext + ",'"+ cod_pri +"',"+ cod_sup +","+ cod_dep + "," + turno + ");";
+                    mQuery = "INSERT INTO ipsa.tbl_mae_man " +
+                              "(cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_pri, cod_sup, cod_dep, turno) " +
+                              "VALUES ("+cod_lis_equ+","+cod_man+","+ cod_tip +",'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',"+ det_sta +","+ cod_usu +","+ cod_per +","+ flg_ext + ",'"+ cod_pri +"',"+ cod_sup +","+ cod_dep + "," + turno + ");";
 
-                mAccesos.dmlSQLvariable(mQuery);
+                    mAccesos.dmlSQLvariable(mQuery);
+                    addMessage("Autorizar Programa", "La Actualización de mantenimientos fue satisfactoria.", 1);
+
+                });
                 
-            });
-     
+                mQuery2 = "";
+                mQuery2 = "UPDATE ipsa.cat_pro_mtto SET Aprobado = 1 WHERE id_pro_mtto =" + id_pro_mtto +";";
+                mAccesos.dmlSQLvariable(mQuery2);
+                
+            } else {
+                addMessage("Autorizar Programa", "NO puede autorizar planificaciones para un año ya autorizado.", 2);
+            }
+                 
         } else {
             addMessage("Autorizar Programa", "Debe elegir un Registro de pronostico.", 2);
         }
         
+        //actualiza registro de cat_pro_mtto indicando que el registro se migró
+        
         mAccesos.Desconectar();
-        addMessage("Autorizar Programa", "La Actualización de mantenimientos fue satisfactoria.", 1);
+       
     }
     
     public void imprimir() {
@@ -319,7 +336,7 @@ public class ManPronosticoMtto implements Serializable {
             catpronosticomtto = new CatPronosticoMtto();
             pronosticomtto = new ArrayList<>();
 
-            mQuery = "SELECT id_pro_mtto, nom_pro_mtto, DATE_FORMAT(fecha_pro_mtto, '%d/%m/%Y'), anho_origen, anho_pro_mtto FROM ipsa.cat_pro_mtto;";
+            mQuery = "SELECT id_pro_mtto, nom_pro_mtto, DATE_FORMAT(fecha_pro_mtto, '%d/%m/%Y'), anho_origen, anho_pro_mtto, aprobado FROM ipsa.cat_pro_mtto;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -330,7 +347,8 @@ public class ManPronosticoMtto implements Serializable {
                         resVariable.getString(2),
                         resVariable.getString(3),
                         resVariable.getString(4),
-                        resVariable.getString(5)
+                        resVariable.getString(5),
+                        resVariable.getString(6)
                 ));
             }
             mAccesos.Desconectar();
@@ -471,6 +489,7 @@ public class ManPronosticoMtto implements Serializable {
         fecha_pro_mtto = ((CatPronosticoMtto) event.getObject()).getFecha_pro_mtto();
         anho_origen = ((CatPronosticoMtto) event.getObject()).getAnho_origen();
         anho_pro_mtto = ((CatPronosticoMtto) event.getObject()).getAnho_pro_mtto();
+        aprobado = ((CatPronosticoMtto) event.getObject()).getAprobado();
         mfecha = format.parse(fecha_pro_mtto);
     }
     
@@ -938,6 +957,12 @@ public class ManPronosticoMtto implements Serializable {
     public void setMfec_fin(Date mfec_fin) {
         this.mfec_fin = mfec_fin;
     }
-    
 
+    public String getAprobado() {
+        return aprobado;
+    }
+
+    public void setAprobado(String aprobado) {
+        this.aprobado = aprobado;
+    }
 }

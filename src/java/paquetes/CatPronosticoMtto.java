@@ -5,17 +5,18 @@ import java.io.Serializable;
 
 public class CatPronosticoMtto implements Serializable{
     
-    private String id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_origen, anho_pro_mtto;
+    private String id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_origen, anho_pro_mtto, aprobado;
 
     public CatPronosticoMtto() {
     }
 
-    public CatPronosticoMtto(String id_pro_mtto, String nom_pro_mtto, String fecha_pro_mtto, String anho_origen, String anho_pro_mtto) {
+    public CatPronosticoMtto(String id_pro_mtto, String nom_pro_mtto, String fecha_pro_mtto, String anho_origen, String anho_pro_mtto, String aprobado) {
         this.id_pro_mtto = id_pro_mtto;
         this.nom_pro_mtto = nom_pro_mtto;
         this.fecha_pro_mtto = fecha_pro_mtto;
         this.anho_origen = anho_origen;
-        this.anho_pro_mtto = anho_pro_mtto;        
+        this.anho_pro_mtto = anho_pro_mtto; 
+        this.aprobado = aprobado;
     }
 
     public String getId_pro_mtto() {
@@ -58,6 +59,12 @@ public class CatPronosticoMtto implements Serializable{
         this.anho_pro_mtto = anho_pro_mtto;
     }
 
-    
+    public String getAprobado() {
+        return aprobado;
+    }
+
+    public void setAprobado(String aprobado) {
+        this.aprobado = aprobado;
+    }
     
 }
