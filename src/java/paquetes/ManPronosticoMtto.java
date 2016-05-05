@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.extensions.component.timeline.TimelineUpdater;
 import org.primefaces.extensions.event.timeline.TimelineAddEvent;
 import org.primefaces.extensions.event.timeline.TimelineModificationEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
@@ -179,14 +180,23 @@ public class ManPronosticoMtto implements Serializable {
 
         Accesos mAccesos = new Accesos();
         mAccesos.Conectar();
-
-        mQuery = "insert into det_pro_mtto SET "
-                + " fec_ini = '" + fmt.format(catdetallepronosticomtto.getFec_ini()) + "', "
-                + " fec_fin = '" + fmt.format(catdetallepronosticomtto.getFec_fin()) + "' "
-                + "WHERE cod_man = " + catdetallepronosticomtto.getCod_man() + " AND cod_lis_equ = '" + catdetallepronosticomtto.getCod_lis_equ() + "' AND id_pro_mtto = "+ catdetallepronosticomtto.getId_pro_mtto()+";";
-
+        mQuery = "select ifnull(max(id_det_pro_mtto),0)+1 as codigo from det_pro_mtto;";
+        id_det_pro_mtto = mAccesos.strQuerySQLvariable(mQuery);
+          
+        cod_lis_equ = ((CatCalendario) tlevent.getData()).getCod_lis_equ();
+        det_obs = ((CatCalendario) tlevent.getData()).getDet_obs();
+        fec_ini = fmt.format(tlevent.getStartDate());
+        fec_fin = fmt.format(tlevent.getEndDate());
+        
+        mQuery = "INSERT INTO ipsa.det_pro_mtto " +
+                 "(id_det_pro_mtto, id_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_pri, cod_sup, cod_dep, turno) " +
+                 "VALUES ("+id_det_pro_mtto+","+id_pro_mtto+","+cod_lis_equ+", 1, 1,'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',"+ det_sta +","+ cod_usu +","+ cod_per +","+ flg_ext + ",'"+ cod_pri +"',"+ cod_sup +","+ cod_dep + "," + turno + ");";
+                                           
         mAccesos.dmlSQLvariable(mQuery);
         mAccesos.Desconectar();
+        TimelineUpdater timelineUpdater = TimelineUpdater.getCurrentInstance(":mainForm:timeline");
+        modelTimeLine.update(tlevent, timelineUpdater);
+        
         addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);    
     }
 
