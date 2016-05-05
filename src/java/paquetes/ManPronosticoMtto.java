@@ -53,7 +53,7 @@ public class ManPronosticoMtto implements Serializable {
     private String id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_origen, anho_pro_mtto;
     private String id_det_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta,
             cod_usu, nomtip, status, datraso, color, cod_per, periodo, flg_ext, cod_sup, turno, cod_pri, cod_dep, cod_alt, obs_tec, otr_per, nomequ;
-    private Date mfecha;
+    private Date mfecha, mfec_fin;
 
     // Variables para timeline
     private TimelineModel modelTimeLine;
@@ -185,17 +185,21 @@ public class ManPronosticoMtto implements Serializable {
           
         cod_lis_equ = ((CatCalendario) tlevent.getData()).getCod_lis_equ();
         det_obs = ((CatCalendario) tlevent.getData()).getDet_obs();
+        mfec_fin = ((CatCalendario) tlevent.getData()).getFec_fin();
+        fec_fin = fmt.format(mfec_fin);
         fec_ini = fmt.format(tlevent.getStartDate());
-        fec_fin = fmt.format(tlevent.getEndDate());
         
         mQuery = "INSERT INTO ipsa.det_pro_mtto " +
-                 "(id_det_pro_mtto, id_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_pri, cod_sup, cod_dep, turno) " +
-                 "VALUES ("+id_det_pro_mtto+","+id_pro_mtto+","+cod_lis_equ+", 1, 1,'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',"+ det_sta +","+ cod_usu +","+ cod_per +","+ flg_ext + ",'"+ cod_pri +"',"+ cod_sup +","+ cod_dep + "," + turno + ");";
+                 "(id_det_pro_mtto, id_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta) " +
+                 "VALUES ("+id_det_pro_mtto+","+id_pro_mtto+","+cod_lis_equ+", 1, 1,'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',1);";
                                            
         mAccesos.dmlSQLvariable(mQuery);
         mAccesos.Desconectar();
-        TimelineUpdater timelineUpdater = TimelineUpdater.getCurrentInstance(":mainForm:timeline");
-        modelTimeLine.update(tlevent, timelineUpdater);
+        
+        llenarDetallePronosticoMtto();
+        
+        //TimelineUpdater timelineUpdater = TimelineUpdater.getCurrentInstance(":frmDetalleProMtto:PronosticoTimeline");
+        //modelTimeLine.update(tlevent, timelineUpdater);
         
         addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);    
     }
@@ -505,7 +509,7 @@ public class ManPronosticoMtto implements Serializable {
     
      public void onAdd(TimelineAddEvent e) {  
         tlevent = new TimelineEvent(new CatCalendario(), e.getStartDate(), e.getEndDate(), true, e.getGroup());
-        tlevent.setStyleClass("pronostico");            
+        tlevent.setStyleClass("timeline-event-selected");            
         modelTimeLine.add(tlevent);
     }   
     // Mensajes
@@ -915,6 +919,14 @@ public class ManPronosticoMtto implements Serializable {
 
     public void setAnho_origen(String anho_origen) {
         this.anho_origen = anho_origen;
+    }
+
+    public Date getMfec_fin() {
+        return mfec_fin;
+    }
+
+    public void setMfec_fin(Date mfec_fin) {
+        this.mfec_fin = mfec_fin;
     }
     
 

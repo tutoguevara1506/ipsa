@@ -7332,13 +7332,13 @@
                     <p:calendar value="#{manPronosticoMtto.tlevent.startDate}"  pattern="dd/MM/yyyy"/>
 
                     <p:outputLabel value="Hasta:" />
-                    <p:calendar value="#{manPronosticoMtto.tlevent.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy"/>
+                    <p:calendar value="#{manPronosticoMtto.tlevent.data.fec_fin}" timeZone="GMT+2" pattern="dd/MM/yyyy"/>
 
                     <p:outputLabel for="obs" value="Observacion:" />
                     <p:inputTextarea rows="6" cols="33" autoResize="false" id="obs" value="#{manPronosticoMtto.tlevent.data.det_obs}" required="true"/>
 
                     <p:commandButton type="reset" value="Limpiar" />
-                    <p:commandButton id="addButton" value="Guardar" actionListener="#{manPronosticoMtto.guardarNuevoMtto()}" oncomplete="PF('mttoDialog').hide();" />
+                    <p:commandButton id="addButton" value="Guardar" actionListener="#{manPronosticoMtto.guardarNuevoMtto()}" oncomplete="PF('mttoDialog').hide();" update=":frmDetalleProMtto" />
                 </h:panelGrid>
             </h:form>
         </p:dialog>    
