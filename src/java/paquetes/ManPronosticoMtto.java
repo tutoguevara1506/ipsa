@@ -512,6 +512,7 @@ public class ManPronosticoMtto implements Serializable {
         tlevent.setStyleClass("timeline-event-selected");            
         modelTimeLine.add(tlevent);
     }   
+     
     // Mensajes
     
      public boolean validardatos() {
