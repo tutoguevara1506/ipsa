@@ -138,16 +138,25 @@ public class ManPronosticoMtto implements Serializable {
                          
                         //cambio de anho de la fecha de inicio y fin
                         
-                        fec_ini = fec_ini.replaceAll(anho_origen, anho_pro_mtto);
-                        fec_fin = fec_fin.replaceAll(anho_origen, anho_pro_mtto);
+                        fec_ini = fec_ini.replaceAll(fec_ini.substring(0,4), anho_pro_mtto);
+                        fec_fin = fec_fin.replaceAll(fec_fin.substring(0,4), anho_pro_mtto);
                                                 
                         // cambio en el correlativo del cod_man
                         
                                                 
                         mQuery2 = "INSERT INTO ipsa.det_pro_mtto " +
+                                  "(id_det_pro_mtto, id_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta) " +
+                                  "VALUES ("+id_det_pro_mtto+","+id_pro_mtto+","+cod_lis_equ+", 1, 1,'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',1);";
+                                
+                                /*
+                                INSERT COMPLETO-- DA ERROR PORQUE CUANDO SE TOMA UNA PLANIFICACIÓN LOS REGISTROS INGRESADOS A TRAVEZ DE NUEVO
+                                EN EL TIMELINE NO TIENE LOS DATOS COMPLETOS.
+                        
+                                "INSERT INTO ipsa.det_pro_mtto " +
                                   "(id_det_pro_mtto, id_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_pri, cod_sup, cod_dep, turno) " +
                                   "VALUES ("+id_det_pro_mtto+","+id_pro_mtto+","+cod_lis_equ+","+cod_man+","+ cod_tip +",'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',"+ det_sta +","+ cod_usu +","+ cod_per +","+ flg_ext + ",'"+ cod_pri +"',"+ cod_sup +","+ cod_dep + "," + turno + ");";
-                                                
+                                */
+                        
                         mAccesos.dmlSQLvariable(mQuery2);
                     });             
                     
@@ -389,7 +398,7 @@ public class ManPronosticoMtto implements Serializable {
                 mQuery = " select det.id_det_pro_mtto, det.id_pro_mtto, det.cod_lis_equ, det.cod_man, det.cod_tip, det.det_obs, det.fec_ini, det.fec_fin, det.det_sta, det.cod_usu, det.cod_per, det.flg_ext, det.cod_pri, det.cod_sup, det.cod_dep, det.turno, lis.des_equ"
                     + " from det_pro_mtto det inner join cat_pro_mtto pro on "
                     + " det.id_pro_mtto = pro.id_pro_mtto inner join lis_equ lis on det.cod_lis_equ = lis.cod_lis_equ"
-                    + " where det.cod_tip = 1 and pro.anho_origen ="+ anho_origen +" order by cod_man;";                 
+                    + " where det.cod_tip = 1 and pro.id_pro_mtto ="+ anho_origen +" order by cod_man;";                 
             }else{
                 mQuery = " select det.id_det_pro_mtto, det.id_pro_mtto, det.cod_lis_equ, det.cod_man, det.cod_tip, det.det_obs, det.fec_ini, det.fec_fin, det.det_sta, det.cod_usu, det.cod_per, det.flg_ext, det.cod_pri, det.cod_sup, det.cod_dep, det.turno, lis.des_equ"
                     + " from det_pro_mtto det inner join cat_pro_mtto pro on "
