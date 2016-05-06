@@ -7314,16 +7314,21 @@
                                      showNavigation="true"
                                      timeChangeable="true"
                                      locale="es"
-                                     widgetVar="pronoTL">
+                                     widgetVar="pronoTL"
+                                     var="timelinepro">
                     <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="@form" update=":frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
                     <p:ajax  event="changed" listener="#{manPronosticoMtto.onChange}" process="@form"/> 
                     <p:ajax  event="add" update=":frmMttoDialog"  listener="#{manPronosticoMtto.onAdd}" oncomplete="PF('mttoDialog').show()"/>  
+                    
+                    <h:panelGrid columns="1">  
+                        <h:outputText value="#{timelinepro.des_equ}" style="font-size:8px"/>  
+                    </h:panelGrid>  
                 </pe:timeline>  
             </h:form>
         </p:dialog>
         
          
-         <p:dialog widgetVar="mttoDialog" header="Observaciones" showEffect="clip" hideEffect="clip">
+         <p:dialog widgetVar="mttoDialog" header="Observaciones" showEffect="clip" hideEffect="clip" modal="true" closable="false">
             <h:form id="frmMttoDialog">
                 <h:panelGrid id="grdMttoDialog" columns="2">
                     <p:outputLabel for="equlist" value="Equipo:" />
@@ -7345,8 +7350,8 @@
                     <p:outputLabel for="obs" value="Observacion:" />
                     <p:inputTextarea rows="6" cols="33" autoResize="false" id="obs" value="#{manPronosticoMtto.tlevent.data.det_obs}" required="true"/>
 
-                    <p:commandButton type="reset" value="Limpiar" />
-                    <p:commandButton id="addButton" value="Guardar" actionListener="#{manPronosticoMtto.guardarNuevoMtto()}" oncomplete="PF('mttoDialog').hide();" update=":frmDetalleProMtto" />
+                    <p:commandButton type="reset" value="Cerrar" onclick="PF('mttoDialog').hide();"/>
+                    <p:commandButton id="addButton" value="Guardar" actionListener="#{manPronosticoMtto.guardarMtto()}" oncomplete="PF('mttoDialog').hide();" update=":frmDetalleProMtto" />
                 </h:panelGrid>
             </h:form>
         </p:dialog>    
