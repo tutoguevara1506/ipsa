@@ -244,10 +244,10 @@ public class ManPronosticoMtto implements Serializable {
         if ("".equals(id_pro_mtto) == false) {
             
             String mQuery2="";
-            mQuery2 = "SELECT ifnull(aprobado,0) FROM ipsa.cat_pro_mtto WHERE anho_pro_mtto ="+ anho_pro_mtto +";";
+            mQuery2 = "SELECT ifnull(aprobado,0) FROM ipsa.cat_pro_mtto WHERE anho_pro_mtto ="+ anho_pro_mtto +" AND aprobado= 1;";
             aprobado = mAccesos.strQuerySQLvariable(mQuery2);
             
-            if("0".equals(aprobado) == true){
+            if("".equals(aprobado) == true){
             
                 llenarMttosPreventivos(2);
                     
@@ -275,17 +275,22 @@ public class ManPronosticoMtto implements Serializable {
 
 
                     mQuery = "INSERT INTO ipsa.tbl_mae_man " +
+                              "(cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta) " +
+                              "VALUES ("+cod_lis_equ+","+cod_man+","+ cod_tip +",'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',"+ det_sta +");";
+                            
+                            /*
+                            Insert completo
+                            "INSERT INTO ipsa.tbl_mae_man " +
                               "(cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_pri, cod_sup, cod_dep, turno) " +
                               "VALUES ("+cod_lis_equ+","+cod_man+","+ cod_tip +",'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',"+ det_sta +","+ cod_usu +","+ cod_per +","+ flg_ext + ",'"+ cod_pri +"',"+ cod_sup +","+ cod_dep + "," + turno + ");";
-
+                            */
                     mAccesos.dmlSQLvariable(mQuery);
-                    addMessage("Autorizar Programa", "La Actualización de mantenimientos fue satisfactoria.", 1);
-
                 });
                 
                 mQuery2 = "";
                 mQuery2 = "UPDATE ipsa.cat_pro_mtto SET Aprobado = 1 WHERE id_pro_mtto =" + id_pro_mtto +";";
                 mAccesos.dmlSQLvariable(mQuery2);
+                addMessage("Autorizar Programa", "La Actualización de mantenimientos fue satisfactoria.", 1);
                 
             } else {
                 addMessage("Autorizar Programa", "NO puede autorizar planificaciones para un año ya autorizado.", 2);
