@@ -247,7 +247,7 @@ public class ManPronosticoMtto implements Serializable {
             mQuery2 = "SELECT ifnull(aprobado,0) FROM ipsa.cat_pro_mtto WHERE anho_pro_mtto ="+ anho_pro_mtto +";";
             aprobado = mAccesos.strQuerySQLvariable(mQuery2);
             
-            if("".equals(aprobado) == true){
+            if("0".equals(aprobado) == true){
             
                 llenarMttosPreventivos(2);
                     
