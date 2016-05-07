@@ -248,7 +248,23 @@ public class ManPronosticoMtto implements Serializable {
             addMessage("Eliminar Evaluaciones", "Debe elegir un Registro.", 2);
         }
         mAccesos.Desconectar();
+    }
+    
+    public void deleteMtto(){
+    
+        id_det_pro_mtto = ((CatDetallePronosticoMtto) tlevent.getData()).getId_det_pro_mtto();
+        String mQuery="";
+        
+        Accesos mAccesos = new Accesos();
+        mAccesos.Conectar();
 
+        mQuery = "delete from det_pro_mtto where id_det_pro_mtto = "+ id_det_pro_mtto+";";
+
+        mAccesos.dmlSQLvariable(mQuery);
+        mAccesos.Desconectar();
+        
+        llenarDetallePronosticoMtto();
+        addMessage("Guardar Mantenimiento", "Información Eliminada con éxito.", 1);
     }
     
     public void autorizar() {
@@ -555,22 +571,7 @@ public void actualizar() {
     }   
      
      public void onDelete(TimelineModificationEvent e) {  
-        // get clone of the TimelineEvent to be deleted  
         tlevent = e.getTimelineEvent(); 
-        /*id_det_pro_mtto = ((CatDetallePronosticoMtto) tlevent.getData());
-                
-        String mQuery="";
-        
-        Accesos mAccesos = new Accesos();
-        mAccesos.Conectar();
-
-        mQuery = "delete from det_pro_mtto where id_det_pro_mtto = "+ id_det_pro_mtto+";";
-
-        mAccesos.dmlSQLvariable(mQuery);
-        mAccesos.Desconectar();
-        addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);
-        
-        */
     }  
      
     // Mensajes
@@ -623,6 +624,16 @@ public void actualizar() {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+    
+     public String getDeleteMessage() {  
+        String equipo = ((CatDetallePronosticoMtto) tlevent.getData()).getDes_equ();  
+        
+        if ("".equals(equipo)) {  
+            return "Desea Borrar el nuevo mantenimiento?";  
+        }  
+  
+        return "Desea eliminar el registro de mantenimiento para el equipo " + equipo + "?";  
+    }  
 
     
     // Setter y Getters

@@ -7255,17 +7255,18 @@
                         <p:column style="width:30px" headerText="Fecha Evaluacion">
                             <h:outputText value="#{vProMtto.fecha_pro_mtto}" />
                         </p:column>
-                         <p:column style="width:30px" headerText="Año Origen">
-                            <h:outputText value="#{vProMtto.anho_origen}" />
-                        </p:column>
                         <p:column style="width:30px" headerText="Año Destino">
                             <h:outputText value="#{vProMtto.anho_pro_mtto}" />
+                        </p:column>
+                        <p:column style="width:32px;text-align: center" headerText="Aplicado">
+                            <pe:triStateCheckbox value="#{vProMtto.aprobado}" disabled="true" />
                         </p:column>
                         <p:column style="width:32px;text-align: center">
                             <p:commandButton update=":dlgDetalleProMtto" oncomplete="PF('wDetalleProMtto').show()" onclick="PF('proMttoCabecera').selectRow(#{proIndex})" icon="ui-icon-search" title="View" action="#{manPronosticoMtto.llenarDetallePronosticoMtto}">
                                 <f:setPropertyActionListener value="#{vProMtto}" target="#{manPronosticoMtto.catpronosticomtto}" />
                             </p:commandButton>
                         </p:column>
+                         
                     </p:dataTable>
                 </div>
             </h:form>
@@ -7319,7 +7320,8 @@
                     <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="@form" update=":frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
                     <p:ajax  event="changed" listener="#{manPronosticoMtto.onChange}" process="@form"/> 
                     <p:ajax  event="add" update=":frmMttoDialog"  listener="#{manPronosticoMtto.onAdd}" oncomplete="PF('mttoDialog').show()"/>  
-                    
+                    <p:ajax  event="delete" update=":frmMttoDelete:deleteMttoInner"  listener="#{manPronosticoMtto.onDelete}"  
+                             onstart="PF('pronoTL').cancelDelete()" oncomplete="PF('deleteMttoWdgt').show()"/>  
                     <h:panelGrid columns="1">  
                         <h:outputText value="#{timelinepro.des_equ}" style="font-size:8px"/>  
                     </h:panelGrid>  
@@ -7354,7 +7356,24 @@
                     <p:commandButton id="addButton" value="Guardar" actionListener="#{manPronosticoMtto.guardarMtto()}" oncomplete="PF('mttoDialog').hide();" update=":frmDetalleProMtto" />
                 </h:panelGrid>
             </h:form>
-        </p:dialog>    
+        </p:dialog> 
+         
+         <p:dialog id="deleteMttoDlg" header="Detalle de mantenimiento" widgetVar="deleteMttoWdgt"  
+                    showEffect="clip" hideEffect="clip" dynamic="true"> 
+             <h:form id="frmMttoDelete">
+                <h:panelGroup id="deleteMttoInner" layout="block" style="margin:10px;">  
+                    <h:outputText value="#{manPronosticoMtto.deleteMessage}"/>  
+                </h:panelGroup>  
+
+                    <h:panelGroup layout="block" style="text-align:right; padding:2px; white-space:nowrap;">  
+                        <p:commandButton value="Borrar" process="deleteMttoDlg" update=":frmDetalleProMtto"  
+                                         action="#{manPronosticoMtto.deleteMtto}"  
+                                         oncomplete="PF('deleteMttoWdgt').hide()"/> 
+                        <p:spacer width="10"/>
+                        <p:commandButton type="button" value="Cerrar" onclick="PF('deleteMttoWdgt').hide()"/>  
+                    </h:panelGroup>  
+             </h:form>
+          </p:dialog> 
 
         <!-- *******************************************************************
         **************** Pantalla mantenimiento de Almacenes *******************
