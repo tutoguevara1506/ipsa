@@ -231,7 +231,10 @@ public class ManPronosticoMtto implements Serializable {
         String mQuery2 = "";
         Accesos mAccesos = new Accesos();
         mAccesos.Conectar();
-        if ("".equals(id_pro_mtto) == false) {
+        mQuery = "Select aprobado from cat_pro_mtto where id_pro_mtto= "+ id_pro_mtto+";";
+        aprobado = mAccesos.strQuerySQLvariable(mQuery);
+        
+        if (("".equals(id_pro_mtto) == false)&&("0".equals(aprobado))) {
             try {
                 mQuery2 = "delete from det_pro_mtto where id_pro_mtto=" + id_pro_mtto + ";";
                 mQuery = "delete from cat_pro_mtto where id_pro_mtto=" + id_pro_mtto + ";";
@@ -245,7 +248,11 @@ public class ManPronosticoMtto implements Serializable {
             llenarPronosticos();
             nuevo();
         } else {
-            addMessage("Eliminar Evaluaciones", "Debe elegir un Registro.", 2);
+            if (!"0".equals(aprobado)){
+                addMessage("Eliminar Evaluaciones", "No puede eliminar un pronostico aprobado.", 2);
+            }else{
+                addMessage("Eliminar Evaluaciones", "Debe elegir un Registro.", 2);
+            }
         }
         mAccesos.Desconectar();
     }
