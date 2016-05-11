@@ -503,11 +503,9 @@ public class ManAlertas implements Serializable {
         try {
         logale.remove(alerta);
         
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-        
-        
+        } catch (Exception e) {
+         e.printStackTrace();
+        }        
     }
 
     public boolean validardatos() {
