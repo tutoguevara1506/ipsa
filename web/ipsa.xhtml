@@ -431,6 +431,7 @@
                             <p:column style="width:180px" headerText="Descripcion">
                                 <h:outputText value="#{vDaler.ale_des}" />
                             </p:column>
+                            
                         </p:dataTable>
                     </p:panel>
 
@@ -8387,6 +8388,7 @@
                         </p:confirmDialog>
                     </f:facet>
                 </p:toolbar>
+                
                 <div style=" background-color: #ebf8fe;">
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Departamento" style="font-weight:bold;"/>
@@ -8416,6 +8418,7 @@
                                          onfocus="this.select()" onkeypress="return valida(event)"/>
                         </h:panelGroup>             
                     </h:panelGrid>
+                
                     <h:panelGrid columns="2" cellpadding="5">
                         <p:fieldset id="usudis" legend="Usuarios Disponibles" style="width:270px">
                             <p:dataTable id="usuariosDisponibles" var="usudis" value="#{manAlertas.usuarios}" style="width:260px" scrollHeight="150">
@@ -8453,17 +8456,19 @@
                                 </p:dataTable>
                             </p:outputPanel>                    
                         </p:fieldset>
-
                     </h:panelGrid>
 
-                    <p:droppable for="ususel" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosDisponibles" onDrop="handleDrop">
+                    <p:droppable for="ususel" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosDisponibles">
                         <p:ajax listener="#{manAlertas.onUsuDrop}" update="dropArea usuariosDisponibles" />
                     </p:droppable>
 
-                    <p:droppable for="usudis" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosSeleccionados" onDrop="handleDrop">
+                    <p:droppable for="usudis" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosSeleccionados">
                         <p:ajax listener="#{manAlertas.onUsuDropRet}" update="dropArea usuariosDisponibles" />
                     </p:droppable>
 
+                    
+                    
+                    
                     <p:dataTable id="dtAlertas" var="vAlertas" 
                                  value="#{manAlertas.alertas}" 
                                  rows ="3"
@@ -8495,6 +8500,12 @@
                     </p:dataTable>
                 </div>
 
+                
+                
+                
+                
+                
+                
             </h:form>
         </p:dialog>  
     </h:body>
