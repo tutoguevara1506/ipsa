@@ -498,6 +498,17 @@ public class ManAlertas implements Serializable {
         mAccesos.Desconectar();
 
     }
+    
+    public void remove(LogAlertas alerta){
+        try {
+        logale.remove(alerta);
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+        
+        
+    }
 
     public boolean validardatos() {
         

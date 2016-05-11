@@ -399,14 +399,6 @@
                             <p:ajax  event="edit" listener="#{manMaestroMan.onEdit}" process="@form" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
                             <p:ajax  event="changed" listener="#{manMaestroMan.onChange}" process="@form"/> 
                         </pe:timeline>  
-
-                        <h:outputStylesheet id="timelineCSS">  
-                            table .formColumn {  
-                            padding: 0 5px 0 5px;  
-                            text-align: right;  
-                            white-space: nowrap;  
-                            }         
-                        </h:outputStylesheet>  
                     </h:form>
                 </p:panel>
 
