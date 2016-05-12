@@ -499,13 +499,10 @@ public class ManAlertas implements Serializable {
 
     }
     
-    public void remove(LogAlertas alerta){
-        try {
-        logale.remove(alerta);
-        
-        } catch (Exception e) {
-         e.printStackTrace();
-        }        
+    public void remove(){
+                        
+        String idRemove= logalertas.getId_log_ale();
+        System.out.println("entro a remove "+ idRemove);
     }
 
     public boolean validardatos() {

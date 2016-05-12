@@ -439,7 +439,8 @@
                                                      icon="ui-icon-trash"
                                                      title="Borrar registro de alerta"
                                                      onclick="PF('alerLogDT').selectRow(#{logIndex})" 
-                                                     action="#{manAlertas.remove}">
+                                                     action="#{manAlertas.remove}"
+                                                     process="@form">
                                         <f:setPropertyActionListener value="#{vDaler}" target="#{manAlertas.logalertas}" />
                                     </p:commandButton>
                                 </p:column>
