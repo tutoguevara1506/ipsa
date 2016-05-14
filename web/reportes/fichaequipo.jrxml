@@ -11,8 +11,8 @@
 		<![CDATA[select 
 pai.nom_pai, 
 equ.nom_equ, 
-pro.nom_pro, 
-cli.nom_cli, 
+pro.nom_mar as nom_pro, 
+lequ.cod_cli as nom_cli, 
 lequ.num_mod, 
 lequ.num_ser, 
 lequ.des_equ, 
@@ -27,8 +27,7 @@ date_format(lequ.fec_ret,'%d/%m/%Y') as fec_ret
 from lis_equ as lequ
 left join cat_pai as pai on lequ.cod_pai = pai.cod_pai
 left join cat_equ as equ on lequ.cod_equ = equ.cod_equ
-left join cat_pro as pro on lequ.cod_pai = pro.cod_pai and lequ.cod_pro = pro.cod_pro
-left join cat_cli as cli on lequ.cod_pai = cli.cod_pai and lequ.cod_cli = cli.cod_cli
+left join cat_mar as pro on lequ.cod_pro = pro.id_mar
 where lequ.cod_lis_equ = $P{codequipo}]]>
 	</queryString>
 	<field name="nom_pai" class="java.lang.String">
@@ -175,13 +174,6 @@ where lequ.cod_lis_equ = $P{codequipo}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{num_ser}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="86" y="323" width="418" height="15" uuid="34ada3e3-dcc7-4eac-adf5-5dbdbfd36e1d"/>
-				<textElement textAlignment="Justified">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{des_equ}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="13" y="103" width="62" height="15" uuid="47a2a155-994a-41d4-833c-695a43a2cdb6"/>
 				<textElement>
@@ -208,7 +200,7 @@ where lequ.cod_lis_equ = $P{codequipo}]]>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Fabricante:]]></text>
+				<text><![CDATA[Marca:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="13" y="203" width="62" height="15" uuid="cb7b597c-41c1-4f40-9906-62310dbe61b7"/>
@@ -322,6 +314,13 @@ where lequ.cod_lis_equ = $P{codequipo}]]>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{det_vol}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="88" y="323" width="416" height="15" uuid="7f13f936-ddb8-4557-b999-6ea9af438b9e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nom_cli}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
