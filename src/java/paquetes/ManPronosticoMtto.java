@@ -24,13 +24,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
-import org.primefaces.event.ScheduleEntryMoveEvent;
-import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.extensions.component.timeline.TimelineUpdater;
+import org.primefaces.extensions.event.timeline.TimelineAddEvent;
 import org.primefaces.extensions.event.timeline.TimelineModificationEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.model.timeline.TimelineModel;
-import org.primefaces.model.ScheduleEvent;
 
 @Named
 @ConversationScoped
@@ -51,14 +50,14 @@ public class ManPronosticoMtto implements Serializable {
     private List<CatListaEquipos> lequipos;
     private CatCalendario catcalendario;
     private List<CatCalendario> listaMttos;
-    private String id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_origen, anho_pro_mtto;
+    private String id_pro_mtto, nom_pro_mtto, fecha_pro_mtto, anho_origen, anho_pro_mtto, aprobado;
     private String id_det_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta,
             cod_usu, nomtip, status, datraso, color, cod_per, periodo, flg_ext, cod_sup, turno, cod_pri, cod_dep, cod_alt, obs_tec, otr_per, nomequ;
-    private Date mfecha;
+    private Date mfecha, mfec_fin;
 
     // Variables para timeline
     private TimelineModel modelTimeLine;
-    private TimelineEvent eventTimeLine;
+    private TimelineEvent tlevent;
 
     
     public ManPronosticoMtto() {
@@ -75,6 +74,7 @@ public class ManPronosticoMtto implements Serializable {
         anho_origen = "";
         anho_pro_mtto = "";
         llenarPronosticos();
+        llenarListaEquipos();
     }
 
     public void cerrarventana() {
@@ -85,13 +85,10 @@ public class ManPronosticoMtto implements Serializable {
         anho_origen = "";
         anho_pro_mtto = "";
         pronosticomtto = new ArrayList<>();
+        lequipos = new ArrayList<>();
     }
     
-    public void cerrardetalle() {
-        guardarDetalleMttos();
-    }
-
-     public void nuevo() {
+    public void nuevo() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         mfecha = Date.from(Instant.now());
         id_pro_mtto= "";
@@ -100,6 +97,7 @@ public class ManPronosticoMtto implements Serializable {
         anho_origen = "";
         anho_pro_mtto = "";
         catpronosticomtto = new CatPronosticoMtto();
+        llenarListaEquipos();
     }
 
     public void guardar() {
@@ -140,16 +138,25 @@ public class ManPronosticoMtto implements Serializable {
                          
                         //cambio de anho de la fecha de inicio y fin
                         
-                        fec_ini = fec_ini.replaceAll(anho_origen, anho_pro_mtto);
-                        fec_fin = fec_fin.replaceAll(anho_origen, anho_pro_mtto);
+                        fec_ini = fec_ini.replaceAll(fec_ini.substring(0,4), anho_pro_mtto);
+                        fec_fin = fec_fin.replaceAll(fec_fin.substring(0,4), anho_pro_mtto);
                                                 
                         // cambio en el correlativo del cod_man
                         
                                                 
                         mQuery2 = "INSERT INTO ipsa.det_pro_mtto " +
+                                  "(id_det_pro_mtto, id_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta) " +
+                                  "VALUES ("+id_det_pro_mtto+","+id_pro_mtto+","+cod_lis_equ+", 1, 1,'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',1);";
+                                
+                                /*
+                                INSERT COMPLETO-- DA ERROR PORQUE CUANDO SE TOMA UNA PLANIFICACIÓN LOS REGISTROS INGRESADOS A TRAVEZ DE NUEVO
+                                EN EL TIMELINE NO TIENE LOS DATOS COMPLETOS.
+                        
+                                "INSERT INTO ipsa.det_pro_mtto " +
                                   "(id_det_pro_mtto, id_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_pri, cod_sup, cod_dep, turno) " +
                                   "VALUES ("+id_det_pro_mtto+","+id_pro_mtto+","+cod_lis_equ+","+cod_man+","+ cod_tip +",'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',"+ det_sta +","+ cod_usu +","+ cod_per +","+ flg_ext + ",'"+ cod_pri +"',"+ cod_sup +","+ cod_dep + "," + turno + ");";
-                                                
+                                */
+                        
                         mAccesos.dmlSQLvariable(mQuery2);
                     });             
                     
@@ -175,9 +182,48 @@ public class ManPronosticoMtto implements Serializable {
 
     }
     
-    public void guardarDetalleMttos(){
-        System.out.println("entra");
-    
+    public void guardarMtto(){
+        
+        String mQuery;
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+
+        Accesos mAccesos = new Accesos();
+        mAccesos.Conectar();
+        
+        id_det_pro_mtto = ((CatDetallePronosticoMtto) tlevent.getData()).getId_det_pro_mtto();
+        cod_lis_equ = ((CatDetallePronosticoMtto) tlevent.getData()).getCod_lis_equ();
+        det_obs = ((CatDetallePronosticoMtto) tlevent.getData()).getDet_obs();
+        mfec_fin = ((CatDetallePronosticoMtto) tlevent.getData()).getFec_fin();
+        fec_fin = fmt.format(mfec_fin);
+        fec_ini = fmt.format(tlevent.getStartDate());
+        
+        if (id_det_pro_mtto == null) {
+            
+            mQuery = "select ifnull(max(id_det_pro_mtto),0)+1 as codigo from det_pro_mtto;";
+            id_det_pro_mtto = mAccesos.strQuerySQLvariable(mQuery);
+
+            mQuery = "INSERT INTO ipsa.det_pro_mtto " +
+                     "(id_det_pro_mtto, id_pro_mtto, cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta) " +
+                     "VALUES ("+id_det_pro_mtto+","+id_pro_mtto+","+cod_lis_equ+", 1, 1,'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',1);";
+
+            mAccesos.dmlSQLvariable(mQuery);
+        }else{
+            mQuery = "update det_pro_mtto SET "
+                + " fec_ini = '" + fec_ini + "', "
+                + " fec_fin = '" + fec_fin + "', "
+                + " det_obs = '" + det_obs + "' "    
+                + "WHERE id_det_pro_mtto = "+ id_det_pro_mtto +";";
+            
+            mAccesos.dmlSQLvariable(mQuery);
+        }
+        
+        mAccesos.Desconectar();
+        
+        llenarDetallePronosticoMtto();
+        
+        //TimelineUpdater timelineUpdater = TimelineUpdater.getCurrentInstance(":frmDetalleProMtto:PronosticoTimeline");
+        //modelTimeLine.update(tlevent, timelineUpdater);
+        addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);    
     }
 
     public void eliminar() {
@@ -185,7 +231,10 @@ public class ManPronosticoMtto implements Serializable {
         String mQuery2 = "";
         Accesos mAccesos = new Accesos();
         mAccesos.Conectar();
-        if ("".equals(id_pro_mtto) == false) {
+        mQuery = "Select aprobado from cat_pro_mtto where id_pro_mtto= "+ id_pro_mtto+";";
+        aprobado = mAccesos.strQuerySQLvariable(mQuery);
+        
+        if (("".equals(id_pro_mtto) == false)&&("0".equals(aprobado))) {
             try {
                 mQuery2 = "delete from det_pro_mtto where id_pro_mtto=" + id_pro_mtto + ";";
                 mQuery = "delete from cat_pro_mtto where id_pro_mtto=" + id_pro_mtto + ";";
@@ -199,56 +248,98 @@ public class ManPronosticoMtto implements Serializable {
             llenarPronosticos();
             nuevo();
         } else {
-            addMessage("Eliminar Evaluaciones", "Debe elegir un Registro.", 2);
+            if (!"0".equals(aprobado)){
+                addMessage("Eliminar Evaluaciones", "No puede eliminar un pronostico aprobado.", 2);
+            }else{
+                addMessage("Eliminar Evaluaciones", "Debe elegir un Registro.", 2);
+            }
         }
         mAccesos.Desconectar();
+    }
+    
+    public void deleteMtto(){
+    
+        id_det_pro_mtto = ((CatDetallePronosticoMtto) tlevent.getData()).getId_det_pro_mtto();
+        String mQuery="";
+        
+        Accesos mAccesos = new Accesos();
+        mAccesos.Conectar();
 
+        mQuery = "delete from det_pro_mtto where id_det_pro_mtto = "+ id_det_pro_mtto+";";
+
+        mAccesos.dmlSQLvariable(mQuery);
+        mAccesos.Desconectar();
+        
+        llenarDetallePronosticoMtto();
+        addMessage("Guardar Mantenimiento", "Información Eliminada con éxito.", 1);
     }
     
     public void autorizar() {
         Accesos mAccesos = new Accesos();
         mAccesos.Conectar();
         if ("".equals(id_pro_mtto) == false) {
-                         
-            llenarMttosPreventivos(2);
+            
+            String mQuery2="";
+            mQuery2 = "SELECT ifnull(aprobado,0) FROM ipsa.cat_pro_mtto WHERE anho_pro_mtto ="+ anho_pro_mtto +" AND aprobado= 1;";
+            aprobado = mAccesos.strQuerySQLvariable(mQuery2);
+            
+            if("".equals(aprobado) == true){
+            
+                llenarMttosPreventivos(2);
                     
-            detallepronosticomtto.stream().forEach((mpdet) -> {
-                String mQuery = "";
-                SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-                cod_lis_equ = mpdet.getCod_lis_equ();
-                
-                // Genera cod_man para cod_lis_equ de acuerdo al correlativo existente.
-                mQuery = "SELECT ifnull(max(cod_man),0)+1 as codigo FROM ipsa.tbl_mae_man WHERE cod_lis_equ ="+ cod_lis_equ +";";
-                cod_man = mAccesos.strQuerySQLvariable(mQuery);
-                
-                cod_tip = mpdet.getCod_tip();
-                det_obs = mpdet.getDet_obs().replace("'", " ");
-                fec_ini = fmt.format(mpdet.getFec_ini());
-                fec_fin = fmt.format(mpdet.getFec_fin());
-                det_sta = mpdet.getDet_sta();
-                cod_usu = mpdet.getCod_usu();
-                cod_per = mpdet.getCod_per();
-                flg_ext = mpdet.getFlg_ext();
-                cod_pri = mpdet.getCod_pri();
-                cod_sup = mpdet.getCod_sup();
-                cod_dep = mpdet.getCod_dep();
-                turno = mpdet.getTurno();
+                detallepronosticomtto.stream().forEach((mpdet) -> {
+                    String mQuery = "";
+                    SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+                    cod_lis_equ = mpdet.getCod_lis_equ();
+
+                    // Genera cod_man para cod_lis_equ de acuerdo al correlativo existente.
+                    mQuery = "SELECT ifnull(max(cod_man),0)+1 as codigo FROM ipsa.tbl_mae_man WHERE cod_lis_equ ="+ cod_lis_equ +";";
+                    cod_man = mAccesos.strQuerySQLvariable(mQuery);
+
+                    cod_tip = mpdet.getCod_tip();
+                    det_obs = mpdet.getDet_obs().replace("'", " ");
+                    fec_ini = fmt.format(mpdet.getFec_ini());
+                    fec_fin = fmt.format(mpdet.getFec_fin());
+                    det_sta = mpdet.getDet_sta();
+                    cod_usu = mpdet.getCod_usu();
+                    cod_per = mpdet.getCod_per();
+                    flg_ext = mpdet.getFlg_ext();
+                    cod_pri = mpdet.getCod_pri();
+                    cod_sup = mpdet.getCod_sup();
+                    cod_dep = mpdet.getCod_dep();
+                    turno = mpdet.getTurno();
 
 
-                mQuery = "INSERT INTO ipsa.tbl_mae_man " +
-                          "(cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_pri, cod_sup, cod_dep, turno) " +
-                          "VALUES ("+cod_lis_equ+","+cod_man+","+ cod_tip +",'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',"+ det_sta +","+ cod_usu +","+ cod_per +","+ flg_ext + ",'"+ cod_pri +"',"+ cod_sup +","+ cod_dep + "," + turno + ");";
-
-                mAccesos.dmlSQLvariable(mQuery);
+                    mQuery = "INSERT INTO ipsa.tbl_mae_man " +
+                              "(cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta) " +
+                              "VALUES ("+cod_lis_equ+","+cod_man+","+ cod_tip +",'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',"+ det_sta +");";
+                            
+                            /*
+                            Insert completo
+                            "INSERT INTO ipsa.tbl_mae_man " +
+                              "(cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin, det_sta, cod_usu, cod_per, flg_ext, cod_pri, cod_sup, cod_dep, turno) " +
+                              "VALUES ("+cod_lis_equ+","+cod_man+","+ cod_tip +",'"+ det_obs +"','" + fec_ini + "','" + fec_fin + "',"+ det_sta +","+ cod_usu +","+ cod_per +","+ flg_ext + ",'"+ cod_pri +"',"+ cod_sup +","+ cod_dep + "," + turno + ");";
+                            */
+                    mAccesos.dmlSQLvariable(mQuery);
+                });
                 
-            });
-     
+                mQuery2 = "";
+                mQuery2 = "UPDATE ipsa.cat_pro_mtto SET Aprobado = 1 WHERE id_pro_mtto =" + id_pro_mtto +";";
+                mAccesos.dmlSQLvariable(mQuery2);
+                addMessage("Autorizar Programa", "La Actualización de mantenimientos fue satisfactoria.", 1);
+                
+            } else {
+                addMessage("Autorizar Programa", "NO puede autorizar planificaciones para un año ya autorizado.", 2);
+            }
+                 
         } else {
             addMessage("Autorizar Programa", "Debe elegir un Registro de pronostico.", 2);
         }
         
+        //actualiza registro de cat_pro_mtto indicando que el registro se migró
+        
         mAccesos.Desconectar();
-        addMessage("Autorizar Programa", "La Actualización de mantenimientos fue satisfactoria.", 1);
+       
     }
     
     public void imprimir() {
@@ -286,7 +377,7 @@ public class ManPronosticoMtto implements Serializable {
             catpronosticomtto = new CatPronosticoMtto();
             pronosticomtto = new ArrayList<>();
 
-            mQuery = "SELECT id_pro_mtto, nom_pro_mtto, DATE_FORMAT(fecha_pro_mtto, '%d/%m/%Y'), anho_origen, anho_pro_mtto FROM ipsa.cat_pro_mtto;";
+            mQuery = "SELECT id_pro_mtto, nom_pro_mtto, DATE_FORMAT(fecha_pro_mtto, '%d/%m/%Y'), anho_origen, anho_pro_mtto, aprobado FROM ipsa.cat_pro_mtto;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -297,7 +388,8 @@ public class ManPronosticoMtto implements Serializable {
                         resVariable.getString(2),
                         resVariable.getString(3),
                         resVariable.getString(4),
-                        resVariable.getString(5)
+                        resVariable.getString(5),
+                        resVariable.getString(6)
                 ));
             }
             mAccesos.Desconectar();
@@ -316,7 +408,8 @@ public class ManPronosticoMtto implements Serializable {
 
         for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
             TimelineEvent tle = new TimelineEvent();
-            tle.setData(cm.getDes_equ());
+            
+            tle.setData(cm);
             tle.setStartDate(cm.getFec_ini());
             //tle.setEndDate(cm.getFec_fin());
             //tle.setGroup(cm.getDes_equ()); 
@@ -351,7 +444,7 @@ public class ManPronosticoMtto implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Equipos MaestroMan. " + e.getMessage());
+            System.out.println("Error en el llenado de Equipos ManpronosticoMtto " + e.getMessage());
         }
     }
     
@@ -365,7 +458,7 @@ public class ManPronosticoMtto implements Serializable {
                 mQuery = " select det.id_det_pro_mtto, det.id_pro_mtto, det.cod_lis_equ, det.cod_man, det.cod_tip, det.det_obs, det.fec_ini, det.fec_fin, det.det_sta, det.cod_usu, det.cod_per, det.flg_ext, det.cod_pri, det.cod_sup, det.cod_dep, det.turno, lis.des_equ"
                     + " from det_pro_mtto det inner join cat_pro_mtto pro on "
                     + " det.id_pro_mtto = pro.id_pro_mtto inner join lis_equ lis on det.cod_lis_equ = lis.cod_lis_equ"
-                    + " where det.cod_tip = 1 and pro.anho_origen ="+ anho_origen +" order by cod_man;";                 
+                    + " where det.cod_tip = 1 and pro.id_pro_mtto ="+ anho_origen +" order by cod_man;";                 
             }else{
                 mQuery = " select det.id_det_pro_mtto, det.id_pro_mtto, det.cod_lis_equ, det.cod_man, det.cod_tip, det.det_obs, det.fec_ini, det.fec_fin, det.det_sta, det.cod_usu, det.cod_per, det.flg_ext, det.cod_pri, det.cod_sup, det.cod_dep, det.turno, lis.des_equ"
                     + " from det_pro_mtto det inner join cat_pro_mtto pro on "
@@ -404,7 +497,7 @@ public class ManPronosticoMtto implements Serializable {
         }
     }
 
-    public void actualizar() {
+public void actualizar() {
         String mQuery;
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
 
@@ -414,13 +507,12 @@ public class ManPronosticoMtto implements Serializable {
         mQuery = "update det_pro_mtto SET "
                 + " fec_ini = '" + fmt.format(catdetallepronosticomtto.getFec_ini()) + "', "
                 + " fec_fin = '" + fmt.format(catdetallepronosticomtto.getFec_fin()) + "' "
-                + "WHERE cod_man = " + catdetallepronosticomtto.getCod_man() + " AND cod_lis_equ = '" + catdetallepronosticomtto.getCod_lis_equ() + "' AND id_pro_mtto = "+ catdetallepronosticomtto.getId_pro_mtto()+";";
+                + "WHERE id_det_pro_mtto = " + id_det_pro_mtto +";";
 
         mAccesos.dmlSQLvariable(mQuery);
         mAccesos.Desconectar();
         addMessage("Guardar Mantenimiento", "Información Almacenada con éxito.", 1);
     }
-
 
     // Eventos
     
@@ -438,6 +530,7 @@ public class ManPronosticoMtto implements Serializable {
         fecha_pro_mtto = ((CatPronosticoMtto) event.getObject()).getFecha_pro_mtto();
         anho_origen = ((CatPronosticoMtto) event.getObject()).getAnho_origen();
         anho_pro_mtto = ((CatPronosticoMtto) event.getObject()).getAnho_pro_mtto();
+        aprobado = ((CatPronosticoMtto) event.getObject()).getAprobado();
         mfecha = format.parse(fecha_pro_mtto);
     }
     
@@ -448,25 +541,18 @@ public class ManPronosticoMtto implements Serializable {
     }   
     
     public void onEdit(TimelineModificationEvent e) {
-        System.out.println("entra al edit");
-        TimelineEvent tlmtto = e.getTimelineEvent();
-
-        for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
-            if (cm.getDes_equ() == tlmtto.getData()) {
-                catdetallepronosticomtto = cm;
-                cod_lis_equ = catdetallepronosticomtto.getCod_lis_equ();
-                cod_man = catdetallepronosticomtto.getCod_man();
-                llenarMttosPreventivos(2);
-                break;
-            }
-        }
+        tlevent = e.getTimelineEvent();
+        
     }
 
     public void onChange(TimelineModificationEvent e) {
-        System.out.println("entra al change");
         
         for (CatDetallePronosticoMtto cm : detallepronosticomtto) {
-            if (cm.getDes_equ() == e.getTimelineEvent().getData()) {
+            
+            id_det_pro_mtto = ((CatDetallePronosticoMtto) e.getTimelineEvent().getData()).getId_det_pro_mtto();
+            
+            
+            if (cm.getId_det_pro_mtto() == id_det_pro_mtto) {
                 Calendar calendar = Calendar.getInstance();
 
                 long dif = cm.getFec_fin().getTime() - cm.getFec_ini().getTime();
@@ -485,6 +571,16 @@ public class ManPronosticoMtto implements Serializable {
         }
     }
     
+     public void onAdd(TimelineAddEvent e) {  
+        tlevent = new TimelineEvent(new CatDetallePronosticoMtto(), e.getStartDate(), e.getEndDate(), true, e.getGroup());
+        tlevent.setStyleClass("timeline-event-selected");            
+        modelTimeLine.add(tlevent);
+    }   
+     
+     public void onDelete(TimelineModificationEvent e) {  
+        tlevent = e.getTimelineEvent(); 
+    }  
+     
     // Mensajes
     
      public boolean validardatos() {
@@ -535,6 +631,16 @@ public class ManPronosticoMtto implements Serializable {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+    
+     public String getDeleteMessage() {  
+        String equipo = ((CatDetallePronosticoMtto) tlevent.getData()).getDes_equ();  
+        
+        if ("".equals(equipo)) {  
+            return "Desea Borrar el nuevo mantenimiento?";  
+        }  
+  
+        return "Desea eliminar el registro de mantenimiento para el equipo " + equipo + "?";  
+    }  
 
     
     // Setter y Getters
@@ -836,14 +942,15 @@ public class ManPronosticoMtto implements Serializable {
         this.modelTimeLine = modelTimeLine;
     }
 
-    
-    public TimelineEvent getEventTimeLine() {
-        return eventTimeLine;
+    public TimelineEvent getTlevent() {
+        return tlevent;
     }
 
-    public void setEventTimeLine(TimelineEvent eventTimeLine) {
-        this.eventTimeLine = eventTimeLine;
+    public void setTlevent(TimelineEvent tlevent) {
+        this.tlevent = tlevent;
     }
+
+   
 
     public List<CatCalendario> getListaMttos() {
         return listaMttos;
@@ -892,6 +999,20 @@ public class ManPronosticoMtto implements Serializable {
     public void setAnho_origen(String anho_origen) {
         this.anho_origen = anho_origen;
     }
-    
 
+    public Date getMfec_fin() {
+        return mfec_fin;
+    }
+
+    public void setMfec_fin(Date mfec_fin) {
+        this.mfec_fin = mfec_fin;
+    }
+
+    public String getAprobado() {
+        return aprobado;
+    }
+
+    public void setAprobado(String aprobado) {
+        this.aprobado = aprobado;
+    }
 }

@@ -498,6 +498,12 @@ public class ManAlertas implements Serializable {
         mAccesos.Desconectar();
 
     }
+    
+    public void remove(){
+                        
+        String idRemove= logalertas.getId_log_ale();
+        System.out.println("entro a remove "+ idRemove);
+    }
 
     public boolean validardatos() {
         

@@ -401,8 +401,8 @@
                         <pe:timeline id="timeline" value="#{manMaestroMan.modelTimeLine}" height="330px" 
                                      zoomable="true"  
                                      selectable="true"
-                                     editable="true"                                               
-                                     moveable="true"  
+                                     editable="false"                                               
+                                     moveable="false"  
                                      stackEvents="true"  
                                      axisOnTop="false"
                                      eventStyle="dot"
@@ -413,14 +413,6 @@
                             <p:ajax  event="edit" listener="#{manMaestroMan.onEdit}" process="@form" update="frmMaestra" oncomplete="PF('wMaestra').show();" /> 
                             <p:ajax  event="changed" listener="#{manMaestroMan.onChange}" process="@form"/> 
                         </pe:timeline>  
-
-                        <h:outputStylesheet id="timelineCSS">  
-                            table .formColumn {  
-                            padding: 0 5px 0 5px;  
-                            text-align: right;  
-                            white-space: nowrap;  
-                            }         
-                        </h:outputStylesheet>  
                     </h:form>
                 </p:panel>
 
@@ -431,29 +423,43 @@
                     </p:panel>
 
                     <p:panel id="dashAlertas" header="Alertas" closable="true">
-                        <p:dataTable id="dshAlert" var="vDaler" 
-                                     value="#{manAlertas.logale}" 
-                                     emptyMessage="No se encontraron resultados" 
-                                     selectionMode="single" selection="#{manAlertas.logalertas}" 
-                                     rowKey="#{vDaler.id_log_ale}"
-                                     editable="false" 
-                                     scrollable="true"
-                                     scrollHeight="80"
-                                     style="width:550px"
-                                     >
-                            <p:column style="width:30px" headerText="Id">
-                                <h:outputText value="#{vDaler.id_log_ale}" />
-                            </p:column>
-                            <p:column style="width:100px" headerText="Tipo Alerta">
-                                <h:outputText value="#{vDaler.nom_tip_ale}" />
-                            </p:column>
-                            <p:column style="width:60px" headerText="Fecha">
-                                <h:outputText value="#{vDaler.fec_ale}" />
-                            </p:column>
-                            <p:column style="width:180px" headerText="Descripcion">
-                                <h:outputText value="#{vDaler.ale_des}" />
-                            </p:column>
-                        </p:dataTable>
+                        <h:form>
+                            <p:dataTable id="dshAlert" var="vDaler" 
+                                         value="#{manAlertas.logale}" 
+                                         emptyMessage="No se encontraron resultados" 
+                                         selectionMode="single" selection="#{manAlertas.logalertas}" 
+                                         rowKey="#{vDaler.id_log_ale}"
+                                         editable="false" 
+                                         scrollable="true"
+                                         scrollHeight="80"
+                                         style="width:550px"
+                                         widgetVar="alerLogDT"
+                                         rowIndexVar="logIndex"                                    
+                                         >
+                                <p:column style="width:30px" headerText="Id">
+                                    <h:outputText value="#{vDaler.id_log_ale}" />
+                                </p:column>
+                                <p:column style="width:100px" headerText="Tipo Alerta">
+                                    <h:outputText value="#{vDaler.nom_tip_ale}" />
+                                </p:column>
+                                <p:column style="width:60px" headerText="Fecha">
+                                    <h:outputText value="#{vDaler.fec_ale}" />
+                                </p:column>
+                                <p:column style="width:180px" headerText="Descripcion">
+                                    <h:outputText value="#{vDaler.ale_des}" />
+                                </p:column>
+                                <p:column style="text-align: center">                                
+                                    <p:commandButton update=":dlgDetalleProMtto"
+                                                     icon="ui-icon-trash"
+                                                     title="Borrar registro de alerta"
+                                                     onclick="PF('alerLogDT').selectRow(#{logIndex})" 
+                                                     action="#{manAlertas.remove}"
+                                                     process="@form">
+                                        <f:setPropertyActionListener value="#{vDaler}" target="#{manAlertas.logalertas}" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
                     </p:panel>
 
                 </p:dashboard>
@@ -7076,27 +7082,35 @@
                 <div style=" background-color: #ebf8fe;">
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Nombre de Pronostico" style="font-weight:bold;"/>
-                        <p:inputText maxlength="250" size="50" value="#{manPronosticoMtto.nom_pro_mtto}" 
+                        <p:inputText maxlength="250" size="60" value="#{manPronosticoMtto.nom_pro_mtto}" 
                                      onfocus="this.select()"/>
                         
                         <h:outputText value="Fecha de pronostico" style="font-weight:bold;"/>
-                        <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fecing"
-                                     readonlyInput="true" 
-                                     showOn="button" size="16"
-                                     value="#{manPronosticoMtto.mfecha}"
-                                     >
-                                <p:ajax event="dateSelect" listener="#{manPronosticoMtto.dateSelected}" />
-                        </p:calendar>
-                        <h:outputText value="Año origen" style="font-weight:bold;"/>
                         <h:panelGroup>
-                            <p:inputText maxlength="15" size="17" value="#{manPronosticoMtto.anho_origen}" 
-                                     onfocus="this.select()" onkeypress="return valida(event)"/>
-                            <p:spacer width="10"/>
+                            <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fecing"
+                                         readonlyInput="true" 
+                                         showOn="button" size="16"
+                                         value="#{manPronosticoMtto.mfecha}"
+                                         >
+                                    <p:ajax event="dateSelect" listener="#{manPronosticoMtto.dateSelected}" />
+                            </p:calendar>
+                            <p:spacer width="10"/>   
                             <h:outputText value="Año a pronosticar" style="font-weight:bold;"/>
                             <p:spacer width="10"/>
                             <p:inputText maxlength="15" size="17" value="#{manPronosticoMtto.anho_pro_mtto}" 
                                          onfocus="this.select()" onkeypress="return valida(event)"/>
                         </h:panelGroup>
+                        <h:outputText value="Pronostico origen" style="font-weight:bold;"/>
+                        <p:selectOneMenu value="#{manPronosticoMtto.anho_origen}" 
+                                         style="width:350px;text-align:right;"
+                                         immediate="false"
+                                >  
+                                <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                                <f:selectItems value="#{manPronosticoMtto.pronosticomtto}" var="mpromtto"
+                                               itemLabel="#{mpromtto.nom_pro_mtto}" itemValue="#{mpromtto.id_pro_mtto}"/>
+                        </p:selectOneMenu>  
+                            
+                            
                     </h:panelGrid>
                     <p:dataTable id="dtProMtto" var="vProMtto" 
                                  value="#{manPronosticoMtto.pronosticomtto}" 
@@ -7121,17 +7135,18 @@
                         <p:column style="width:30px" headerText="Fecha Evaluacion">
                             <h:outputText value="#{vProMtto.fecha_pro_mtto}" />
                         </p:column>
-                         <p:column style="width:30px" headerText="Año Origen">
-                            <h:outputText value="#{vProMtto.anho_origen}" />
-                        </p:column>
                         <p:column style="width:30px" headerText="Año Destino">
                             <h:outputText value="#{vProMtto.anho_pro_mtto}" />
+                        </p:column>
+                        <p:column style="width:32px;text-align: center" headerText="Aplicado">
+                            <pe:triStateCheckbox value="#{vProMtto.aprobado}" disabled="true" />
                         </p:column>
                         <p:column style="width:32px;text-align: center">
                             <p:commandButton update=":dlgDetalleProMtto" oncomplete="PF('wDetalleProMtto').show()" onclick="PF('proMttoCabecera').selectRow(#{proIndex})" icon="ui-icon-search" title="View" action="#{manPronosticoMtto.llenarDetallePronosticoMtto}">
                                 <f:setPropertyActionListener value="#{vProMtto}" target="#{manPronosticoMtto.catpronosticomtto}" />
                             </p:commandButton>
                         </p:column>
+                         
                     </p:dataTable>
                 </div>
             </h:form>
@@ -7155,7 +7170,6 @@
                                          />
                         <p:commandButton value="Cerrar" style=" width: 100px;"
                                          onclick="PF('wDetalleProMtto').hide()"
-                                         actionListener="#{manPronosticoMtto.cerrardetalle()}"
                                          update=":frmDetalleProMtto"
                                          icon="ui-icon-close"
                                          />
@@ -7174,31 +7188,65 @@
                                      showNavigation="true"
                                      timeChangeable="true"
                                      locale="es"
-                                     widgetVar="pronoTL">
-                    <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="@form" update="frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
+                                     widgetVar="pronoTL"
+                                     var="timelinepro">
+                    <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="@form" update=":frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
                     <p:ajax  event="changed" listener="#{manPronosticoMtto.onChange}" process="@form"/> 
+                    <p:ajax  event="add" update=":frmMttoDialog"  listener="#{manPronosticoMtto.onAdd}" oncomplete="PF('mttoDialog').show()"/>  
+                    <p:ajax  event="delete" update=":frmMttoDelete:deleteMttoInner"  listener="#{manPronosticoMtto.onDelete}"  
+                             onstart="PF('pronoTL').cancelDelete()" oncomplete="PF('deleteMttoWdgt').show()"/>  
+                    <h:panelGrid columns="1">  
+                        <h:outputText value="#{timelinepro.des_equ}" style="font-size:8px"/>  
+                    </h:panelGrid>  
                 </pe:timeline>  
             </h:form>
         </p:dialog>
         
          
-         <p:dialog widgetVar="mttoDialog" header="Observaciones" showEffect="clip" hideEffect="clip">
+         <p:dialog widgetVar="mttoDialog" header="Observaciones" showEffect="clip" hideEffect="clip" modal="true" closable="false">
             <h:form id="frmMttoDialog">
                 <h:panelGrid id="grdMttoDialog" columns="2">
-                    <p:outputLabel for="desde" value="Desde:" />
-                    <p:calendar id="desde" value="#{manPronosticoMtto.fec_ini}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+                    <p:outputLabel for="equlist" value="Equipo:" />
+                    <p:selectOneMenu value="#{manPronosticoMtto.tlevent.data.cod_lis_equ}" 
+                                     style="width:180px;text-align:right;"
+                                     immediate="false"
+                                     id ="equlist"
+                                    >  
+                        <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                        <f:selectItems value="#{manPronosticoMtto.lequipos}" var="mlequ"
+                                       itemLabel="#{mlequ.des_equ}" itemValue="#{mlequ.cod_lis_equ}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Desde:" />
+                    <p:calendar value="#{manPronosticoMtto.tlevent.startDate}"  pattern="dd/MM/yyyy"/>
 
-                    <p:outputLabel for="hasta" value="Hasta:" />
-                    <p:calendar id="hasta" value="#{manPronosticoMtto.fec_fin}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+                    <p:outputLabel value="Hasta:" />
+                    <p:calendar value="#{manPronosticoMtto.tlevent.data.fec_fin}" pattern="dd/MM/yyyy" mindate="#{manPronosticoMtto.tlevent.startDate}"/>
 
                     <p:outputLabel for="obs" value="Observacion:" />
-                    <p:inputTextarea rows="6" cols="33" autoResize="false" id="obs" value="#{manPronosticoMtto.det_obs}" required="true"/>
+                    <p:inputTextarea rows="6" cols="33" autoResize="false" id="obs" value="#{manPronosticoMtto.tlevent.data.det_obs}" required="true"/>
 
-                    <p:commandButton type="reset" value="Limpiar" />
-                    <p:commandButton id="addButton" value="Guardar" actionListener="#{manPronosticoMtto.addEvent}" oncomplete="PF('wDetalleProMtto').update();PF('mttoDialog').hide();" />
+                    <p:commandButton type="reset" value="Cerrar" onclick="PF('mttoDialog').hide();"/>
+                    <p:commandButton id="addButton" value="Guardar" actionListener="#{manPronosticoMtto.guardarMtto()}" oncomplete="PF('mttoDialog').hide();" update=":frmDetalleProMtto" />
                 </h:panelGrid>
             </h:form>
-        </p:dialog>    
+        </p:dialog> 
+         
+         <p:dialog id="deleteMttoDlg" header="Detalle de mantenimiento" widgetVar="deleteMttoWdgt"  
+                    showEffect="clip" hideEffect="clip" dynamic="true" modal="true"> 
+             <h:form id="frmMttoDelete">
+                <h:panelGroup id="deleteMttoInner" layout="block" style="margin:10px;">  
+                    <h:outputText value="#{manPronosticoMtto.deleteMessage}"/>  
+                </h:panelGroup>  
+
+                    <h:panelGroup layout="block" style="text-align:right; padding:2px; white-space:nowrap;">  
+                        <p:commandButton value="Borrar" process="deleteMttoDlg" update=":frmDetalleProMtto"  
+                                         action="#{manPronosticoMtto.deleteMtto}"  
+                                         oncomplete="PF('deleteMttoWdgt').hide()"/> 
+                        <p:spacer width="10"/>
+                        <p:commandButton type="button" value="Cerrar" onclick="PF('deleteMttoWdgt').hide()"/>  
+                    </h:panelGroup>  
+             </h:form>
+          </p:dialog> 
 
         <!-- *******************************************************************
         **************** Pantalla mantenimiento de Almacenes *******************
@@ -8143,6 +8191,7 @@
                         
                     </f:facet>
                 </p:toolbar>
+                
                 <div style=" background-color: #ebf8fe;">
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Departamento" style="font-weight:bold;"/>
@@ -8172,6 +8221,7 @@
                                          onfocus="this.select()" onkeypress="return valida(event)"/>
                         </h:panelGroup>             
                     </h:panelGrid>
+                
                     <h:panelGrid columns="2" cellpadding="5">
                         <p:fieldset id="usudis" legend="Usuarios Disponibles" style="width:270px">
                             <p:dataTable id="usuariosDisponibles" var="usudis" value="#{manAlertas.usuarios}" style="width:260px" scrollHeight="150">
@@ -8209,17 +8259,19 @@
                                 </p:dataTable>
                             </p:outputPanel>                    
                         </p:fieldset>
-
                     </h:panelGrid>
 
-                    <p:droppable for="ususel" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosDisponibles" onDrop="handleDrop">
+                    <p:droppable for="ususel" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosDisponibles">
                         <p:ajax listener="#{manAlertas.onUsuDrop}" update="dropArea usuariosDisponibles" />
                     </p:droppable>
 
-                    <p:droppable for="usudis" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosSeleccionados" onDrop="handleDrop">
+                    <p:droppable for="usudis" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosSeleccionados">
                         <p:ajax listener="#{manAlertas.onUsuDropRet}" update="dropArea usuariosDisponibles" />
                     </p:droppable>
 
+                    
+                    
+                    
                     <p:dataTable id="dtAlertas" var="vAlertas" 
                                  value="#{manAlertas.alertas}" 
                                  rows ="3"
@@ -8251,6 +8303,12 @@
                     </p:dataTable>
                 </div>
 
+                
+                
+                
+                
+                
+                
             </h:form>
         </p:dialog>
         
