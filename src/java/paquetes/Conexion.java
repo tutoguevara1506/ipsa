@@ -3,6 +3,7 @@ package paquetes;
 import java.sql.*;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 
 @ManagedBean
@@ -68,5 +69,11 @@ public class Conexion {
         
     }
     
+     public void logout() {
+         System.out.println("entró al logout");
+         FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().clear();
+     }
     
+       
 }

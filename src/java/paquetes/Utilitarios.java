@@ -3,6 +3,7 @@ package paquetes;
 import java.sql.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.faces.context.FacesContext;
 
 public class Utilitarios extends Conexion {
 
@@ -31,5 +32,5 @@ public class Utilitarios extends Conexion {
      cal.add(Calendar.DATE, - dias); 
      return new Date(cal.getTimeInMillis()); 
    }  
-  
+     
 }

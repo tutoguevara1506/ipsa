@@ -15,7 +15,33 @@
 
     </h:head>
     <h:body id="mBody" onload="PF('bar').show()" >
+        
+          <!--********************************************************************
+        ************************** Manejo de sesiones *******************************
+        *********************************************************************-->
+        <h:form>
+            <p:idleMonitor  onidle="PF('sessionTerminada').show();" timeout="#{session.maxInactiveInterval}" >
+                <p:ajax event="idle" listener="#{conexion.logout}" process="@form" />
+            </p:idleMonitor>
+        </h:form>  
+          
+        <p:dialog header="Sesión caducada" widgetVar="sessionTerminada"
+                  modal="true" closable="false" width="400" visible="false" resizable="false">
+            <h:form>
+                <h:panelGrid columns="1" style="vertical-align: middle; text-align: center;">
+                    <h:panelGrid columns="2" style="vertical-align: middle; text-align: center;">
+                        <h:outputText value="La sesión a caducado por inactividad, por favor, pulse sobre el siguiente botón para volver a acceder a la aplicación" />
+                        <p:graphicImage url="/resources/images/desconectado.png"  /> 
+                    </h:panelGrid>
 
+                    <p:commandButton id="confirmBackToLogin" type="button" value="Iniciar sesión"
+                                     onclick="window.location = '#{request.contextPath}';" />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+        
+
+        
         <!--********************************************************************
         ************************** Barra de Menú *******************************
         *********************************************************************-->
@@ -8478,10 +8504,7 @@
                     <p:droppable for="usudis" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="usuariosSeleccionados">
                         <p:ajax listener="#{manAlertas.onUsuDropRet}" update="dropArea usuariosDisponibles" />
                     </p:droppable>
-
-                    
-                    
-                    
+ 
                     <p:dataTable id="dtAlertas" var="vAlertas" 
                                  value="#{manAlertas.alertas}" 
                                  rows ="3"
@@ -8512,13 +8535,7 @@
                         </p:column>
                     </p:dataTable>
                 </div>
-
-                
-                
-                
-                
-                
-                
+     
             </h:form>
         </p:dialog>  
     </h:body>
