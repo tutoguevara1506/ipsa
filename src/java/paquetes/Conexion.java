@@ -70,7 +70,8 @@ public class Conexion {
     }
     
      public void logout() {
-         System.out.println("entró al logout");
+         java.util.Date time= new java.util.Date();
+         System.out.println("hora de fin "+ time.toString());
          FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().getSessionMap().clear();
      }
