@@ -35,9 +35,17 @@ public class ManSeguimiento extends Conexion implements Serializable {
     private static final long serialVersionUID = 8791111238764288L;
     @Inject
     Login cbean;
+    private List<CatCotizaciones> cotizaciones;
+    private CatCotizaciones catcotizaciones;
+    private List<CatProveedores> proveedores;
+    private CatCompras catcompras;
+    private List<CatCompras> compras;
     private List<CatHistorico> historico;
     private List<CatUsuarios> recibidores;
     private List<CatUsuarios> aprobadores;
+    private List<CatPaises> paises;
+    private List<CatBodegas> bodegas;
+    private List<CatUbicaciones> ubicaciones;
     private CatSolicitudes catmaestro;
     private List<CatSolicitudes> maestro;
     private CatSolicitudesDetalle catdetalles;
@@ -48,19 +56,62 @@ public class ManSeguimiento extends Conexion implements Serializable {
     private List<CatSolicitudesDetalle> detallesaprobar;
     private CatSolicitudes catmaestrohistoria;
     private List<CatSolicitudes> maestrohistoria;
-    private CatSolicitudesDetalle catdetalleshistoria;
-    private List<CatSolicitudesDetalle> detalleshistoria;
+    private CatSolicitudesDetalleHistoria catdetalleshistoria;
+    private List<CatSolicitudesDetalleHistoria> detalleshistoria;
 
-    private String cod_mae, det_sta, det_can_sol, det_can_ent, det_can_pen, det_fec_cie, fec_cie;
-    private String apr_cod_mae, his_cod_mae;
-    private String tabindex;
+    private String cot_cod_cor, cot_cod_pro, cot_det_cot;
+    private String com_cod_cor, com_cod_pro, com_det_com, com_can_com;
+    private String cod_mae, det_sta, fec_cie;
+    private String det_can_sol, det_can_ent, det_can_pen, mdt_cod_det, mdt_cod_ite, mdt_des_ite, mdt_non_sto, mdt_det_sta, mdt_cos_uni, det_fec_cie;
+    private String apr_cod_mae, his_cod_mae, his_cod_det;
+    private String tabindex, tabindex2, rbhistoria;
     private Date mfecha, mfecha2;
-    private String aprobador, recibidapor, cod_pai, cod_alt, idbuscar, destino;
+    private String aprobador, recibidapor, cod_pai, cod_alt, idbuscar, destino, cod_bod, des_ubi, booledit;
 
     private String nombrereporte, nombreexportar;
     private Map<String, Object> parametros;
 
     public ManSeguimiento() {
+    }
+
+    public List<CatProveedores> getProveedores() {
+        return proveedores;
+    }
+
+    public void setProveedores(List<CatProveedores> proveedores) {
+        this.proveedores = proveedores;
+    }
+
+    public CatCotizaciones getCatcotizaciones() {
+        return catcotizaciones;
+    }
+
+    public void setCatcotizaciones(CatCotizaciones catcotizaciones) {
+        this.catcotizaciones = catcotizaciones;
+    }
+
+    public List<CatCotizaciones> getCotizaciones() {
+        return cotizaciones;
+    }
+
+    public void setCotizaciones(List<CatCotizaciones> cotizaciones) {
+        this.cotizaciones = cotizaciones;
+    }
+
+    public CatCompras getCatcompras() {
+        return catcompras;
+    }
+
+    public void setCatcompras(CatCompras catcompras) {
+        this.catcompras = catcompras;
+    }
+
+    public List<CatCompras> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(List<CatCompras> compras) {
+        this.compras = compras;
     }
 
     public List<CatHistorico> getHistorico() {
@@ -85,6 +136,30 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
     public void setAprobadores(List<CatUsuarios> aprobadores) {
         this.aprobadores = aprobadores;
+    }
+
+    public List<CatPaises> getPaises() {
+        return paises;
+    }
+
+    public void setPaises(List<CatPaises> paises) {
+        this.paises = paises;
+    }
+
+    public List<CatBodegas> getBodegas() {
+        return bodegas;
+    }
+
+    public void setBodegas(List<CatBodegas> bodegas) {
+        this.bodegas = bodegas;
+    }
+
+    public List<CatUbicaciones> getUbicaciones() {
+        return ubicaciones;
+    }
+
+    public void setUbicaciones(List<CatUbicaciones> ubicaciones) {
+        this.ubicaciones = ubicaciones;
     }
 
     public CatSolicitudes getCatmaestro() {
@@ -167,24 +242,80 @@ public class ManSeguimiento extends Conexion implements Serializable {
         this.maestrohistoria = maestrohistoria;
     }
 
-    public CatSolicitudesDetalle getCatdetalleshistoria() {
+    public CatSolicitudesDetalleHistoria getCatdetalleshistoria() {
         return catdetalleshistoria;
     }
 
-    public void setCatdetalleshistoria(CatSolicitudesDetalle catdetalleshistoria) {
+    public void setCatdetalleshistoria(CatSolicitudesDetalleHistoria catdetalleshistoria) {
         this.catdetalleshistoria = catdetalleshistoria;
     }
 
-    public List<CatSolicitudesDetalle> getDetalleshistoria() {
+    public List<CatSolicitudesDetalleHistoria> getDetalleshistoria() {
         return detalleshistoria;
     }
 
-    public void setDetalleshistoria(List<CatSolicitudesDetalle> detalleshistoria) {
+    public void setDetalleshistoria(List<CatSolicitudesDetalleHistoria> detalleshistoria) {
         this.detalleshistoria = detalleshistoria;
+    }
+
+    public String getCot_cod_cor() {
+        return cot_cod_cor;
+    }
+
+    public void setCot_cod_cor(String cot_cod_cor) {
+        this.cot_cod_cor = cot_cod_cor;
+    }
+
+    public String getCot_cod_pro() {
+        return cot_cod_pro;
+    }
+
+    public void setCot_cod_pro(String cot_cod_pro) {
+        this.cot_cod_pro = cot_cod_pro;
+    }
+
+    public String getCot_det_cot() {
+        return cot_det_cot;
+    }
+
+    public void setCot_det_cot(String cot_det_cot) {
+        this.cot_det_cot = cot_det_cot;
+    }
+
+    public String getCom_cod_cor() {
+        return com_cod_cor;
+    }
+
+    public void setCom_cod_cor(String com_cod_cor) {
+        this.com_cod_cor = com_cod_cor;
+    }
+
+    public String getCom_cod_pro() {
+        return com_cod_pro;
+    }
+
+    public void setCom_cod_pro(String com_cod_pro) {
+        this.com_cod_pro = com_cod_pro;
+    }
+
+    public String getCom_det_com() {
+        return com_det_com;
+    }
+
+    public void setCom_det_com(String com_det_com) {
+        this.com_det_com = com_det_com;
     }
 
     public String getCod_mae() {
         return cod_mae;
+    }
+
+    public String getCom_can_com() {
+        return com_can_com;
+    }
+
+    public void setCom_can_com(String com_can_com) {
+        this.com_can_com = com_can_com;
     }
 
     public void setCod_mae(String cod_mae) {
@@ -197,6 +328,14 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
     public void setDet_sta(String det_sta) {
         this.det_sta = det_sta;
+    }
+
+    public String getFec_cie() {
+        return fec_cie;
+    }
+
+    public void setFec_cie(String fec_cie) {
+        this.fec_cie = fec_cie;
     }
 
     public String getDet_can_sol() {
@@ -223,28 +362,60 @@ public class ManSeguimiento extends Conexion implements Serializable {
         this.det_can_pen = det_can_pen;
     }
 
+    public String getMdt_cod_det() {
+        return mdt_cod_det;
+    }
+
+    public void setMdt_cod_det(String mdt_cod_det) {
+        this.mdt_cod_det = mdt_cod_det;
+    }
+
+    public String getMdt_cod_ite() {
+        return mdt_cod_ite;
+    }
+
+    public void setMdt_cod_ite(String mdt_cod_ite) {
+        this.mdt_cod_ite = mdt_cod_ite;
+    }
+
+    public String getMdt_des_ite() {
+        return mdt_des_ite;
+    }
+
+    public void setMdt_des_ite(String mdt_des_ite) {
+        this.mdt_des_ite = mdt_des_ite;
+    }
+
+    public String getMdt_non_sto() {
+        return mdt_non_sto;
+    }
+
+    public void setMdt_non_sto(String mdt_non_sto) {
+        this.mdt_non_sto = mdt_non_sto;
+    }
+
+    public String getMdt_det_sta() {
+        return mdt_det_sta;
+    }
+
+    public void setMdt_det_sta(String mdt_det_sta) {
+        this.mdt_det_sta = mdt_det_sta;
+    }
+
+    public String getMdt_cos_uni() {
+        return mdt_cos_uni;
+    }
+
+    public void setMdt_cos_uni(String mdt_cos_uni) {
+        this.mdt_cos_uni = mdt_cos_uni;
+    }
+
     public String getDet_fec_cie() {
         return det_fec_cie;
     }
 
     public void setDet_fec_cie(String det_fec_cie) {
         this.det_fec_cie = det_fec_cie;
-    }
-
-    public String getFec_cie() {
-        return fec_cie;
-    }
-
-    public void setFec_cie(String fec_cie) {
-        this.fec_cie = fec_cie;
-    }
-
-    public String getTabindex() {
-        return tabindex;
-    }
-
-    public void setTabindex(String tabindex) {
-        this.tabindex = tabindex;
     }
 
     public String getApr_cod_mae() {
@@ -261,6 +432,38 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
     public void setHis_cod_mae(String his_cod_mae) {
         this.his_cod_mae = his_cod_mae;
+    }
+
+    public String getHis_cod_det() {
+        return his_cod_det;
+    }
+
+    public void setHis_cod_det(String his_cod_det) {
+        this.his_cod_det = his_cod_det;
+    }
+
+    public String getTabindex() {
+        return tabindex;
+    }
+
+    public void setTabindex(String tabindex) {
+        this.tabindex = tabindex;
+    }
+
+    public String getTabindex2() {
+        return tabindex2;
+    }
+
+    public void setTabindex2(String tabindex2) {
+        this.tabindex2 = tabindex2;
+    }
+
+    public String getRbhistoria() {
+        return rbhistoria;
+    }
+
+    public void setRbhistoria(String rbhistoria) {
+        this.rbhistoria = rbhistoria;
     }
 
     public Date getMfecha() {
@@ -327,6 +530,30 @@ public class ManSeguimiento extends Conexion implements Serializable {
         this.destino = destino;
     }
 
+    public String getCod_bod() {
+        return cod_bod;
+    }
+
+    public void setCod_bod(String cod_bod) {
+        this.cod_bod = cod_bod;
+    }
+
+    public String getDes_ubi() {
+        return des_ubi;
+    }
+
+    public void setDes_ubi(String des_ubi) {
+        this.des_ubi = des_ubi;
+    }
+
+    public String getBooledit() {
+        return booledit;
+    }
+
+    public void setBooledit(String booledit) {
+        this.booledit = booledit;
+    }
+
     public String getNombrereporte() {
         return nombrereporte;
     }
@@ -351,32 +578,57 @@ public class ManSeguimiento extends Conexion implements Serializable {
         this.parametros = parametros;
     }
 
+    //*************** Configuración Inicial *****************************************
     public void iniciarventana() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
         tabindex = "0";
+        tabindex2 = "0";
+        rbhistoria = "0";
         mfecha = Date.from(Instant.now());
         mfecha2 = Date.from(Instant.now());
 
         cod_mae = "";
         apr_cod_mae = "";
         his_cod_mae = "";
+        his_cod_det = "";
         det_sta = "";
         det_can_sol = "";
         det_can_ent = "";
         det_can_pen = "";
+        mdt_cod_det = "";
+        mdt_cod_ite = "";
+        mdt_des_ite = "";
+        mdt_non_sto = "1";
+        mdt_det_sta = "";
+        mdt_cos_uni = "0.0";
         det_fec_cie = format.format(mfecha);
         fec_cie = format.format(mfecha2);
         aprobador = "0";
+        cot_cod_cor = "";
+        cot_cod_pro = "0";
+        cot_det_cot = "";
+        com_cod_cor = "";
+        com_cod_pro = "0";
+        com_det_com = "";
+        com_can_com = "";
         recibidapor = "0";
         cod_pai = "";
+        cod_bod = "0";
+        des_ubi = "";
         cod_alt = "";
         idbuscar = "";
         destino = "0";
+        booledit = "false";
+        bodegas = new ArrayList<>();
+        ubicaciones = new ArrayList<>();
         maestrohistoria = new ArrayList<>();
         detalles = new ArrayList<>();
         detallesaprobar = new ArrayList<>();
         detalleshistoria = new ArrayList<>();
+        catdetalles = new CatSolicitudesDetalle();
+        llenarProveedores();
+        llenarBodegas();
         llenarAprobadores();
         llenarRecibidores();
         llenarMaestro();
@@ -388,12 +640,14 @@ public class ManSeguimiento extends Conexion implements Serializable {
         cod_mae = "";
         apr_cod_mae = "";
         his_cod_mae = "";
+        his_cod_det = "";
         det_sta = "";
         det_can_sol = "";
         det_can_ent = "";
         det_can_pen = "";
         det_fec_cie = "";
         fec_cie = "";
+        destino = "";
         maestro = new ArrayList<>();
         detalles = new ArrayList<>();
         maestroaprobar = new ArrayList<>();
@@ -406,32 +660,58 @@ public class ManSeguimiento extends Conexion implements Serializable {
     public void refrescarventana() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
+        rbhistoria = "0";
+
         mfecha = Date.from(Instant.now());
         mfecha2 = Date.from(Instant.now());
 
         cod_mae = "";
-        apr_cod_mae = "";
-        his_cod_mae = "";
+
         det_sta = "";
         det_can_sol = "";
         det_can_ent = "";
         det_can_pen = "";
+        mdt_cod_det = "";
+        mdt_cod_ite = "";
+        mdt_des_ite = "";
+        mdt_non_sto = "1";
+        mdt_det_sta = "";
+        mdt_cos_uni = "0.0";
         det_fec_cie = format.format(mfecha);
         fec_cie = format.format(mfecha2);
+        aprobador = "0";
+        cot_cod_cor = "";
+        cot_cod_pro = "0";
+        cot_det_cot = "";
+        com_cod_cor = "";
+        com_cod_pro = "0";
+        com_det_com = "";
+        com_can_com = "";
+        recibidapor = "0";
         cod_pai = "";
+        cod_bod = "0";
+        des_ubi = "";
         cod_alt = "";
         idbuscar = "";
         destino = "0";
+        booledit = "false";
+        bodegas = new ArrayList<>();
+        ubicaciones = new ArrayList<>();
         maestrohistoria = new ArrayList<>();
         detalles = new ArrayList<>();
         detallesaprobar = new ArrayList<>();
         detalleshistoria = new ArrayList<>();
-        catmaestrohistoria = new CatSolicitudes();
+        catdetalles = new CatSolicitudesDetalle();
+        llenarProveedores();
+        llenarBodegas();
+        llenarAprobadores();
+        llenarRecibidores();
         llenarMaestro();
         llenarMaestroAprobar();
 
     }
 
+    //******************* Llenar Catálogos ******************************************
     public void llenarAprobadores() {
         try {
             aprobadores = new ArrayList<>();
@@ -440,7 +720,10 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     + "usu.cod_dep, usu.det_nom, usu.det_mai,ifnull(pai.nom_pai,'') as nom_pai, ifnull(dep.nom_dep,'') as nom_dep "
                     + "from cat_usu as usu "
                     + "left join cat_dep as dep on usu.cod_dep = dep.cod_dep and usu.cod_pai = dep.cod_pai "
-                    + "left join cat_pai as pai on usu.cod_pai = pai.cod_pai order by cod_usu;";
+                    + "left join cat_pai as pai on usu.cod_pai = pai.cod_pai "
+                    + "left join lis_esp as lis on usu.cod_usu = lis.cod_usu "
+                    + "where lis.cod_lis = 3 "
+                    + "order by cod_usu;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -474,7 +757,9 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     + "usu.cod_dep, usu.det_nom, usu.det_mai,ifnull(pai.nom_pai,'') as nom_pai, ifnull(dep.nom_dep,'') as nom_dep "
                     + "from cat_usu as usu "
                     + "left join cat_dep as dep on usu.cod_dep = dep.cod_dep and usu.cod_pai = dep.cod_pai "
-                    + "left join cat_pai as pai on usu.cod_pai = pai.cod_pai order by cod_usu;";
+                    + "left join cat_pai as pai on usu.cod_pai = pai.cod_pai "
+                    + "left join lis_esp as lis on usu.cod_usu = lis.cod_usu "
+                    + "order by cod_usu;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -500,128 +785,124 @@ public class ManSeguimiento extends Conexion implements Serializable {
         }
     }
 
-    public void llenarMaestro() {
+    public void llenarBodegas() {
         try {
-            catmaestro = new CatSolicitudes();
-            maestro = new ArrayList<>();
 
-            String mQuery = "select "
-                    + "mae.cod_mae, mae.cod_alt, "
-                    + "date_format(mae.fec_sol,'%d/%m/%Y'), "
-                    + "mae.cod_usu_sol, "
-                    + "mae.cod_usu_apr, mae.cod_usu_rec, mae.cod_dep, mae.det_uso, mae.cod_maq, "
-                    + "case mae.det_sta "
-                    + "when 0 then 'ESPERA APROBACIÓN' "
-                    + "when 1 then 'CANCELADA' "
-                    + "when 2 then 'APROBADA' "
-                    + "when 3 then 'DENEGADA' "
-                    + "when 4 then 'PENDIENTE' "
-                    + "when 5 then 'CERRADA' end as sta, "
-                    + "mae.det_obs, "
-                    + "date_format(mae.fec_cie,'%d/%m/%Y'), mae.flg_loc,mae.cod_pai, "
-                    + "dep.nom_dep, concat(lis.num_ser,'-',maq.nom_equ) as nomequ,"
-                    + "pai.nom_alm, usu.det_nom "
-                    + "FROM sol_mae as mae "
-                    + "left join cat_dep as dep on mae.cod_dep = dep.cod_dep "
-                    + "left join lis_equ as lis on mae.cod_maq = lis.cod_lis_equ "
-                    + "left join cat_equ as maq on lis.cod_equ = maq.cod_equ "
-                    + "left join cat_alm as pai on mae.cod_pai = pai.cod_alm "
-                    + "left join cat_usu as usu on mae.cod_usu_sol = usu.cod_usu "
-                    + "where "
-                    + "mae.det_sta in (2,4) "
-                    + "order by mae.fec_sol desc;";
+            paises = new ArrayList<>();
+
+            String mQuery = "select cod_alm, nom_alm "
+                    + "from cat_alm order by cod_alm;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
             resVariable = mAccesos.querySQLvariable(mQuery);
             while (resVariable.next()) {
-                maestro.add(new CatSolicitudes(
+                paises.add(new CatPaises(
                         resVariable.getString(1),
-                        resVariable.getString(2),
-                        resVariable.getString(3),
-                        resVariable.getString(4),
-                        resVariable.getString(5),
-                        resVariable.getString(6),
-                        resVariable.getString(7),
-                        resVariable.getString(8),
-                        resVariable.getString(9),
-                        resVariable.getString(10),
-                        resVariable.getString(11),
-                        resVariable.getString(12),
-                        resVariable.getString(13),
-                        resVariable.getString(14),
-                        resVariable.getString(15),
-                        resVariable.getString(16),
-                        resVariable.getString(17),
-                        resVariable.getString(18)
+                        resVariable.getString(2)
                 ));
             }
             mAccesos.Desconectar();
+            bodegas.clear();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado Maestro en Seguimiento Solicitud. " + e.getMessage());
+            System.out.println("Error en el llenado de Paises en ManSeguimiento. " + e.getMessage());
         }
     }
 
-    public void llenarDetalles() {
+    public void llenarEstantes() {
+        String mQuery = "";
         try {
-            catdetalles = new CatSolicitudesDetalle();
-            detalles = new ArrayList<>();
 
-            String mQuery = "select  "
-                    + "det.cod_mae, det.cod_det, det.cod_pai, det.cod_bod, "
-                    + "det.cod_ubi, det.cod_ite, det.des_ite, det.det_can_sol, 0, "
-                    + "det.det_can_pen, det.non_sto, "
-                    + "case det.det_sta "
-                    + "when 0 then 'PENDIENTE' "
-                    + "when 1 then 'COTIZADO' "
-                    + "when 2 then 'COMPRADO' "
-                    + "when 3 then 'ENTREGA PARCIAL' "
-                    + "when 4 then 'ENTREGADO' "
-                    + "when 5 then 'CANCELADO' "
-                    + "end as sta , "
-                    + "det.fec_cie, "
-                    + "det.cos_uni, "
-                    + "pai.nom_alm, bod.nom_bod, ubi.nom_ubi "
-                    + "from sol_det as det "
-                    + "left join cat_alm as pai on det.cod_pai = pai.cod_alm "
-                    + "left join cat_bodegas as bod on det.cod_pai = bod.cod_pai and det.cod_bod = bod.id_bod "
-                    + "left join cat_ubicaciones as ubi on det.cod_bod = ubi.cod_bod and det.cod_ubi = ubi.id_ubi "
-                    + "where det.cod_mae = " + cod_mae + " "
-                    + "and det.det_sta in (0,1,2,3) "
-                    + "order by det.cod_det asc;";
+            bodegas.clear();
+
+            mQuery = "select id_bod, nom_bod,cod_pai "
+                    + "from cat_bodegas "
+                    + "where cod_pai=" + cod_pai + " "
+                    + "order by id_bod;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
             resVariable = mAccesos.querySQLvariable(mQuery);
             while (resVariable.next()) {
-                detalles.add(new CatSolicitudesDetalle(
+                bodegas.add(new CatBodegas(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3), ""
+                ));
+            }
+            mAccesos.Desconectar();
+            des_ubi = "";
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Bodegas en ManSeguimiento. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+
+    public void llenarUbicaciones() {
+        String mQuery = "";
+        try {
+
+            ubicaciones = new ArrayList<>();
+
+            mQuery = "select ubi.id_ubi,ubi.cod_bod,ubi.nom_ubi,bod.nom_bod, bod.cod_pai, alm.nom_alm "
+                    + "from cat_ubicaciones as ubi "
+                    + "left join cat_bodegas as bod on bod.id_bod = ubi.cod_bod "
+                    + "left join cat_alm as alm on bod.cod_pai = alm.cod_alm "
+                    + "where alm.cod_alm=" + cod_pai + " "
+                    + "and ubi.cod_bod=" + cod_bod + " "
+                    + "order by ubi.cod_bod,ubi.id_ubi;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                ubicaciones.add(new CatUbicaciones(
                         resVariable.getString(1),
                         resVariable.getString(2),
                         resVariable.getString(3),
                         resVariable.getString(4),
                         resVariable.getString(5),
-                        resVariable.getString(6),
-                        resVariable.getString(7),
-                        resVariable.getString(8),
-                        resVariable.getString(9),
-                        resVariable.getString(10),
-                        resVariable.getString(11),
-                        resVariable.getString(12),
-                        resVariable.getString(13),
-                        resVariable.getString(14),
-                        resVariable.getString(15),
-                        resVariable.getString(16),
-                        resVariable.getString(17)
+                        resVariable.getString(6)
                 ));
             }
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado Detalles en Seguimiento Solicitud. " + e.getMessage());
+            System.out.println("Error en el llenado de Catálogo Repisas. " + e.getMessage() + " Query: " + mQuery);
         }
     }
 
+    public void llenarProveedores() {
+        String mQuery = "";
+        try {
+
+            proveedores = new ArrayList<>();
+
+            mQuery = "select cod_pro,cod_pai,nom_pro,per_con,tel_con,det_mai  "
+                    + "from cat_pro order by cod_pro;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                proveedores.add(new CatProveedores(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Proveedores en ManSeguimiento. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+
+    //****************** Llenar Listas *******************************
     public void llenarMaestroAprobar() {
         try {
             catmaestroaprobar = new CatSolicitudes();
@@ -641,7 +922,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     + "when 5 then 'CERRADA' end as sta, "
                     + "mae.det_obs, "
                     + "date_format(mae.fec_cie,'%d/%m/%Y'), mae.flg_loc,mae.cod_pai, "
-                    + "dep.nom_dep, concat(lis.num_ser,'-',maq.nom_equ) as nomequ,"
+                    + "dep.nom_dep, lis.des_equ as nomequ,"
                     + "pai.nom_alm, usu.det_nom "
                     + "FROM sol_mae as mae "
                     + "left join cat_dep as dep on mae.cod_dep = dep.cod_dep "
@@ -651,7 +932,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     + "left join cat_usu as usu on mae.cod_usu_sol = usu.cod_usu "
                     + "where "
                     + "mae.det_sta = 0 "
-                    + "order by mae.fec_sol desc, mae.cod_mae desc;";
+                    + "order by mae.fec_sol asc, mae.cod_mae asc;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -742,16 +1023,151 @@ public class ManSeguimiento extends Conexion implements Serializable {
         }
     }
 
+    public void llenarMaestro() {
+        try {
+            RequestContext.getCurrentInstance().execute("PF('wvSegui').clearFilters()");
+            catmaestro = new CatSolicitudes();
+            maestro = new ArrayList<>();
+
+            String mQuery = "select "
+                    + "mae.cod_mae, mae.cod_alt, "
+                    + "date_format(mae.fec_sol,'%d/%m/%Y'), "
+                    + "mae.cod_usu_sol, "
+                    + "mae.cod_usu_apr, mae.cod_usu_rec, mae.cod_dep, mae.det_uso, mae.cod_maq, "
+                    + "case mae.det_sta "
+                    + "when 0 then 'ESPERA APROBACIÓN' "
+                    + "when 1 then 'CANCELADA' "
+                    + "when 2 then 'APROBADA' "
+                    + "when 3 then 'DENEGADA' "
+                    + "when 4 then 'PENDIENTE' "
+                    + "when 5 then 'CERRADA' end as sta, "
+                    + "mae.det_obs, "
+                    + "date_format(mae.fec_cie,'%d/%m/%Y'), mae.flg_loc,mae.cod_pai, "
+                    + "dep.nom_dep, lis.des_equ as nomequ,"
+                    + "pai.nom_alm, usu.det_nom "
+                    + "FROM sol_mae as mae "
+                    + "left join cat_dep as dep on mae.cod_dep = dep.cod_dep "
+                    + "left join lis_equ as lis on mae.cod_maq = lis.cod_lis_equ "
+                    + "left join cat_equ as maq on lis.cod_equ = maq.cod_equ "
+                    + "left join cat_alm as pai on mae.cod_pai = pai.cod_alm "
+                    + "left join cat_usu as usu on mae.cod_usu_sol = usu.cod_usu "
+                    + "where "
+                    + "mae.det_sta in (2,4) "
+                    + "order by mae.fec_sol asc, mae.cod_alt asc;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                maestro.add(new CatSolicitudes(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10),
+                        resVariable.getString(11),
+                        resVariable.getString(12),
+                        resVariable.getString(13),
+                        resVariable.getString(14),
+                        resVariable.getString(15),
+                        resVariable.getString(16),
+                        resVariable.getString(17),
+                        resVariable.getString(18)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado Maestro en Seguimiento Solicitud. " + e.getMessage());
+        }
+    }
+
+    public void llenarDetalles() {
+        try {
+
+            detalles = new ArrayList<>();
+
+            String mQuery = "select  "
+                    + "det.cod_mae, det.cod_det, det.cod_pai, det.cod_bod, "
+                    + "det.cod_ubi, det.cod_ite, det.des_ite, det.det_can_sol, 0, "
+                    + "det.det_can_pen, det.non_sto, "
+                    + "case det.det_sta "
+                    + "when 0 then 'PENDIENTE' "
+                    + "when 1 then 'COTIZADO' "
+                    + "when 2 then 'COMPRADO' "
+                    + "when 3 then 'ENTREGA PARCIAL' "
+                    + "when 4 then 'ENTREGADO' "
+                    + "when 5 then 'CANCELADO' "
+                    + "end as sta , "
+                    + "det.fec_cie, "
+                    + "det.cos_uni, "
+                    + "pai.nom_alm, bod.nom_bod, ubi.nom_ubi "
+                    + "from sol_det as det "
+                    + "left join cat_alm as pai on det.cod_pai = pai.cod_alm "
+                    + "left join cat_bodegas as bod on det.cod_pai = bod.cod_pai and det.cod_bod = bod.id_bod "
+                    + "left join cat_ubicaciones as ubi on det.cod_bod = ubi.cod_bod and det.cod_ubi = ubi.id_ubi "
+                    + "where det.cod_mae = " + cod_mae + " "
+                    + "and det.det_sta in (0,1,2,3) "
+                    + "order by det.cod_det asc;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                detalles.add(new CatSolicitudesDetalle(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10),
+                        resVariable.getString(11),
+                        resVariable.getString(12),
+                        resVariable.getString(13),
+                        resVariable.getString(14),
+                        resVariable.getString(15),
+                        resVariable.getString(16),
+                        resVariable.getString(17)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado Detalles en Seguimiento Solicitud. " + e.getMessage());
+        }
+    }
+
     public void llenarMaestroHistoria() {
         try {
             catmaestrohistoria = new CatSolicitudes();
             maestrohistoria = new ArrayList<>();
-            String mwhere;
+            String mwhere = "";
             if ("".equals(idbuscar)) {
                 mwhere = " ";
             } else {
-                mwhere = "where "
-                        + "mae.cod_mae in (" + idbuscar + ") ";
+                switch (rbhistoria) {
+                    case "0":
+                        mwhere = "where "
+                                + "mae.cod_alt in ('" + idbuscar.replace(",", "','") + "') ";
+                        break;
+                    case "1":
+                        mwhere = "where "
+                                + "mae.fec_sol = str_to_date('" + idbuscar + "','%d/%m/%Y') ";
+                        break;
+                    case "2":
+                        mwhere = "where usu.det_nom like '%" + idbuscar + "%' ";
+                        break;
+                }
+
             }
 
             String mQuery = "select "
@@ -768,7 +1184,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     + "when 5 then 'CERRADA' end as sta, "
                     + "mae.det_obs, "
                     + "date_format(mae.fec_cie,'%d/%m/%Y'), mae.flg_loc,mae.cod_pai, "
-                    + "dep.nom_dep, concat(lis.num_ser,'-',maq.nom_equ) as nomequ,"
+                    + "dep.nom_dep, lis.des_equ as nomequ,"
                     + "pai.nom_alm, usu.det_nom "
                     + "FROM sol_mae as mae "
                     + "left join cat_dep as dep on mae.cod_dep = dep.cod_dep "
@@ -777,7 +1193,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                     + "left join cat_alm as pai on mae.cod_pai = pai.cod_alm "
                     + "left join cat_usu as usu on mae.cod_usu_sol = usu.cod_usu "
                     + mwhere
-                    + "order by mae.fec_sol desc;";
+                    + "order by mae.fec_sol asc, mae.cod_alt asc;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -813,35 +1229,51 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
     public void llenarDetallesHistoria() {
         try {
-            catdetalleshistoria = new CatSolicitudesDetalle();
+            catdetalleshistoria = new CatSolicitudesDetalleHistoria();
             detalleshistoria = new ArrayList<>();
 
-            String mQuery = "select  "
-                    + "det.cod_mae, det.cod_det, det.cod_pai, det.cod_bod, "
-                    + "det.cod_ubi, det.cod_ite, det.des_ite, det.det_can_sol, det.det_can_ent, "
-                    + "det.det_can_pen, det.non_sto, "
-                    + "case det.det_sta "
+            String mQuery = "select "
+                    + "detrec.cod_mae, "
+                    + "detrec.det_mae, "
+                    + "his.cod_pai,"
+                    + "his.cod_bod,"
+                    + "detrec.cod_rec,"
+                    + "his.cod_pie,"
+                    + "det.des_ite,"
+                    + "det.det_can_sol,"
+                    + "detrec.det_can,"
+                    + "0 as det_can_pen,"
+                    + "det.non_sto, "
+                    + "case detrec.det_sta "
                     + "when 0 then 'PENDIENTE' "
                     + "when 1 then 'COTIZADO' "
                     + "when 2 then 'COMPRADO' "
-                    + "when 3 then 'ENTREGADO PARCIAL' "
+                    + "when 3 then 'ENTREGA PARCIAL' "
                     + "when 4 then 'ENTREGADO' "
                     + "when 5 then 'CANCELADO' "
-                    + "end as sta , "
-                    + "det.fec_cie, "
-                    + "det.cos_uni, "
-                    + "pai.nom_alm, bod.nom_bod, ubi.nom_ubi "
-                    + "from sol_det as det "
-                    + "left join cat_alm as pai on det.cod_pai = pai.cod_alm "
-                    + "left join cat_bodegas as bod on det.cod_pai = bod.cod_pai and det.cod_bod = bod.id_bod "
-                    + "left join cat_ubicaciones as ubi on det.cod_bod = ubi.cod_bod and det.cod_ubi = ubi.id_ubi "
-                    + "where det.cod_mae = " + his_cod_mae + " order by det.cod_det asc;";
+                    + "end as estado,"
+                    + "date_format(detrec.fec_rec,'%d/%m/%Y') as fecrec,"
+                    + "his.cos_pro,"
+                    + "pai.nom_alm,"
+                    + "bod.nom_bod,"
+                    + "detrec.cod_his, "
+                    + "ubi.id_ubi, "
+                    + "ubi.nom_ubi "
+                    + "from sol_det_rec as detrec "
+                    + "left join sol_det as det on detrec.cod_mae = det.cod_mae and detrec.det_mae = det.cod_det "
+                    + "left join tbl_pie_his as his on detrec.cod_his = his.cod_his "
+                    + "left join cat_alm as pai on his.cod_pai = pai.cod_alm "
+                    + "left join cat_bodegas as bod on his.cod_pai = bod.cod_pai and his.cod_bod = bod.id_bod "
+                    + "left join cat_ubicaciones as ubi on his.cod_bod = ubi.cod_bod and his.des_ubi = ubi.id_ubi "
+                    + "where detrec.cod_mae = " + his_cod_mae + " "
+                    + "order by detrec.det_mae, his.cod_pie, detrec.fec_rec;";
+
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
             resVariable = mAccesos.querySQLvariable(mQuery);
             while (resVariable.next()) {
-                detalleshistoria.add(new CatSolicitudesDetalle(
+                detalleshistoria.add(new CatSolicitudesDetalleHistoria(
                         resVariable.getString(1),
                         resVariable.getString(2),
                         resVariable.getString(3),
@@ -858,16 +1290,83 @@ public class ManSeguimiento extends Conexion implements Serializable {
                         resVariable.getString(14),
                         resVariable.getString(15),
                         resVariable.getString(16),
-                        resVariable.getString(17)
+                        resVariable.getString(17),
+                        resVariable.getString(18),
+                        resVariable.getString(19)
                 ));
             }
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado Detalles en Seguimiento Solicitud. " + e.getMessage());
+            System.out.println("Error en el llenado Detalles en Seguimiento Solicitud Historia. " + e.getMessage());
         }
     }
 
+    public void llenarCotizaciones() {
+        try {
+            catcotizaciones = new CatCotizaciones();
+            cotizaciones = new ArrayList<>();
+
+            String mQuery = "select cot.cod_mae, cot.cod_det, cot.cor_det, cot.cod_pro, cot.det_cot, pro.nom_pro "
+                    + "from sol_cot as cot "
+                    + "left join cat_pro as pro on cot.cod_pro = pro.cod_pro "
+                    + "where cot.cod_mae=" + cod_mae + " and cot.cod_det=" + mdt_cod_det + " "
+                    + "order by cot.cor_det;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                cotizaciones.add(new CatCotizaciones(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado Cotizaciones en Seguimiento Solicitud. " + e.getMessage());
+        }
+    }
+
+    public void llenarCompras() {
+        try {
+            catcompras = new CatCompras();
+            compras = new ArrayList<>();
+
+            String mQuery = "select com.cod_mae, com.cod_det, com.cor_com, com.cod_pro, com.det_com, pro.nom_pro,can_com "
+                    + "from sol_com as com "
+                    + "left join cat_pro as pro on com.cod_pro = pro.cod_pro "
+                    + "where com.cod_mae=" + cod_mae + " and com.cod_det=" + mdt_cod_det + " "
+                    + "order by com.cod_mae;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                compras.add(new CatCompras(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado Compras en Seguimiento Solicitud. " + e.getMessage());
+        }
+
+    }
+
+    //************************* Acciones **********************
     public void aprobar() {
         String mQuery;
         Accesos mAccesos = new Accesos();
@@ -935,147 +1434,500 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
     }
 
-    public void guardar() {
+    public void agregarcotizacion() {
         String mQuery = "";
+        try {
+            if (validarcotizacion()) {
+                Accesos acc = new Accesos();
+                acc.Conectar();
+
+                if ("".equals(cot_cod_cor) || "0".equals(cot_cod_cor)) {
+                    mQuery = "select ifnull(max(cor_det),0)+1 as codigo from sol_cot where cod_mae= " + cod_mae + " and cod_det = " + mdt_cod_det + ";";
+                    cot_cod_cor = acc.strQuerySQLvariable(mQuery);
+                    mQuery = "insert into sol_cot (cod_mae,cod_det,cor_det,cod_pro,det_cot) VALUES ("
+                            + cod_mae + "," + mdt_cod_det + "," + cot_cod_cor + "," + cot_cod_pro + "," + cot_det_cot
+                            + ");";
+                } else {
+                    mQuery = "update sol_cot set "
+                            + "cod_pro=" + cot_cod_pro + ","
+                            + "det_cot=" + cot_det_cot + " "
+                            + "where cod_mae=" + cod_mae + " "
+                            + "and cod_det=" + mdt_cod_det + " "
+                            + "and cor_det=" + cot_cod_cor + ";";
+                }
+                acc.dmlSQLvariable(mQuery);
+
+                mQuery = "update sol_det set det_sta=1 where cod_mae=" + cod_mae + " and cod_det=" + mdt_cod_det + ";";
+                acc.dmlSQLvariable(mQuery);
+
+                acc.Desconectar();
+
+                llenarDetalles();
+                //cotizaciones = new ArrayList<>();
+                llenarCotizaciones();
+                catcotizaciones = new CatCotizaciones();
+                cot_cod_cor = "0";
+                cot_cod_pro = "0";
+                cot_det_cot = "";
+
+                addMessage("Guardar Cotización", "Información almacenada con Éxito.", 1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error en guardar Cotización." + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+
+    public boolean validarcotizacion() {
+        boolean mvalidar = true;
+
+        if ("".equals(cot_det_cot)) {
+            cot_det_cot = "0";
+        }
+
+        if ("".equals(cod_mae) || "0".equals(cod_mae)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar una Solicitud.", 2);
+        }
+
+        if ("".equals(mdt_cod_det) || "0".equals(mdt_cod_det)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar un Item de la Solicitud.", 2);
+        } else {
+            if (!"COTIZADO".equals(catdetalles.getDet_sta()) && !"PENDIENTE".equals(catdetalles.getDet_sta())) {
+                mvalidar = false;
+                addMessage("Validar Datos", "El Detalle Seleccionado ya no puede ser cotizado.", 2);
+            }
+            if ("".equals(cot_cod_pro) || "0".equals(cot_cod_pro)) {
+                mvalidar = false;
+                addMessage("Validar Datos", "Debe Seleccionar un Proveedor.", 2);
+            }
+        }
+
+        return mvalidar;
+    }
+
+    public void eliminarcotizacion() {
+        String mQuery = "";
+        try {
+            if ("".equals(cod_mae) || "0".equals(cod_mae)) {
+                if ("".equals(mdt_cod_det) || "0".equals(mdt_cod_det)) {
+                    if (!cotizaciones.isEmpty()) {
+                        if ("".equals(cot_cod_cor) || "0".equals(cot_cod_cor)) {
+                            Accesos acc = new Accesos();
+                            acc.Conectar();
+                            mQuery = "delete from sol_cot where cod_mae=" + cod_mae + " and cod_det=" + mdt_cod_det + " and cor_det=" + cot_cod_cor + ";";
+                            acc.dmlSQLvariable(mQuery);
+                            acc.Desconectar();
+                            llenarCotizaciones();
+                            catcotizaciones = new CatCotizaciones();
+                        } else {
+                            addMessage("Validar Datos", "Seleccione un Item de la Lista de Cotización.", 2);
+                        }
+
+                    } else {
+                        addMessage("Validar Datos", "No Existe ningún Registro de Cotización para este Item.", 2);
+                    }
+                } else {
+                    addMessage("Validar Datos", "Seleccione un Detalle de la Solicitud.", 2);
+                }
+            } else {
+                addMessage("Validar Datos", "Seleccione una Solicitud.", 2);
+            }
+        } catch (Exception e) {
+            System.out.println("Error en eliminarcotizacion de manseguimiento. " + e.getMessage() + " Query: " + mQuery);
+        }
+
+    }
+
+    public void agregarcompra() {
+        String mQuery = "";
+        try {
+            if (validarcompra()) {
+                Accesos acc = new Accesos();
+                acc.Conectar();
+
+                if ("".equals(com_cod_cor) || "0".equals(com_cod_cor)) {
+                    mQuery = "select ifnull(max(cor_com),0)+1 as codigo from sol_com where cod_mae= " + cod_mae + " and cod_det = " + mdt_cod_det + ";";
+                    com_cod_cor = acc.strQuerySQLvariable(mQuery);
+                    mQuery = "insert into sol_com (cod_mae,cod_det,cor_com,cod_pro,det_com,can_com) VALUES ("
+                            + cod_mae + "," + mdt_cod_det + "," + com_cod_cor + "," + com_cod_pro + "," + com_det_com + "," + com_can_com
+                            + ");";
+                } else {
+                    mQuery = "update sol_cot set "
+                            + "cod_pro=" + com_cod_pro + ","
+                            + "det_com=" + com_det_com + ","
+                            + "can_com=" + com_can_com + " "
+                            + "where cod_mae=" + cod_mae + " "
+                            + "and cod_det=" + mdt_cod_det + " "
+                            + "and cor_com=" + com_cod_cor + ";";
+                }
+                acc.dmlSQLvariable(mQuery);
+
+                mQuery = "update sol_det set det_sta=2 where cod_mae=" + cod_mae + " and cod_det=" + mdt_cod_det + ";";
+                acc.dmlSQLvariable(mQuery);
+
+                acc.Desconectar();
+
+                llenarDetalles();
+                //compras = new ArrayList<>();
+                catcompras = new CatCompras();
+                llenarCompras();
+                com_cod_cor = "0";
+                com_cod_pro = "0";
+                com_det_com = "";
+                com_can_com = "";
+
+                addMessage("Guardar Compra", "Información almacenada con Éxito.", 1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error en guardar Compra." + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+
+    public boolean validarcompra() {
+        boolean mvalidar = true;
+
+        if ("".equals(com_det_com)) {
+            cot_det_cot = "0";
+        }
+
+        if ("".equals(com_can_com)) {
+            com_can_com = "0";
+        }
+
+        if ("".equals(cod_mae) || "0".equals(cod_mae)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar una Solicitud.", 2);
+        }
+
+        if ("".equals(mdt_cod_det) || "0".equals(mdt_cod_det)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar un Item de la Solicitud.", 2);
+        } else {
+            if (!"COTIZADO".equals(catdetalles.getDet_sta()) && !"PENDIENTE".equals(catdetalles.getDet_sta()) && !"COMPRADO".equals(catdetalles.getDet_sta())) {
+                mvalidar = false;
+                addMessage("Validar Datos", "El Item Seleccionado ya ha sido Comprado.", 2);
+            }
+            if ("".equals(com_cod_pro) || "0".equals(com_cod_pro)) {
+                mvalidar = false;
+                addMessage("Validar Datos", "Debe Seleccionar un Proveedor.", 2);
+            }
+        }
+
+        Accesos acc = new Accesos();
+        acc.Conectar();
+        Double micantidad = acc.doubleQuerySQLvariable("select ifnull(sum(can_com),0) from sol_com where cod_mae=" + cod_mae + " and cod_det=" + mdt_cod_det + ";") + Double.valueOf(com_can_com);
+        acc.Desconectar();
+
+        if (micantidad > Double.valueOf(catdetalles.getDet_can_sol())) {
+            mvalidar = false;
+            addMessage("Validar Datos", "La Cantidad Comprada no puede ser superior a la Cantidad Solicitada.", 2);
+        }
+
+        return mvalidar;
+    }
+
+    public void eliminarcompra() {
+        String mQuery = "";
+        try {
+            if ("".equals(cod_mae) || "0".equals(cod_mae)) {
+                if ("".equals(mdt_cod_det) || "0".equals(mdt_cod_det)) {
+                    if (!compras.isEmpty()) {
+                        if ("".equals(com_cod_cor) || "0".equals(com_cod_cor)) {
+                            Accesos acc = new Accesos();
+                            acc.Conectar();
+                            mQuery = "delete from sol_com where cod_mae=" + cod_mae + " and cod_det=" + mdt_cod_det + " and cor_com=" + com_cod_cor + ";";
+                            acc.dmlSQLvariable(mQuery);
+                            acc.Desconectar();
+                            llenarCompras();
+                            catcompras = new CatCompras();
+
+                        } else {
+                            addMessage("Validar Datos", "Seleccione un Item de la Lista de Compra.", 2);
+                        }
+
+                    } else {
+                        addMessage("Validar Datos", "No Existe ningún Registro de Compra para este Item.", 2);
+                    }
+                } else {
+                    addMessage("Validar Datos", "Seleccione un Detalle de la Solicitud.", 2);
+                }
+            } else {
+                addMessage("Validar Datos", "Seleccione una Solicitud.", 2);
+            }
+        } catch (Exception e) {
+            System.out.println("Error en eliminarcompra de manseguimiento. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+
+    public void guardarItem() {
+        String mQuery = "", mdetsta;
         try {
             if (validarseguimiento()) {
                 Accesos acc = new Accesos();
 
-                int contador = 0, contador2 = 0;
-                String mEstado = "", mCostoUni = "", mCanEnt = "", mNonStock = "", cod_lis_pie = "";
+                acc.Conectar();
+                mQuery = "update sol_mae set "
+                        + "det_sta = 4 "
+                        + "where cod_mae = " + cod_mae + ";";
+                acc.dmlSQLvariable(mQuery);
 
-                // ********************** Fin Creación Solicitud de Compra *********************
-                for (int i = 0; i < detalles.size(); i++) {
+                String strvar = acc.strQuerySQLvariable("select (det_can_pen - " + det_can_ent + " ) as resta from sol_det where cod_mae= " + cod_mae
+                        + " and cod_det=" + mdt_cod_det + ";");
 
-                    switch (detalles.get(i).getDet_sta()) {
-                        case "PENDIENTE":
-                            mEstado = "0";
-                            break;
-                        case "COTIZADO":
-                            mEstado = "1";
-                            break;
-                        case "COMPRADO":
-                            mEstado = "2";
-                            break;
-                        case "ENTREGA PARCIAL":
-                            mEstado = "0";
-                            break;
-                        case "ENTREGADO":
-                            mEstado = "4";
-                            break;
-                        case "CANCELADO":
-                            mEstado = "5";
-                            break;
-                    }
+                mQuery = "update sol_det set "
+                        + "det_can_ent = (det_can_ent + " + det_can_ent + "), "
+                        + "det_can_pen = (det_can_pen-" + det_can_ent + "), "
+                        + "cos_uni = " + mdt_cos_uni + " "
+                        + "where cod_mae= " + cod_mae
+                        + " and cod_det=" + mdt_cod_det + ";";
+                acc.dmlSQLvariable(mQuery);
 
-                    if ("".equals(detalles.get(i).getCos_uni().replace(",", ""))) {
-                        mCostoUni = "0";
-                    } else {
-                        mCostoUni = detalles.get(i).getCos_uni().replace(",", "");
-                    }
-                    if ("".equals(detalles.get(i).getDet_can_ent().replace(",", ""))) {
-                        mCanEnt = "0";
-                    } else {
-                        mCanEnt = detalles.get(i).getDet_can_ent().replace(",", "");
-                    }
-
-                    acc.Conectar();
+                if ("0".equals(strvar)) {
                     mQuery = "update sol_det set "
-                            + "det_sta = " + mEstado + ", "
-                            + "det_can_ent = (det_can_ent + " + mCanEnt + "), "
-                            + "det_can_pen = (det_can_pen-" + mCanEnt + "), "
-                            + "cos_uni = " + mCostoUni + ", "
+                            + "det_sta=4, "
                             + "fec_cie = str_to_date('" + det_fec_cie + "','%d/%m/%Y') "
-                            + "where cod_mae= " + detalles.get(i).getCod_mae()
-                            + " and cod_det=" + detalles.get(i).getCod_det() + ";";
+                            + "where cod_mae= " + cod_mae
+                            + " and cod_det=" + mdt_cod_det + ";";
                     acc.dmlSQLvariable(mQuery);
-                    acc.Desconectar();
-
-                    //********************* Registro de Recibido ***********************************
-                    if ("ENTREGADO".equals(detalles.get(i).getDet_sta()) || "ENTREGA PARCIAL".equals(detalles.get(i).getDet_sta())) {
-                        acc.Conectar();
-                        String mnewCod = acc.strQuerySQLvariable("select ifnull(max(cod_rec),0)+1 as newcod from sol_req_det_rec;");
-                        mQuery = "insert into sol_req_det_rec ( cod_rec,cod_mae,det_mae,cod_usu_rec,fec_rec,flg_sol_req,det_can) VALUES "
-                                + "( " + mnewCod + "," + cod_mae + "," + detalles.get(i).getCod_det() + "," + recibidapor
-                                + ",str_to_date('" + det_fec_cie + "','%d/%m/%Y'),'SOL'," + detalles.get(i).getDet_can_ent() + ");";
-                        acc.dmlSQLvariable(mQuery);
-                        acc.Desconectar();
-                    }
-
-                    //******************* Fin Registro de Recibido *********************************
-                    if ("1".equals(detalles.get(i).getNon_sto()) && "1".equals(destino)) {
-                        if ("ENTREGADO".equals(detalles.get(i).getDet_sta()) || "ENTREGA PARCIAL".equals(detalles.get(i).getDet_sta())) {
-                            acc.Conectar();
-                            mNonStock = acc.strQuerySQLvariable("select count(cod_det) as count from sol_det where cod_mae = " + cod_mae + " and non_sto=1;");
-
-                            // *************** Suma Existencias de Pieza por País *******************
-                            if (!"0".equals(mNonStock)) {
-                                if ("0".equals(acc.strQuerySQLvariable("select count(cod_pai) as count from bol_exi_pai where cod_pai = " + cod_pai
-                                        + " and cod_pie=" + detalles.get(i).getCod_ite() + " and ing_sal = 0;"))) {
-                                    mQuery = "insert into bol_exi_pai (cod_pai,cod_pie,ing_sal,det_exi) "
-                                            + "values (" + cod_pai + "," + detalles.get(i).getCod_ite() + ",0,"
-                                            + detalles.get(i).getDet_can_ent() + ");";
-
-                                } else {
-                                    mQuery = "update into bol_exi_pai set det_exi = (det_exi + " + detalles.get(i).getDet_can_ent() + ") where "
-                                            + "cod_pai = " + cod_pai + " "
-                                            + "and cod_pie = " + detalles.get(i).getCod_ite() + " "
-                                            + "and ing_sal = 0;";
-                                }
-                                acc.dmlSQLvariable(mQuery);
-                                //******************* Insertar Pendientes por Ubicar *********************************
-                                String mnewpen = acc.strQuerySQLvariable("select ifnull(max(cod_pen),0)+1 as newcod from tbl_pen_ubi;");
-                                mQuery = "insert into tbl_pen_ubi(cod_pen, cod_sol_req, cod_ite, det_can, flg_ing_sal) VALUES( "
-                                        + mnewpen + "," + cod_mae + "," + detalles.get(i).getCod_ite() + "," + detalles.get(i).getDet_can_ent() + ",0);";
-                                acc.dmlSQLvariable(mQuery);
-                            }
-
-                            acc.Desconectar();
-
-                        }
-                    }
-                    // ******************* Fin Existencias de Pieza por País *****************************
-
-                    if ("ENTREGADO".equals(detalles.get(i).getDet_sta()) || "CANCELADO".equals(detalles.get(i).getDet_sta())) {
-                        contador = contador + 1;
-                    }
-                    if ("CANCELADO".equals(detalles.get(i).getDet_sta())) {
-                        contador2 = contador2 + 1;
-                    }
-                    if ("ENTREGADO".equals(detalles.get(i).getDet_sta()) || "ENTREGA PARCIAL".equals(detalles.get(i).getDet_sta())) {
-                        if (!"PENDIENTE".equals(det_sta)) {
-                            acc.Conectar();
-                            mQuery = "update sol_mae set det_sta = 4 where cod_mae = " + cod_mae + ";";
-                            acc.dmlSQLvariable(mQuery);
-                        }
-                        acc.Desconectar();
-                    }
-
+                    mdetsta = "4";
+                } else {
+                    mQuery = "update sol_det set "
+                            + "det_sta=3, "
+                            + "fec_cie = str_to_date('" + det_fec_cie + "','%d/%m/%Y') "
+                            + "where cod_mae= " + cod_mae
+                            + " and cod_det=" + mdt_cod_det + ";";
+                    acc.dmlSQLvariable(mQuery);
+                    mdetsta = "3";
                 }
 
-                if (detalles.size() == contador2) {
-                    acc.Conectar();
-                    mQuery = "update tbl_rel_man_sol_req set det_sta_sol_req=1 "
-                            + "where cod_sol_req= " + cod_mae + " and flg_sol_req='SOL';";
-                    acc.dmlSQLvariable(mQuery);
-                    mQuery = "update sol_mae set det_sta = 1 where cod_ma = " + cod_mae + ";";
-                    acc.dmlSQLvariable(mQuery);
-                    acc.Desconectar();
-                } else if (detalles.size() == contador) {
-                    acc.Conectar();
-                    mQuery = "update tbl_rel_man_sol_req set det_sta_sol_req=5 "
-                            + "where cod_sol_req= " + cod_mae + " and flg_sol_req='SOL';";
-                    acc.dmlSQLvariable(mQuery);
+                strvar = acc.strQuerySQLvariable("select count(cod_mae) from sol_det where cod_mae= " + cod_mae
+                        + " and det_sta not in (4,5);");
+
+                if ("0".equals(strvar)) {
                     mQuery = "update sol_mae set "
                             + "det_sta = 5, "
                             + "fec_cie = str_to_date('" + fec_cie + "','%d/%m/%Y') "
                             + "where cod_mae = " + cod_mae + ";";
                     acc.dmlSQLvariable(mQuery);
-                    acc.Desconectar();
+                    catdetalles = new CatSolicitudesDetalle();
+                    detalles = new ArrayList<>();
+                    llenarMaestro();
+                } else {
+                    catdetalles = new CatSolicitudesDetalle();
+                    llenarDetalles();
+
                 }
-                catdetalles = new CatSolicitudesDetalle();
-                detalles = new ArrayList<>();
-                llenarMaestro();
+
+                catcotizaciones = new CatCotizaciones();
+                cotizaciones = new ArrayList<>();
+                catcompras = new CatCompras();
+                compras = new ArrayList<>();
+
+                String cod_rec = acc.strQuerySQLvariable("select ifnull(max(cod_rec),0)+1 as cod from sol_det_rec;");
+                if ("0".equals(destino)) {
+                    mQuery = "insert into sol_det_rec (cod_rec,cod_mae,det_mae,fec_rec,det_can,flg_usu_alm,cod_usu_rec,cod_his,det_sta) "
+                            + "VALUES (" + cod_rec + "," + cod_mae + "," + mdt_cod_det
+                            + ",str_to_date('" + det_fec_cie + "','%d/%m/%YYYY')," + det_can_ent + ",0," + recibidapor + ",0," + mdetsta + ");";
+                    acc.dmlSQLvariable(mQuery);
+                } else {
+                    //código correlativo existencia histórica de artículo
+                    String cod_cor_exi_art = acc.strQuerySQLvariable("select ifnull(max(cod_his),0)+1 "
+                            + "as codigo from tbl_pie_his;");
+                    //Código correlativo diario existencia histórica de artículo
+                    String cor_dia = acc.strQuerySQLvariable("select ifnull(max(ord_dia),0)+1 "
+                            + "as cordia from tbl_pie_his "
+                            + "where "
+                            + "cod_pie=" + mdt_cod_ite + " "
+                            + "and fec_his=STR_TO_DATE('" + det_fec_cie + "','%d/%m/%Y') "
+                            + "and cod_pai = " + cod_pai + " "
+                            + ";");
+                    //Costo promedio
+                    Double cPromedio, exisAnt, mNuevaExistencia;
+                    if ("1".equals(cod_cor_exi_art)) {
+                        cPromedio = 0.0;
+                        exisAnt = 0.0;
+                    } else {
+                        cPromedio = acc.doubleQuerySQLvariable("select ifnull(cos_pro,0) as cospro "
+                                + "from tbl_pie_his "
+                                + "where "
+                                + "cod_pie=" + mdt_cod_ite + " "
+                                + "and fec_his <= STR_TO_DATE('" + det_fec_cie + "','%d/%m/%Y') "
+                                + "and flg_ing = 0 "
+                                + "and det_sta = 0 "
+                                + "and cod_pai = " + cod_pai + " "
+                                + "order by fec_his desc,"
+                                + "ord_dia desc "
+                                + "limit 1;");
+
+                        //Existencia Anterior
+                        exisAnt = acc.doubleQuerySQLvariable("select ifnull(can_exi,0) as exisant "
+                                + "from tbl_pie_his "
+                                + "where "
+                                + "cod_pie=" + mdt_cod_ite + " "
+                                + "and fec_his <= STR_TO_DATE('" + det_fec_cie + "','%d/%m/%Y') "
+                                + "and det_sta = 0 "
+                                + "and cod_pai = " + cod_pai + " "
+                                + "order by fec_his desc,"
+                                + "ord_dia desc "
+                                + "limit 1;");
+
+                    }
+                    //Inserta Registros
+
+                    mNuevaExistencia = (exisAnt + Double.valueOf(det_can_ent));
+
+                    mQuery = " insert into tbl_pie_his (cod_his,cod_pie,fec_his,ord_dia,flg_ing,"
+                            + "cod_enc,cod_det,det_can,det_cos,can_exi,cos_pro,det_sta,fec_mod,cod_usu,cod_pai,cod_bod,des_ubi) "
+                            + "VALUES (" + cod_cor_exi_art + "," + mdt_cod_ite + ","
+                            + "STR_TO_DATE('" + det_fec_cie + "','%d/%m/%Y')" + "," + cor_dia + ",0,0,0," + det_can_ent + "," + cPromedio + ","
+                            + mNuevaExistencia + ","
+                            + cPromedio + "," + "0" + "," + "now()" + "," + cbean.getCod_usu() + ","
+                            + cod_pai + "," + cod_bod + "," + des_ubi + ");";
+                    acc.dmlSQLvariable(mQuery);
+                    mQuery = "insert into sol_det_rec (cod_rec,cod_mae,det_mae,fec_rec,det_can,flg_usu_alm,cod_usu_rec,cod_his,det_sta) "
+                            + "VALUES (" + cod_rec + "," + cod_mae + "," + mdt_cod_det
+                            + ",str_to_date('" + det_fec_cie + "','%d/%m/%YYYY')," + det_can_ent + ",1,0," + cod_cor_exi_art + "," + mdetsta + ");";
+                    acc.dmlSQLvariable(mQuery);
+
+                    // Verifica si hay registros posteriores y si los hay actualiza a partir de la fecha de Transacción
+                    String contasiguientes = acc.strQuerySQLvariable("select count(cod_his) "
+                            + "from tbl_pie_his where fec_his=STR_TO_DATE('" + det_fec_cie + "','%d/%m/%Y') "
+                            + "and ord_dia >" + cor_dia + " "
+                            + "and cod_pie=" + mdt_cod_ite + " "
+                            + "and det_sta = 0 "
+                            + "and cod_pai = " + cod_pai + " "
+                            + ";");
+                    contasiguientes = String.valueOf(
+                            Integer.valueOf(contasiguientes)
+                            + Integer.valueOf(acc.strQuerySQLvariable("select count(cod_his) "
+                                    + "from tbl_pie_his "
+                                    + "where fec_his > STR_TO_DATE('" + det_fec_cie + "','%d/%m/%Y') "
+                                    + "and cod_pie=" + mdt_cod_ite + " "
+                                    + "and det_sta = 0 "
+                                    + "and cod_pai = " + cod_pai + " "
+                                    + ";")));
+
+                    Double nuevacantidad = mNuevaExistencia;
+                    if ("0".equals(contasiguientes) == false) {
+                        try {
+                            historico = new ArrayList<>();
+
+                            //Double cos_uni_sal = 0.0;
+                            ResultSet resvariable;
+                            resvariable = acc.querySQLvariable("select cod_his,cod_pie,fec_his,ord_dia,flg_ing,cod_enc,"
+                                    + "cod_det,det_can,det_cos,can_exi,cos_pro,det_sta,fec_mod,"
+                                    + "cod_usu from tbl_pie_his "
+                                    + "where fec_his > STR_TO_DATE('" + det_fec_cie + "','%d/%m/%Y') "
+                                    + "and cod_pie=" + mdt_cod_ite + " "
+                                    + "and det_sta = 0 "
+                                    + "and cod_pai = " + cod_pai + " "
+                                    + "order by fec_his asc,"
+                                    + "ord_dia asc"
+                                    + ";");
+                            while (resvariable.next()) {
+                                historico.add(new CatHistorico(
+                                        resvariable.getString(1),
+                                        resvariable.getString(2),
+                                        resvariable.getString(3),
+                                        resvariable.getString(4),
+                                        resvariable.getString(5),
+                                        resvariable.getString(6),
+                                        resvariable.getString(7),
+                                        resvariable.getString(8),
+                                        resvariable.getString(9),
+                                        resvariable.getString(10),
+                                        resvariable.getString(11),
+                                        resvariable.getString(12),
+                                        resvariable.getString(13),
+                                        resvariable.getString(14)
+                                ));
+                            }
+
+                            for (CatHistorico seriehistorica1 : historico) {
+                                if ("0".equals(seriehistorica1.getFlg_ing())) {
+                                    cPromedio = (cPromedio * nuevacantidad + Double.valueOf(seriehistorica1.getDet_can()) * Double.valueOf(seriehistorica1.getDet_cos())) / (nuevacantidad + Double.valueOf(seriehistorica1.getDet_can()));
+                                    nuevacantidad = nuevacantidad + Double.valueOf(seriehistorica1.getDet_can());
+                                    //cos_uni_sal = 0.0;
+                                    //cunitario = Double.valueOf(seriehistorica1.getDet_cos());
+                                } else {
+                                    nuevacantidad = nuevacantidad - Double.valueOf(seriehistorica1.getDet_can());
+                                    //cos_uni_sal = cPromedio;
+                                }
+                                mQuery = "update tbl_pie_his set "
+                                        + "cos_pro= " + cPromedio + " ,"
+                                        + "can_exi= " + nuevacantidad + " "
+                                        + "where "
+                                        + "cod_his = " + seriehistorica1.getCod_his()
+                                        + ";";
+                                acc.dmlSQLvariable(mQuery);
+                            }
+
+                        } catch (Exception e) {
+                            System.out.println("Error en actualización de costos posteriores Agregar. " + e.getMessage());
+                        }
+
+                    }
+
+                    // Tratamiento tabla bol_exi_pai
+                    String mContador = acc.strQuerySQLvariable("select count(cod_pie) as contador from bol_exi_pai "
+                            + "where "
+                            + "cod_pai=" + cod_pai + " "
+                            + "and ing_sal=0 "
+                            + "and cod_pie=" + mdt_cod_ite
+                            + ";");
+
+                    if ("0".equals(mContador)) {
+
+                        mQuery = "insert into bol_exi_pai(cod_pai,cod_pie,ing_sal,det_exi) "
+                                + "VALUES ("
+                                + cod_pai + ","
+                                + mdt_cod_ite + ",0,"
+                                + det_can_ent
+                                + ");";
+
+                    } else {
+                        mQuery = "update bol_exi_pai set "
+                                + "det_exi= (det_exi + " + det_can_ent + ") "
+                                + "where "
+                                + "cod_pai=" + cod_pai + " "
+                                + "and ing_sal=0 "
+                                + "and cod_pie=" + mdt_cod_ite + ";";
+
+                    }
+
+                    acc.dmlSQLvariable(mQuery);
+
+                    // Tratamiento tabla tbl_existencias
+                    mContador = acc.strQuerySQLvariable("select count(cod_exi) as contador from tbl_existencias "
+                            + "where "
+                            + "cod_pai=" + cod_pai + " "
+                            + "and cod_bod=" + cod_bod + " "
+                            + "and cod_ubi=" + des_ubi + " "
+                            + "and cod_pie=" + mdt_cod_ite
+                            + ";");
+
+                    if ("0".equals(mContador)) {
+
+                        mQuery = "insert into tbl_existencias(cod_exi,cod_pie,cod_pai,cod_bod,cod_ubi,det_can,cos_pro) "
+                                + "VALUES ("
+                                + acc.strQuerySQLvariable("select (ifnull(max(cod_exi),0) + 1) as codigo from tbl_existencias;") + ","
+                                + mdt_cod_ite + ","
+                                + cod_pai + ","
+                                + cod_bod + "," + des_ubi + ","
+                                + det_can_ent
+                                + ",0);";
+                    } else {
+                        mQuery = " update tbl_existencias set det_can=(det_can+" + det_can_ent + ") "
+                                + " where cod_pai=" + cod_pai + " and cod_bod = " + cod_bod + " and cod_ubi=" + des_ubi + " "
+                                + " and cod_pie=" + mdt_cod_ite + " ;";
+                    }
+                    acc.dmlSQLvariable(mQuery);
+
+                }
+
+                acc.Desconectar();
+                det_can_ent = "";
                 addMessage("Guardar Solicitud", "Cambios Almacenados con Éxito.", 1);
             }
 
@@ -1086,275 +1938,666 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
     public boolean validarseguimiento() {
         boolean mvalidar = true;
-        for (int i = 0; i < detalles.size(); i++) {
 
-            if ("ENTREGA PARCIAL".equals(detalles.get(i).getDet_sta()) && "0".equals(detalles.get(i).getDet_can_ent())) {
+        if ("".equals(det_can_ent)) {
+            det_can_ent = "0";
+        }
+
+        if ("".equals(cod_mae) || "0".equals(cod_mae)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar una Solicitud.", 2);
+        }
+
+        if ("".equals(mdt_cod_det) || "0".equals(mdt_cod_det)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar un Item de la Solicitud.", 2);
+        }
+
+        try {
+            if (Integer.valueOf(det_can_pen) < Integer.valueOf(det_can_ent)) {
                 mvalidar = false;
-                addMessage("Validar Datos", "Al Detalle con ENTREGA PARCIAL " + detalles.get(i).getDet_can_sol()
-                        + " " + detalles.get(i).getDes_ite() + " debe definirse una Cantidad Parcial Entregada.", 2);
+                addMessage("Validar Datos", "La Cantidad Entregada no puede ser Superior a la Pendiente.", 2);
             }
-            if ("ENTREGA PARCIAL".equals(detalles.get(i).getDet_sta()) && "".equals(detalles.get(i).getDet_can_ent())) {
+        } catch (Exception e) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Verifique la Cantidad Entregada y la Cantidad Pendiente.", 2);
+        }
+
+        if ("0".equals(destino)) {
+            if ("0".equals(recibidapor)) {
                 mvalidar = false;
-                addMessage("Validar Datos", "Al Detalle con ENTREGA PARCIAL " + detalles.get(i).getDet_can_sol()
-                        + " " + detalles.get(i).getDes_ite() + " debe definirse una Cantidad Parcial Entregada.", 2);
+                addMessage("Validar Datos", "Debe Seleccionar un Responsable de Recibir.", 2);
             }
-            if ("ENTREGA PARCIAL".equals(detalles.get(i).getDet_sta()) && detalles.get(i).getDet_can_pen().equals(detalles.get(i).getDet_can_ent())) {
+        } else {
+            if ("0".equals(mdt_non_sto)) {
                 mvalidar = false;
-                addMessage("Validar Datos", "La ENTREGA PARCIAL de " + detalles.get(i).getDet_can_sol()
-                        + " " + detalles.get(i).getDes_ite() + " debe ser MENOR que la Cantidad Solicitada Pendiente.", 2);
+                addMessage("Validar Datos", "El Item Seleccionado no es Artìculo codificado de Almacèn.", 2);
             }
-            if ("ENTREGADO".equals(detalles.get(i).getDet_sta()) && !detalles.get(i).getDet_can_pen().equals(detalles.get(i).getDet_can_ent())) {
+            if ("0".equals(cod_pai)) {
                 mvalidar = false;
-                addMessage("Validar Datos", "Al Detalle ENTREGADO " + detalles.get(i).getDet_can_sol()
-                        + " " + detalles.get(i).getDes_ite() + " debe Asignarsele una Cantidad Entregada igual a la Solicitada Pendiente.", 2);
+                addMessage("Validar Datos", "Debe Seleccionar una Bodega.", 2);
             }
-            if ("PENDIENTE".equals(detalles.get(i).getDet_sta()) || "COTIZADO".equals(detalles.get(i).getDet_sta())
-                    || "COMPRADO".equals(detalles.get(i).getDet_sta()) || "CANCELADO".equals(detalles.get(i).getDet_sta())) {
-                if (!"0".equals(detalles.get(i).getDet_can_ent()) && !"".equals(detalles.get(i).getDet_can_ent())) {
-                    mvalidar = false;
-                    addMessage("Validar Datos", "El Detalle " + detalles.get(i).getDet_can_sol()
-                            + " " + detalles.get(i).getDes_ite()
-                            + " No ha sido Entregado Parcial o totalmente y NO PUEDE tener Cantidad Entregada Mayor que Cero.", 2);
+            if ("0".equals(cod_bod)) {
+                mvalidar = false;
+                addMessage("Validar Datos", "Debe Seleccionar un Estante.", 2);
+            }
+            if ("0".equals(des_ubi)) {
+                mvalidar = false;
+                addMessage("Validar Datos", "Debe Seleccionar una Repisa.", 2);
+            }
+            if ("0".equals(mdt_cod_ite) || "".equals(mdt_cod_ite)) {
+                mvalidar = false;
+                addMessage("Validar Datos", "Este Item no es Pieza Codificada.", 2);
+            }
+        }
+        if ("0".equals(det_can_ent)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Ingresar una Cantidad Entregada superior a Cero.", 2);
+        }
+
+        Accesos macc = new Accesos();
+        macc.Conectar();
+        String mQuery = "select str_to_date(fec_sol,'%d/%m/%Y') from req_mae where cod_mae=" + cod_mae + ";";
+        String mQuery2 = "select DATEDIFF(str_to_date('" + det_fec_cie + "','%d/%m/%Y'), str_to_date('" + macc.strQuerySQLvariable(mQuery) + "','%d/%m/%Y')) as datedif;";
+        if (macc.doubleQuerySQLvariable(mQuery2) < 0.0) {
+            mvalidar = false;
+            addMessage("Validar Datos", "La Fecha de Recepción no puede ser anterior a la Fecha de Creación de Solicitud.", 2);
+        }
+        macc.Desconectar();
+
+        return mvalidar;
+    }
+
+    public void cancelarItem() {
+        String mQuery = "";
+        try {
+            if (validarCancelado()) {
+                Accesos acc = new Accesos();
+
+                acc.Conectar();
+                mQuery = "update sol_mae set "
+                        + "det_sta = 4 "
+                        + "where cod_mae = " + cod_mae + ";";
+                acc.dmlSQLvariable(mQuery);
+
+                mQuery = "update sol_det set "
+                        + "det_sta=5, "
+                        + "fec_cie = str_to_date('" + det_fec_cie + "','%d/%m/%Y') "
+                        + "where cod_mae= " + cod_mae
+                        + " and cod_det=" + mdt_cod_det + ";";
+                acc.dmlSQLvariable(mQuery);
+                String cod_rec = acc.strQuerySQLvariable("select ifnull(max(cod_rec),0)+1 as cod from sol_det_rec;");
+                mQuery = "insert into sol_det_rec (cod_rec,cod_mae,det_mae,fec_rec,det_can,flg_usu_alm,cod_usu_rec,cod_his,det_sta) "
+                        + "VALUES (" + cod_rec + "," + cod_mae + "," + mdt_cod_det
+                        + ",str_to_date('" + det_fec_cie + "','%d/%m/%YYYY'),0,1,0,0,2);";
+                acc.dmlSQLvariable(mQuery);
+
+                String strvar = acc.strQuerySQLvariable("select count(cod_mae) from sol_det where cod_mae= " + cod_mae + ";");
+
+                if (strvar.equals(acc.strQuerySQLvariable("select count(cod_mae) from sol_det where cod_mae= " + cod_mae + " and det_sta =5;"))) {
+                    mQuery = "update sol_mae set "
+                            + "det_sta = 1, "
+                            + "fec_cie = str_to_date('" + fec_cie + "','%d/%m/%Y') "
+                            + "where cod_mae = " + cod_mae + ";";
+                    acc.dmlSQLvariable(mQuery);
+                    catdetalles = new CatSolicitudesDetalle();
+                    detalles = new ArrayList<>();
+                    llenarMaestro();
+                } else {
+                    mQuery = "select (" + strvar + "-"
+                            + acc.strQuerySQLvariable("select count(cod_mae) from sol_det where cod_mae= " + cod_mae + " and det_sta =5;") + "-"
+                            + " count(cod_mae)) as total from sol_det where cod_mae=" + cod_mae + " and det_sta = 4;";
+                    if ("0".equals(acc.strQuerySQLvariable(mQuery))) {
+                        mQuery = "update sol_mae set "
+                                + "det_sta = 5, "
+                                + "fec_cie = str_to_date('" + fec_cie + "','%d/%m/%Y') "
+                                + "where cod_mae = " + cod_mae + ";";
+                        acc.dmlSQLvariable(mQuery);
+                        catdetalles = new CatSolicitudesDetalle();
+                        detalles = new ArrayList<>();
+                        llenarMaestro();
+                    } else {
+                        catdetalles = new CatSolicitudesDetalle();
+                        llenarDetalles();
+                    }
                 }
-            }
-            if ("ENTREGADO".equals(detalles.get(i).getDet_sta()) || "ENTREGA PARCIAL".equals(detalles.get(i).getDet_sta())) {
-                if ("0".equals(recibidapor)) {
-                    mvalidar = false;
-                    addMessage("Validar Datos", "El Detalle " + detalles.get(i).getDet_can_sol()
-                            + " " + detalles.get(i).getDes_ite() + " Debe ser Recibido por un Responsable.", 2);
-                }
+
+                acc.Desconectar();
+                det_can_ent = "";
+                addMessage("Guardar Solicitud", "Cambios Almacenados con Éxito.", 1);
             }
 
-            if ("ENTREGADO".equals(detalles.get(i).getDet_sta()) || "ENTREGA PARCIAL".equals(detalles.get(i).getDet_sta())) {
-                Accesos macc = new Accesos();
-                macc.Conectar();
-                String mQuery = "select str_to_date(fec_sol,'%d/%m/%Y') from req_mae where cod_mae=" + cod_mae + ";";
-                String mQuery2 = "select DATEDIFF(str_to_date('" + det_fec_cie + "','%d/%m/%Y'), str_to_date('" + macc.strQuerySQLvariable(mQuery) + "','%d/%m/%Y')) as datedif;";
-                if (macc.doubleQuerySQLvariable(mQuery2) < 0.0) {
-                    mvalidar = false;
-                    addMessage("Validar Datos", "La Fecha de Recepción no puede ser anterior a la Creación de Solicitud.", 2);
-                }
-                macc.Desconectar();
-            }
+        } catch (Exception e) {
+            System.out.println("Error al Guardar Cambios en Seguimiento." + e.getMessage() + " Query: " + mQuery);
+        }
+    }
 
+    public boolean validarCancelado() {
+        boolean mvalidar = true;
+
+        if ("".equals(det_can_ent)) {
+            det_can_ent = "0";
+        }
+        if ("".equals(cod_mae) || "0".equals(cod_mae)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar una Solicitud.", 2);
+        }
+
+        if ("".equals(mdt_cod_det) || "0".equals(mdt_cod_det)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar un Item de la Solicitud.", 2);
         }
 
         return mvalidar;
     }
 
-    public void ingresoalmacen(String cod_lis_pie, String fec_tra, String cod_bod, String cod_ubi, String det_can,
-            String cod_pie, String det_cos, int i, String cod_usu) {
+    public void deshacer() {
+        String mQuery = "", mdetsta;
         try {
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            String mQuery = "", mQuery2 = "", cuentaregs = "";
+            if (validardeshacer()) {
+                Accesos acc = new Accesos();
 
-            String mValues = "";
+                acc.Conectar();
+                mQuery = "update sol_mae set "
+                        + "det_sta = 4 "
+                        + "where cod_mae = " + catdetalleshistoria.getCod_mae() + ";";
+                acc.dmlSQLvariable(mQuery);
 
-//              ********************************** Existencias ****************************************
-            Double mCantidad;
-            mCantidad = Double.valueOf(det_can.replace(",", ""));
-            //código correlativo existencia histórica de artículo
-            String cod_cor_exi_art = mAccesos.strQuerySQLvariable("select ifnull(max(cod_his),0)+1 "
-                    + "as codigo from tbl_pie_his;");
-            //Código correlativo diario existencia histórica de artículo
-            String cor_dia = mAccesos.strQuerySQLvariable("select ifnull(max(ord_dia),0)+1 "
-                    + "as cordia from tbl_pie_his "
-                    + "where "
-                    + "cod_pie=" + cod_pie + " "
-                    + "and fec_his=STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
-                    + "and flg_ing = 0"
-                    + ";");
-            //Contador de Registros históricos con esa pieza.
-            cuentaregs = mAccesos.strQuerySQLvariable("select ifnull(count(cod_his),0) "
-                    + "as codigo from tbl_pie_his where cod_pie=" + cod_pie + ";");
-            //Costo promedio
-            Double cPromedio, exisAnt, cunitario, mNuevaExistencia;
-            if ("0".equals(cuentaregs)) {
-                cPromedio = Double.valueOf(det_cos.replace(",", ""));
-                exisAnt = 0.0;
-            } else {
+                mQuery = "update sol_det set "
+                        + "det_can_ent = (det_can_ent - " + catdetalleshistoria.getDet_can_ent() + "), "
+                        + "det_can_pen = (det_can_pen + " + catdetalleshistoria.getDet_can_ent() + ") "
+                        + "where cod_mae= " + catdetalleshistoria.getCod_mae()
+                        + " and cod_det=" + catdetalleshistoria.getCod_det() + ";";
+                acc.dmlSQLvariable(mQuery);
 
-                cPromedio = mAccesos.doubleQuerySQLvariable("select (ifnull((can_exi*cos_pro),0)+"
-                        + (Double.valueOf(det_can) * Double.valueOf(det_cos)) + ")"
-                        + "/(IFNULL(can_exi,0)+" + mCantidad + ") as Cpromedio "
-                        + "from tbl_pie_his "
-                        + "where "
-                        + "cod_pie=" + cod_pie + " "
-                        + "and fec_his <= STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
-                        + "and det_sta = 0 "
-                        + "order by fec_his desc,"
-                        + "ord_dia desc "
-                        + "limit 1;");
+                mdetsta = acc.strQuerySQLvariable("select (det_can_sol - det_can_pen) as resta from sol_det where cod_mae= "
+                        + catdetalleshistoria.getCod_mae()
+                        + " and cod_det=" + catdetalleshistoria.getCod_det() + ";");
 
-                //Existencia Anterior
-                exisAnt = mAccesos.doubleQuerySQLvariable("select ifnull(can_exi,0) as exisant "
-                        + "from tbl_pie_his "
-                        + "where "
-                        + "cod_pie=" + cod_pie + " "
-                        + "and fec_his <= STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
-                        + "and det_sta = 0 "
-                        + "order by fec_his desc,"
-                        + "ord_dia desc "
-                        + "limit 1;");
+                if ("0".equals(mdetsta)) {
+                    String countcompra = acc.strQuerySQLvariable("select count(cod_mae) as resta from sol_com where cod_mae= "
+                            + catdetalleshistoria.getCod_mae()
+                            + " and cod_det=" + catdetalleshistoria.getCod_det() + ";");
 
-            }
-            //Inserta Registro
+                    String countcotiza = acc.strQuerySQLvariable("select count(cod_mae) as resta from sol_cot where cod_mae= "
+                            + catdetalleshistoria.getCod_mae()
+                            + " and cod_det=" + catdetalleshistoria.getCod_det() + ";");
 
-            mNuevaExistencia = (exisAnt + mCantidad);
-
-            cunitario = Double.valueOf(det_cos.replace(",", ""));
-            mQuery2 = " insert into tbl_pie_his (cod_his,cod_pie,fec_his,ord_dia,flg_ing,"
-                    + "cod_enc,cod_det,det_can,det_cos,can_exi,cos_pro,det_sta,fec_mod,cod_usu) "
-                    + "VALUES (" + cod_cor_exi_art + "," + cod_pie + ","
-                    + "STR_TO_DATE('" + fec_tra + "','%d/%m/%Y')" + "," + cor_dia + ",0,"
-                    + cod_lis_pie + "," + (i + 1) + "," + mCantidad + "," + cunitario + ","
-                    + mNuevaExistencia + ","
-                    + cPromedio + "," + "0" + "," + "now()" + "," + cod_usu + ");";
-
-            mAccesos.dmlSQLvariable(mQuery2);
-
-            // Verifica si hay registros posteriores y si los hay actualiza a partir de la fecha de Transacción
-            String contasiguientes = mAccesos.strQuerySQLvariable("select count(cod_his) "
-                    + "from tbl_pie_his where fec_his=STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
-                    + "and ord_dia >" + cor_dia + " "
-                    + "and cod_pie=" + cod_pie + " "
-                    + "and det_sta = 0 "
-                    + ";");
-            contasiguientes = String.valueOf(
-                    Integer.valueOf(contasiguientes)
-                    + Integer.valueOf(mAccesos.strQuerySQLvariable("select count(cod_his) "
-                            + "from tbl_pie_his "
-                            + "where fec_his > STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
-                            + "and cod_pie=" + cod_pie + " "
-                            + "and det_sta = 0 "
-                            + ";")));
-
-            Double nuevacantidad = mNuevaExistencia;
-            if ("0".equals(contasiguientes) == false) {
-                try {
-                    historico = new ArrayList<>();
-
-                    //Double cos_uni_sal = 0.0;
-                    ResultSet resvariable;
-                    resvariable = mAccesos.querySQLvariable("select cod_his,cod_pie,fec_his,ord_dia,flg_ing,cod_enc,"
-                            + "cod_det,det_can,det_cos,can_exi,cos_pro,det_sta,fec_mod,"
-                            + "cod_usu "
-                            + "from tbl_pie_his "
-                            + "where fec_his >= STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
-                            + "and cod_pie=" + cod_pie + " "
-                            + "and det_sta = 0 "
-                            + "order by fec_his asc,"
-                            + "ord_dia asc"
-                            + ";");
-                    while (resvariable.next()) {
-                        historico.add(new CatHistorico(
-                                resvariable.getString(1),
-                                resvariable.getString(2),
-                                resvariable.getString(3),
-                                resvariable.getString(4),
-                                resvariable.getString(5),
-                                resvariable.getString(6),
-                                resvariable.getString(7),
-                                resvariable.getString(8),
-                                resvariable.getString(9),
-                                resvariable.getString(10),
-                                resvariable.getString(11),
-                                resvariable.getString(12),
-                                resvariable.getString(13),
-                                resvariable.getString(14)
-                        ));
+                    if ("0".equals(countcompra) && "0".equals(countcompra)) {
+                        mQuery = "update sol_det set "
+                                + "det_sta = 0 "
+                                + "where cod_mae= " + catdetalleshistoria.getCod_mae() + " "
+                                + "and cod_det=" + catdetalleshistoria.getCod_det() + ";";
+                        acc.dmlSQLvariable(mQuery);
+                    }
+                    if (!"0".equals(countcompra)) {
+                        mQuery = "update sol_det set "
+                                + "det_sta = 2 "
+                                + "where cod_mae= " + catdetalleshistoria.getCod_mae() + " "
+                                + "and cod_det=" + catdetalleshistoria.getCod_det() + ";";
+                        acc.dmlSQLvariable(mQuery);
+                    } else {
+                        mQuery = "update sol_det set "
+                                + "det_sta = 1 "
+                                + "where cod_mae= " + catdetalleshistoria.getCod_mae() + " "
+                                + "and cod_det=" + catdetalleshistoria.getCod_det() + ";";
+                        acc.dmlSQLvariable(mQuery);
                     }
 
-                    for (CatHistorico seriehistorica1 : historico) {
-                        if ("0".equals(seriehistorica1.getFlg_ing())) {
-                            cPromedio = (cPromedio * nuevacantidad + Double.valueOf(seriehistorica1.getDet_can()) * Double.valueOf(seriehistorica1.getDet_cos())) / (nuevacantidad + Double.valueOf(seriehistorica1.getDet_can()));
-                            nuevacantidad = nuevacantidad + Double.valueOf(seriehistorica1.getDet_can());
-                            //cos_uni_sal = 0.0;
-                            //cunitario = Double.valueOf(seriehistorica1.getDet_cos());
-                        } else {
-                            nuevacantidad = nuevacantidad - Double.valueOf(seriehistorica1.getDet_can());
-                            //cos_uni_sal = cPromedio;
-                        }
-                        mQuery2 = "update tbl_pie_his set "
-                                + "cos_pro= " + cPromedio + " ,"
-                                + "can_exi= " + nuevacantidad + " "
-                                + "where "
-                                + "cod_his = " + seriehistorica1.getCod_his()
-                                + ";";
-                        mAccesos.dmlSQLvariable(mQuery2);
-                    }
-
-                } catch (Exception e) {
-                    System.out.println("Error en actualización de costos posteriores Agregar. " + e.getMessage());
+                } else {
+                    mQuery = "update sol_det set "
+                            + "det_sta = 3 "
+                            + "where cod_mae= " + catdetalleshistoria.getCod_mae() + " "
+                            + "and cod_det=" + catdetalleshistoria.getCod_det() + ";";
+                    acc.dmlSQLvariable(mQuery);
                 }
 
+                if ("1".equals(acc.strQuerySQLvariable("select flg_usu_alm from sol_det_rec where cod_rec= " + catdetalleshistoria.getCod_ubi() + ";"))) {
+                    //Obtener el correlativo diario del registro actual
+                    mQuery = "select ifnull(ord_dia,0) cordia "
+                            + "from tbl_pie_his "
+                            + "where "
+                            + "cod_his = " + catdetalleshistoria.getNomubi() + ";";
+                    String cor_dia = acc.strQuerySQLvariable(mQuery);
+
+                    //Borrado Lógico el registro del Histórico
+                    mQuery = " update tbl_pie_his set det_sta=1, fec_mod=now(), cod_usu=" + cbean.getCod_usu()
+                            + " where cod_his=" + catdetalleshistoria.getNomubi() + ";";
+                    acc.dmlSQLvariable(mQuery);
+
+                    // Verifica si hay registros anteriores y toma sus valores
+                    mQuery = "select count(ord_dia) as contador "
+                            + "from tbl_pie_his "
+                            + "where fec_his = STR_TO_DATE('" + catdetalleshistoria.getFec_cie() + "','%d/%m/%Y') "
+                            + "and cod_pai =" + catdetalleshistoria.getCod_pai() + " "
+                            + "and cod_pie=" + catdetalleshistoria.getCod_ite() + " "
+                            + "and det_sta=0;";
+                    String contador = acc.strQuerySQLvariable(mQuery);
+
+                    Double cPromedio = 0.0, nuevacantidad = 0.0;
+
+                    if ("0".equals(contador)) {
+                        mQuery = "select count(ord_dia) as contador "
+                                + "from tbl_pie_his "
+                                + "where fec_his < STR_TO_DATE('" + catdetalleshistoria.getFec_cie() + "','%d/%m/%Y') "
+                                + "and cod_pai =" + catdetalleshistoria.getCod_pai() + " "
+                                + "and cod_pie=" + catdetalleshistoria.getCod_ite() + " "
+                                + "and det_sta=0;";
+                        contador = acc.strQuerySQLvariable(mQuery);
+                        if ("0".equals(contador) == false) {
+                            mQuery = "select ifnull(cos_pro,0) as cpromedio "
+                                    + "from tbl_pie_his where fec_his < STR_TO_DATE('" + catdetalleshistoria.getFec_cie() + "','%d/%m/%Y') "
+                                    + "and cod_pai =" + catdetalleshistoria.getCod_pai() + " "
+                                    + "and cod_pie=" + catdetalleshistoria.getCod_ite() + " "
+                                    + "and det_sta=0 "
+                                    + "order by fec_his desc,"
+                                    + "ord_dia desc "
+                                    + "limit 1;";
+                            cPromedio = acc.doubleQuerySQLvariable(mQuery);
+                            mQuery = "select ifnull(can_exi,0) as nuevacantidad "
+                                    + "from tbl_pie_his where fec_his < STR_TO_DATE('" + catdetalleshistoria.getFec_cie() + "','%d/%m/%Y') "
+                                    + "and cod_pai =" + catdetalleshistoria.getCod_pai() + " "
+                                    + "and cod_pie=" + catdetalleshistoria.getCod_ite() + " "
+                                    + "and det_sta=0 "
+                                    + "order by fec_his desc,"
+                                    + "ord_dia desc "
+                                    + "limit 1;";
+                            nuevacantidad = acc.doubleQuerySQLvariable(mQuery);
+
+                        }
+                    } else {
+                        mQuery = "select ifnull(cos_pro,0) as cpromedio "
+                                + "from tbl_pie_his where fec_his = STR_TO_DATE('" + catdetalleshistoria.getFec_cie() + "','%d/%m/%Y') "
+                                + "and ord_dia < " + cor_dia + " "
+                                + "and cod_pai =" + catdetalleshistoria.getCod_pai() + " "
+                                + "and cod_pie=" + catdetalleshistoria.getCod_ite() + " "
+                                + "and det_sta=0 "
+                                + "order by fec_his desc,"
+                                + "ord_dia desc "
+                                + "limit 1;";
+                        cPromedio = acc.doubleQuerySQLvariable(mQuery);
+                        mQuery = "select ifnull(can_exi,0) as nuevacantidad "
+                                + "from tbl_pie_his where fec_his=STR_TO_DATE('" + catdetalleshistoria.getFec_cie() + "','%d/%m/%Y') "
+                                + "and ord_dia < " + cor_dia + " "
+                                + "and cod_pai =" + catdetalleshistoria.getCod_pai() + " "
+                                + "and cod_pie=" + catdetalleshistoria.getCod_ite() + " "
+                                + "and det_sta=0 "
+                                + "order by fec_his desc,"
+                                + "ord_dia desc "
+                                + "limit 1;";
+                        nuevacantidad = acc.doubleQuerySQLvariable(mQuery);
+
+                    }
+
+                    // Verifica si hay registros posteriores y si los hay actualiza a partir de la fecha de Transacción
+                    String contasiguientes = acc.strQuerySQLvariable("select count(cod_his) "
+                            + "from tbl_pie_his "
+                            + "where fec_his=STR_TO_DATE('" + catdetalleshistoria.getFec_cie() + "','%d/%m/%Y') "
+                            + "and ord_dia >" + cor_dia + " "
+                            + "and cod_pai =" + catdetalleshistoria.getCod_pai() + " "
+                            + "and cod_pie=" + catdetalleshistoria.getCod_ite() + " "
+                            + "and det_sta = 0 "
+                            + ";");
+                    contasiguientes = String.valueOf(
+                            Integer.valueOf(contasiguientes)
+                            + Integer.valueOf(acc.strQuerySQLvariable("select count(cod_his) "
+                                    + "from tbl_pie_his "
+                                    + "where fec_his > STR_TO_DATE('" + catdetalleshistoria.getFec_cie() + "','%d/%m/%Y') "
+                                    + "and cod_pai =" + catdetalleshistoria.getCod_pai() + " "
+                                    + "and cod_pie=" + catdetalleshistoria.getCod_ite() + " "
+                                    + "and det_sta = 0 "
+                                    + ";")));
+
+                    //Double nuevacantidad = mNuevaExistencia;
+                    if ("0".equals(contasiguientes) == false) {
+                        try {
+                            historico = new ArrayList<>();
+
+                            //Double cos_uni_sal = 0.0;
+                            ResultSet resvariable;
+                            resvariable = acc.querySQLvariable(" select * from ("
+                                    + "select cod_his,cod_pie,fec_his,ord_dia,flg_ing,cod_enc,"
+                                    + "cod_det,det_can,det_cos,can_exi,cos_pro,det_sta,fec_mod,"
+                                    + "cod_usu from tbl_pie_his "
+                                    + "where fec_his = STR_TO_DATE('" + catdetalleshistoria.getFec_cie() + "','%d/%m/%Y') "
+                                    + "and ord_dia >" + cor_dia + " "
+                                    + "and cod_pai =" + catdetalleshistoria.getCod_pai() + " "
+                                    + "and cod_pie=" + catdetalleshistoria.getCod_ite() + " "
+                                    + "and det_sta = 0 "
+                                    + "UNION ALL "
+                                    + "select cod_his,cod_pie,fec_his,ord_dia,flg_ing,cod_enc,"
+                                    + "cod_det,det_can,det_cos,can_exi,cos_pro,det_sta,fec_mod,"
+                                    + "cod_usu from tbl_pie_his "
+                                    + "where fec_his > STR_TO_DATE('" + catdetalleshistoria.getFec_cie() + "','%d/%m/%Y') "
+                                    + "and cod_pai =" + catdetalleshistoria.getCod_pai() + " "
+                                    + "and cod_pie=" + catdetalleshistoria.getCod_ite() + " "
+                                    + "and det_sta = 0 ) as tabla "
+                                    + "order by fec_his asc,"
+                                    + "ord_dia asc"
+                                    + ";");
+                            while (resvariable.next()) {
+                                historico.add(new CatHistorico(
+                                        resvariable.getString(1),
+                                        resvariable.getString(2),
+                                        resvariable.getString(3),
+                                        resvariable.getString(4),
+                                        resvariable.getString(5),
+                                        resvariable.getString(6),
+                                        resvariable.getString(7),
+                                        resvariable.getString(8),
+                                        resvariable.getString(9),
+                                        resvariable.getString(10),
+                                        resvariable.getString(11),
+                                        resvariable.getString(12),
+                                        resvariable.getString(13),
+                                        resvariable.getString(14)
+                                ));
+                            }
+
+                            for (CatHistorico seriehistorica1 : historico) {
+                                if ("0".equals(seriehistorica1.getFlg_ing())) {
+                                    cPromedio = (cPromedio * nuevacantidad + Double.valueOf(seriehistorica1.getDet_can()) * Double.valueOf(seriehistorica1.getDet_cos())) / (nuevacantidad + Double.valueOf(seriehistorica1.getDet_can()));
+                                    nuevacantidad = nuevacantidad + Double.valueOf(seriehistorica1.getDet_can());
+                                    //cos_uni_sal = 0.0;
+                                    //cunitario = Double.valueOf(seriehistorica1.getDet_cos());
+                                } else {
+                                    nuevacantidad = nuevacantidad - Double.valueOf(seriehistorica1.getDet_can());
+                                    //cos_uni_sal = cPromedio;
+                                }
+                                mQuery = "update tbl_pie_his set "
+                                        + "cos_pro= " + cPromedio + " ,"
+                                        + "can_exi= " + nuevacantidad + " "
+                                        + "where "
+                                        + "cod_his = " + seriehistorica1.getCod_his()
+                                        + ";";
+                                acc.dmlSQLvariable(mQuery);
+                            }
+
+                        } catch (Exception e) {
+                            System.out.println("Error en actualización de costos posteriores. " + e.getMessage());
+                        }
+
+                    }
+
+                    // Tratamiento tabla bol_exi_pai
+                    String mContador = acc.strQuerySQLvariable("select count(cod_pie) as contador from bol_exi_pai "
+                            + "where "
+                            + "cod_pai=" + catdetalleshistoria.getCod_pai() + " "
+                            + "and ing_sal=0 "
+                            + "and cod_pie=" + catdetalleshistoria.getCod_ite()
+                            + ";");
+
+                    if (!"0".equals(mContador)) {
+
+                        mQuery = "update bol_exi_pai set "
+                                + "det_exi= (det_exi - " + catdetalleshistoria.getDet_can_ent() + ") "
+                                + "where "
+                                + "cod_pai=" + catdetalleshistoria.getCod_pai() + " "
+                                + "and ing_sal=0 "
+                                + "and cod_pie=" + catdetalleshistoria.getCod_ite() + ";";
+
+                    }
+
+                    acc.dmlSQLvariable(mQuery);
+
+                    // Tratamiento tabla tbl_existencias
+                    mContador = acc.strQuerySQLvariable("select count(cod_exi) as contador from tbl_existencias "
+                            + "where "
+                            + "cod_pai=" + catdetalleshistoria.getCod_pai() + " "
+                            + "and cod_bod=" + catdetalleshistoria.getCod_bod() + " "
+                            + "and cod_ubi=" + catdetalleshistoria.getExtra1() + " "
+                            + "and cod_pie=" + catdetalleshistoria.getCod_ite()
+                            + ";");
+
+                    if (!"0".equals(mContador)) {
+
+                        mQuery = " update tbl_existencias set det_can=(det_can-" + catdetalleshistoria.getDet_can_ent() + ") "
+                                + " where cod_pai=" + catdetalleshistoria.getCod_pai() + " and cod_bod = " + catdetalleshistoria.getCod_bod()
+                                + " and cod_ubi = " + catdetalleshistoria.getExtra1()
+                                + " and cod_pie=" + catdetalleshistoria.getCod_ite() + " ;";
+
+                    }
+                    acc.dmlSQLvariable(mQuery);
+                    mQuery = "delete from tbl_pie_his where cod_his= " + catdetalleshistoria.getNomubi() + ";";
+                    acc.dmlSQLvariable(mQuery);
+                }
+
+                mQuery = "delete from sol_det_rec where cod_rec= " + catdetalleshistoria.getCod_ubi() + ";";
+                acc.dmlSQLvariable(mQuery);
+
+                cod_mae = "";
+                apr_cod_mae = "";
+                his_cod_mae = "";
+                his_cod_det = "";
+                det_sta = "";
+                det_can_sol = "";
+                det_can_ent = "";
+                det_can_pen = "";
+                mdt_cod_det = "";
+                mdt_cod_ite = "";
+                mdt_des_ite = "";
+                mdt_non_sto = "1";
+                mdt_det_sta = "";
+                mdt_cos_uni = "0.0";
+                cod_pai = "";
+                cod_bod = "0";
+                des_ubi = "";
+                cod_alt = "";
+                idbuscar = "";
+
+                detalles = new ArrayList<>();
+                detallesaprobar = new ArrayList<>();
+
+                llenarMaestro();
+                llenarMaestroAprobar();
+                llenarDetallesHistoria();
+
+                addMessage("Deshacer Cambios Solicitud", "Cambios Almacenados con Éxito.", 1);
+
             }
-
-            // Tratamiento tabla tbl_existencias
-            String mContador = mAccesos.strQuerySQLvariable("select count(cod_pie) as contador from tbl_existencias "
-                    + "where "
-                    + "cod_pai=" + cod_pai + " "
-                    + "and cod_bod=" + cod_bod + " "
-                    + "and cod_ubi=" + cod_ubi + " "
-                    + "and cod_pie=" + cod_pie
-                    + ";");
-
-            if ("0".equals(mContador)) {
-                String codexi = mAccesos.strQuerySQLvariable("select ifnull(max(cod_exi),0)+1 "
-                        + "as cod from tbl_existencias;");
-
-                mQuery2 = "insert into tbl_existencias(cod_exi,cod_pie,cod_pai,cod_bod,cod_ubi,det_can,cos_pro) "
-                        + "VALUES ("
-                        + codexi + ","
-                        + cod_pie + ","
-                        + cod_pai + ","
-                        + cod_bod + ","
-                        + cod_ubi + ","
-                        + nuevacantidad + ","
-                        + cPromedio
-                        + ");";
-            } else {
-
-                mQuery2 = "update tbl_existencias set "
-                        + "det_can=" + nuevacantidad + ","
-                        + "cos_pro=" + cPromedio + " "
-                        + "where "
-                        + "cod_pai=" + cod_pai + " "
-                        + "and cod_bod=" + cod_bod + " "
-                        + "and cod_ubi=" + cod_ubi + " "
-                        + "and cod_pie=" + cod_pie + ";";
-            }
-
-            mAccesos.dmlSQLvariable(mQuery2);
-
-//              ********************************* Fin Existencias ************************************
-            mValues = mValues + "," + "("
-                    + cod_lis_pie + ","
-                    + (i + 1) + ","
-                    + cod_pie + ","
-                    + cod_bod + ","
-                    + cod_ubi + ","
-                    + det_can + ","
-                    + det_cos + ","
-                    + "0"
-                    + ")";
-
-            // ******************* Inserta Detalles*****************
-            mValues = mValues.substring(1);
-            mQuery = " insert into tbl_pie_det(cod_enc,cod_det,"
-                    + "cod_pie,cod_bod,cod_ubi,det_can,det_cos,det_sta) "
-                    + "values " + mValues + ";";
-
-            mAccesos.dmlSQLvariable(mQuery);
-
-            mAccesos.Desconectar();
-
         } catch (Exception e) {
-            addMessage("Guardar Almacén", "Error al momento de guardar la información. " + e.getMessage(), 2);
-            System.out.println("Error al Guardar Detalle en Almacén en Seguimiento Solicitudes. " + e.getMessage());
+            System.out.println("Error en Deshacer Cambios Solicitud. " + e.getMessage());
+            addMessage("Guardar Cambios Solicitud", "Error al Almacenar la Información.", 2);
+        }
+    }
+
+    public boolean validardeshacer() {
+        boolean mvalidar = true;
+
+        if ("".equals(his_cod_mae) || "0".equals(his_cod_mae)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar una Solicitud.", 2);
         }
 
+        if ("".equals(his_cod_det) || "0".equals(his_cod_det)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar un Item de la Solicitud.", 2);
+        }
+
+        return mvalidar;
+    }
+
+    //********************* Controles *****************************
+    public void onRowSelect(SelectEvent event) {
+        cod_mae = ((CatSolicitudes) event.getObject()).getCod_mae();
+        det_sta = ((CatSolicitudes) event.getObject()).getDet_sta();
+        cod_pai = ((CatSolicitudes) event.getObject()).getCod_pai();
+        cod_alt = ((CatSolicitudes) event.getObject()).getCod_alt();
+
+        mfecha = Date.from(Instant.now());
+        mfecha2 = Date.from(Instant.now());
+
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        det_fec_cie = format.format(mfecha);
+        fec_cie = format.format(mfecha2);
+        recibidapor = "0";
+
+        llenarDetalles();
+        llenarBodegas();
+        ubicaciones = new ArrayList<>();
+        catdetalles = new CatSolicitudesDetalle();
+        catcotizaciones = new CatCotizaciones();
+        catcompras = new CatCompras();
+        cotizaciones = new ArrayList<>();
+        compras = new ArrayList<>();
+    }
+
+    public void onRowSelectDetalle(SelectEvent event) {
+        det_can_sol = ((CatSolicitudesDetalle) event.getObject()).getDet_can_sol();
+        //det_can_ent = ((CatSolicitudesDetalle) event.getObject()).getDet_can_ent();
+        det_can_pen = ((CatSolicitudesDetalle) event.getObject()).getDet_can_pen();
+        mdt_cod_det = ((CatSolicitudesDetalle) event.getObject()).getCod_det();
+        mdt_cod_ite = ((CatSolicitudesDetalle) event.getObject()).getCod_ite();
+        mdt_des_ite = ((CatSolicitudesDetalle) event.getObject()).getDes_ite();
+        mdt_non_sto = ((CatSolicitudesDetalle) event.getObject()).getNon_sto();
+        mdt_det_sta = ((CatSolicitudesDetalle) event.getObject()).getDet_sta();
+        mdt_cos_uni = ((CatSolicitudesDetalle) event.getObject()).getCos_uni();
+
+        det_can_ent = det_can_pen;
+
+        llenarCompras();
+        llenarCotizaciones();
+
+        cot_cod_cor = "0";
+        com_cod_cor = "0";
+        cot_cod_pro = "0";
+        com_cod_pro = "0";
+        cot_det_cot = "";
+        com_det_com = "";
+        com_can_com = "";
+
+    }
+
+    public void onRowUnselect(UnselectEvent event) {
+        detalles = new ArrayList<>();
+        compras = new ArrayList<>();
+        cotizaciones = new ArrayList<>();
+        catdetalles = new CatSolicitudesDetalle();
+    }
+
+    public void onRowUnselectDetalle(UnselectEvent event) {
+        compras = new ArrayList<>();
+        cotizaciones = new ArrayList<>();
+    }
+
+    public void onRowAprobarSelect(SelectEvent event) {
+        apr_cod_mae = ((CatSolicitudes) event.getObject()).getCod_mae();
+        cod_alt = ((CatSolicitudes) event.getObject()).getCod_alt();
+        llenarDetallesAprobar();
+    }
+
+    public void onRowAprobarUnselect(UnselectEvent event) {
+        detallesaprobar = new ArrayList<>();
+    }
+
+    public void onRowHistoriaSelect(SelectEvent event) {
+        his_cod_mae = ((CatSolicitudes) event.getObject()).getCod_mae();
+        llenarDetallesHistoria();
+    }
+
+    public void onRowHistoriaUnselect(UnselectEvent event) {
+        detalleshistoria = new ArrayList<>();
+    }
+
+    public void onRowHistoriaDetalleSelect(SelectEvent event) {
+        his_cod_det = ((CatSolicitudesDetalleHistoria) event.getObject()).getCod_det();
+    }
+
+    public void onRowHistoriaDetalleUnselect(UnselectEvent event) {
+        his_cod_det = "";
+    }
+
+    public void onRowSelectCotizacion(SelectEvent event) {
+        cot_cod_cor = ((CatCotizaciones) event.getObject()).getCor_det();
+        cot_cod_pro = ((CatCotizaciones) event.getObject()).getCod_pro();
+        cot_det_cot = ((CatCotizaciones) event.getObject()).getDet_cot();
+    }
+
+    public void onRowUnselectCotizacion(UnselectEvent event) {
+        cot_cod_cor = "";
+        cot_cod_pro = "0";
+        cot_det_cot = "";
+    }
+
+    public void onRowSelectCompras(SelectEvent event) {
+        com_cod_cor = ((CatCompras) event.getObject()).getCor_com();
+        com_cod_pro = ((CatCompras) event.getObject()).getCod_pro();
+        com_det_com = ((CatCompras) event.getObject()).getDet_com();
+        com_can_com = ((CatCompras) event.getObject()).getCan_com();
+    }
+
+    public void onRowUnselectCompras(UnselectEvent event) {
+        com_cod_cor = "";
+        com_cod_pro = "0";
+        com_det_com = "";
+        com_can_com = "";
+    }
+
+    public void dateCieSelected(SelectEvent f) {
+        Date date = (Date) f.getObject();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        fec_cie = format.format(date);
+        det_fec_cie = format.format(date);
+    }
+
+    public void onTabChange(TabChangeEvent event) {
+        switch (event.getTab().getId()) {
+            case "tabSegSol":
+                tabindex = "0";
+                break;
+            case "tabAproSol":
+                tabindex = "1";
+                RequestContext.getCurrentInstance().execute("PF('wvSegui').clearFilters()");
+                break;
+            case "tabHistoSol":
+                tabindex = "2";
+                RequestContext.getCurrentInstance().execute("PF('wvSegui').clearFilters()");
+                break;
+        }
+        //System.out.println(tabindex);
+        //RequestContext.getCurrentInstance().update(":frmListaEquipos:tvLE");
+    }
+
+    public void onTabChange2(TabChangeEvent event) {
+        switch (event.getTab().getId()) {
+            case "tabSegCot":
+                tabindex2 = "0";
+                break;
+            case "tabSegCom":
+                tabindex2 = "1";
+                break;
+            case "panentregas":
+                tabindex2 = "2";
+                break;
+        }
+        //System.out.println(tabindex);
+        //RequestContext.getCurrentInstance().update(":frmListaEquipos:tvLE");
+    }
+
+    public void onSelectBodega() {
+        des_ubi = "";
+    }
+
+    public void onSelectDestino() {
+        if ("false".equals(booledit)) {
+            booledit = "true";
+        } else {
+            booledit = "false";
+        }
+    }
+
+    public void addMessage(String summary, String detail, int tipo) {
+        FacesMessage message = new FacesMessage();
+        switch (tipo) {
+            case 1:
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+                break;
+            case 2:
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
+                break;
+        }
+
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     //******************* Reporte ***************************************
@@ -1466,142 +2709,6 @@ public class ManSeguimiento extends Conexion implements Serializable {
         } catch (JRException | IOException e) {
             System.out.println("Error en verPDF en Seguimiento Solicitudes." + e.getMessage());
         }
-    }
-
-    public void onRowSelect(SelectEvent event) {
-        cod_mae = ((CatSolicitudes) event.getObject()).getCod_mae();
-        det_sta = ((CatSolicitudes) event.getObject()).getDet_sta();
-        cod_pai = ((CatSolicitudes) event.getObject()).getCod_pai();
-        cod_alt = ((CatSolicitudes) event.getObject()).getCod_alt();
-
-        mfecha = Date.from(Instant.now());
-        mfecha2 = Date.from(Instant.now());
-
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        det_fec_cie = format.format(mfecha);
-        fec_cie = format.format(mfecha2);
-        recibidapor = "0";
-
-        llenarDetalles();
-    }
-
-    public void onRowUnselect(UnselectEvent event) {
-        detalles = new ArrayList<>();
-    }
-
-    public void onRowAprobarSelect(SelectEvent event) {
-        apr_cod_mae = ((CatSolicitudes) event.getObject()).getCod_mae();
-        cod_alt = ((CatSolicitudes) event.getObject()).getCod_alt();
-        llenarDetallesAprobar();
-    }
-
-    public void onRowAprobarUnselect(UnselectEvent event) {
-        detallesaprobar = new ArrayList<>();
-    }
-
-    public void onRowHistoriaSelect(SelectEvent event) {
-        his_cod_mae = ((CatSolicitudes) event.getObject()).getCod_mae();
-        llenarDetallesHistoria();
-    }
-
-    public void onRowHistoriaUnselect(UnselectEvent event) {
-        detalleshistoria = new ArrayList<>();
-    }
-
-    public void onRowEdit(RowEditEvent event) {
-
-        addMessage("Modificar Item", "Estado Modificado Satisfactoriamente.", 1);
-    }
-
-    public void onRowCancel(RowEditEvent event) {
-        addMessage("Modificar Item", "Modificación Cancelada.", 2);
-    }
-
-    public void onCellEdit(CellEditEvent event) {
-        Object oldValue = event.getOldValue();
-        Object newValue = event.getNewValue();
-
-        int alteredRow = event.getRowIndex();
-        String column_name = event.getColumn().getHeaderText();
-
-        switch (column_name) {
-            case "C.Ent.":
-                if (Double.valueOf(newValue.toString()) > Double.valueOf(detalles.get(alteredRow).getDet_can_pen())) {
-                    detalles.set(alteredRow, new CatSolicitudesDetalle(
-                            detalles.get(alteredRow).getCod_mae(),
-                            detalles.get(alteredRow).getCod_det(),
-                            detalles.get(alteredRow).getCod_pai(),
-                            detalles.get(alteredRow).getCod_bod(),
-                            detalles.get(alteredRow).getCod_ubi(),
-                            detalles.get(alteredRow).getCod_ite(),
-                            detalles.get(alteredRow).getDes_ite(),
-                            detalles.get(alteredRow).getDet_can_sol(),
-                            detalles.get(alteredRow).getDet_can_sol(),
-                            detalles.get(alteredRow).getDet_can_pen(),
-                            detalles.get(alteredRow).getNon_sto(),
-                            detalles.get(alteredRow).getDet_sta(),
-                            detalles.get(alteredRow).getFec_cie(),
-                            detalles.get(alteredRow).getCos_uni(),
-                            detalles.get(alteredRow).getNompai(),
-                            detalles.get(alteredRow).getNombod(),
-                            detalles.get(alteredRow).getNomubi()
-                    ));
-                    addMessage("Modificar Cantidad Entregada", "La Cantidad Entregada no puede superar la Cantidad Pendiente Solicitada.", 2);
-                } else {
-                    addMessage("Modificar Cantidad Entregada", "Cantidad Entregada Modificada de " + oldValue + " a " + newValue + ".", 1);
-                }
-
-                break;
-            case "Cost.Uni.":
-                addMessage("Modificar Costo Unitario Detalle", "Costo Unitario del Detalle Modificado de " + oldValue + " a " + newValue + ".", 1);
-                break;
-            case "Estado":
-                addMessage("Modificar Estado Detalle", "Estado del Detalle Modificado de " + oldValue + " a " + newValue + ".", 1);
-                break;
-        }
-
-        /*
-        if (newValue != null && !newValue.equals(oldValue)) {
-            addMessage("Modificar Item", "Estado Modificado de " + oldValue + " a " + newValue + ".", 1);
-        }
-         */
-    }
-
-    public void dateCieSelected(SelectEvent f) {
-        Date date = (Date) f.getObject();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        fec_cie = format.format(date);
-        det_fec_cie = format.format(date);
-    }
-
-    public void onTabChange(TabChangeEvent event) {
-        switch (event.getTab().getId()) {
-            case "tabSegSol":
-                tabindex = "0";
-                break;
-            case "tabAproSol":
-                tabindex = "1";
-                break;
-            case "tabHistoSol":
-                tabindex = "2";
-                break;
-        }
-        //System.out.println(tabindex);
-        //RequestContext.getCurrentInstance().update(":frmListaEquipos:tvLE");
-    }
-
-    public void addMessage(String summary, String detail, int tipo) {
-        FacesMessage message = new FacesMessage();
-        switch (tipo) {
-            case 1:
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
-                break;
-            case 2:
-                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
-                break;
-        }
-
-        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
 }

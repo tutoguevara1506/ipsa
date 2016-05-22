@@ -127,7 +127,7 @@
                                 style="width: 190px;"
                                 disabled="#{manSeguridad.disableOpt('menuCalendMtto')}"
                                 />
-                    <p:menuitem value="Pronostico de Mantenimientos" icon="ui-icon-calendar" 
+                    <p:menuitem value="Pronóstico de Mantenimientos" icon="ui-icon-calendar" 
                                 id="menuPronosticoMtto"
                                 onclick="PF('wPronosticoMtto').show()"
                                 update=":frmPronosticoMtto"
@@ -137,23 +137,23 @@
                                 />
                 </p:submenu>
                 <p:submenu label="Compras" icon="ui-icon-cart">
-                    <p:submenu label="Solicitudes" icon="ui-icon-pencil">
-                        <p:menuitem value="Nueva Solicitud" icon="ui-icon-document" 
-                                    onclick="PF('wSol').show()"
-                                    update=":frmSol"
-                                    style="width: 125px;"
-                                    actionListener="#{manSolicitudes.iniciarventana()}"
-                                    disabled="#{manSeguridad.disableOpt('menuNuevaSolicitud')}"
-                                    />
 
-                        <p:menuitem value="Estado Solicitud" icon="ui-icon-help" 
-                                    onclick="PF('wEstado').show()"
-                                    update=":frmEstado"
-                                    style="width: 125px;"
-                                    actionListener="#{manEstado.iniciarventana()}"
-                                    disabled="#{manSeguridad.disableOpt('menuEstadoSolicitud')}"
-                                    />
-                    </p:submenu>  
+                    <p:menuitem value="Nueva Solicitud" icon="ui-icon-document" 
+                                onclick="PF('wSol').show()"
+                                update=":frmSol"
+                                style="width: 125px;"
+                                actionListener="#{manSolicitudes.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuNuevaSolicitud')}"
+                                />
+
+                    <p:menuitem value="Estado Solicitud" icon="ui-icon-help" 
+                                onclick="PF('wEstado').show()"
+                                update=":frmEstado"
+                                style="width: 125px;"
+                                actionListener="#{manEstado.iniciarventana()}"
+                                disabled="#{manSeguridad.disableOpt('menuEstadoSolicitud')}"
+                                />
+
                     <p:menuitem value="Seguimiento" icon="ui-icon-search" 
                                 onclick="PF('wSeguimiento').show()"
                                 update=":frmSeguimiento"
@@ -185,27 +185,21 @@
                                     actionListener="#{manUbicaciones.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuRepisas')}"
                                     />
-                        <p:menuitem value="Unidades" icon="ui-icon-bookmark" 
-                                    onclick="PF('wUniMed').show()"
-                                    update=":frmUniMed"
-                                    style="width: 125px;"
-                                    actionListener="#{manUniMed.iniciarventana()}"
-                                    disabled="#{manSeguridad.disableOpt('menuUnidades')}"
-                                    />
                         <p:menuitem value="Movimientos" icon="ui-icon-arrowthick-2-n-s" 
                                     onclick="PF('wMov').show()"
                                     update=":frmMov"
                                     style="width: 125px;"
                                     actionListener="#{manMovimientos.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuMovimientos')}"
-                                    />                        
-                        <p:menuitem value="Grupos Piezas" icon="ui-icon-wrench" 
-                                    onclick="PF('wGruPie').show()"
-                                    update=":frmGruPie"
+                                    />   
+                        <p:menuitem value="Piezas" icon="ui-icon-pin-s" 
+                                    onclick="PF('wPiezas').show()"
                                     style="width: 125px;"
-                                    actionListener="#{manGruPie.iniciarventana()}"
-                                    disabled="#{manSeguridad.disableOpt('menuGruposPiezas')}"
+                                    action="#{manPiezas.iniciarventana()}" 
+                                    update=":frmPiezas"
+                                    disabled="#{manSeguridad.disableOpt('menuPiezasAlmacen')}"
                                     />
+
                     </p:submenu>
                     <p:menuitem value="Inventario Piezas" icon="ui-icon-suitcase" 
                                 onclick="PF('wListaPiezas').show()"
@@ -230,14 +224,15 @@
                                     actionListener="#{manRequisicionEstado.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuEstadoRequisicion')}"
                                     />
+                        <p:menuitem value="Seguimiento" icon="ui-icon-search" 
+                                    onclick="PF('wSeguimientoReq').show()"
+                                    update=":frmSeguimientoReq"
+                                    style="width: 125px;"
+                                    actionListener="#{manRequisicionSeguimiento.iniciarventana()}"
+                                    disabled="#{manSeguridad.disableOpt('menuSeguimientoRequisicion')}"
+                                    />
                     </p:submenu>  
-                    <p:menuitem value="Seguimiento" icon="ui-icon-search" 
-                                onclick="PF('wSeguimientoReq').show()"
-                                update=":frmSeguimientoReq"
-                                style="width: 125px;"
-                                actionListener="#{manRequisicionSeguimiento.iniciarventana()}"
-                                disabled="#{manSeguridad.disableOpt('menuSeguimientoRequisicion')}"
-                                />
+
                 </p:submenu>
                 <p:submenu label="Personal" icon="ui-icon-person">
                     <p:submenu label="Configuración" icon="ui-icon-folder-open">
@@ -371,20 +366,20 @@
                                      />
                 </f:facet>
             </p:menubar>
-            
-            
-            
+
+
+
             <!--****************** ConfirmDialog Global *********************-->
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                    <p:commandButton value="Sí" type="button" 
-                                                     styleClass="ui-confirmdialog-yes" 
-                                                     icon="ui-icon-check" />
-                                    <p:commandButton value="No" type="button" 
-                                                     styleClass="ui-confirmdialog-no" 
-                                                     icon="ui-icon-close" />
-                                </p:confirmDialog>
-            
-            
+                <p:commandButton value="Sí" type="button" 
+                                 styleClass="ui-confirmdialog-yes" 
+                                 icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" 
+                                 styleClass="ui-confirmdialog-no" 
+                                 icon="ui-icon-close" />
+            </p:confirmDialog>
+
+
         </h:form>
 
         <!--******************************************************************** 
@@ -530,7 +525,7 @@
                                          update=":frmUsuarios"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -627,7 +622,7 @@
                                          update=":frmPaises"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -699,7 +694,7 @@
                                          icon="ui-icon-close"
                                          />
 
-                        
+
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -774,7 +769,7 @@
                                          update=":frmMarca"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -862,7 +857,7 @@
                                          update=":frmUniMed"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
 
                 </p:toolbar>
@@ -956,7 +951,7 @@
                                          update=":frmTipMan"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
 
                 </p:toolbar>
@@ -1045,7 +1040,7 @@
                                          update=":frmCatPie"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
 
                 </p:toolbar>
@@ -1129,7 +1124,7 @@
                                          update=":frmOpe"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -1217,7 +1212,7 @@
                                          update=":frmMov"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -1310,7 +1305,7 @@
                                          update=":frmBod"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -1407,7 +1402,7 @@
                                          update=":frmUbi"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -1517,7 +1512,7 @@
                                          update=":frmCli"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -1627,7 +1622,7 @@
                                          update=":frmPro"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -1735,7 +1730,7 @@
                                          update=":frmEquipos"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -1863,7 +1858,7 @@
                                          update=":frmPiezas"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -2010,7 +2005,7 @@
                                          icon="ui-icon-search"
                                          />
 
-                        
+
                     </f:facet>
                     <f:facet name="right">
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -2030,8 +2025,8 @@
                             <h:panelGrid columns="4" cellpadding="5">
                                 <h:outputText value="Fecha" style="font-weight:bold;"/>
                                 <h:outputText value="Solicitante" style="font-weight:bold;"/>
-                                <h:outputText value="Almacén" style="font-weight:bold;"/>
                                 <h:outputText value="Departamento" style="font-weight:bold;"/>
+                                <h:outputText value="Clase de Compra" style="font-weight:bold;"/>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fecing"
                                              readonlyInput="true" 
                                              showOn="button" size="16"
@@ -2042,47 +2037,35 @@
                                 <p:selectOneMenu value="#{manSolicitudes.cod_usu_sol}" 
                                                  style="width:160px;text-align:right;"
                                                  immediate="false"
-                                                 disabled="false" 
+                                                 disabled="#{manSeguridad.disableOpt('comboSolicitante')}" 
                                                  >  
                                     <f:selectItem itemLabel="Ninguno" itemValue="0" />  
                                     <f:selectItems value="#{manSolicitudes.usuarios}" var="solususol"
                                                    itemLabel="#{solususol.det_nom}" itemValue="#{solususol.cod_usu}"/>
                                 </p:selectOneMenu>
-                                <p:selectOneMenu value="#{manSolicitudes.cod_pai}" 
-                                                 style="width:140px;text-align:right;"
-                                                 immediate="false"
-                                                 disabled="false" 
-                                                 >  
-                                    <p:ajax event="change" listener="#{manSolicitudes.onChangePais()}" 
-                                            update="somdepsol,somequsol"/>
-                                    <f:selectItem itemLabel="Ninguno" itemValue="0" />  
-                                    <f:selectItems value="#{manSolicitudes.paises}" var="solpai"
-                                                   itemLabel="#{solpai.nom_pai}" itemValue="#{solpai.cod_pai}"/>
-                                </p:selectOneMenu>
                                 <p:selectOneMenu value="#{manSolicitudes.cod_dep}" 
                                                  style="width:140px;text-align:right;"
                                                  immediate="false"
-                                                 disabled="false" 
+                                                 disabled="#{manSeguridad.disableOpt('comboDepartamento')}"
                                                  id="somdepsol"
                                                  >  
                                     <f:selectItem itemLabel="Ninguno" itemValue="0" />  
                                     <f:selectItems value="#{manSolicitudes.departamentos}" var="movDep"
                                                    itemLabel="#{movDep.nom_dep}" itemValue="#{movDep.cod_dep}"/>
                                 </p:selectOneMenu>
-
-                                <h:outputText value="Clase de Compra" style="font-weight:bold;"/>
-                                <h:outputText value="Equipo" style="font-weight:bold;"/>
-                                <h:outputText value="Uso" style="font-weight:bold;"/>
-                                <h:outputText value="" style="font-weight:bold;"/>
                                 <p:selectOneMenu value="#{manSolicitudes.flg_loc}" 
-                                                 style="width:110px;text-align:right;"
+                                                 style="width:140px;text-align:right;"
                                                  immediate="false"
                                                  >  
                                     <f:selectItem itemLabel="Local" itemValue="0" />
                                     <f:selectItem itemLabel="Internacional" itemValue="1" /> 
                                 </p:selectOneMenu>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" cellpadding="5" >
+                                <h:outputText value="Equipo" style="font-weight:bold;"/>
+                                <h:outputText value="Uso" style="font-weight:bold;"/>
                                 <p:selectOneMenu value="#{manSolicitudes.cod_maq}" 
-                                                 style="width:160px;text-align:right;"
+                                                 style="width:310px;text-align:right;"
                                                  immediate="false"
                                                  id="somequsol"
                                                  filter="true"
@@ -2090,10 +2073,10 @@
                                                  >  
                                     <f:selectItem itemLabel="No Aplica" itemValue="0" />  
                                     <f:selectItems value="#{manSolicitudes.equipos}" var="solmaq"
-                                                   itemLabel="#{solmaq.num_ser} - #{solmaq.nomequ}" itemValue="#{solmaq.cod_lis_equ}"/>
+                                                   itemLabel="#{solmaq.des_equ}" itemValue="#{solmaq.cod_lis_equ}"/>
                                 </p:selectOneMenu>
 
-                                <p:inputText size="25"
+                                <p:inputText size="50"
                                              maxlength="75"
                                              value="#{manSolicitudes.det_uso}"
                                              onfocus="this.select()"
@@ -2117,7 +2100,7 @@
                                 <h:outputText value="Item Codificado" style="font-weight:bold;"/>
 
                                 <p:selectOneMenu value="#{manSolicitudes.det_non_sto}" 
-                                                 style="width:80px;text-align:right;"
+                                                 style="width:60px;text-align:right;"
                                                  immediate="false"
                                                  >
                                     <p:ajax event="change" listener="#{manSolicitudes.onChangeNonStock()}" update="somitesol,desitem"/>
@@ -2129,44 +2112,53 @@
                             <h:panelGrid columns="4" cellpadding="5">
                                 <h:outputText value="Cantidad" style="font-weight:bold;"/>
                                 <h:outputText value="Código Pieza" style="font-weight:bold;"/>
-                                <h:outputText value="Descripción Item" style="font-weight:bold;"/>
-                                <p:commandButton icon="ui-icon-arrowthick-1-n" 
-                                                 title="Remover Detalle" 
-                                                 style=" width: 18px; height: 20px;" 
-                                                 actionListener="#{manSolicitudes.eliminardetalle()}" 
-                                                 update=":frmSol:dtSol,:frmSol:msgSol,canitem,desitem"/>
-                                <p:inputText size="9"
+                                <h:outputText value="" style="font-weight:bold;"/>
+                                <h:outputText value="" style="font-weight:bold;"/>
+                                <p:inputText size="11"
                                              maxlength="11"
                                              value="#{manSolicitudes.det_det_can_sol}"
                                              onfocus="this.select()"
                                              id="canitem"
                                              />
                                 <p:selectOneMenu value="#{manSolicitudes.det_cod_ite}" 
-                                                 style="width:220px;text-align:right;"
+                                                 style="width:500px;text-align:right;"
                                                  immediate="false"
                                                  id="somitesol"
                                                  disabled="#{manSolicitudes.boolNS}"
                                                  filter="true"
                                                  filterMatchMode="contains"
                                                  >
-                                    <f:selectItem  itemLabel="No Codificado" itemValue="0" />
+                                    <f:selectItem  itemLabel="Ninguno" itemValue="0" />
                                     <f:selectItems value="#{manSolicitudes.piezas}" var="solpie"
                                                    itemLabel="#{solpie.cod_ref} - #{solpie.nom_pie}" itemValue="#{solpie.cod_pie}"/>
                                 </p:selectOneMenu>
-                                <p:inputText size="50"
+                                <h:outputText value="" style="font-weight:bold;"/>
+                                <h:outputText value="" style="font-weight:bold;"/>
+
+                                <h:outputText value="" style="font-weight:bold;"/>
+                                <h:outputText value="Descripción Item no codificado" style="font-weight:bold;"/>
+                                <h:outputText value="" style="font-weight:bold;"/>
+                                <h:outputText value="" style="font-weight:bold;"/>
+                                <h:outputText value="" style="font-weight:bold;"/>
+                                <p:inputText size="80"
                                              maxlength="150"
                                              value="#{manSolicitudes.det_des_ite}"
                                              onfocus="this.select()"
                                              id="desitem"
                                              disabled="#{!manSolicitudes.boolNS}"
                                              />
-                                <p:commandButton icon="ui-icon-arrowthick-1-s" 
+                                <p:commandButton icon="ui-icon-plus" 
                                                  title="Agregar Detalle" 
-                                                 style=" width: 18px; height: 20px;" 
+                                                 style=" width: 30px; height: 20px;" 
                                                  actionListener="#{manSolicitudes.agregardetalle()}"
                                                  update=":frmSol:dtSol,:frmSol:msgSol,canitem,desitem"
                                                  />
-                            </h:panelGrid>
+                                <p:commandButton icon="ui-icon-minus" 
+                                                 title="Remover Detalle" 
+                                                 style=" width: 30px; height: 20px;" 
+                                                 actionListener="#{manSolicitudes.eliminardetalle()}" 
+                                                 update=":frmSol:dtSol,:frmSol:msgSol,canitem,desitem"/>
+                            </h:panelGrid>  
                         </div>
                     </p:tab>
                 </p:tabView>
@@ -2186,15 +2178,16 @@
                                 update=":frmSol"/>
                         <p:ajax event="rowUnselect"/>
 
-                        <p:column style="width:70px;" headerText="Almacén">
-                            <h:outputText value="#{vSol.nompai}" />
+                        <p:column style="width:40px;" headerText="Item">
+                            <h:outputText value="#{vSol.cod_det}" />
                         </p:column>
-                        <p:column style="width:50px;" headerText="Cantidad">
+                        <p:column style="width:80px;" headerText="Cantidad">
                             <h:outputText value="#{vSol.det_can_sol}" />
                         </p:column>
-                        <p:column style="width:250px" headerText="Descripción Item">
+                        <p:column style="width:450px" headerText="Descripción Item">
                             <h:outputText value="#{vSol.des_ite}" />
                         </p:column>
+
 
                     </p:dataTable>
                 </p:panel>
@@ -2291,7 +2284,7 @@
                                          update=":frmEstado"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
 
                 </p:toolbar>
@@ -2315,7 +2308,7 @@
                                 update=":frmEstado"/>
 
                         <p:column style="width:40px;" headerText="Código">
-                            <h:outputText value="#{vEstado.cod_mae}" />
+                            <h:outputText value="#{vEstado.cod_alt}" />
                         </p:column>
                         <p:column style="width:60px;" headerText="Fecha">
                             <h:outputText value="#{vEstado.fec_sol}" />
@@ -2388,34 +2381,7 @@
                 <p:growl id="msgSeguimiento" showDetail="true" life="4500"/>
                 <p:tabView id="tabseguimientosol" activeIndex="#{manSeguimiento.tabindex}">
                     <p:ajax event="tabChange" listener="#{manSeguimiento.onTabChange}" />
-                    <p:tab id="tabSegSol" title="Seguimiento">
-                        <p:toolbar>
-                            <f:facet name="left">
-                                <p:commandButton value="Guardar" style=" width: 100px;"
-                                                 actionListener="#{manSeguimiento.guardar()}"
-                                                 update=":frmSeguimiento"
-                                                 icon="ui-icon-disk"
-                                                 > 
-                                    <p:confirm header="Guardar Registro" 
-                                               message="¿Realmente desea Guardar los cambios realizados?" 
-                                               icon="ui-icon-alert"/>
-                                </p:commandButton>
-
-                                <p:commandButton value="Actualizar" style=" width: 100px;"
-                                                 actionListener="#{manSeguimiento.refrescarventana()}"
-                                                 update=":frmSeguimiento"
-                                                 icon="ui-icon-refresh"
-                                                 /> 
-
-                                <p:commandButton value="Cerrar" style=" width: 100px;"
-                                                 onclick="PF('wSeguimiento').hide()"
-                                                 actionListener="#{manSeguimiento.cerrarventana()}"
-                                                 update=":frmSeguimiento"
-                                                 icon="ui-icon-close"
-                                                 />
-                                
-                            </f:facet>
-                        </p:toolbar>
+                    <p:tab id="tabSegSol" title="Seguimiento" disabled="#{manSeguridad.disableOpt('tabSeguimientoSol')}" >
 
                         <p:panel>
                             <p:dataTable id="dtSegui" var="vSegui" 
@@ -2426,33 +2392,61 @@
                                          editable="false" 
                                          style="width:800px;"
                                          scrollable="true"
-                                         scrollHeight="110"
+                                         scrollHeight="55"
+                                         widgetVar="wvSegui"
                                          >
-                                <p:ajax event="rowSelect" listener="#{manSeguimiento.onRowSelect}" 
-                                        update=":frmSeguimiento:tabseguimientosol:dtSeguiDet" />
-                                <p:ajax event="rowUnselect" listener="#{manSeguimiento.onRowUnselect}" 
-                                        update=":frmSeguimiento:tabseguimientosol:dtSeguiDet" />
 
-                                <p:column style="width:40px;" headerText="Código">
-                                    <h:outputText value="#{vSegui.cod_mae}" />
+                                <f:facet name="header">
+                                    <p:outputPanel style=" text-align: right;">
+                                        <h:panelGroup>
+                                            <p:commandButton value="Actualizar" style=" width: 100px;"
+                                                             actionListener="#{manSeguimiento.refrescarventana()}"
+                                                             update=":frmSeguimiento"
+                                                             icon="ui-icon-refresh"
+                                                             /> 
+
+                                            <p:commandButton value="Cerrar" style=" width: 100px;"
+                                                             onclick="PF('wSeguimiento').hide()"
+                                                             actionListener="#{manSeguimiento.cerrarventana()}"
+                                                             update=":frmSeguimiento"
+                                                             icon="ui-icon-close"
+                                                             />
+                                            <h:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Filtrar:&nbsp;&nbsp;" />
+                                            <p:inputText id="globalFilter" 
+                                                         onkeyup="PF('wvSegui').filter()" 
+                                                         style="width:200px;" 
+                                                         placeholder="Código, Fecha, Solicitante"/>
+                                        </h:panelGroup>
+
+                                    </p:outputPanel>
+                                </f:facet>
+
+
+                                <p:ajax event="rowSelect" listener="#{manSeguimiento.onRowSelect}" 
+                                        update=":frmSeguimiento:tabseguimientosol" />
+                                <p:ajax event="rowUnselect" listener="#{manSeguimiento.onRowUnselect}" 
+                                        update=":frmSeguimiento:tabseguimientosol" />
+
+                                <p:column style="width:40px;" headerText="Código" filterBy="#{vSegui.cod_alt}" filterMatchMode="contains"  
+                                          filterStyle="display:none; visibility:hidden;">
+                                    <h:outputText value="#{vSegui.cod_alt}" />
                                 </p:column>
-                                <p:column style="width:60px;" headerText="Fecha">
+                                <p:column style="width:60px;" headerText="Fecha" filterBy="#{vSegui.fec_sol}" filterMatchMode="contains"  
+                                          filterStyle="display:none; visibility:hidden;">
                                     <h:outputText value="#{vSegui.fec_sol}" />
                                 </p:column>
-                                <p:column style="width:70px;" headerText="Almacén">
-                                    <h:outputText value="#{vSegui.nompai}" />
-                                </p:column>
-                                <p:column style="width:100px" headerText="Solicitante">
+                                <p:column style="width:100px" headerText="Solicitante" filterBy="#{vSegui.nomusu}" filterMatchMode="contains"  
+                                          filterStyle="display:none; visibility:hidden;">
                                     <h:outputText value="#{vSegui.nomusu}" />
                                 </p:column>
                                 <p:column style="width:100px" headerText="Departamento">
                                     <h:outputText value="#{vSegui.nomdep}" />
                                 </p:column>
-                                <p:column style="width:110px" headerText="Equipo">
-                                    <h:outputText value="#{vSegui.nommaq}" />
-                                </p:column>
-                                <p:column style="width:70px" headerText="Uso">
+                                <p:column style="width:170px" headerText="Uso">
                                     <h:outputText value="#{vSegui.det_uso}" />
+                                </p:column>
+                                <p:column style="width:70px;" headerText="Equipo">
+                                    <h:outputText value="#{vSegui.nommaq}" />
                                 </p:column>
                                 <p:column style="width:70px" headerText="Estado">
                                     <h:outputText value="#{vSegui.det_sta}" />
@@ -2460,97 +2454,244 @@
                             </p:dataTable>
                         </p:panel>
                         <p:panel>
-                            <h:panelGrid columns="6" cellpadding="5">
-                                <h:outputText value="Destino:" style="font-weight:bold;"/>
-                                <p:selectOneMenu value="#{manSeguimiento.destino}" 
-                                                 style="width:100px;text-align:right;"
-                                                 immediate="false"
-                                                 >
-                                    <f:selectItem  itemLabel="Usuario Final" itemValue="0" />
-                                    <f:selectItem  itemLabel="Almacén" itemValue="1" />
-                                </p:selectOneMenu>
-                                <h:outputText value="Recibida por:" style="font-weight:bold;"/>
-                                <p:selectOneMenu value="#{manSeguimiento.recibidapor}" 
-                                                 style="width:220px;text-align:right;"
-                                                 immediate="false"
-                                                 >
-                                    <f:selectItem  itemLabel="Ninguno" itemValue="0" />
-                                    <f:selectItems value="#{manSeguimiento.recibidores}" var="segrecibi"
-                                                   itemLabel="#{segrecibi.det_nom}" itemValue="#{segrecibi.cod_usu}"/>
-                                </p:selectOneMenu>
-                                <h:outputText value="Fecha:" style="font-weight:bold;"/>
-                                <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fecreci"
-                                             readonlyInput="true" 
-                                             showOn="button" size="16"
-                                             value="#{manSeguimiento.mfecha}"
-                                             >
-                                    <p:ajax event="dateSelect" listener="#{manSeguimiento.dateCieSelected}" />
-                                </p:calendar>
-
-                            </h:panelGrid>
-                        </p:panel>
-                        <p:panel>
                             <p:dataTable id="dtSeguiDet" var="vSeguiDet" 
                                          value="#{manSeguimiento.detalles}" 
                                          emptyMessage="No se encontraron resultados" 
-
+                                         selectionMode="single" selection="#{manSeguimiento.catdetalles}" 
                                          rowKey="#{vSeguiDet.cod_det}"
-                                         editable="true" 
+                                         editable="false" 
                                          style="width:800px;"
                                          scrollable="true"
-                                         scrollHeight="150"
-                                         editMode="cell"
+                                         scrollHeight="65"
                                          >
-                                <p:ajax event="rowEdit" listener="#{manSeguimiento.onRowEdit}" 
-                                        update=":frmSeguimiento:msgSeguimiento"/>
-                                <p:ajax event="rowEditCancel" listener="#{manSeguimiento.onRowCancel}" 
-                                        update=":frmSeguimiento:msgSeguimiento" />
-                                <p:ajax event="cellEdit" listener="#{manSeguimiento.onCellEdit}" 
-                                        update=":frmSeguimiento:msgSeguimiento, :frmSeguimiento:tabseguimientosol:dtSeguiDet"/>
-
+                                <p:ajax event="rowSelect" listener="#{manSeguimiento.onRowSelectDetalle}" 
+                                        update=":frmSeguimiento:tabseguimientosol" />
+                                <p:ajax event="rowUnselect" listener="#{manSeguimiento.onRowUnselectDetalle}" 
+                                        update=":frmSeguimiento:tabseguimientosol" />
 
                                 <p:column style="width:30px;" headerText="C.Sol.">
                                     <h:outputText value="#{vSeguiDet.det_can_sol}" />
                                 </p:column>
-                                <p:column style="width:30px; background-color: #fcf3a6;" headerText="C.Ent.">
-                                    <p:cellEditor>
-                                        <f:facet name="output"><h:outputText value="#{vSeguiDet.det_can_ent}" /></f:facet>
-                                        <f:facet name="input"><h:inputText value="#{vSeguiDet.det_can_ent}" style="width: 90%;" /> </f:facet>
-                                    </p:cellEditor>
+                                <p:column style="width:30px;" headerText="C.Ent.">
+                                    <h:outputText value="#{vSeguiDet.det_can_ent}" />
                                 </p:column>
-                                <p:column style="width:30px;" headerText="C.Pen.">
+                                <p:column style="width:30px; background-color: #ff9999;" headerText="C.Pen.">
                                     <h:outputText value="#{vSeguiDet.det_can_pen}" />
                                 </p:column>
                                 <p:column style="width:210px" headerText="Descripción Item">
                                     <h:outputText value="#{vSeguiDet.des_ite}" />
                                 </p:column>
-                                <p:column style="width:40px; background-color: #fcd794;" headerText="Cost.Uni.">
-                                    <p:cellEditor>
-                                        <f:facet name="output"><h:outputText value="#{vSeguiDet.cos_uni}" /></f:facet>
-                                        <f:facet name="input"><h:inputText value="#{vSeguiDet.cos_uni}" style="width: 90%;" /> </f:facet>
-                                    </p:cellEditor>
-                                </p:column>
-                                <p:column style="width:80px; background-color: #fcf3a6;" headerText="Estado">
-                                    <p:cellEditor>
-                                        <f:facet name="output"><h:outputText value="#{vSeguiDet.det_sta}"/></f:facet>
-                                        <f:facet name="input">
-                                            <h:selectOneMenu value="#{vSeguiDet.det_sta}" style="width:90%">
-
-                                                <f:selectItem itemLabel="PENDIENTE" itemValue="PENDIENTE" />
-                                                <f:selectItem itemLabel="COTIZADO" itemValue="COTIZADO" />
-                                                <f:selectItem itemLabel="COMPRADO" itemValue="COMPRADO" />
-                                                <f:selectItem itemLabel="ENTREGA PARCIAL" itemValue="ENTREGA PARCIAL" />
-                                                <f:selectItem itemLabel="ENTREGADO" itemValue="ENTREGADO" />
-                                                <f:selectItem itemLabel="CANCELADO" itemValue="CANCELADO" />
-                                            </h:selectOneMenu>
-                                        </f:facet>
-                                    </p:cellEditor>
+                                <p:column style="width:80px; background-color: #ff9999;" headerText="Estado">
+                                    <h:outputText value="#{vSeguiDet.det_sta}"/>
                                 </p:column>
 
                             </p:dataTable>
                         </p:panel>
+                        <p:tabView activeIndex="#{manSeguimiento.tabindex2}">
+                            <p:ajax event="tabChange" listener="#{manSeguimiento.onTabChange2}" />
+                            <p:tab title="Cotizar" id="tabSegCot">
+                                <h:panelGrid columns="6" cellpadding="5">
+                                    <h:outputText value="Proveedor" style="font-weight:bold;"/>
+                                    <p:selectOneMenu value="#{manSeguimiento.cot_cod_pro}" 
+                                                     style="width:400px;text-align:right;"
+                                                     immediate="false"
+                                                     >
+                                        <f:selectItem  itemLabel="Ninguno" itemValue="0" />
+                                        <f:selectItems value="#{manSeguimiento.proveedores}" var="somprovsegui"
+                                                       itemLabel="#{somprovsegui.nom_pro}" itemValue="#{somprovsegui.cod_pro}"/>
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Precio" style="font-weight:bold;"/>
+                                    <p:inputText value="#{manSeguimiento.cot_det_cot}" size="15" onfocus="this.select()" />
+                                    <p:commandButton icon="ui-icon-plus" 
+                                                     title="Agregar Detalle" 
+                                                     style=" width: 30px; height: 20px;" 
+                                                     actionListener="#{manSeguimiento.agregarcotizacion()}"
+                                                     update=":frmSeguimiento:tabseguimientosol, :frmSeguimiento:msgSeguimiento "
+                                                     />
+                                    <p:commandButton icon="ui-icon-minus" 
+                                                     title="Remover Detalle" 
+                                                     style=" width: 30px; height: 20px;" 
+                                                     actionListener="#{manSeguimiento.eliminarcotizacion()}" 
+                                                     update=":frmSeguimiento:tabseguimientosol, :frmSeguimiento:msgSeguimiento "
+                                                     />
+
+                                </h:panelGrid>
+                                <p:dataTable id="dtCotizac" var="vCotizac" 
+                                             value="#{manSeguimiento.cotizaciones}" 
+                                             emptyMessage="No se encontraron resultados" 
+                                             selectionMode="single" selection="#{manSeguimiento.catcotizaciones}" 
+                                             rowKey="#{vCotizac.cor_det}"
+                                             editable="false" 
+                                             style="width:800px;"
+                                             scrollable="true"
+                                             scrollHeight="65"
+                                             >
+                                    <p:ajax event="rowSelect" listener="#{manSeguimiento.onRowSelectCotizacion}" 
+                                            update=":frmSeguimiento:tabseguimientosol" />
+                                    <p:ajax event="rowUnselect" listener="#{manSeguimiento.onRowUnselectCotizacion}" 
+                                            update=":frmSeguimiento:tabseguimientosol" />
+
+                                    <p:column style="width:300px;" headerText="Proveedor">
+                                        <h:outputText value="#{vCotizac.nompro}" />
+                                    </p:column>
+                                    <p:column style="width:100px;" headerText="Precio">
+                                        <h:outputText value="#{vCotizac.det_cot}" />
+                                    </p:column>
+                                </p:dataTable>
+
+                            </p:tab>
+                            <p:tab title="Comprar" id="tabSegCom">
+                                <h:panelGrid columns="8" cellpadding="5">
+                                    <h:outputText value="Proveedor" style="font-weight:bold;"/>
+                                    <p:selectOneMenu value="#{manSeguimiento.com_cod_pro}" 
+                                                     style="width:300px;text-align:right;"
+                                                     immediate="false"
+                                                     >
+                                        <f:selectItem  itemLabel="Ninguno" itemValue="0" />
+                                        <f:selectItems value="#{manSeguimiento.proveedores}" var="somprovseguicom"
+                                                       itemLabel="#{somprovseguicom.nom_pro}" itemValue="#{somprovseguicom.cod_pro}"/>
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Cantidad" style="font-weight:bold;"/>
+                                    <p:inputText value="#{manSeguimiento.com_can_com}" size="10" onfocus="this.select()" />
+                                    <h:outputText value="Costo" style="font-weight:bold;"/>
+                                    <p:inputText value="#{manSeguimiento.com_det_com}" size="15" onfocus="this.select()" />
+                                    <p:commandButton icon="ui-icon-plus" 
+                                                     title="Agregar Detalle" 
+                                                     style=" width: 30px; height: 20px;" 
+                                                     actionListener="#{manSeguimiento.agregarcompra()}"
+                                                     update=":frmSeguimiento:tabseguimientosol, :frmSeguimiento:msgSeguimiento "
+                                                     />
+                                    <p:commandButton icon="ui-icon-minus" 
+                                                     title="Remover Detalle" 
+                                                     style=" width: 30px; height: 20px;" 
+                                                     actionListener="#{manSeguimiento.eliminarcompra()}" 
+                                                     update=":frmSeguimiento:tabseguimientosol, :frmSeguimiento:msgSeguimiento "
+                                                     />
+
+                                </h:panelGrid>
+                                <p:dataTable id="dtComprag" var="vComprag" 
+                                             value="#{manSeguimiento.compras}" 
+                                             emptyMessage="No se encontraron resultados" 
+                                             selectionMode="single" selection="#{manSeguimiento.catcompras}" 
+                                             rowKey="#{vComprag.cor_com}"
+                                             editable="false" 
+                                             style="width:800px;"
+                                             scrollable="true"
+                                             scrollHeight="65"
+                                             >
+                                    <p:ajax event="rowSelect" listener="#{manSeguimiento.onRowSelectCompras}" 
+                                            update=":frmSeguimiento:tabseguimientosol" />
+                                    <p:ajax event="rowUnselect" listener="#{manSeguimiento.onRowUnselectCompras}" 
+                                            update=":frmSeguimiento:tabseguimientosol" />
+
+                                    <p:column style="width:300px;" headerText="Proveedor">
+                                        <h:outputText value="#{vComprag.nompro}" />
+                                    </p:column>
+                                    <p:column style="width:100px;" headerText="Cantidad">
+                                        <h:outputText value="#{vComprag.can_com}" />
+                                    </p:column>
+                                    <p:column style="width:100px;" headerText="Costo">
+                                        <h:outputText value="#{vComprag.det_com}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>    
+                            <p:tab title="Entregar" id="panentregas">
+                                <h:panelGrid columns="4" cellpadding="5">
+                                    <h:outputText value="C.Entregada" style="font-weight:bold;"/>
+                                    <h:outputText value="Fecha" style="font-weight:bold;"/>
+                                    <h:outputText value="Destino" style="font-weight:bold;"/>
+                                    <h:outputText value="Recibe" style="font-weight:bold;"/>
+                                    <p:inputText value="#{manSeguimiento.det_can_ent}" size="10" onfocus="this.select()" />
+                                    <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fecreci"
+                                                 readonlyInput="true" 
+                                                 showOn="button" size="16"
+                                                 value="#{manSeguimiento.mfecha}"
+                                                 >
+                                        <p:ajax event="dateSelect" listener="#{manSeguimiento.dateCieSelected}" />
+                                    </p:calendar>
+
+                                    <p:selectOneMenu value="#{manSeguimiento.destino}" 
+                                                     style="width:140px;text-align:right;"
+                                                     immediate="false"
+                                                     >
+                                        <p:ajax event="change" listener="#{manSeguimiento.onSelectDestino()}" update="somreciporseg,sompaiseg,sombodseg,txtubisegui" />
+                                        <f:selectItem  itemLabel="Usuario Final" itemValue="0" />
+                                        <f:selectItem  itemLabel="Almacén" itemValue="1" />
+                                    </p:selectOneMenu>
+
+                                    <p:selectOneMenu value="#{manSeguimiento.recibidapor}" 
+                                                     style="width:220px;text-align:right;"
+                                                     immediate="false"
+                                                     id="somreciporseg"
+                                                     disabled="#{manSeguimiento.booledit}"
+                                                     >
+                                        <f:selectItem  itemLabel="Ninguno" itemValue="0" />
+                                        <f:selectItems value="#{manSeguimiento.recibidores}" var="segrecibi"
+                                                       itemLabel="#{segrecibi.det_nom}" itemValue="#{segrecibi.cod_usu}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>    
+                                <h:panelGrid columns="5" cellpadding="5">
+                                    <h:outputText value="Bodega" style="font-weight:bold;"/>
+                                    <h:outputText value="Estante" style="font-weight:bold;"/>
+                                    <h:outputText value="Repisa" style="font-weight:bold;"/>
+                                    <h:outputText value="" style="font-weight:bold;"/>
+                                    <h:outputText value="" style="font-weight:bold;"/>
+                                    <p:selectOneMenu value="#{manSeguimiento.cod_pai}" 
+                                                     style="width:200px;text-align:right;"
+                                                     immediate="false" id="sompaiseg"
+                                                     disabled="#{!manSeguimiento.booledit}"
+                                                     >
+                                        <p:ajax event="change" listener="#{manSeguimiento.llenarBodegas()}" update="sombodseg,txtubisegui" />
+                                        <f:selectItem  itemLabel="Seleccione Una" itemValue="0" />
+                                        <f:selectItems value="#{manSeguimiento.paises}" var="solmpaisegui"
+                                                       itemLabel="#{solmpaisegui.nom_pai}" itemValue="#{solmpaisegui.cod_pai}" />
+                                    </p:selectOneMenu>
+
+                                    <p:selectOneMenu value="#{manSeguimiento.cod_bod}" 
+                                                     style="width:180px;text-align:right;"
+                                                     immediate="false" id="sombodseg"
+                                                     disabled="#{!manSeguimiento.booledit}"
+                                                     >
+                                        <p:ajax event="change" listener="#{manSeguimiento.onSelectBodega()}" update="txtubisegui" />
+                                        <f:selectItem  itemLabel="Seleccione Uno" itemValue="0" />
+                                        <f:selectItems value="#{manSeguimiento.bodegas}" var="solmbodsegui"
+                                                       itemLabel="#{solmbodsegui.nom_bod}" itemValue="#{solmbodsegui.id_bod}" />
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{manSeguimiento.des_ubi}" 
+                                                     style="width:180px;text-align:right;"
+                                                     immediate="false" id="txtubisegui"
+                                                     disabled="#{!manSeguimiento.booledit}"
+                                                     >
+                                        <f:selectItem  itemLabel="Seleccione Una" itemValue="0" />
+                                        <f:selectItems value="#{manSeguimiento.ubicaciones}" var="solmubisegui"
+                                                       itemLabel="#{solmubisegui.nom_ubi}" itemValue="#{solmubisegui.id_ubi}" />
+                                    </p:selectOneMenu>
+                                    <p:commandButton title="Guardar" style=" width: 50px;"
+                                                     actionListener="#{manSeguimiento.guardarItem()}"
+                                                     update=":frmSeguimiento"
+                                                     icon="ui-icon-check"
+                                                     > 
+                                        <p:confirm header="Guardar Entrega" 
+                                                   message="¿Realmente desea Guardar los cambios realizados?" 
+                                                   icon="ui-icon-alert"/>
+                                    </p:commandButton>
+                                    <p:commandButton title="Cancelar" style=" width: 50px;"
+                                                     actionListener="#{manSeguimiento.cancelarItem()}"
+                                                     update=":frmSeguimiento"
+                                                     icon="ui-icon-cancel"
+                                                     > 
+                                        <p:confirm header="Cancelar Entrega" 
+                                                   message="¿Realmente desea Cancelar el Item?" 
+                                                   icon="ui-icon-alert"/>
+                                    </p:commandButton>
+
+
+                                </h:panelGrid>
+                            </p:tab>
+                        </p:tabView>
+
                     </p:tab>
-                    <p:tab id="tabAproSol" title="Aprobaciones">
+                    <p:tab id="tabAproSol" title="Aprobaciones" disabled="#{manSeguridad.disableOpt('TabAprobacionesSol')}" >
                         <p:toolbar>
                             <f:facet name="left">
                                 <p:commandButton value="Aprobar" style=" width: 100px;"
@@ -2590,13 +2731,14 @@
                                                  icon="ui-icon-close"
                                                  />
 
-                                
+
                             </f:facet>
                             <f:facet name="right">
                                 <h:outputText value="Aprobada por:&nbsp;&nbsp;" style="font-weight:bold;"/>
                                 <p:selectOneMenu value="#{manSeguimiento.aprobador}" 
                                                  style="width:180px;text-align:right;"
                                                  immediate="false"
+                                                 disabled="#{manSeguridad.disableOpt('comboAprobadaPorSol')}" 
                                                  >
                                     <f:selectItem  itemLabel="Ninguno" itemValue="0" />
                                     <f:selectItems value="#{manSeguimiento.aprobadores}" var="segapro"
@@ -2614,7 +2756,7 @@
                                          selectionMode="single" selection="#{manSeguimiento.catmaestroaprobar}" 
                                          rowKey="#{vSeguiApr.cod_mae}"
                                          editable="false" 
-                                         style="width:800px;"
+                                         style="width:810px;"
                                          scrollable="true"
                                          scrollHeight="120"
                                          >
@@ -2623,27 +2765,25 @@
                                 <p:ajax event="rowUnselect" listener="#{manSeguimiento.onRowAprobarUnselect}" 
                                         update=":frmSeguimiento:tabseguimientosol:dtSeguiDetApr"/>
 
-                                <p:column style="width:40px;" headerText="Código">
+                                <p:column style="width:20px;" headerText="Código">
                                     <h:outputText value="#{vSeguiApr.cod_mae}" />
                                 </p:column>
-                                <p:column style="width:70px;" headerText="Fecha">
+                                <p:column style="width:40px;" headerText="Fecha">
                                     <h:outputText value="#{vSeguiApr.fec_sol}" />
                                 </p:column>
-                                <p:column style="width:90px;" headerText="Almacén">
-                                    <h:outputText value="#{vSeguiApr.nompai}" />
-                                </p:column>
-                                <p:column style="width:110px" headerText="Solicitante">
+                                <p:column style="width:90px" headerText="Solicitante">
                                     <h:outputText value="#{vSeguiApr.nomusu}" />
                                 </p:column>
-                                <p:column style="width:110px" headerText="Departamento">
+                                <p:column style="width:70px" headerText="Departamento">
                                     <h:outputText value="#{vSeguiApr.nomdep}" />
                                 </p:column>
-                                <p:column style="width:120px" headerText="Equipo">
-                                    <h:outputText value="#{vSeguiApr.nommaq}" />
-                                </p:column>
-                                <p:column style="width:70px" headerText="Uso">
+                                <p:column style="width:90px;" headerText="Uso">
                                     <h:outputText value="#{vSeguiApr.det_uso}" />
                                 </p:column>
+                                <p:column style="width:150px" headerText="Observaciones">
+                                    <h:outputText value="#{vSeguiApr.det_obs}" />
+                                </p:column>
+
                             </p:dataTable>
                         </p:panel>
                         <p:panel>
@@ -2654,7 +2794,7 @@
                                          selection="#{manSeguimiento.catdetallesaprobar}" 
                                          rowKey="#{vSeguiDetApr.cod_det}"
                                          editable="false" 
-                                         style="width:800px;"
+                                         style="width:810px;"
                                          scrollable="true"
                                          scrollHeight="180"
                                          >
@@ -2674,13 +2814,18 @@
                             </p:dataTable>
                         </p:panel>
                     </p:tab>
-                    <p:tab id="tabHistoSol" title="Historico">
+                    <p:tab id="tabHistoSol" title="Histórico">
                         <p:toolbar>
                             <f:facet name="left">
 
-                                <h:panelGrid columns="4" cellpadding="3">
-                                    <h:outputText value="Código:" style="font-weight:bold;" />
-                                    <p:inputText value="#{manSeguimiento.idbuscar}" size="25" placeholder="Id's separados por comas." />
+                                <h:panelGrid columns="5" cellpadding="3">
+                                    <h:outputText value="Buscar:" style="font-weight:bold;" />
+                                    <p:inputText value="#{manSeguimiento.idbuscar}" size="25" />
+                                    <p:selectOneRadio id="console" value="#{manSeguimiento.rbhistoria}">
+                                        <f:selectItem itemLabel="Código" itemValue="0" />
+                                        <f:selectItem itemLabel="Fecha" itemValue="1" />
+                                        <f:selectItem itemLabel="Solicitante" itemValue="2" />
+                                    </p:selectOneRadio>
                                     <p:commandButton value="Consultar" style=" width: 100px;"
                                                      actionListener="#{manSeguimiento.llenarMaestroHistoria()}"
                                                      update=":frmSeguimiento"
@@ -2716,29 +2861,20 @@
                                 <p:ajax event="rowUnselect" listener="#{manSeguimiento.onRowHistoriaUnselect}" 
                                         update=":frmSeguimiento:tabseguimientosol:dtHistoricasDet"/>
 
-                                <p:column style="width:30px;" headerText="Cod">
-                                    <h:outputText value="#{vHistoricos.cod_mae}" />
-                                </p:column>
-                                <p:column style="width:30px;" headerText="C.Alt.">
+                                <p:column style="width:30px;" headerText="Código">
                                     <h:outputText value="#{vHistoricos.cod_alt}" />
                                 </p:column>
                                 <p:column style="width:60px;" headerText="Fecha">
                                     <h:outputText value="#{vHistoricos.fec_sol}" />
                                 </p:column>
-                                <p:column style="width:70px;" headerText="Almacén">
-                                    <h:outputText value="#{vSvHistoricos.nompai}" />
-                                </p:column>
                                 <p:column style="width:90px" headerText="Solicitante">
                                     <h:outputText value="#{vHistoricos.nomusu}" />
                                 </p:column>
-                                <p:column style="width:90px" headerText="Departamento">
-                                    <h:outputText value="#{vHistoricos.nomdep}" />
-                                </p:column>
-                                <p:column style="width:100px" headerText="Equipo">
-                                    <h:outputText value="#{vHistoricos.nommaq}" />
-                                </p:column>
-                                <p:column style="width:70px" headerText="Uso">
+                                <p:column style="width:90px" headerText="Uso">
                                     <h:outputText value="#{vHistoricos.det_uso}" />
+                                </p:column>
+                                <p:column style="width:180px" headerText="Observaciones">
+                                    <h:outputText value="#{vHistoricos.det_obs}" />
                                 </p:column>
                                 <p:column style="width:70px" headerText="Estado">
                                     <h:outputText value="#{vHistoricos.det_sta}" />
@@ -2756,8 +2892,13 @@
                                          editable="false" 
                                          style="width:800px"
                                          scrollable="true"
-                                         scrollHeight="180"
+                                         scrollHeight="140"
                                          >
+
+                                <p:ajax event="rowSelect" listener="#{manSeguimiento.onRowHistoriaDetalleSelect}" 
+                                        />
+                                <p:ajax event="rowUnselect" listener="#{manSeguimiento.onRowHistoriaDetalleUnselect}" 
+                                        />
 
                                 <p:column style="width:30px;" headerText="C.Sol.">
                                     <h:outputText value="#{vHistoricasDet.det_can_sol}" />
@@ -2765,8 +2906,8 @@
                                 <p:column style="width:30px;" headerText="C.Ent.">
                                     <h:outputText value="#{vHistoricasDet.det_can_ent}" />
                                 </p:column>
-                                <p:column style="width:30px;" headerText="C.Pen.">
-                                    <h:outputText value="#{vHistoricasDet.det_can_pen}" />
+                                <p:column style="width:30px;" headerText="Fecha">
+                                    <h:outputText value="#{vHistoricasDet.fec_cie}" />
                                 </p:column>
                                 <p:column style="width:250px" headerText="Descripción Item">
                                     <h:outputText value="#{vHistoricasDet.des_ite}" />
@@ -2777,6 +2918,17 @@
 
                             </p:dataTable>
                         </p:panel>
+                        <p:panel>
+                            <div align="right">
+                                <p:commandButton value="Deshacer" 
+                                                 icon="ui-icon-arrowreturnthick-1-w" 
+                                                 style="width: 100px;"
+                                                 actionListener="#{manSeguimiento.deshacer()}"
+                                                 update=":frmSeguimiento"
+                                                 disabled="#{manSeguridad.disableOpt('botonDeshacerSol')}"
+                                                 />
+                            </div>
+                        </p:panel>   
 
                     </p:tab>
                 </p:tabView>
@@ -2856,7 +3008,7 @@
                                          icon="ui-icon-search"
                                          />
 
-                        
+
                     </f:facet>
                     <f:facet name="right">
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -3110,7 +3262,7 @@
                                          update=":frmEstadoReq"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
 
                 </p:toolbar>
@@ -3229,7 +3381,7 @@
                                                  update=":frmSeguimientoReq"
                                                  icon="ui-icon-close"
                                                  />
-                                
+
                             </f:facet>
                         </p:toolbar>
 
@@ -3394,7 +3546,7 @@
                                                  icon="ui-icon-close"
                                                  />
 
-                                
+
                             </f:facet>
                             <f:facet name="right">
                                 <h:outputText value="Aprobada por:&nbsp;&nbsp;" style="font-weight:bold;"/>
@@ -3685,7 +3837,7 @@
                                          action="#{manListaEquipos.ejecutarFMAN003()}"
                                          disabled="#{manSeguridad.disableOpt('botonLisEquImprimir')}"
                                          ajax="false"/>
-                        
+
                     </f:facet>
                     <f:facet name="right">
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -3699,8 +3851,8 @@
 
                 <p:tabView id="tvLE" activeIndex="#{manListaEquipos.tabindex}">
                     <p:ajax event="tabChange" listener="#{manListaEquipos.onTabChange}" />
-                        <p:tab title="Lista" id="tabLista">
-                            <p:dataTable id="dtSLE" var="vSLE" 
+                    <p:tab title="Lista" id="tabLista">
+                        <p:dataTable id="dtSLE" var="vSLE" 
                                      value="#{manListaEquipos.lequipos}" 
                                      emptyMessage="No se encontraron resultados" 
                                      selectionMode="single" selection="#{manListaEquipos.catlistaequipos}" 
@@ -3711,34 +3863,34 @@
                                      style="width:790px"
                                      widgetVar="wvSLE"
                                      >
-                                 <f:facet name="header">
-                                    <p:outputPanel style=" text-align: right;">
-                                        <h:panelGroup>
-                                            <h:outputText value="Filtrar:&nbsp;&nbsp;" />
-                                            <p:inputText id="globalFilter" 
-                                                         onkeyup="PF('wvSLE').filter()" 
-                                                         style="width:200px;" 
-                                                         placeholder="Nombre, Serie"/>
-                                        </h:panelGroup>
+                            <f:facet name="header">
+                                <p:outputPanel style=" text-align: right;">
+                                    <h:panelGroup>
+                                        <h:outputText value="Filtrar:&nbsp;&nbsp;" />
+                                        <p:inputText id="globalFilter" 
+                                                     onkeyup="PF('wvSLE').filter()" 
+                                                     style="width:200px;" 
+                                                     placeholder="Nombre, Serie"/>
+                                    </h:panelGroup>
 
-                                    </p:outputPanel>
-                                </f:facet>
-                                <p:ajax event="rowSelect" listener="#{manListaEquipos.onRowSelectListaEquipo}" 
+                                </p:outputPanel>
+                            </f:facet>
+                            <p:ajax event="rowSelect" listener="#{manListaEquipos.onRowSelectListaEquipo}" 
                                     update=":frmListaEquipos"/>
-                                <p:column style="width:70px" headerText="Nombre Equipo" filterBy="#{vSLE.des_equ}" filterMatchMode="contains"  
+                            <p:column style="width:70px" headerText="Nombre Equipo" filterBy="#{vSLE.des_equ}" filterMatchMode="contains"  
                                       filterStyle="display:none; visibility:hidden;">
-                                    <h:outputText value="#{vSLE.des_equ}" />
-                                </p:column>
-                                <p:column style="width:30px;" headerText="Tipo Equipo">
-                                    <h:outputText value="#{vSLE.nomequ}" />
-                                </p:column>
-                                <p:column style="width:30px;" headerText="Proceso">
-                                    <h:outputText value="#{vSLE.nompai}" />
-                                </p:column>
-                                <p:column style="width:70px" headerText="Serie" filterBy="#{vSLE.num_ser}" filterMatchMode="contains"  
+                                <h:outputText value="#{vSLE.des_equ}" />
+                            </p:column>
+                            <p:column style="width:30px;" headerText="Tipo Equipo">
+                                <h:outputText value="#{vSLE.nomequ}" />
+                            </p:column>
+                            <p:column style="width:30px;" headerText="Proceso">
+                                <h:outputText value="#{vSLE.nompai}" />
+                            </p:column>
+                            <p:column style="width:70px" headerText="Serie" filterBy="#{vSLE.num_ser}" filterMatchMode="contains"  
                                       filterStyle="display:none; visibility:hidden;">
-                                    <h:outputText value="#{vSLE.num_ser}" />
-                                </p:column>
+                                <h:outputText value="#{vSLE.num_ser}" />
+                            </p:column>
 
                         </p:dataTable>
                     </p:tab>
@@ -3821,11 +3973,11 @@
                                                      value="#{manListaEquipos.cod_cli}"
                                                      rows="2"
                                                      cols="110"
-                                                 />
+                                                     />
                                 </h:panelGrid>    
-                                
+
                             </p:panel>
-                            
+
                         </div>
                     </p:tab>
                     <p:tab title="Garantía" id="tabGarantia">
@@ -3837,20 +3989,20 @@
                                     <h:outputText value="Fecha Fin" style="font-weight:bold;"/>
                                     <h:outputText value="" style="font-weight:bold;"/>
                                     <h:outputText value="Detalle Garantía" style="font-weight:bold;"/>
-                                   
-                                        <p:calendar  pattern="dd/MM/yyyy" locale="es" 
-                                                     readonlyInput="true" showOn="button" size="10"
-                                                     style="width: 10px"
-                                                     value="#{manListaEquipos.dfecini}" 
-                                                     disabled="#{!manListaEquipos.edfecini}"
-                                                     id="ledfecini"
-                                                     >
-                                            <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecgarini}" />
-                                        </p:calendar> 
-                                        <p:selectBooleanCheckbox value="#{manListaEquipos.edfecini}" >
-                                            <p:ajax event="change" update="ledfecini"  />
-                                        </p:selectBooleanCheckbox>
-                          
+
+                                    <p:calendar  pattern="dd/MM/yyyy" locale="es" 
+                                                 readonlyInput="true" showOn="button" size="10"
+                                                 style="width: 10px"
+                                                 value="#{manListaEquipos.dfecini}" 
+                                                 disabled="#{!manListaEquipos.edfecini}"
+                                                 id="ledfecini"
+                                                 >
+                                        <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecgarini}" />
+                                    </p:calendar> 
+                                    <p:selectBooleanCheckbox value="#{manListaEquipos.edfecini}" >
+                                        <p:ajax event="change" update="ledfecini"  />
+                                    </p:selectBooleanCheckbox>
+
                                     <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                                  readonlyInput="true" showOn="button" size="10"
                                                  style="width: 10px"
@@ -3891,7 +4043,7 @@
                                     <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecfab}" />
                                 </p:calendar> 
                                 <p:selectBooleanCheckbox value="#{manListaEquipos.edfecfab}" >
-                                            <p:ajax event="change" update="ledfecfab"  />
+                                    <p:ajax event="change" update="ledfecfab"  />
                                 </p:selectBooleanCheckbox>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                              readonlyInput="true" showOn="button" size="10"
@@ -3903,7 +4055,7 @@
                                     <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFeccom}" />
                                 </p:calendar>
                                 <p:selectBooleanCheckbox value="#{manListaEquipos.edfeccom}" >
-                                            <p:ajax event="change" update="ledfeccom"  />
+                                    <p:ajax event="change" update="ledfeccom"  />
                                 </p:selectBooleanCheckbox>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                              readonlyInput="true" showOn="button" size="10"
@@ -3915,7 +4067,7 @@
                                     <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecadq}" />
                                 </p:calendar>
                                 <p:selectBooleanCheckbox value="#{manListaEquipos.edfecadq}" >
-                                            <p:ajax event="change" update="ledfecadq"  />
+                                    <p:ajax event="change" update="ledfecadq"  />
                                 </p:selectBooleanCheckbox>
                                 <h:outputText value="Puesta en Servicio" style="font-weight:bold;"/>
                                 <h:outputText value="" style="font-weight:bold;"/>
@@ -3930,10 +4082,10 @@
                                              disabled="#{!manListaEquipos.edfecpueser}"
                                              id="ledfecpueser"
                                              >
-                                            <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecpueser}" />
+                                    <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecpueser}" />
                                 </p:calendar> 
                                 <p:selectBooleanCheckbox value="#{manListaEquipos.edfecpueser}" >
-                                            <p:ajax event="change" update="ledfecpueser"  />
+                                    <p:ajax event="change" update="ledfecpueser"  />
                                 </p:selectBooleanCheckbox>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                              readonlyInput="true" showOn="button" size="10"
@@ -3945,13 +4097,13 @@
                                     <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecret}" />
                                 </p:calendar>
                                 <p:selectBooleanCheckbox value="#{manListaEquipos.edfecret}" >
-                                            <p:ajax event="change" update="ledfecret"  />
+                                    <p:ajax event="change" update="ledfecret"  />
                                 </p:selectBooleanCheckbox>
                                 <p:commandButton value="Detalle" icon="ui-icon-print"
-                                         style=" width: 80px;"
-                                         onclick="this.form.target = '_blank';" 
-                                         action="#{manListaEquipos.ejecutarreporte2()}"
-                                         ajax="false"/>
+                                                 style=" width: 80px;"
+                                                 onclick="this.form.target = '_blank';" 
+                                                 action="#{manListaEquipos.ejecutarreporte2()}"
+                                                 ajax="false"/>
                             </h:panelGrid>
 
                         </div>
@@ -3966,7 +4118,7 @@
                                      style="width:781px"
                                      >
                             <p:ajax event="rowSelect" listener="#{manListaEquipos.onRowSelectMantenimiento}" 
-                                />
+                                    />
 
                             <p:column style="width:80px;" headerText="Tipo">
                                 <h:outputText value="#{vEncManH.nomtip}" />
@@ -4022,10 +4174,10 @@
                                              disabled="#{!manListaEquipos.edfecact}"
                                              id="ledfecact"
                                              >
-                                            <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecact}" />
+                                    <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecact}" />
                                 </p:calendar> 
                                 <p:selectBooleanCheckbox value="#{manListaEquipos.edfecact}" >
-                                            <p:ajax event="change" update="ledfecact"  />
+                                    <p:ajax event="change" update="ledfecact"  />
                                 </p:selectBooleanCheckbox>
                             </h:panelGrid>
                         </p:panel>
@@ -4112,7 +4264,7 @@
                                     <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFeccon}" />
                                 </p:calendar>
                                 <p:selectBooleanCheckbox value="#{manListaEquipos.edfeccon}" >
-                                            <p:ajax event="change" update="ledfeccon"  />
+                                    <p:ajax event="change" update="ledfeccon"  />
                                 </p:selectBooleanCheckbox>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                              readonlyInput="true" showOn="button" size="10"
@@ -4124,7 +4276,7 @@
                                     <p:ajax event="dateSelect" listener="#{manListaEquipos.dateSelectedFecexp}" />
                                 </p:calendar>
                                 <p:selectBooleanCheckbox value="#{manListaEquipos.edfecexp}" >
-                                            <p:ajax event="change" update="ledfecexp"  />
+                                    <p:ajax event="change" update="ledfecexp"  />
                                 </p:selectBooleanCheckbox>
                             </h:panelGrid>
                         </p:panel>
@@ -4173,8 +4325,6 @@
             </h:form>
         </p:dialog>
 
-       
-
         <!--******************************************************************** 
         ************************ Pantalla Almacén Piezas ***********************
         *********************************************************************-->
@@ -4212,7 +4362,7 @@
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
 
-                        
+
                     </f:facet>
                     <f:facet name="right">
                         <p:commandButton value="Modificar" style=" width: 100px;"
@@ -4235,7 +4385,7 @@
                     <h:panelGrid columns="5" cellpadding="5">
                         <h:outputText value="" style="font-weight:bold;"/>
                         <h:outputText value="Fecha" style="font-weight:bold;"/>
-                        <h:outputText value="Almacén" style="font-weight:bold;"/>
+                        <h:outputText value="Bodega" style="font-weight:bold;"/>
                         <h:outputText value="Proveedor" style="font-weight:bold;"/>
                         <h:outputText value="Movimiento" style="font-weight:bold;"/>
                         <p:inputSwitch offLabel="Entrada" onLabel="Salida" value="#{manTblPiezas.boolinout}" >
@@ -4249,7 +4399,8 @@
                                      size="10"
                                      style="width: 10px"
                                      >
-                            <p:ajax event="dateSelect" listener="#{manTblPiezas.dateSelectedAction}" />
+                            <p:ajax event="dateSelect" listener="#{manTblPiezas.dateSelectedAction}" 
+                                    update="detallepiezas,msgListaPiezas"/>
                         </p:calendar> 
 
                         <p:selectOneMenu value="#{manTblPiezas.cod_pai}" 
@@ -4261,7 +4412,9 @@
                                            itemLabel="#{lstpaipie.nom_pai}" itemValue="#{lstpaipie.cod_pai}"/> 
                         </p:selectOneMenu>
                         <p:selectOneMenu id="somprolstpie" value="#{manTblPiezas.cod_pro}" 
-                                         style=" width: 160px;">
+                                         style=" width: 160px;"
+                                         disabled="#{!manTblPiezas.booleditable}"
+                                         >
                             <f:selectItem itemLabel="Ninguno" itemValue="0"/>
                             <f:selectItems value="#{manTblPiezas.proveedores}" var="lstpropie"
                                            itemLabel="#{lstpropie.nom_pro}" itemValue="#{lstpropie.cod_pro}"/> 
@@ -4274,71 +4427,89 @@
                         </p:selectOneMenu>
                     </h:panelGrid>    
 
-                    <h:panelGrid columns="4" cellpadding="5">
-                        <h:outputText value="PO QuickBook" style="font-weight:bold;"/>
-                        <h:outputText value="Solicitud Compra" style="font-weight:bold;"/>
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <h:outputText value="Código Rel." style="font-weight:bold;"/>
                         <h:outputText value="Doc. Entrada/Salida" style="font-weight:bold;"/>
                         <h:outputText value="Observaciones" style="font-weight:bold;"/>
-                        <p:inputText maxlength="12" size="15" value="#{manTblPiezas.por_qbo}" />
-                        <p:selectOneMenu value="#{manTblPiezas.cod_sol}" 
-                                         style=" width: 120px;"
-                                         filter="true" 
-                                         filterMatchMode="contains"
-                                         >
-                            <p:ajax event="change" listener="#{manTblPiezas.selectsol()}" update=":frmListaPiezas" />
-                            <f:selectItem itemLabel="Ninguna" itemValue="0" />
-                            <f:selectItems value="#{manTblPiezas.solicitudes}" var="lstdocinout"
-                                           itemLabel="PO: #{lstdocinout.id_mae} - #{lstdocinout.fec_sol}" itemValue="#{lstdocinout.id_mae}"/> 
-                        </p:selectOneMenu>
+                        <p:inputText maxlength="12" size="15" value="#{manTblPiezas.por_qbo}" disabled="#{!manTblPiezas.booleditable}"/>
                         <p:inputText maxlength="20" size="15" value="#{manTblPiezas.doc_tra}" />
-                        <p:inputText maxlength="200" size="74" value="#{manTblPiezas.det_obs}"/>
+                        <p:inputText maxlength="200" size="85" value="#{manTblPiezas.det_obs}"/>
                     </h:panelGrid>
                 </p:panel>
                 <p:panel id="detallepiezas">
-                    <h:panelGrid columns="7" cellpadding="5">
-                        <h:outputText value="Pieza" style="font-weight:bold;"/>
-                        <h:outputText value="" style="font-weight:bold;"/>
+                    <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Estante" style="font-weight:bold;"/>
                         <h:outputText value="Repisa" style="font-weight:bold;"/>
+                        <p:selectOneMenu value="#{manTblPiezas.cod_bod}" 
+                                         style=" width: 250px;"
+                                         filter="true" 
+                                         filterMatchMode="contains"
+                                         id="sombodip"
+                                         >
+                            <p:ajax event="change" listener="#{manTblPiezas.seleccionarbodega()}" update="somubiip,solpiealmpie" />
+                            <f:selectItem itemLabel="Ninguna" itemValue="0"/>
+                            <f:selectItems value="#{manTblPiezas.bodegas}" var="lstbodtblpie"
+                                           itemLabel="#{lstbodtblpie.nom_bod}" itemValue="#{lstbodtblpie.id_bod}"/> 
+                        </p:selectOneMenu>
+                        <p:selectOneMenu value="#{manTblPiezas.cod_ubi}" 
+                                         style=" width: 250px;"
+                                         filter="true" 
+                                         filterMatchMode="contains"
+                                         id="somubiip"
+                                         >
+                            <p:ajax event="change" listener="#{manTblPiezas.seleccionarubi()}" update="solpiealmpie" />
+                            <f:selectItem itemLabel="Ninguna" itemValue="0"/>
+                            <f:selectItems value="#{manTblPiezas.ubicaciones}" var="lstubitblpie"
+                                           itemLabel="#{lstubitblpie.nom_ubi}" itemValue="#{lstubitblpie.id_ubi}"/> 
+                        </p:selectOneMenu>
+                    </h:panelGrid>    
+                    <h:panelGrid columns="6" cellpadding="5">
+                        <h:outputText value="Pieza" style="font-weight:bold;"/>
+                        <h:outputText value="" style="font-weight:bold;"/>
                         <h:outputText value="Cantidad" style="font-weight:bold;"/>
                         <h:outputText value="Precio Unitario" style="font-weight:bold;"/>
                         <h:outputText value="" style="font-weight:bold;"/>
-                        <p:selectOneMenu value="#{manTblPiezas.cod_pie}" 
-                                         style=" width: 200px;"
+                        <h:outputText value="" style="font-weight:bold;"/>
+                        <p:selectOneMenu value="#{manTblPiezas.catpiezasabreviado}" 
+                                         style=" width: 535px;"
                                          filter="true" 
                                          filterMatchMode="contains"
+                                         id="solpiealmpie"
+                                         var="p"
+                                         converter="codigoproducto"
                                          >
+                            <p:ajax event="change" listener="#{manTblPiezas.seleccionarpieza()}" />
                             <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                            <f:selectItems value="#{manTblPiezas.piezas}" var="lstpiepie"
-                                           itemLabel="#{lstpiepie.cod_ref} | #{lstpiepie.nom_pie}" itemValue="#{lstpiepie.cod_pie}"/> 
+                            <f:selectItems value="#{manTblPiezas.piezas}" var="lstpiepie1"
+                                           itemLabel="#{lstpiepie1.referencia} | #{lstpiepie1.nombre}" itemValue="#{lstpiepie1}"/> 
+                            <p:column>
+                                <h:outputText value="#{p.referencia}" />
+                            </p:column>
+
+                            <p:column>
+                                <h:outputText value="#{p.nombre}" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{p.existencia}" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{p.pendiente}" />
+                            </p:column>
                         </p:selectOneMenu>
-                        <p:commandButton title="Existencias" 
-                                         icon="ui-icon-search" 
-                                         style=" width: 30px;" 
-                                         actionListener="#{manTblPiezas.iniciarventanaexistencia()}"
-                                         onclick="PF('wExistencias').show()"
-                                         update=":frmExistencias"
-                                         />
-                        <p:selectOneMenu value="#{manTblPiezas.cod_bod}" 
-                                         style=" width: 150px;">
-                            <p:ajax event="change" listener="#{manTblPiezas.llenarUbicaciones()}" update="somubi" />
-                            <f:selectItem itemLabel="Seleccione Una" itemValue="0"/>
-                            <f:selectItems value="#{manTblPiezas.bodegas}" var="lstbodpie"
-                                           itemLabel="#{lstbodpie.nom_bod}" itemValue="#{lstbodpie.id_bod}"/> 
-                        </p:selectOneMenu>
-                        <p:selectOneMenu id="somubi" value="#{manTblPiezas.cod_ubi}" 
-                                         style=" width: 150px;">
-                            <f:selectItem itemLabel="Seleccione Una" itemValue="0"/>
-                            <f:selectItems value="#{manTblPiezas.ubicaciones}" var="lstubipie"
-                                           itemLabel="#{lstubipie.nom_ubi}" itemValue="#{lstubipie.id_ubi}"/> 
-                        </p:selectOneMenu>
-                        <p:inputText maxlength="12" size="10" value="#{manTblPiezas.det_can}"/>
-                        <p:inputText maxlength="12" size="10" value="#{manTblPiezas.det_cos}"/>
+                        <h:outputText value="" style="font-weight:bold;"/>
+                        <p:inputText maxlength="12" size="12" value="#{manTblPiezas.det_can}"/>
+                        <p:inputText maxlength="12" size="12" value="#{manTblPiezas.det_cos}"/>
                         <p:commandButton title="Agregar" 
                                          icon="ui-icon-plus" 
                                          style=" width: 30px;" 
                                          actionListener="#{manTblPiezas.agregardetalle()}" 
-                                         update="detallepiezas,dtInv"
+                                         update="detallepiezas,dtInv,:frmListaPiezas:msgListaPiezas"
+                                         />
+                        <p:commandButton title="Eliminar" 
+                                         icon="ui-icon-minus" 
+                                         style=" width: 30px;" 
+                                         actionListener="#{manTblPiezas.eliminardetalle()}" 
+                                         update="detallepiezas,dtInv,:frmListaPiezas:msgListaPiezas"
                                          />
                     </h:panelGrid>
                 </p:panel>
@@ -4350,7 +4521,7 @@
                              rowKey="#{vDetInv.cod_det}"
                              editable="#{manTblPiezas.booleditable}"
                              scrollable="true"
-                             scrollHeight="160"
+                             scrollHeight="140"
                              style="width:895px"
                              >
 
@@ -4369,33 +4540,6 @@
                     <p:column style="width:90px;" headerText="Pieza">
                         <h:outputText value="#{vDetInv.nompie}" />
                     </p:column>
-                    <p:column style="width:50px;" headerText="Estante">
-                        <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="#{vDetInv.nombod}" /></f:facet>
-                            <f:facet name="input">
-                                <p:selectOneMenu value="#{manTblPiezas.cod_bod}" 
-                                                 style=" width: 100%;">
-                                    <p:ajax event="change" listener="#{manTblPiezas.llenarUbicaciones()}" update="somubi2" />
-                                    <f:selectItem itemLabel="Seleccione Una" itemValue="0"/>
-                                    <f:selectItems value="#{manTblPiezas.bodegas}" var="lstbodpie2"
-                                                   itemLabel="#{lstbodpie2.nom_bod}" itemValue="#{lstbodpie2.id_bod}"/> 
-                                </p:selectOneMenu>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-                    <p:column style="width:50px;" headerText="Repisa">
-                        <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="#{vDetInv.nomubi}" /></f:facet>
-                            <f:facet name="input">
-                                <p:selectOneMenu id="somubi2" value="#{manTblPiezas.cod_ubi}" 
-                                                 style=" width: 100%;">
-                                    <f:selectItem itemLabel="Seleccione Una" itemValue="0"/>
-                                    <f:selectItems value="#{manTblPiezas.ubicaciones}" var="lstubipie2"
-                                                   itemLabel="#{lstubipie2.nom_ubi}" itemValue="#{lstubipie2.id_ubi}"/> 
-                                </p:selectOneMenu>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
                     <p:column style="width:30px;" headerText="P.Uni">
                         <h:outputText value="#{vDetInv.det_cos}" />
                     </p:column>
@@ -4405,97 +4549,6 @@
 
                 </p:dataTable>
 
-            </h:form>
-        </p:dialog>
-
-        <p:dialog  id="dlgExistencias" widgetVar="wExistencias" modal="true" 
-                   width="850" height="360" closable="false" resizable="false" 
-                   header="Existencias" rendered="true" 
-                   dynamic="false" visible="false"  
-                   >
-            <h:form id="frmExistencias">
-                <p:toolbar>
-                    <f:facet name="right">
-                        <p:commandButton value="Cerrar" style=" width: 100px;"
-                                         onclick="PF('wExistencias').hide()"
-                                         actionListener="#{manTblPiezas.cerrarventanaexistencia()}"
-                                         update=":frmListaPiezas,:frmExistencias"
-                                         icon="ui-icon-close"
-                                         />
-                    </f:facet>
-
-                </p:toolbar>
-                <p:panel>
-                    <h:panelGrid columns="5" cellpadding="5">
-                        <h:outputText value="Pieza" style="font-weight:bold;"/>
-                        <h:outputText value="Almacén" style="font-weight:bold;"/>
-                        <h:outputText value="Estante" style="font-weight:bold;"/>
-                        <h:outputText value="Repisa" style="font-weight:bold;"/>
-                        <h:outputText value="" style="font-weight:bold;"/>
-                        <p:selectOneMenu value="#{manTblPiezas.cod_pie}" 
-                                         style=" width: 200px;"
-                                         filter="true" 
-                                         filterMatchMode="contains"
-                                         >
-                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                            <f:selectItems value="#{manTblPiezas.piezas}" var="lstpiepie"
-                                           itemLabel="#{lstpiepie.cod_ref} | #{lstpiepie.nom_pie}" itemValue="#{lstpiepie.cod_pie}"/> 
-                        </p:selectOneMenu>
-                        <p:inputText size="20" value="#{manTblPiezas.nompai}" readonly="true"/>
-                        <p:selectOneMenu value="#{manTblPiezas.cod_bod}" 
-                                         style=" width: 150px;">
-                            <p:ajax event="change" listener="#{manTblPiezas.llenarUbicaciones()}" 
-                                    update=":frmListaPiezas:dtInv:somubi2,somubi3" />
-                            <f:selectItem itemLabel="Seleccione Una" itemValue="0"/>
-                            <f:selectItems value="#{manTblPiezas.bodegas}" var="lstbodpie"
-                                           itemLabel="#{lstbodpie.nom_bod}" itemValue="#{lstbodpie.id_bod}"/> 
-                        </p:selectOneMenu>
-                        <p:selectOneMenu id="somubi3" value="#{manTblPiezas.cod_ubi}" 
-                                         style=" width: 150px;">
-                            <f:selectItem itemLabel="Seleccione Una" itemValue="0"/>
-                            <f:selectItems value="#{manTblPiezas.ubicaciones}" var="lstubipie"
-                                           itemLabel="#{lstubipie.nom_ubi}" itemValue="#{lstubipie.id_ubi}"/> 
-                        </p:selectOneMenu>
-                        <p:commandButton title="Buscar" 
-                                         icon="ui-icon-search" 
-                                         style=" width: 30px;" 
-                                         actionListener="#{manTblPiezas.buscarexistencia()}" 
-                                         update="dtExistencias"
-                                         />
-                    </h:panelGrid>
-                </p:panel>
-                <p:dataTable id="dtExistencias" var="vExistencias" 
-                             value="#{manTblPiezas.existencias}" 
-                             emptyMessage="No se encontraron resultados" 
-                             selection="#{manTblPiezas.catpiezasconexistencia}" 
-                             selectionMode="single"
-                             rowKey="#{vExistencias.cod_pie}"
-                             scrollable="true"
-                             scrollHeight="180"
-                             style="width:823px"
-                             >
-
-
-                    <p:column style="width:50px;" headerText="Pieza">
-                        <h:outputText value="#{vExistencias.nompie}" />
-                    </p:column>
-                    <p:column style="width:50px;" headerText="Estante">
-                        <h:outputText value="#{vExistencias.nombod}" />
-                    </p:column>
-                    <p:column style="width:50px;" headerText="Repisa">
-                        <h:outputText value="#{vExistencias.nomubi}" />
-                    </p:column>
-                    <p:column style="width:50px;" headerText="Stock">
-                        <h:outputText value="#{vExistencias.can_sto}" />
-                    </p:column>
-                    <p:column style="width:50px;" headerText="Reserva">
-                        <h:outputText value="#{vExistencias.can_res}" />
-                    </p:column>
-                    <p:column style="width:50px;" headerText="Disponible">
-                        <h:outputText value="#{vExistencias.can_sto - vExistencias.can_res}" />
-                    </p:column>
-
-                </p:dataTable>
             </h:form>
         </p:dialog>
 
@@ -4519,9 +4572,9 @@
                 <p:panel>
                     <h:panelGrid columns="4" cellpadding="5">
                         <h:outputText value="Id Ingreso/Salida" style="font-weight:bold;"/>
-                        <h:outputText value="País" style="font-weight:bold;"/>
+                        <h:outputText value="Bodega" style="font-weight:bold;"/>
                         <h:outputText value="Proveedor" style="font-weight:bold;"/>
-                        <h:outputText value="PO Quickbook" style="font-weight:bold;"/>
+                        <h:outputText value="Código Rel." style="font-weight:bold;"/>
                         <p:inputText size="20" value="#{manTblPiezas.cod_lis_pie}" />
                         <p:selectOneMenu value="#{manTblPiezas.paibus}" 
                                          style=" width: 160px;">
@@ -4574,7 +4627,7 @@
                     <p:column style="width:30px;" headerText="Fecha">
                         <h:outputText value="#{vIngSal.fec_tra}" />
                     </p:column>
-                    <p:column style="width:40px;" headerText="Almacén">
+                    <p:column style="width:40px;" headerText="Bodega">
                         <h:outputText value="#{vIngSal.nompai}" />
                     </p:column>
                     <p:column style="width:60px;" headerText="Proveedor">
@@ -4623,7 +4676,7 @@
                     <p:layoutUnit position="center" id="lumanc">
                         <p:toolbar>
                             <f:facet name="left">
-                                
+
                                 <p:commandButton value="Guardar" style=" width: 90px;"
                                                  actionListener="#{manMaestroMan.guardarmantenimiento()}"
                                                  update=":frmMaestra"
@@ -4633,17 +4686,17 @@
                                                message="¿Realmente desea Guardar Todos Los Cambios de este Mantenimiento?" 
                                                icon="ui-icon-alert"/>
                                 </p:commandButton>
-                                
 
-                                
+
+
                             </f:facet>
                             <f:facet name="right">
                                 <p:commandButton value="Actualizar" style=" width: 90px;"
                                                  update=":frmMaestra"
                                                  icon="ui-icon-refresh"
                                                  />
-                                
-                                
+
+
                                 <p:commandButton value="Cerrar" style=" width: 90px;"
                                                  onclick="PF('wMaestra').hide()"
                                                  actionListener="#{manMaestroMan.cerrarventana()}"
@@ -5234,11 +5287,11 @@
                                          icon="ui-icon-close" 
                                          onclick="PF('wMaestraFin').hide()"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
                 <p:panel>
-                    
+
                     <h:panelGrid columns="1" cellpadding="5" style=" text-align: center;">
                         <h:outputText value="Al FINALIZAR EL MANTENIMIENTO, se removerá toda la información de la lista de Trabajo y no podrán realizarse más cambios en él." 
                                       style="font-weight:bold; color: red;"/>
@@ -5493,23 +5546,23 @@
                                          actionListener="#{manMaestroMan.guardarintegral()}"
                                          >
                             <p:confirm header="Guardar Mantenimiento" 
-                                               message="¿Realmente desea Guardar Todos Los Cambios de este Mantenimiento?" 
-                                               icon="ui-icon-alert"/>
+                                       message="¿Realmente desea Guardar Todos Los Cambios de este Mantenimiento?" 
+                                       icon="ui-icon-alert"/>
                         </p:commandButton> 
                         <p:commandButton value="Eliminar" style=" width: 100px;"
                                          update=":frmIntegralIni"
                                          icon="ui-icon-trash" 
                                          actionListener="#{manMaestroMan.eliminarencabezadoInt()}"
                                          >
-                        <p:confirm header="Eliminar Mantenimiento" 
-                                               message="¿Realmente desea Eliminar este Mantenimiento?" 
-                                               icon="ui-icon-alert"/>
+                            <p:confirm header="Eliminar Mantenimiento" 
+                                       message="¿Realmente desea Eliminar este Mantenimiento?" 
+                                       icon="ui-icon-alert"/>
                         </p:commandButton> 
                         <p:commandButton value="Finalizar" style=" width: 100px;"
-                                                 onclick="PF('wMaestraFin').show()"
-                                                 update=":frmMaestraFin"
-                                                 icon="ui-icon-check"
-                                                 />  
+                                         onclick="PF('wMaestraFin').show()"
+                                         update=":frmMaestraFin"
+                                         icon="ui-icon-check"
+                                         />  
                         <p:commandButton value="Orden" icon="ui-icon-print"
                                          style=" width: 100px;"
                                          onclick="this.form.target = '_blank';" 
@@ -5531,7 +5584,7 @@
                                          onclick="PF('wIntegralIni').hide()"
                                          update=":frmIntegralIni"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
                 <p:tabView activeIndex="#{manMaestroMan.tabindex}" >
@@ -5582,7 +5635,7 @@
                             <p:column style="width:50px" headerText="Estado">
                                 <h:outputText value="#{vEncManInit.status}" />
                             </p:column>
-                            
+
 
                         </p:dataTable>
                         <h:panelGrid columns="3" cellpadding="5" style=" text-align: right;">
@@ -5744,7 +5797,7 @@
                                         <p:column style="width:100px;" headerText="Grupo">
                                             <h:outputText value="#{vFallInt.nomgrup}" />
                                         </p:column>
-                                        
+
 
                                     </p:dataTable>
                                 </p:tab>
@@ -6049,65 +6102,65 @@
                                 </p:dataTable>
                             </p:tab>
                             <p:tab id="tab001rec" title="M-001-Rec" titleStyleClass=" ">
-                                
-                                    <h:panelGrid columns="2" cellpadding="5" >
-                                        <h:outputText value="" style="font-weight:bold;"/>
-                                        <p:commandButton value="Imprimir" icon="ui-icon-print"
-                                                         style=" width: 100px;"
-                                                         onclick="this.form.target = '_blank';" 
-                                                         action="#{manMaestroMan.ejecutarreporteFMAN001(1)}" 
-                                                         ajax="false"/>
-                                        <h:outputText value="Sistema Neumático" style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_001}"/>
-                                        <h:outputText value="Sistema Eléctrico, Tableros, Tomas, Acometidas, Sensores, Etc." style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_002}"/>
-                                        <h:outputText value="Sistema de Lubricación: Chumaceras, Graseras, Rodamientos, Etc." style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_003}"/>
-                                        <h:outputText value="Sistema de Enfriamiento: Mangueras, Válvulas, Adaptadores, Etc." style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_004}"/>
-                                        <h:outputText value="Transmisión de Potencia: Motor, Fajas, Poleas, Reductores, Etc." style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_005}"/>
-                                        <h:outputText value="Unidad de Tratamiento: Rodillos, Fundas, Rodamientos, Etc. " style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_006}"/>
-                                        <h:outputText value="Sistema Embobinador, Desembobinador." style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_007}"/>
-                                        <h:outputText value="Calandra." style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_008}"/>
-                                        <h:outputText value="Cabezal y Tornillo Extrusor." style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_009}"/>
-                                        <h:outputText value="Mesa de Bandas, Fajas, Rodillos, Etc." style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_010}"/>
-                                        <h:outputText value="Sellador: Soportes, Termocuplas, Etc." style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_011}"/>
-                                        <h:outputText value="Conjunto Alineador: Pistón, Mangueras, Etc." style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_012}"/>
-                                        <h:outputText value="Conjunto de Unidades Impresoras." style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_013}"/>
-                                        <h:outputText value="Brazos Portabobinas Refilador: Rachet, Mangueras, Rodamientos." style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_014}"/>
-                                        <h:outputText value="Sistema Visualizador de Producción: Displa, Contómetro, Monitor, Etc." style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_015}"/>
-                                        <h:outputText value="Sistema de Calefacción, Mangueras, Blower, Horno, Etc." style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_016}"/>
-                                        <h:outputText value="Observaciones" style="font-weight:bold;"/>
-                                        <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_017}"/>
-                                        <h:outputText value="Responsable Producción" style="font-weight:bold;"/>
-                                        <p:selectOneMenu value="#{manMaestroMan.fm1_rec_usu_pro}" 
-                                                 style=" width: 320px;">
-                                                 <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                                                 <f:selectItems value="#{manMaestroMan.supervisores}" var="suppro001rec"
-                                                   itemLabel="#{suppro001rec.det_nom}" itemValue="#{suppro001rec.cod_usu}"/> 
-                                        </p:selectOneMenu>
-                                        <h:outputText value="Responsable Mantenimiento" style="font-weight:bold;"/>
-                                        <p:selectOneMenu style=" width: 320px;" 
-                                                         value="#{manMaestroMan.fm1_rec_usu_man}">
-                                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                                            <f:selectItems value="#{manMaestroMan.usuarios}" var="tecman001rec"
-                                                           itemLabel="#{tecman001rec.det_nom}" itemValue="#{tecman001rec.cod_usu}"/> 
-                                        </p:selectOneMenu>
-                                        
-                                    </h:panelGrid>
-                                
+
+                                <h:panelGrid columns="2" cellpadding="5" >
+                                    <h:outputText value="" style="font-weight:bold;"/>
+                                    <p:commandButton value="Imprimir" icon="ui-icon-print"
+                                                     style=" width: 100px;"
+                                                     onclick="this.form.target = '_blank';" 
+                                                     action="#{manMaestroMan.ejecutarreporteFMAN001(1)}" 
+                                                     ajax="false"/>
+                                    <h:outputText value="Sistema Neumático" style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_001}"/>
+                                    <h:outputText value="Sistema Eléctrico, Tableros, Tomas, Acometidas, Sensores, Etc." style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_002}"/>
+                                    <h:outputText value="Sistema de Lubricación: Chumaceras, Graseras, Rodamientos, Etc." style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_003}"/>
+                                    <h:outputText value="Sistema de Enfriamiento: Mangueras, Válvulas, Adaptadores, Etc." style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_004}"/>
+                                    <h:outputText value="Transmisión de Potencia: Motor, Fajas, Poleas, Reductores, Etc." style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_005}"/>
+                                    <h:outputText value="Unidad de Tratamiento: Rodillos, Fundas, Rodamientos, Etc. " style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_006}"/>
+                                    <h:outputText value="Sistema Embobinador, Desembobinador." style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_007}"/>
+                                    <h:outputText value="Calandra." style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_008}"/>
+                                    <h:outputText value="Cabezal y Tornillo Extrusor." style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_009}"/>
+                                    <h:outputText value="Mesa de Bandas, Fajas, Rodillos, Etc." style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_010}"/>
+                                    <h:outputText value="Sellador: Soportes, Termocuplas, Etc." style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_011}"/>
+                                    <h:outputText value="Conjunto Alineador: Pistón, Mangueras, Etc." style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_012}"/>
+                                    <h:outputText value="Conjunto de Unidades Impresoras." style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_013}"/>
+                                    <h:outputText value="Brazos Portabobinas Refilador: Rachet, Mangueras, Rodamientos." style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_014}"/>
+                                    <h:outputText value="Sistema Visualizador de Producción: Displa, Contómetro, Monitor, Etc." style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_015}"/>
+                                    <h:outputText value="Sistema de Calefacción, Mangueras, Blower, Horno, Etc." style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_016}"/>
+                                    <h:outputText value="Observaciones" style="font-weight:bold;"/>
+                                    <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_017}"/>
+                                    <h:outputText value="Responsable Producción" style="font-weight:bold;"/>
+                                    <p:selectOneMenu value="#{manMaestroMan.fm1_rec_usu_pro}" 
+                                                     style=" width: 320px;">
+                                        <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                        <f:selectItems value="#{manMaestroMan.supervisores}" var="suppro001rec"
+                                                       itemLabel="#{suppro001rec.det_nom}" itemValue="#{suppro001rec.cod_usu}"/> 
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Responsable Mantenimiento" style="font-weight:bold;"/>
+                                    <p:selectOneMenu style=" width: 320px;" 
+                                                     value="#{manMaestroMan.fm1_rec_usu_man}">
+                                        <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                        <f:selectItems value="#{manMaestroMan.usuarios}" var="tecman001rec"
+                                                       itemLabel="#{tecman001rec.det_nom}" itemValue="#{tecman001rec.cod_usu}"/> 
+                                    </p:selectOneMenu>
+
+                                </h:panelGrid>
+
                             </p:tab>
                             <p:tab id="tab001ent" title="M-001-Ent">
                                 <div style=" background-color: #d3f2ff;">
@@ -6154,10 +6207,10 @@
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_017}"/>
                                         <h:outputText value="Responsable Producción" style="font-weight:bold;"/>
                                         <p:selectOneMenu value="#{manMaestroMan.fm1_ent_usu_pro}" 
-                                                 style=" width: 320px;">
-                                                 <f:selectItem itemLabel="Ninguno" itemValue="0"/>
-                                                 <f:selectItems value="#{manMaestroMan.supervisores}" var="suppro001ent"
-                                                   itemLabel="#{suppro001ent.det_nom}" itemValue="#{suppro001ent.cod_usu}"/> 
+                                                         style=" width: 320px;">
+                                            <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                            <f:selectItems value="#{manMaestroMan.supervisores}" var="suppro001ent"
+                                                           itemLabel="#{suppro001ent.det_nom}" itemValue="#{suppro001ent.cod_usu}"/> 
                                         </p:selectOneMenu>
                                         <h:outputText value="Responsable Mantenimiento" style="font-weight:bold;"/>
                                         <p:selectOneMenu style=" width: 320px;" 
@@ -6167,7 +6220,7 @@
                                                            itemLabel="#{tecman001ent.det_nom}" itemValue="#{tecman001ent.cod_usu}"/> 
                                         </p:selectOneMenu>
                                     </h:panelGrid>
-                            </div>
+                                </div>
                             </p:tab>
                         </p:tabView>
                     </p:tab>
@@ -6212,7 +6265,7 @@
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
 
-                        
+
                     </f:facet>
                     <f:facet name="right">
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -6303,7 +6356,7 @@
                                          update=":frmGrupo"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -6391,7 +6444,7 @@
                                          update=":frmControl"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -6498,7 +6551,7 @@
                                          update=":frmUsrGrp"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -6597,7 +6650,7 @@
                                          update=":frmSecurity"
                                          icon="ui-icon-close"
                                          />
-                       
+
                     </f:facet>
                 </p:toolbar>
 
@@ -6720,7 +6773,7 @@
                                          update=":frmPersonal"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -6953,7 +7006,7 @@
                                          update=":frmCargo"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -7017,11 +7070,11 @@
                 </p:schedule>
             </h:form>
         </p:dialog>
-        
-         <!--******************************************************************** 
-        **************** Pantalla Pronostico de mantenimientos ************
-        *********************************************************************-->
-         
+
+        <!--******************************************************************** 
+       **************** Pantalla Pronostico de mantenimientos ************
+       *********************************************************************-->
+
         <p:dialog  id="dlgPronosticoMtto" widgetVar="wPronosticoMtto" modal="true" 
                    width="570" height="400" closable="false" resizable="false" 
                    header="Pronostico de Calendario de Mantenimientos" rendered="true" 
@@ -7063,19 +7116,19 @@
                         </p:commandButton>
                         <f:facet name="right">
                             <p:commandButton value="Cerrar" style=" width: 100px;"
-                                            onclick="PF('wPronosticoMtto').hide()"
-                                            action="#{manPronosticoMtto.cerrarventana()}" 
-                                            update=":frmPronosticoMtto"
-                                            icon="ui-icon-close"
-                                            />
-                           <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                               <p:commandButton value="Sí" type="button" 
-                                                styleClass="ui-confirmdialog-yes" 
-                                                icon="ui-icon-check" />
-                               <p:commandButton value="No" type="button" 
-                                                styleClass="ui-confirmdialog-no" 
-                                                icon="ui-icon-close" />
-                           </p:confirmDialog>
+                                             onclick="PF('wPronosticoMtto').hide()"
+                                             action="#{manPronosticoMtto.cerrarventana()}" 
+                                             update=":frmPronosticoMtto"
+                                             icon="ui-icon-close"
+                                             />
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Sí" type="button" 
+                                                 styleClass="ui-confirmdialog-yes" 
+                                                 icon="ui-icon-check" />
+                                <p:commandButton value="No" type="button" 
+                                                 styleClass="ui-confirmdialog-no" 
+                                                 icon="ui-icon-close" />
+                            </p:confirmDialog>
                         </f:facet>
                     </f:facet>
                 </p:toolbar>
@@ -7084,7 +7137,7 @@
                         <h:outputText value="Nombre de Pronostico" style="font-weight:bold;"/>
                         <p:inputText maxlength="250" size="60" value="#{manPronosticoMtto.nom_pro_mtto}" 
                                      onfocus="this.select()"/>
-                        
+
                         <h:outputText value="Fecha de pronostico" style="font-weight:bold;"/>
                         <h:panelGroup>
                             <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fecing"
@@ -7092,7 +7145,7 @@
                                          showOn="button" size="16"
                                          value="#{manPronosticoMtto.mfecha}"
                                          >
-                                    <p:ajax event="dateSelect" listener="#{manPronosticoMtto.dateSelected}" />
+                                <p:ajax event="dateSelect" listener="#{manPronosticoMtto.dateSelected}" />
                             </p:calendar>
                             <p:spacer width="10"/>   
                             <h:outputText value="Año a pronosticar" style="font-weight:bold;"/>
@@ -7104,13 +7157,13 @@
                         <p:selectOneMenu value="#{manPronosticoMtto.anho_origen}" 
                                          style="width:350px;text-align:right;"
                                          immediate="false"
-                                >  
-                                <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
-                                <f:selectItems value="#{manPronosticoMtto.pronosticomtto}" var="mpromtto"
-                                               itemLabel="#{mpromtto.nom_pro_mtto}" itemValue="#{mpromtto.id_pro_mtto}"/>
+                                         >  
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                            <f:selectItems value="#{manPronosticoMtto.pronosticomtto}" var="mpromtto"
+                                           itemLabel="#{mpromtto.nom_pro_mtto}" itemValue="#{mpromtto.id_pro_mtto}"/>
                         </p:selectOneMenu>  
-                            
-                            
+
+
                     </h:panelGrid>
                     <p:dataTable id="dtProMtto" var="vProMtto" 
                                  value="#{manPronosticoMtto.pronosticomtto}" 
@@ -7146,19 +7199,19 @@
                                 <f:setPropertyActionListener value="#{vProMtto}" target="#{manPronosticoMtto.catpronosticomtto}" />
                             </p:commandButton>
                         </p:column>
-                         
+
                     </p:dataTable>
                 </div>
             </h:form>
         </p:dialog> 
-        
-         
+
+
         <p:dialog  id="dlgDetalleProMtto" widgetVar="wDetalleProMtto" modal="true" 
                    width="900" height="540" closable="false" resizable="false" 
                    header="Detalle Pronostico de Calendario de Mantenimientos" rendered="true" 
                    dynamic="false" visible="false" 
                    >
-            
+
             <h:form id="frmDetalleProMtto">
                 <p:growl id="messDetalleProMtto" showDetail="true" />
                 <p:toolbar>
@@ -7173,23 +7226,23 @@
                                          update=":frmDetalleProMtto"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
                 <pe:timeline id="PronosticoTimeline" value="#{manPronosticoMtto.modelTimeLine}" height="500px" 
-                                     zoomable="true"  
-                                     selectable="true"
-                                     editable="true"                                               
-                                     moveable="true"  
-                                     stackEvents="true"  
-                                     axisOnTop="false"
-                                     eventStyle="dot"
-                                     showCurrentTime="true"  
-                                     showNavigation="true"
-                                     timeChangeable="true"
-                                     locale="es"
-                                     widgetVar="pronoTL"
-                                     var="timelinepro">
+                             zoomable="true"  
+                             selectable="true"
+                             editable="true"                                               
+                             moveable="true"  
+                             stackEvents="true"  
+                             axisOnTop="false"
+                             eventStyle="dot"
+                             showCurrentTime="true"  
+                             showNavigation="true"
+                             timeChangeable="true"
+                             locale="es"
+                             widgetVar="pronoTL"
+                             var="timelinepro">
                     <p:ajax  event="edit" listener="#{manPronosticoMtto.onEdit}" process="@form" update=":frmMttoDialog" oncomplete="PF('mttoDialog').show();" /> 
                     <p:ajax  event="changed" listener="#{manPronosticoMtto.onChange}" process="@form"/> 
                     <p:ajax  event="add" update=":frmMttoDialog"  listener="#{manPronosticoMtto.onAdd}" oncomplete="PF('mttoDialog').show()"/>  
@@ -7201,9 +7254,9 @@
                 </pe:timeline>  
             </h:form>
         </p:dialog>
-        
-         
-         <p:dialog widgetVar="mttoDialog" header="Observaciones" showEffect="clip" hideEffect="clip" modal="true" closable="false">
+
+
+        <p:dialog widgetVar="mttoDialog" header="Observaciones" showEffect="clip" hideEffect="clip" modal="true" closable="false">
             <h:form id="frmMttoDialog">
                 <h:panelGrid id="grdMttoDialog" columns="2">
                     <p:outputLabel for="equlist" value="Equipo:" />
@@ -7211,7 +7264,7 @@
                                      style="width:180px;text-align:right;"
                                      immediate="false"
                                      id ="equlist"
-                                    >  
+                                     >  
                         <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                         <f:selectItems value="#{manPronosticoMtto.lequipos}" var="mlequ"
                                        itemLabel="#{mlequ.des_equ}" itemValue="#{mlequ.cod_lis_equ}"/>
@@ -7230,23 +7283,23 @@
                 </h:panelGrid>
             </h:form>
         </p:dialog> 
-         
-         <p:dialog id="deleteMttoDlg" header="Detalle de mantenimiento" widgetVar="deleteMttoWdgt"  
-                    showEffect="clip" hideEffect="clip" dynamic="true" modal="true"> 
-             <h:form id="frmMttoDelete">
+
+        <p:dialog id="deleteMttoDlg" header="Detalle de mantenimiento" widgetVar="deleteMttoWdgt"  
+                  showEffect="clip" hideEffect="clip" dynamic="true" modal="true"> 
+            <h:form id="frmMttoDelete">
                 <h:panelGroup id="deleteMttoInner" layout="block" style="margin:10px;">  
                     <h:outputText value="#{manPronosticoMtto.deleteMessage}"/>  
                 </h:panelGroup>  
 
-                    <h:panelGroup layout="block" style="text-align:right; padding:2px; white-space:nowrap;">  
-                        <p:commandButton value="Borrar" process="deleteMttoDlg" update=":frmDetalleProMtto"  
-                                         action="#{manPronosticoMtto.deleteMtto}"  
-                                         oncomplete="PF('deleteMttoWdgt').hide()"/> 
-                        <p:spacer width="10"/>
-                        <p:commandButton type="button" value="Cerrar" onclick="PF('deleteMttoWdgt').hide()"/>  
-                    </h:panelGroup>  
-             </h:form>
-          </p:dialog> 
+                <h:panelGroup layout="block" style="text-align:right; padding:2px; white-space:nowrap;">  
+                    <p:commandButton value="Borrar" process="deleteMttoDlg" update=":frmDetalleProMtto"  
+                                     action="#{manPronosticoMtto.deleteMtto}"  
+                                     oncomplete="PF('deleteMttoWdgt').hide()"/> 
+                    <p:spacer width="10"/>
+                    <p:commandButton type="button" value="Cerrar" onclick="PF('deleteMttoWdgt').hide()"/>  
+                </h:panelGroup>  
+            </h:form>
+        </p:dialog> 
 
         <!-- *******************************************************************
         **************** Pantalla mantenimiento de Almacenes *******************
@@ -7287,7 +7340,7 @@
                                          update=":frmAlmacenes"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7357,7 +7410,7 @@
                                          update=":frmGruPie"
                                          icon="ui-icon-close"
                                          />
-                       
+
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7426,7 +7479,7 @@
                                          update=":frmEval"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7496,7 +7549,7 @@
                                          update=":frmFacEval"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7566,7 +7619,7 @@
                                          update=":frmCriEval"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7654,7 +7707,7 @@
                                          update=":frmGruFal"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
 
@@ -7738,7 +7791,7 @@
                                          update=":frmFallas"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7818,7 +7871,7 @@
                                          update=":frmDetEva"
                                          icon="ui-icon-close"
                                          />
-                       
+
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7925,7 +7978,7 @@
                                          update=":frmEvaPer"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -7938,7 +7991,7 @@
                             <f:selectItems value="#{manEvaluacionPersonas.personas}" var="mpereva"
                                            itemLabel="#{mpereva.nombres} #{mpereva.apellidos}" itemValue="#{mpereva.id_per}"/>
                         </p:selectOneMenu>
-                        
+
                         <h:outputText value="Persona que evalua" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manEvaluacionPersonas.per_eva}" 
                                          style="width:400px;text-align:right;"
@@ -7947,7 +8000,7 @@
                             <f:selectItems value="#{manEvaluacionPersonas.personas}" var="mpereva"
                                            itemLabel="#{mpereva.nombres} #{mpereva.apellidos}" itemValue="#{mpereva.id_per}"/>
                         </p:selectOneMenu>
-                        
+
                         <h:outputText value="Evaluacion" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manEvaluacionPersonas.id_eva}" 
                                          style="width:400px;text-align:right;"
@@ -7958,13 +8011,13 @@
                         </p:selectOneMenu>
                         <h:outputText value="Fecha de evaluacion" style="font-weight:bold;" />
                         <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fdeeva"
-                                             readonlyInput="true" 
-                                             showOn="button" size="16"
-                                             value="#{manEvaluacionPersonas.dfevaluacion}"
-                                             >
-                                    <p:ajax event="dateSelect" listener="#{manEvaluacionPersonas.dateSelected}" />
-                                </p:calendar> 
-                        
+                                     readonlyInput="true" 
+                                     showOn="button" size="16"
+                                     value="#{manEvaluacionPersonas.dfevaluacion}"
+                                     >
+                            <p:ajax event="dateSelect" listener="#{manEvaluacionPersonas.dateSelected}" />
+                        </p:calendar> 
+
                     </h:panelGrid>
                     <p:dataTable id="dtEvaPer" var="vEvaPer" 
                                  value="#{manEvaluacionPersonas.evaluacionpersonas}" 
@@ -7998,13 +8051,13 @@
                 </div>
             </h:form>
         </p:dialog>          
-     
+
         <p:dialog  id="dlgDetEvaPer" widgetVar="wDetEvaPer" modal="true" showEffect="fade" hideEffect="fade" 
                    width="800" height="550" closable="false" resizable="false" 
                    header="Evaluaciones al personal" rendered="true" 
                    dynamic="true" visible="false" 
                    >
-        
+
             <h:form id="pDetEvaPer"> 
                 <p:growl id="msgEvaPer" showDetail="true" life="4500"/>
                 <p:toolbar>
@@ -8015,7 +8068,7 @@
                                          update=":frmEvaPer"
                                          icon="ui-icon-close"
                                          />
-                         <p:commandButton value="Imprimir" icon="ui-icon-print"
+                        <p:commandButton value="Imprimir" icon="ui-icon-print"
                                          onclick="this.form.target = '_blank';" 
                                          action="#{manEvaluacionPersonas.imprimir()}" 
                                          ajax="false"
@@ -8033,9 +8086,9 @@
                              scrollHeight="400"
                              widgetVar="evaDetalle"
                              rowIndexVar="findex"
-                          >
-                     <p:ajax event="rowSelect" listener="#{manEvaluacionPersonas.onRowDetalle}" 
-                                update=":frmEvaPer" />
+                             >
+                    <p:ajax event="rowSelect" listener="#{manEvaluacionPersonas.onRowDetalle}" 
+                            update=":frmEvaPer" />
                     <f:facet name="header">
                         <h:outputText value="#{vDetEvaPer.nom_eva}" />
                     </f:facet>
@@ -8062,7 +8115,7 @@
                 <h:outputText id="display" />
             </h:form>
         </p:dialog>
-        
+
         <!-- *******************************************************************
         *********************** Pantalla Lista Específica **********************
         *********************************************************************-->
@@ -8102,7 +8155,7 @@
                                          update=":frmLisEsp"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
@@ -8188,10 +8241,10 @@
                                          update=":frmAlertas"
                                          icon="ui-icon-close"
                                          />
-                        
+
                     </f:facet>
                 </p:toolbar>
-                
+
                 <div style=" background-color: #ebf8fe;">
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Departamento" style="font-weight:bold;"/>
@@ -8221,7 +8274,7 @@
                                          onfocus="this.select()" onkeypress="return valida(event)"/>
                         </h:panelGroup>             
                     </h:panelGrid>
-                
+
                     <h:panelGrid columns="2" cellpadding="5">
                         <p:fieldset id="usudis" legend="Usuarios Disponibles" style="width:270px">
                             <p:dataTable id="usuariosDisponibles" var="usudis" value="#{manAlertas.usuarios}" style="width:260px" scrollHeight="150">
@@ -8269,9 +8322,9 @@
                         <p:ajax listener="#{manAlertas.onUsuDropRet}" update="dropArea usuariosDisponibles" />
                     </p:droppable>
 
-                    
-                    
-                    
+
+
+
                     <p:dataTable id="dtAlertas" var="vAlertas" 
                                  value="#{manAlertas.alertas}" 
                                  rows ="3"
@@ -8303,15 +8356,15 @@
                     </p:dataTable>
                 </div>
 
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
             </h:form>
         </p:dialog>
-        
+
     </h:body>
 
 </html>

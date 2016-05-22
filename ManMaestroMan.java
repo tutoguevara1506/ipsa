@@ -1366,7 +1366,7 @@ public class ManMaestroMan implements Serializable {
         existencias = new ArrayList<>();
         Accesos acc = new Accesos();
         acc.Conectar();
-        nompai = acc.strQuerySQLvariable("select nom_pai from cat_alm where cod_alm=" + pie_cod_pai + ";");
+        nompai = acc.strQuerySQLvariable("select nom_alm from cat_alm where cod_alm=" + pie_cod_pai + ";");
         nombod = acc.strQuerySQLvariable("select nom_bod from cat_bodegas where cod_pai=" + pie_cod_pai + " and id_bod = " + pie_cod_bod + ";");
         nomubi = acc.strQuerySQLvariable("select nom_ubi from cat_ubicaciones where cod_bod = " + pie_cod_bod + " and id_ubi=" + pie_cod_ubi + ";");
         acc.Desconectar();

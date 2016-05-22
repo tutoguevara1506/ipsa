@@ -2,6 +2,7 @@ package paquetes;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -23,34 +24,25 @@ public class ManTblPiezas implements Serializable {
     private static final long serialVersionUID = 7997486784762638L;
     @Inject
     Login cbean;
-    private CatHistorico cathistorico;
     private List<CatHistorico> historico;
     private CatPiezasConExistencia catpiezasconexistencia;
     private List<CatPiezasConExistencia> existencias;
-    private CatPaises catpaises;
     private List<CatPaises> paises;
-    private CatProveedores catproveedores;
     private List<CatProveedores> proveedores;
-    private CatMovimientos catmovimientos;
     private List<CatMovimientos> movimientos;
-    private CatMovimientos catmovimientostotal;
     private List<CatMovimientos> movimientostotal;
-    private CatPiezas catpiezas;
-    private List<CatPiezas> piezas;
-    private CatBodegas catbodegas;
+    private CatPiezasAbreviado catpiezasabreviado;
+    private List<CatPiezasAbreviado> piezas;
     private List<CatBodegas> bodegas;
-    private CatUbicaciones catubicaciones;
     private List<CatUbicaciones> ubicaciones;
-    private CatSolicitudes catsolicitudes;
     private List<CatSolicitudes> solicitudes;
-    private CatSolicitudesDetalle catsolicitudesdetalle;
     private List<CatSolicitudesDetalle> solicitudesdetalle;
 
     private CatTblPiezas cattblpiezas;
     private List<CatTblPiezas> piezasencabezado;
     private CatTblPiezasDetalle cattblpiezasdetalle;
     private List<CatTblPiezasDetalle> piezasdetalle;
-
+    private List<CatTblPiezasDetalle> piezasdetallecopia;
     private String cod_lis_pie, por_qbo, cod_pai, cod_pro, cod_mov, doc_tra,
             cod_sol, fec_tra, det_obs, flg_ing, det_sta;
     private String cod_enc, cod_det, cod_pie, cod_bod, cod_ubi, det_can, det_cos, det_sta2;
@@ -62,14 +54,6 @@ public class ManTblPiezas implements Serializable {
     private Date mfecha;
 
     public ManTblPiezas() {
-    }
-
-    public CatHistorico getCathistorico() {
-        return cathistorico;
-    }
-
-    public void setCathistorico(CatHistorico cathistorico) {
-        this.cathistorico = cathistorico;
     }
 
     public List<CatHistorico> getHistorico() {
@@ -96,28 +80,12 @@ public class ManTblPiezas implements Serializable {
         this.existencias = existencias;
     }
 
-    public CatPaises getCatpaises() {
-        return catpaises;
-    }
-
-    public void setCatpaises(CatPaises catpaises) {
-        this.catpaises = catpaises;
-    }
-
     public List<CatPaises> getPaises() {
         return paises;
     }
 
     public void setPaises(List<CatPaises> paises) {
         this.paises = paises;
-    }
-
-    public CatProveedores getCatproveedores() {
-        return catproveedores;
-    }
-
-    public void setCatproveedores(CatProveedores catproveedores) {
-        this.catproveedores = catproveedores;
     }
 
     public List<CatProveedores> getProveedores() {
@@ -128,28 +96,12 @@ public class ManTblPiezas implements Serializable {
         this.proveedores = proveedores;
     }
 
-    public CatMovimientos getCatmovimientos() {
-        return catmovimientos;
-    }
-
-    public void setCatmovimientos(CatMovimientos catmovimientos) {
-        this.catmovimientos = catmovimientos;
-    }
-
     public List<CatMovimientos> getMovimientos() {
         return movimientos;
     }
 
     public void setMovimientos(List<CatMovimientos> movimientos) {
         this.movimientos = movimientos;
-    }
-
-    public CatMovimientos getCatmovimientostotal() {
-        return catmovimientostotal;
-    }
-
-    public void setCatmovimientostotal(CatMovimientos catmovimientostotal) {
-        this.catmovimientostotal = catmovimientostotal;
     }
 
     public List<CatMovimientos> getMovimientostotal() {
@@ -160,28 +112,20 @@ public class ManTblPiezas implements Serializable {
         this.movimientostotal = movimientostotal;
     }
 
-    public CatPiezas getCatpiezas() {
-        return catpiezas;
+    public CatPiezasAbreviado getCatpiezasabreviado() {
+        return catpiezasabreviado;
     }
 
-    public void setCatpiezas(CatPiezas catpiezas) {
-        this.catpiezas = catpiezas;
+    public void setCatpiezasabreviado(CatPiezasAbreviado catpiezasabreviado) {
+        this.catpiezasabreviado = catpiezasabreviado;
     }
 
-    public List<CatPiezas> getPiezas() {
+    public List<CatPiezasAbreviado> getPiezas() {
         return piezas;
     }
 
-    public void setPiezas(List<CatPiezas> piezas) {
+    public void setPiezas(List<CatPiezasAbreviado> piezas) {
         this.piezas = piezas;
-    }
-
-    public CatBodegas getCatbodegas() {
-        return catbodegas;
-    }
-
-    public void setCatbodegas(CatBodegas catbodegas) {
-        this.catbodegas = catbodegas;
     }
 
     public List<CatBodegas> getBodegas() {
@@ -192,14 +136,6 @@ public class ManTblPiezas implements Serializable {
         this.bodegas = bodegas;
     }
 
-    public CatUbicaciones getCatubicaciones() {
-        return catubicaciones;
-    }
-
-    public void setCatubicaciones(CatUbicaciones catubicaciones) {
-        this.catubicaciones = catubicaciones;
-    }
-
     public List<CatUbicaciones> getUbicaciones() {
         return ubicaciones;
     }
@@ -208,28 +144,12 @@ public class ManTblPiezas implements Serializable {
         this.ubicaciones = ubicaciones;
     }
 
-    public CatSolicitudes getCatsolicitudes() {
-        return catsolicitudes;
-    }
-
-    public void setCatsolicitudes(CatSolicitudes catsolicitudes) {
-        this.catsolicitudes = catsolicitudes;
-    }
-
     public List<CatSolicitudes> getSolicitudes() {
         return solicitudes;
     }
 
     public void setSolicitudes(List<CatSolicitudes> solicitudes) {
         this.solicitudes = solicitudes;
-    }
-
-    public CatSolicitudesDetalle getCatsolicitudesdetalle() {
-        return catsolicitudesdetalle;
-    }
-
-    public void setCatsolicitudesdetalle(CatSolicitudesDetalle catsolicitudesdetalle) {
-        this.catsolicitudesdetalle = catsolicitudesdetalle;
     }
 
     public List<CatSolicitudesDetalle> getSolicitudesdetalle() {
@@ -512,6 +432,7 @@ public class ManTblPiezas implements Serializable {
         this.paibus = paibus;
     }
 
+    //*********************** Configuraciones Principal ********************************
     public void iniciarventana() {
 
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -532,7 +453,7 @@ public class ManTblPiezas implements Serializable {
         cod_det = "";
         cod_pie = "0";
         cod_bod = "0";
-        cod_ubi = "0";
+        cod_ubi = "";
         det_can = "";
         det_cos = "";
         det_sta2 = "0";
@@ -541,15 +462,18 @@ public class ManTblPiezas implements Serializable {
         booleditable = "true";
         nompai = "";
         piezasdetalle = new ArrayList<>();
+        piezasdetallecopia = new ArrayList<>();
         bodegas = new ArrayList<>();
         ubicaciones = new ArrayList<>();
         proveedores = new ArrayList<>();
+        catpiezasabreviado = new CatPiezasAbreviado();
+        piezas = new ArrayList<>();
         llenarPaises();
         llenarProveedores();
         llenarMovimientos();
-        llenarPiezas();
+        //llenarPiezas();
         llenarBodegas();
-        llenarEncabezadoSol();
+        //llenarEncabezadoSol();
     }
 
     public void cerrarventana() {
@@ -585,6 +509,7 @@ public class ManTblPiezas implements Serializable {
         solicitudesdetalle = null;
         piezasencabezado = null;
         piezasdetalle = null;
+        piezasdetallecopia = null;
     }
 
     public void nuevo() {
@@ -593,7 +518,7 @@ public class ManTblPiezas implements Serializable {
 
         cod_lis_pie = "";
         por_qbo = "";
-        cod_pai = cbean.getCod_pai();
+        //cod_pai = cbean.getCod_pai();
         cod_pro = "0";
         cod_mov = "0";
         doc_tra = "";
@@ -606,7 +531,7 @@ public class ManTblPiezas implements Serializable {
         cod_det = "";
         cod_pie = "0";
         cod_bod = "0";
-        cod_ubi = "0";
+        cod_ubi = "";
         det_can = "";
         det_cos = "";
         det_sta2 = "0";
@@ -614,20 +539,17 @@ public class ManTblPiezas implements Serializable {
         boolinout = "false";
         booleditable = "true";
         nompai = "";
-        catpaises = null;
-        catproveedores = null;
-        catpiezas = null;
-        catbodegas = null;
-        catubicaciones = null;
-        catsolicitudes = null;
+
         solicitudesdetalle = null;
         cattblpiezas = null;
         cattblpiezasdetalle = null;
+        piezas.clear();
         piezasdetalle.clear();
+        piezasdetallecopia.clear();
         llenarMovimientos();
-
     }
 
+    //*********************** Configuraciones Búsqueda ********************************
     public void iniciarventanabuscarid() {
         cattblpiezas = new CatTblPiezas();
         piezasencabezado = new ArrayList<>();
@@ -669,17 +591,17 @@ public class ManTblPiezas implements Serializable {
             mQuery = mQuery + " and enc.fec_tra= date_format(" + fecbus + ",'%d/%m/%Y') ";
         }
 
-        System.out.println(mQuery);
-
+        //System.out.println(mQuery);
         llenarEncabezado(mQuery);
     }
 
+    //*********************** Configuraciones Existencias ********************************
     public void iniciarventanaexistencia() {
         catpiezasconexistencia = new CatPiezasConExistencia();
         existencias = new ArrayList<>();
         Accesos acc = new Accesos();
         acc.Conectar();
-        nompai = acc.strQuerySQLvariable("select nom_pai from cat_pai where cod_pai=" + cod_pai + ";");
+        nompai = acc.strQuerySQLvariable("select nom_alm from cat_alm where cod_alm=" + cod_pai + ";");
         acc.Desconectar();
     }
 
@@ -689,23 +611,23 @@ public class ManTblPiezas implements Serializable {
         if (!"0".equals(cod_pie)) {
             if (!"0".equals(cod_bod)) {
                 if (!"0".equals(cod_ubi)) {
-                    mQuery = "and exi.cod_pie=" + cod_pie + " and exi.cod_bod=" + cod_bod + " and exi.cod_ubi=" + cod_ubi;
+                    mQuery = "and exis.cod_pie=" + cod_pie + " and exis.cod_bod=" + cod_bod + " and exis.cod_ubi=" + cod_ubi;
                 } else {
-                    mQuery = "and exi.cod_pie=" + cod_pie + " and exi.cod_bod=" + cod_bod;
+                    mQuery = "and exis.cod_pie=" + cod_pie + " and exis.cod_bod=" + cod_bod;
                 }
             } else if (!"0".equals(cod_ubi)) {
-                mQuery = "and exi.cod_pie=" + cod_pie + " and exi.cod_ubi=" + cod_ubi;
+                mQuery = "and exis.cod_pie=" + cod_pie + " and exis.cod_ubi=" + cod_ubi;
             } else {
-                mQuery = "and exi.cod_pie=" + cod_pie;
+                mQuery = "and exis.cod_pie=" + cod_pie;
             }
         } else if (!"0".equals(cod_bod)) {
             if (!"0".equals(cod_ubi)) {
-                mQuery = "and exi.cod_bod=" + cod_bod + " and exi.cod_ubi=" + cod_ubi;
+                mQuery = "and exis.cod_bod=" + cod_bod + " and exis.cod_ubi=" + cod_ubi;
             } else {
-                mQuery = "and exi.cod_bod=" + cod_bod;
+                mQuery = "and exis.cod_bod=" + cod_bod;
             }
         } else if (!"0".equals(cod_ubi)) {
-            mQuery = "and exi.cod_ubi=" + cod_ubi;
+            mQuery = "and exis.cod_ubi=" + cod_ubi;
         } else {
             mQuery = "";
         }
@@ -725,22 +647,29 @@ public class ManTblPiezas implements Serializable {
             existencias.clear();
 
             String mQuery = "select "
-                    + "exi.cod_pie, exi.cod_pai, exi.cod_bod, exi.cod_ubi, "
-                    + "(select ifnull(sum(res.det_can),0) as suma "
-                    + "from tbl_res as res "
-                    + "where res.cod_pie = exi.cod_pie "
-                    + "and res.cod_pai = exi.cod_pai "
-                    + "and res.cod_bod = exi.cod_bod "
-                    + "and res.cod_ubi = exi.cod_ubi ) as reserva,"
-                    + "exi.det_can, pie.nom_pie, pai.nom_pai, bod.nom_bod, ubi.nom_ubi "
-                    + "from tbl_existencias as exi "
-                    + "left join cat_pie as pie on exi.cod_pie = pie.cod_pie "
-                    + "left join cat_pai as pai on exi.cod_pai = pai.cod_pai "
-                    + "left join cat_bodegas as bod on exi.cod_pai = bod.cod_pai and exi.cod_bod = bod.id_bod "
-                    + "left join cat_ubicaciones as ubi on exi.cod_bod = ubi.cod_bod and exi.cod_ubi = ubi.id_ubi "
-                    + "where exi.cod_pai=" + cod_pai + " "
+                    + "exis.cod_pie,  "
+                    + "exis.cod_pai, "
+                    + "pie.cod_ref as bodega,  "
+                    + "0 as ubicacion,  "
+                    + "(select ifnull(sum(res.det_can),0) as suma  "
+                    + "from tbl_res as res  "
+                    + "where res.cod_pie = exis.cod_pie  "
+                    + "and res.cod_pai = exis.cod_pai) as reserva, "
+                    + "exis.existencias, "
+                    + "pie.nom_pie,  "
+                    + "pai.nom_alm,  "
+                    + "'' as nombod,  "
+                    + "'' as nomubi  "
+                    + "from ( "
+                    + "select exi.cod_pai, exi.cod_pie, 0 as ingsal,  "
+                    + "sum(case exi.ing_sal when 0 then exi.det_exi when 1 then exi.det_exi*-1 end) as existencias  "
+                    + "FROM bol_exi_pai as exi group by exi.cod_pai, exi.cod_pie "
+                    + ") as exis "
+                    + "left join cat_pie as pie on exis.cod_pie = pie.cod_pie  "
+                    + "left join cat_alm as pai on exis.cod_pai = pai.cod_alm "
+                    + "where exis.cod_pai=" + cod_pai + " "
                     + mWhere + " "
-                    + "order by exi.cod_pie,exi.cod_pai,exi.cod_bod,exi.cod_ubi;";
+                    + "order by exis.cod_pie,exis.cod_pai;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -765,13 +694,14 @@ public class ManTblPiezas implements Serializable {
         }
     }
 
+    //*********************** Llenado de Lista de Catálogos ********************************
     public void llenarPaises() {
         try {
-            catpaises = new CatPaises();
+            //Bodegas
             paises = new ArrayList<>();
 
-            String mQuery = "select cod_pai, nom_pai "
-                    + "from cat_pai order by cod_pai;";
+            String mQuery = "select cod_alm, nom_alm "
+                    + "from cat_alm order by cod_alm;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -786,20 +716,83 @@ public class ManTblPiezas implements Serializable {
             bodegas.clear();
             ubicaciones.clear();
             piezasdetalle.clear();
-            proveedores.clear();
+            //proveedores.clear();
         } catch (Exception e) {
             System.out.println("Error en el llenado de Paises en ManTblPiezas. " + e.getMessage());
+        }
+    }
+
+    public void llenarBodegas() {
+        String mQuery = "";
+        try {
+
+            bodegas.clear();
+
+            mQuery = "select id_bod, nom_bod,cod_pai "
+                    + "from cat_bodegas "
+                    + "where cod_pai=" + cod_pai + " "
+                    + "order by id_bod;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                bodegas.add(new CatBodegas(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3), ""
+                ));
+            }
+            mAccesos.Desconectar();
+            ubicaciones.clear();
+            piezas.clear();
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Bodegas en ManTblPiezas. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+
+    public void llenarUbicaciones() {
+        String mQuery = "";
+        try {
+
+            ubicaciones = new ArrayList<>();
+
+            mQuery = "select ubi.id_ubi,ubi.cod_bod,ubi.nom_ubi,bod.nom_bod, bod.cod_pai, alm.nom_alm "
+                    + "from cat_ubicaciones as ubi "
+                    + "left join cat_bodegas as bod on bod.id_bod = ubi.cod_bod "
+                    + "left join cat_alm as alm on bod.cod_pai = alm.cod_alm "
+                    + "where alm.cod_alm=" + cod_pai + " "
+                    + "and ubi.cod_bod=" + cod_bod + " "
+                    + "order by ubi.cod_bod,ubi.id_ubi;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                ubicaciones.add(new CatUbicaciones(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6)
+                ));
+            }
+            mAccesos.Desconectar();
+            piezas.clear();
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Catálogo Repisas. " + e.getMessage() + " Query: " + mQuery);
         }
     }
 
     public void llenarProveedores() {
         String mQuery = "";
         try {
-            catproveedores = new CatProveedores();
+
             proveedores = new ArrayList<>();
 
             mQuery = "select cod_pro,cod_pai,nom_pro,per_con,tel_con,det_mai  "
-                    + "from cat_pro where cod_pai = " + cod_pai + " order by cod_pro;";
+                    + "from cat_pro order by cod_pro;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -829,7 +822,7 @@ public class ManTblPiezas implements Serializable {
             } else {
                 tipmov = "1";
             }
-            catmovimientos = new CatMovimientos();
+
             movimientos = new ArrayList<>();
 
             mQuery = "select id_mov, nom_mov, "
@@ -859,7 +852,6 @@ public class ManTblPiezas implements Serializable {
         String mQuery = "";
         try {
 
-            catmovimientostotal = new CatMovimientos();
             movimientostotal = new ArrayList<>();
 
             mQuery = "select id_mov, nom_mov, "
@@ -887,38 +879,51 @@ public class ManTblPiezas implements Serializable {
     public void llenarPiezas() {
         String mQuery = "";
         try {
-            catpiezas = new CatPiezas();
+
             piezas = new ArrayList<>();
 
-            mQuery = "select pie.cod_pie,pie.cod_ref,pie.cod_equ,"
-                    + "pie.nom_pie,pie.des_pie,equ.nom_equ,pie.cod_cat,"
-                    + "pie.det_ima,pie.vid_uti,pie.cod_gru,pie.cod_lin, "
-                    + "gru.nom_gru,"
-                    + "lin.nom_lin "
-                    + "from cat_pie as pie "
-                    + "left join cat_equ as equ on equ.cod_equ=pie.cod_equ "
-                    + "left join cat_gru as gru on pie.cod_gru = gru.cod_gru "
-                    + "left join cat_lin as lin on pie.cod_gru = lin.cod_gru and lin.cod_lin = pie.cod_lin "
-                    + "order by pie.cod_pie;";
+            mQuery = "select "
+                    + "piezas.cod_pie, "
+                    + "piezas.cod_ref, "
+                    + "piezas.nom_pie, "
+                    + "piezas.existencia, "
+                    + "piezas.pendientes "
+                    + "from( "
+                    + "select "
+                    + "pie.cod_pie, "
+                    + "pie.cod_ref, "
+                    + "pie.nom_pie, "
+                    + "ifnull((select exi.can_exi "
+                    + "from tbl_pie_his as exi "
+                    + "where "
+                    + "exi.cod_pie= pie.cod_pie "
+                    + "and exi.fec_his <= STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                    + "and exi.det_sta = 0 "
+                    + "and exi.cod_pai = " + cod_pai + " "
+                    + "order by exi.fec_his desc,"
+                    + "exi.ord_dia desc "
+                    + "limit 1),0) as existencia,"
+                    + "ifnull(("
+                    + "select sum(det_can_pen) from sol_det as det "
+                    + "left join sol_mae as mae on mae.cod_mae = det.cod_mae "
+                    + "where "
+                    + "det.cod_ite = pie.cod_pie "
+                    + "and det.det_sta <> 2 "
+                    + "and mae.det_sta not in (0,1,3) "
+                    + "),0) as pendientes "
+                    + "from cat_pie as pie ) as piezas "
+                    + "order by piezas.cod_pie;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
             resVariable = mAccesos.querySQLvariable(mQuery);
             while (resVariable.next()) {
-                piezas.add(new CatPiezas(
+                piezas.add(new CatPiezasAbreviado(
                         resVariable.getString(1),
                         resVariable.getString(2),
                         resVariable.getString(3),
                         resVariable.getString(4),
-                        resVariable.getString(5),
-                        resVariable.getString(6),
-                        resVariable.getString(7),
-                        resVariable.getString(8),
-                        resVariable.getString(9),
-                        resVariable.getString(10),
-                        resVariable.getString(11),
-                        resVariable.getString(12),
-                        resVariable.getString(13)
+                        resVariable.getString(5)
                 ));
             }
             mAccesos.Desconectar();
@@ -928,153 +933,66 @@ public class ManTblPiezas implements Serializable {
         }
     }
 
-    public void llenarBodegas() {
+    public void llenarPiezasout() {
         String mQuery = "";
         try {
-            catbodegas = new CatBodegas();
-            bodegas.clear();
 
-            mQuery = "select id_bod, nom_bod,cod_pai "
-                    + "from cat_bodegas "
-                    + "where cod_pai=" + cod_pai + " "
-                    + "order by id_bod;";
-            ResultSet resVariable;
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            resVariable = mAccesos.querySQLvariable(mQuery);
-            while (resVariable.next()) {
-                bodegas.add(new CatBodegas(
-                        resVariable.getString(1),
-                        resVariable.getString(2),
-                        resVariable.getString(3), ""
-                ));
-            }
-            mAccesos.Desconectar();
-            ubicaciones.clear();
-        } catch (Exception e) {
-            System.out.println("Error en el llenado de Bodegas en ManTblPiezas. " + e.getMessage() + " Query: " + mQuery);
-        }
-    }
+            piezas = new ArrayList<>();
 
-    public void llenarUbicaciones() {
-        String mQuery = "";
-        try {
-            catubicaciones = new CatUbicaciones();
-            ubicaciones.clear();
-
-            mQuery = "select ubi.id_ubi,ubi.cod_bod,ubi.nom_ubi,bod.nom_bod "
-                    + "from cat_ubicaciones as ubi "
-                    + "left join cat_bodegas as bod on bod.id_bod = ubi.cod_bod "
-                    + "where bod.cod_pai = " + cod_pai + " "
-                    + "and ubi.cod_bod=" + cod_bod + " "
-                    + "order by ubi.cod_bod,ubi.id_ubi;";
-            ResultSet resVariable;
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            resVariable = mAccesos.querySQLvariable(mQuery);
-            while (resVariable.next()) {
-                ubicaciones.add(new CatUbicaciones(
-                        resVariable.getString(1),
-                        resVariable.getString(2),
-                        resVariable.getString(3),
-                        resVariable.getString(4), "", ""
-                ));
-            }
-            mAccesos.Desconectar();
-
-        } catch (Exception e) {
-            System.out.println("Error en el llenado de Ubicaciones en ManTblPiezas. " + e.getMessage() + " Query: " + mQuery);
-        }
-    }
-
-    public void llenarEncabezadoSol() {
-        try {
-            catsolicitudes = new CatSolicitudes();
-            solicitudes = new ArrayList<>();
-
-            String mQuery = "select mae.id_mae, date_format(mae.fec_sol,'%d/%m/%Y') as fec_sol, mae.nom_usu, "
-                    + "mae.cod_dep, mae.det_uso, mae.cod_maq, mae.nom_apr, mae.det_sta,"
-                    + "dep.nom_dep,maq.nom_equ,mae.det_obs "
-                    + "FROM mae_sol as mae "
-                    + "left join cat_dep as dep on mae.cod_dep = dep.cod_dep "
-                    + "left join cat_equ as maq on mae.cod_maq = maq.cod_equ "
-                    + "left join cat_usu as usu on mae.nom_usu = usu.cod_usu "
+            mQuery = "select "
+                    + "piezas.cod_pie, "
+                    + "piezas.cod_ref, "
+                    + "piezas.nom_pie, "
+                    + "piezas.existencia, "
+                    + "piezas.pendientes "
+                    + "from( "
+                    + "select "
+                    + "pie.cod_pie, "
+                    + "pie.cod_ref, "
+                    + "pie.nom_pie, "
+                    + "ifnull((select exi.can_exi "
+                    + "from tbl_pie_his as exi "
                     + "where "
-                    + "mae.det_sta in('CERRADA','BACKORDER') "
-                    + "order by mae.fec_sol desc;";
+                    + "exi.cod_pie= pie.cod_pie "
+                    + "and exi.fec_his <= STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                    + "and exi.det_sta = 0 "
+                    + "and exi.cod_pai = " + cod_pai + " "
+                    + "order by exi.fec_his desc,"
+                    + "exi.ord_dia desc "
+                    + "limit 1),0) as existencia,"
+                    + "ifnull(("
+                    + "select sum(det_can_pen) from sol_det as det "
+                    + "left join sol_mae as mae on mae.cod_mae = det.cod_mae "
+                    + "where "
+                    + "det.cod_ite = pie.cod_pie "
+                    + "and det.det_sta <> 2 "
+                    + "and mae.det_sta not in (0,1,3) "
+                    + "),0) as pendientes "
+                    + "from cat_pie as pie ) as piezas "
+                    + "where "
+                    + "piezas.existencia > 0 "
+                    + "order by piezas.cod_pie;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
             resVariable = mAccesos.querySQLvariable(mQuery);
             while (resVariable.next()) {
-                solicitudes.add(new CatSolicitudes(
+                piezas.add(new CatPiezasAbreviado(
                         resVariable.getString(1),
                         resVariable.getString(2),
                         resVariable.getString(3),
                         resVariable.getString(4),
-                        resVariable.getString(5),
-                        resVariable.getString(6),
-                        resVariable.getString(7),
-                        resVariable.getString(8),
-                        resVariable.getString(9),
-                        resVariable.getString(10),
-                        resVariable.getString(11),
-                        resVariable.getString(10),
-                        resVariable.getString(11),
-                        resVariable.getString(11),
-                        resVariable.getString(11),
-                        resVariable.getString(11),
-                        resVariable.getString(11),
-                        resVariable.getString(11)
+                        resVariable.getString(5)
                 ));
             }
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado Solicitudes en ManTblPiezas. " + e.getMessage());
+            System.out.println("Error en el llenado de Piezas en ManTblPiezas. " + e.getMessage() + " Query: " + mQuery);
         }
     }
 
-    public void llenarDetallesSol() {
-        try {
-            catsolicitudesdetalle = new CatSolicitudesDetalle();
-            solicitudesdetalle = new ArrayList<>();
-
-            String mQuery = "select id_mae, id_det, cod_ite,des_ite, det_can, det_sta FROM det_sol "
-                    + "where id_mae = " + id_mae + " order by id_det asc;";
-            ResultSet resVariable;
-            Accesos mAccesos = new Accesos();
-            mAccesos.Conectar();
-            resVariable = mAccesos.querySQLvariable(mQuery);
-            while (resVariable.next()) {
-                solicitudesdetalle.add(new CatSolicitudesDetalle(
-                        resVariable.getString(1),
-                        resVariable.getString(2),
-                        resVariable.getString(3),
-                        resVariable.getString(4),
-                        resVariable.getString(5),
-                        resVariable.getString(6),
-                        resVariable.getString(2),
-                        resVariable.getString(3),
-                        resVariable.getString(4),
-                        resVariable.getString(5),
-                        resVariable.getString(6),
-                        resVariable.getString(6),
-                        resVariable.getString(6),
-                        resVariable.getString(6),
-                        resVariable.getString(6),
-                        resVariable.getString(6),
-                        resVariable.getString(6)
-                ));
-            }
-            mAccesos.Desconectar();
-
-        } catch (Exception e) {
-            System.out.println("Error en el llenado Detalles de Solicitudes en ManTblPiezas. " + e.getMessage());
-        }
-
-    }
-
+//**************************** Llenado de Catálogo Principal ***********
     public void llenarEncabezado(String mWhere) {
         try {
             cattblpiezas = null;
@@ -1083,13 +1001,14 @@ public class ManTblPiezas implements Serializable {
             String mQuery = "select enc.cod_lis_pie, enc.por_qbo, enc.cod_pai, enc.cod_pro, enc.cod_mov, "
                     + "enc.doc_tra, enc.cod_sol, date_format(enc.fec_tra,'%d/%m/%Y') as fec_tra, enc.det_obs, "
                     + "enc.flg_ing, enc.det_sta, "
-                    + "pai.nom_pai, ifnull(pro.nom_pro,'Ninguno') as nom_pro, mov.nom_mov, "
+                    + "pai.nom_alm, ifnull(pro.nom_pro,'Ninguno') as nom_pro, mov.nom_mov, "
                     + "case enc.det_sta when 0 then 'ACTIVO' when 1 then 'ANULADO' end as detsta "
                     + "from tbl_pie as enc "
-                    + "left join cat_pai as pai on enc.cod_pai = pai.cod_pai "
+                    + "left join cat_alm as pai on enc.cod_pai = pai.cod_alm "
                     + "left join cat_pro as pro on enc.cod_pro = pro.cod_pro "
                     + "left join cat_mov as mov on enc.cod_mov = mov.id_mov "
                     + "where enc.cod_pai = " + paibus + " and enc.det_sta = 0 "
+                    + "and enc.cod_mov <> 0 "
                     + mWhere + " "
                     + "order by enc.cod_pai, enc.flg_ing, enc.fec_tra, enc.cod_pro, enc.cod_lis_pie;";
             ResultSet resVariable;
@@ -1125,6 +1044,7 @@ public class ManTblPiezas implements Serializable {
         try {
             cattblpiezasdetalle = null;
             piezasdetalle.clear();
+            piezasdetallecopia.clear();
 
             String mQuery = "select det.cod_enc, det.cod_det, det.cod_pie, det.cod_bod, det.cod_ubi, "
                     + "det.det_can, det.det_cos, det.det_sta, pie.nom_pie,bod.nom_bod,ubi.nom_ubi "
@@ -1152,13 +1072,28 @@ public class ManTblPiezas implements Serializable {
                         resVariable.getString(10),
                         resVariable.getString(11)
                 ));
+                piezasdetallecopia.add(new CatTblPiezasDetalle(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10),
+                        resVariable.getString(11)
+                ));
             }
+
             mAccesos.Desconectar();
         } catch (Exception e) {
             System.out.println("Error en el llenado de Detalle en ManTblPiezas. " + e.getMessage());
         }
     }
 
+//**************************** Operaciones de Grid Detalle ***********
     public void agregardetalle() {
         try {
             if (validardetalle()) {
@@ -1205,17 +1140,18 @@ public class ManTblPiezas implements Serializable {
                             det_sta,
                             acc.strQuerySQLvariable("select nom_pie from cat_pie where cod_pie =" + cod_pie + ";"),
                             acc.strQuerySQLvariable("select nom_bod from cat_bodegas where cod_pai = " + cod_pai + " and id_bod =" + cod_bod + ";"),
-                            acc.strQuerySQLvariable("select nom_ubi from cat_ubicaciones where id_ubi = " + cod_ubi + " and cod_bod =" + cod_bod + ";")
+                            acc.strQuerySQLvariable("select nom_ubi from cat_ubicaciones where cod_bod = " + cod_bod + " and id_ubi =" + cod_ubi + ";")
                     ));
                 }
                 acc.Desconectar();
                 cod_pie = "0";
                 cod_bod = "0";
-                cod_ubi = "0";
+                //cod_ubi = "";
                 det_can = "";
                 det_cos = "";
                 det_sta = "0";
                 cattblpiezasdetalle = null;
+
             }
         } catch (Exception e) {
             System.out.println("Error en Agregar Detalle ManTblPiezas." + e.getMessage());
@@ -1223,7 +1159,104 @@ public class ManTblPiezas implements Serializable {
     }
 
     public boolean validardetalle() {
-        return true;
+        boolean mvalidar = true;
+        String mQuery = "";
+
+        if ("".equals(det_can)) {
+            det_can = "0.0";
+        }
+        if ("".equals(det_cos)) {
+            det_cos = "0.0";
+        }
+
+        if ("0".equals(cod_pai)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar una Bodega.", 2);
+        }
+
+        if ("0".equals(cod_bod)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar un Estante.", 2);
+        }
+
+        if ("0".equals(cod_pie)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar una Pieza.", 2);
+        }
+        if ("0".equals(cod_mov)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe escoger un Movimiento.", 2);
+        }
+
+        if ("".equals(det_can)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Ingresar una Cantidad mayor que Cero.", 2);
+        } else if (Double.valueOf(det_can) <= 0) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Ingresar una Cantidad mayor que Cero.", 2);
+        }
+        if ("0".equals(cod_ubi) || "".equals(cod_ubi)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar una Repisa.", 2);
+        } else {
+            try {
+                if ("1".equals(flg_ing)) {
+                    Double existencia = 0.0;
+                    Accesos acc = new Accesos();
+                    mQuery = "select "
+                            + "piezas.existencia "
+                            + "from("
+                            + "select "
+                            + "pie.cod_pie, "
+                            + "pie.cod_ref,"
+                            + "pie.nom_pie,"
+                            + "ifnull((select exi.can_exi "
+                            + "from tbl_pie_his as exi "
+                            + "where "
+                            + "exi.cod_pie= pie.cod_pie "
+                            + "and exi.fec_his <= STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                            + "and exi.flg_ing = 0 "
+                            + "and exi.det_sta = 0 "
+                            + "and exi.cod_pai = " + cod_pai + " "
+                            + "and exi.cod_bod = " + cod_bod + " "
+                            + "and exi.des_ubi = " + cod_ubi + " "
+                            + "order by exi.fec_his desc, "
+                            + "exi.ord_dia desc "
+                            + "limit 1),0) as existencia, "
+                            + "ifnull((select sum(det_can_pen) from sol_det as det where det.cod_pai = " + cod_pai
+                            + " and det.cod_bod = " + cod_bod + " and det.cod_ubi= " + cod_ubi + " and det.cod_ite = pie.cod_pie ),0) as pendientes "
+                            + "from cat_pie as pie ) as piezas "
+                            + "where "
+                            + "piezas.cod_pie = " + cod_pie + ";";
+
+                    if (!piezasdetalle.isEmpty()) {
+                        for (int i = 0; i < piezasdetalle.size(); i++) {
+                            if (cod_pie.equals(piezasdetalle.get(i).getCod_pie())) {
+                                existencia = existencia + Double.valueOf(piezasdetalle.get(i).getDet_can());
+                            }
+                        }
+                    }
+
+                    acc.Conectar();
+                    existencia = acc.doubleQuerySQLvariable(mQuery) - existencia;
+                    acc.Desconectar();
+
+                    if (existencia <= 0.0) {
+                        mvalidar = false;
+
+                        addMessage("Validar Datos", "La existencia de esta Pieza es Cero.", 2);
+
+                    } else if (existencia < Double.valueOf(det_can)) {
+                        mvalidar = false;
+                        addMessage("Validar Datos", "La Cantidad Solicitada sobrepasa la existencia de esta Pieza.", 2);
+                    }
+                }
+            } catch (Exception e) {
+                mvalidar = false;
+                System.out.println("Error en Validación Existencia agregardetalle de ManInventarioPiezas. " + e.getMessage() + " Query: " + mQuery);
+            }
+        }
+        return mvalidar;
     }
 
     public void eliminardetalle() {
@@ -1233,17 +1266,27 @@ public class ManTblPiezas implements Serializable {
             for (int i = 0; i < piezasdetalle.size(); i++) {
                 if (cod_det.equals(piezasdetalle.get(i).getCod_det())) {
                     piezasdetalle.remove(i);
+                    cod_det = "";
+                    cod_pie = "0";
+                    cod_bod = "0";
+                    cod_ubi = "0";
+                    det_can = "";
+                    det_cos = "";
+                    det_sta = "0";
+                    cattblpiezasdetalle = null;
                 }
             }
+
         }
     }
 
+//**************************** Operaciones de Mantenimiento de Tablas ***********
     public void guardar() {
         if (validardatos()) {
             try {
                 Accesos mAccesos = new Accesos();
                 mAccesos.Conectar();
-                String mQuery = "", mQuery2 = "";
+                String mQuery, mQuery2;
                 if ("".equals(cod_lis_pie)) {
                     mQuery = "select ifnull(max(cod_lis_pie),0)+1 as codigo from tbl_pie;";
                     cod_lis_pie = mAccesos.strQuerySQLvariable(mQuery);
@@ -1270,9 +1313,32 @@ public class ManTblPiezas implements Serializable {
                     mAccesos.dmlSQLvariable(mQuery);
                     mQuery = " delete from tbl_pie_det where cod_enc=" + cod_lis_pie + ";";
                     mAccesos.dmlSQLvariable(mQuery);
+                    // ********************** Borrado Lógico del Histórico *************************************
                     mQuery = " update tbl_pie_his set det_sta=1, fec_mod=now(), cod_usu=" + cbean.getCod_usu()
                             + " where flg_ing=" + flg_ing + " and cod_enc=" + cod_lis_pie + " and det_sta=0;";
                     mAccesos.dmlSQLvariable(mQuery);
+
+                    for (int l = 0; l < piezasdetallecopia.size(); l++) {
+
+                        mQuery = " update bol_exi_pai set det_exi=(det_exi-" + piezasdetallecopia.get(l).getDet_can() + ") "
+                                + " where cod_pai=" + cod_pai + " and cod_pie=" + piezasdetallecopia.get(l).getCod_pie() + " and ing_sal=" + flg_ing + ";";
+
+                        mAccesos.dmlSQLvariable(mQuery);
+                        if ("0".equals(flg_ing)) {
+                            mQuery = " update tbl_existencias set det_can=(det_can-" + piezasdetallecopia.get(l).getDet_can() + ") "
+                                    + "where cod_pai=" + cod_pai + " and cod_bod = " + piezasdetallecopia.get(l).getCod_bod() + " "
+                                    + "and cod_ubi=" + piezasdetallecopia.get(l).getCod_ubi() + " "
+                                    + "and cod_pie=" + piezasdetallecopia.get(l).getCod_pie() + " ;";
+                        } else {
+                            mQuery = " update tbl_existencias set det_can=(det_can+" + piezasdetallecopia.get(l).getDet_can() + ") "
+                                    + "where cod_pai=" + cod_pai + " and cod_bod = " + piezasdetallecopia.get(l).getCod_bod() + " "
+                                    + "and cod_ubi=" + piezasdetallecopia.get(l).getCod_ubi() + " "
+                                    + "and cod_pie=" + piezasdetallecopia.get(l).getCod_pie() + " ;";
+                        }
+
+                        mAccesos.dmlSQLvariable(mQuery);
+                    }
+
                 }
                 // ******************* Borra Reservas *****************
                 mQuery = " delete from tbl_res where cod_lis_pie = " + cod_lis_pie + ";";
@@ -1295,7 +1361,7 @@ public class ManTblPiezas implements Serializable {
                             + "where "
                             + "cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                             + "and fec_his=STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
-                            + "and flg_ing = 0"
+                            + "and cod_pai = " + cod_pai + " "
                             + ";");
 
                     //Costo promedio
@@ -1312,7 +1378,9 @@ public class ManTblPiezas implements Serializable {
                                     + "where "
                                     + "cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                                     + "and fec_his <= STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                                    + "and flg_ing = 0 "
                                     + "and det_sta = 0 "
+                                    + "and cod_pai = " + cod_pai + " "
                                     + "order by fec_his desc,"
                                     + "ord_dia desc "
                                     + "limit 1;");
@@ -1324,6 +1392,7 @@ public class ManTblPiezas implements Serializable {
                                     + "and fec_his <= STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
                                     + "and flg_ing = 0 "
                                     + "and det_sta = 0 "
+                                    + "and cod_pai = " + cod_pai + " "
                                     + "order by fec_his desc,"
                                     + "ord_dia desc "
                                     + "limit 1;");
@@ -1335,6 +1404,7 @@ public class ManTblPiezas implements Serializable {
                                 + "cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                                 + "and fec_his <= STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
                                 + "and det_sta = 0 "
+                                + "and cod_pai = " + cod_pai + " "
                                 + "order by fec_his desc,"
                                 + "ord_dia desc "
                                 + "limit 1;");
@@ -1348,12 +1418,13 @@ public class ManTblPiezas implements Serializable {
                     }
                     cunitario = Double.valueOf(piezasdetalle.get(i).getDet_cos().replace(",", ""));
                     mQuery2 = " insert into tbl_pie_his (cod_his,cod_pie,fec_his,ord_dia,flg_ing,"
-                            + "cod_enc,cod_det,det_can,det_cos,can_exi,cos_pro,det_sta,fec_mod,cod_usu) "
+                            + "cod_enc,cod_det,det_can,det_cos,can_exi,cos_pro,det_sta,fec_mod,cod_usu,cod_pai,cod_bod,des_ubi) "
                             + "VALUES (" + cod_cor_exi_art + "," + piezasdetalle.get(i).getCod_pie() + ","
                             + "STR_TO_DATE('" + fec_tra + "','%d/%m/%Y')" + "," + cor_dia + "," + flg_ing + ","
                             + cod_lis_pie + "," + (i + 1) + "," + mCantidad + "," + cunitario + ","
                             + mNuevaExistencia + ","
-                            + cPromedio + "," + "0" + "," + "now()" + "," + cbean.getCod_usu() + ");";
+                            + cPromedio + "," + "0" + "," + "now()" + "," + cbean.getCod_usu() + ","
+                            + cod_pai + "," + piezasdetalle.get(i).getCod_bod() + "," + piezasdetalle.get(i).getCod_ubi() + ");";
 
                     mAccesos.dmlSQLvariable(mQuery2);
 
@@ -1363,6 +1434,7 @@ public class ManTblPiezas implements Serializable {
                             + "and ord_dia >" + cor_dia + " "
                             + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                             + "and det_sta = 0 "
+                            + "and cod_pai = " + cod_pai + " "
                             + ";");
                     contasiguientes = String.valueOf(
                             Integer.valueOf(contasiguientes)
@@ -1371,6 +1443,7 @@ public class ManTblPiezas implements Serializable {
                                     + "where fec_his > STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
                                     + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                                     + "and det_sta = 0 "
+                                    + "and cod_pai = " + cod_pai + " "
                                     + ";")));
 
                     Double nuevacantidad = mNuevaExistencia;
@@ -1383,9 +1456,10 @@ public class ManTblPiezas implements Serializable {
                             resvariable = mAccesos.querySQLvariable("select cod_his,cod_pie,fec_his,ord_dia,flg_ing,cod_enc,"
                                     + "cod_det,det_can,det_cos,can_exi,cos_pro,det_sta,fec_mod,"
                                     + "cod_usu from tbl_pie_his "
-                                    + "where fec_his >= STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                                    + "where fec_his > STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
                                     + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                                     + "and det_sta = 0 "
+                                    + "and cod_pai = " + cod_pai + " "
                                     + "order by fec_his asc,"
                                     + "ord_dia asc"
                                     + ";");
@@ -1433,8 +1507,38 @@ public class ManTblPiezas implements Serializable {
 
                     }
 
+                    // Tratamiento tabla bol_exi_pai
+                    String mContador = mAccesos.strQuerySQLvariable("select count(cod_pie) as contador from bol_exi_pai "
+                            + "where "
+                            + "cod_pai=" + cod_pai + " "
+                            + "and ing_sal=" + flg_ing + " "
+                            + "and cod_pie=" + piezasdetalle.get(i).getCod_pie()
+                            + ";");
+
+                    if ("0".equals(mContador)) {
+
+                        mQuery2 = "insert into bol_exi_pai(cod_pai,cod_pie,ing_sal,det_exi) "
+                                + "VALUES ("
+                                + cod_pai + ","
+                                + piezasdetalle.get(i).getCod_pie() + ","
+                                + flg_ing + ","
+                                + piezasdetalle.get(i).getDet_can()
+                                + ");";
+
+                    } else {
+                        mQuery2 = "update bol_exi_pai set "
+                                + "det_exi= (det_exi + " + piezasdetalle.get(i).getDet_can() + ") "
+                                + "where "
+                                + "cod_pai=" + cod_pai + " "
+                                + "and ing_sal=" + flg_ing + " "
+                                + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + ";";
+
+                    }
+
+                    mAccesos.dmlSQLvariable(mQuery2);
+
                     // Tratamiento tabla tbl_existencias
-                    String mContador = mAccesos.strQuerySQLvariable("select count(cod_pie) as contador from tbl_existencias "
+                    mContador = mAccesos.strQuerySQLvariable("select count(cod_exi) as contador from tbl_existencias "
                             + "where "
                             + "cod_pai=" + cod_pai + " "
                             + "and cod_bod=" + piezasdetalle.get(i).getCod_bod() + " "
@@ -1443,29 +1547,27 @@ public class ManTblPiezas implements Serializable {
                             + ";");
 
                     if ("0".equals(mContador)) {
-                        String codexi = mAccesos.strQuerySQLvariable("select ifnull(max(cod_exi),0)+1 "
-                                + "as cod from tbl_existencias;");
 
                         mQuery2 = "insert into tbl_existencias(cod_exi,cod_pie,cod_pai,cod_bod,cod_ubi,det_can,cos_pro) "
                                 + "VALUES ("
-                                + codexi + ","
+                                + mAccesos.strQuerySQLvariable("select (ifnull(max(cod_exi),0) + 1) as codigo from tbl_existencias;") + ","
                                 + piezasdetalle.get(i).getCod_pie() + ","
                                 + cod_pai + ","
                                 + piezasdetalle.get(i).getCod_bod() + ","
                                 + piezasdetalle.get(i).getCod_ubi() + ","
-                                + nuevacantidad + ","
-                                + cPromedio
-                                + ");";
-                    } else {
+                                + piezasdetalle.get(i).getDet_can()
+                                + ",0);";
 
-                        mQuery2 = "update tbl_existencias set "
-                                + "det_can=" + nuevacantidad + ","
-                                + "cos_pro=" + cPromedio + " "
-                                + "where "
-                                + "cod_pai=" + cod_pai + " "
-                                + "and cod_bod=" + piezasdetalle.get(i).getCod_bod() + " "
+                    } else if ("0".equals(flg_ing)) {
+                        mQuery2 = " update tbl_existencias set det_can=(det_can+" + piezasdetalle.get(i).getDet_can() + ") "
+                                + "where cod_pai=" + cod_pai + " and cod_bod = " + piezasdetalle.get(i).getCod_bod() + " "
                                 + "and cod_ubi=" + piezasdetalle.get(i).getCod_ubi() + " "
-                                + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + ";";
+                                + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " ;";
+                    } else {
+                        mQuery2 = " update tbl_existencias set det_can=(det_can-" + piezasdetalle.get(i).getDet_can() + ") "
+                                + "where cod_pai=" + cod_pai + " and cod_bod = " + piezasdetalle.get(i).getCod_bod() + " "
+                                + "and cod_ubi=" + piezasdetalle.get(i).getCod_ubi() + " "
+                                + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " ;";
                     }
 
                     mAccesos.dmlSQLvariable(mQuery2);
@@ -1475,8 +1577,8 @@ public class ManTblPiezas implements Serializable {
                             + cod_lis_pie + ","
                             + (i + 1) + ","
                             + piezasdetalle.get(i).getCod_pie() + ","
-                            + piezasdetalle.get(i).getCod_bod() + ","
-                            + piezasdetalle.get(i).getCod_ubi() + ","
+                            + piezasdetalle.get(i).getCod_bod() + ",'"
+                            + piezasdetalle.get(i).getCod_ubi() + "',"
                             + piezasdetalle.get(i).getDet_can() + ","
                             + piezasdetalle.get(i).getDet_cos() + ","
                             + piezasdetalle.get(i).getDet_sta()
@@ -1488,12 +1590,15 @@ public class ManTblPiezas implements Serializable {
                 mQuery = " insert into tbl_pie_det(cod_enc,cod_det,"
                         + "cod_pie,cod_bod,cod_ubi,det_can,det_cos,det_sta) "
                         + "values " + mValues + ";";
-                
 
                 mAccesos.dmlSQLvariable(mQuery);
                 // ******************* Borra Reservas *****************
                 mQuery = " delete from tbl_res where cod_lis_pie = " + cod_lis_pie + ";";
                 mAccesos.dmlSQLvariable(mQuery);
+                //*************** Devolver a estatus normal el registro editado en histórico ******************
+                /*mQuery = " update tbl_pie_his set det_sta = 0 "
+                        + " where cod_enc=" + cod_lis_pie + ";";
+                mAccesos.dmlSQLvariable(mQuery);*/
 
                 mAccesos.Desconectar();
                 addMessage("Guardar Almacén", "Información Almacenada con éxito.", 1);
@@ -1506,14 +1611,28 @@ public class ManTblPiezas implements Serializable {
     }
 
     public boolean validardatos() {
-        return true;
+        boolean mvalidar = true;
+        if (piezasdetalle.isEmpty()) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe agregar al menos un Item a la Lista.", 2);
+        }
+        if ("0".equals(cod_mov)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe escoger un Movimiento.", 2);
+        }
+        if ("0".equals(cod_pai)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar una Bodega.", 2);
+        }
+        return mvalidar;
     }
 
     public void eliminar() {
+        String mQuery = "";
         if ("".equals(cod_lis_pie) == false) {
             try {
                 Accesos mAccesos = new Accesos();
-                String mQuery = "";
+
                 mAccesos.Conectar();
                 for (int i = 0; i < piezasdetalle.size(); i++) {
 
@@ -1534,6 +1653,7 @@ public class ManTblPiezas implements Serializable {
                             + "and cod_enc =" + piezasdetalle.get(i).getCod_enc() + " "
                             + "and cod_det =" + piezasdetalle.get(i).getCod_det() + " "
                             + "and flg_ing =" + flg_ing + " "
+                            + "and cod_pai =" + cod_pai + " "
                             + "limit 1;";
                     String cor_dia = mAccesos.strQuerySQLvariable(mQuery);
 
@@ -1546,21 +1666,25 @@ public class ManTblPiezas implements Serializable {
                     mQuery = "select count(ord_dia) as contador "
                             + "from tbl_pie_his "
                             + "where fec_his = STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
-                            + "and cod_pie=" + piezasdetalle.get(i).getCod_pie();
+                            + "and cod_pai =" + cod_pai + " "
+                            + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
+                            + "and det_sta=0;";
                     String contador = mAccesos.strQuerySQLvariable(mQuery);
 
-                    Double cPromedio = 0.0, nuevacantidad = 0.0, cunitario = 0.0;
+                    Double cPromedio = 0.0, nuevacantidad = 0.0;
 
                     if ("0".equals(contador)) {
                         mQuery = "select count(ord_dia) as contador "
                                 + "from tbl_pie_his "
                                 + "where fec_his < STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                                + "and cod_pai =" + cod_pai + " "
                                 + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                                 + "and det_sta=0;";
                         contador = mAccesos.strQuerySQLvariable(mQuery);
                         if ("0".equals(contador) == false) {
                             mQuery = "select ifnull(cos_pro,0) as cpromedio "
                                     + "from tbl_pie_his where fec_his < STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                                    + "and cod_pai =" + cod_pai + " "
                                     + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                                     + "and det_sta=0 "
                                     + "order by fec_his desc,"
@@ -1569,25 +1693,29 @@ public class ManTblPiezas implements Serializable {
                             cPromedio = mAccesos.doubleQuerySQLvariable(mQuery);
                             mQuery = "select ifnull(can_exi,0) as nuevacantidad "
                                     + "from tbl_pie_his where fec_his < STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                                    + "and cod_pai =" + cod_pai + " "
                                     + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                                     + "and det_sta=0 "
                                     + "order by fec_his desc,"
                                     + "ord_dia desc "
                                     + "limit 1;";
                             nuevacantidad = mAccesos.doubleQuerySQLvariable(mQuery);
-                            mQuery = "select ifnull(det_cos,0) as costounitario "
+                            /*mQuery = "select ifnull(det_cos,0) as costounitario "
                                     + "from tbl_pie_his where fec_his < STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                                    + "and cod_pai =" + cod_pai + " "
+                                    + "and cod_bod =" + piezasdetalle.get(i).getCod_bod() + " "
                                     + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                                     + "and det_sta=0 "
                                     + "order by fec_his desc,"
                                     + "ord_dia desc "
                                     + "limit 1;";
-                            cunitario = mAccesos.doubleQuerySQLvariable(mQuery);
+                            cunitario = mAccesos.doubleQuerySQLvariable(mQuery);*/
                         }
                     } else {
                         mQuery = "select ifnull(cos_pro,0) as cpromedio "
                                 + "from tbl_pie_his where fec_his = STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
                                 + "and ord_dia < " + cor_dia + " "
+                                + "and cod_pai =" + cod_pai + " "
                                 + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                                 + "and det_sta=0 "
                                 + "order by fec_his desc,"
@@ -1597,21 +1725,24 @@ public class ManTblPiezas implements Serializable {
                         mQuery = "select ifnull(can_exi,0) as nuevacantidad "
                                 + "from tbl_pie_his where fec_his=STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
                                 + "and ord_dia < " + cor_dia + " "
+                                + "and cod_pai =" + cod_pai + " "
                                 + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                                 + "and det_sta=0 "
                                 + "order by fec_his desc,"
                                 + "ord_dia desc "
                                 + "limit 1;";
                         nuevacantidad = mAccesos.doubleQuerySQLvariable(mQuery);
-                        mQuery = "select ifnull(det_cos,0) as costounitario "
+                        /*mQuery = "select ifnull(det_cos,0) as costounitario "
                                 + "from tbl_pie_his where fec_his=STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
                                 + "and ord_dia < " + cor_dia + " "
+                                + "and cod_pai =" + cod_pai + " "
+                                + "and cod_bod =" + piezasdetalle.get(i).getCod_bod() + " "
                                 + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                                 + "and det_sta=0 "
                                 + "order by fec_his desc,"
                                 + "ord_dia desc "
                                 + "limit 1;";
-                        cunitario = mAccesos.doubleQuerySQLvariable(mQuery);
+                        cunitario = mAccesos.doubleQuerySQLvariable(mQuery);*/
                     }
 
                     // Verifica si hay registros posteriores y si los hay actualiza a partir de la fecha de Transacción
@@ -1619,6 +1750,7 @@ public class ManTblPiezas implements Serializable {
                             + "from tbl_pie_his "
                             + "where fec_his=STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
                             + "and ord_dia >" + cor_dia + " "
+                            + "and cod_pai =" + cod_pai + " "
                             + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                             + "and det_sta = 0 "
                             + ";");
@@ -1627,6 +1759,7 @@ public class ManTblPiezas implements Serializable {
                             + Integer.valueOf(mAccesos.strQuerySQLvariable("select count(cod_his) "
                                     + "from tbl_pie_his "
                                     + "where fec_his > STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                                    + "and cod_pai =" + cod_pai + " "
                                     + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                                     + "and det_sta = 0 "
                                     + ";")));
@@ -1638,13 +1771,24 @@ public class ManTblPiezas implements Serializable {
 
                             //Double cos_uni_sal = 0.0;
                             ResultSet resvariable;
-                            resvariable = mAccesos.querySQLvariable("select cod_his,cod_pie,fec_his,ord_dia,flg_ing,cod_enc,"
+                            resvariable = mAccesos.querySQLvariable("select * from ( "
+                                    + "select cod_his,cod_pie,fec_his,ord_dia,flg_ing,cod_enc,"
                                     + "cod_det,det_can,det_cos,can_exi,cos_pro,det_sta,fec_mod,"
                                     + "cod_usu from tbl_pie_his "
-                                    + "where fec_his >= STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                                    + "where fec_his = STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                                    + "and ord_dia >" + cor_dia + " "
+                                    + "and cod_pai =" + cod_pai + " "
                                     + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " "
                                     + "and det_sta = 0 "
-                                    + "order by fec_his asc,"
+                                    + "UNION ALL "
+                                    + "select cod_his,cod_pie,fec_his,ord_dia,flg_ing,cod_enc,"
+                                    + "cod_det,det_can,det_cos,can_exi,cos_pro,det_sta,fec_mod,"
+                                    + "cod_usu from tbl_pie_his "
+                                    + "where fec_his > STR_TO_DATE('" + fec_tra + "','%d/%m/%Y') "
+                                    + "and cod_pai =" + cod_pai + " "
+                                    + "and cod_pie =" + piezasdetalle.get(i).getCod_pie() + " "
+                                    + "and det_sta = 0 ) as tabla "
+                                    + "order by fec_his asc, "
                                     + "ord_dia asc"
                                     + ";");
                             while (resvariable.next()) {
@@ -1685,47 +1829,55 @@ public class ManTblPiezas implements Serializable {
                                 mAccesos.dmlSQLvariable(mQuery);
                             }
 
-                        } catch (Exception e) {
+                        } catch (SQLException | NumberFormatException e) {
                             System.out.println("Error en actualización de costos posteriores. " + e.getMessage());
                         }
 
                     }
 
-                    // Tratamiento tabla tbl_existencias
-                    String mContador = mAccesos.strQuerySQLvariable("select count(cod_pie) as contador from tbl_existencias "
+                    // Tratamiento tabla bol_exi_pai
+                    String mContador = mAccesos.strQuerySQLvariable("select count(cod_pie) as contador from bol_exi_pai "
                             + "where "
                             + "cod_pai=" + cod_pai + " "
-                            + "and cod_bod=" + piezasdetalle.get(i).getCod_bod() + " "
-                            + "and cod_ubi=" + piezasdetalle.get(i).getCod_ubi() + " "
+                            + "and ing_sal=" + flg_ing + " "
                             + "and cod_pie=" + piezasdetalle.get(i).getCod_pie()
                             + ";");
 
-                    if ("0".equals(mContador)) {
-                        String codexi = mAccesos.strQuerySQLvariable("select ifnull(max(cod_exi),0)+1 "
-                                + "as cod from tbl_existencias;");
+                    if (!"0".equals(mContador)) {
 
-                        mQuery = "insert into tbl_existencias(cod_exi,cod_pie,cod_pai,cod_bod,cod_ubi,det_can,cos_pro) "
-                                + "VALUES ("
-                                + codexi + ","
-                                + piezasdetalle.get(i).getCod_pie() + ","
-                                + cod_pai + ","
-                                + piezasdetalle.get(i).getCod_bod() + ","
-                                + piezasdetalle.get(i).getCod_ubi() + ","
-                                + nuevacantidad + ","
-                                + cPromedio
-                                + ");";
-                    } else {
-
-                        mQuery = "update tbl_existencias set "
-                                + "det_can=" + nuevacantidad + ","
-                                + "cos_pro=" + cPromedio + " "
+                        mQuery = "update bol_exi_pai set "
+                                + "det_exi= (det_exi - " + piezasdetalle.get(i).getDet_can() + ") "
                                 + "where "
                                 + "cod_pai=" + cod_pai + " "
-                                + "and cod_bod=" + piezasdetalle.get(i).getCod_bod() + " "
-                                + "and cod_ubi=" + piezasdetalle.get(i).getCod_ubi() + " "
+                                + "and ing_sal=" + flg_ing + " "
                                 + "and cod_pie=" + piezasdetalle.get(i).getCod_pie() + ";";
+
                     }
 
+                    mAccesos.dmlSQLvariable(mQuery);
+
+                    // Tratamiento tabla tbl_existencias
+                    mContador = mAccesos.strQuerySQLvariable("select count(cod_exi) as contador from tbl_existencias "
+                            + "where "
+                            + "cod_pai=" + cod_pai + " "
+                            + "and cod_bod=" + piezasdetalle.get(i).getCod_bod() + " "
+                            + "and cod_pie=" + piezasdetalle.get(i).getCod_pie()
+                            + ";");
+
+                    if (!"0".equals(mContador)) {
+
+                        if ("0".equals(flg_ing)) {
+                            mQuery = " update tbl_existencias set det_can=(det_can-" + piezasdetalle.get(i).getDet_can() + ") "
+                                    + " where cod_pai=" + cod_pai + " and cod_bod = " + piezasdetalle.get(i).getCod_bod() + " "
+                                    + " and cod_ubi = " + piezasdetalle.get(i).getCod_ubi() + " "
+                                    + " and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " ;";
+                        } else {
+                            mQuery = " update tbl_existencias set det_can=(det_can+" + piezasdetalle.get(i).getDet_can() + ") "
+                                    + " where cod_pai=" + cod_pai + " and cod_bod = " + piezasdetalle.get(i).getCod_bod() + " "
+                                    + " and cod_ubi = " + piezasdetalle.get(i).getCod_ubi() + " "
+                                    + " and cod_pie=" + piezasdetalle.get(i).getCod_pie() + " ;";
+                        }
+                    }
                     mAccesos.dmlSQLvariable(mQuery);
                 }
 
@@ -1738,7 +1890,7 @@ public class ManTblPiezas implements Serializable {
 
             } catch (Exception e) {
                 addMessage("Eliminar de Almacén", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
-                System.out.println("Error al Eliminar de Almacén. " + e.getMessage());
+                System.out.println("Error al Eliminar de Almacén. " + e.getMessage() + " Query: " + mQuery);
             }
 
         } else {
@@ -1747,6 +1899,7 @@ public class ManTblPiezas implements Serializable {
         nuevo();
     }
 
+//**************************** Funciones Varias ***********
     public void inout() {
         cod_pro = "0";
         por_qbo = "";
@@ -1754,23 +1907,215 @@ public class ManTblPiezas implements Serializable {
         doc_tra = "";
         cod_pie = "0";
         cod_bod = "0";
-        cod_ubi = "0";
+        cod_ubi = "";
         det_can = "";
         det_cos = "";
         id_mae = "0";
         cod_sol = "0";
         piezasdetalle.clear();
-        llenarMovimientos();
+
         if ("true".equals(boolinout)) {
-            solicitudes.clear();
+            //solicitudes.clear();
+            llenarPiezasout();
             proveedores.clear();
             booleditable = "false";
             flg_ing = "1";
         } else {
             llenarProveedores();
-            llenarEncabezadoSol();
+            llenarPiezas();
+            //llenarEncabezadoSol();
             booleditable = "true";
             flg_ing = "0";
+        }
+        llenarMovimientos();
+
+    }
+
+    public void onRowSelect(SelectEvent event) {
+        cod_enc = ((CatTblPiezasDetalle) event.getObject()).getCod_enc();
+        cod_det = ((CatTblPiezasDetalle) event.getObject()).getCod_det();
+        cod_pie = ((CatTblPiezasDetalle) event.getObject()).getCod_pie();
+        cod_bod = ((CatTblPiezasDetalle) event.getObject()).getCod_bod();
+        cod_ubi = ((CatTblPiezasDetalle) event.getObject()).getCod_ubi();
+        det_can = ((CatTblPiezasDetalle) event.getObject()).getDet_can();
+        det_cos = ((CatTblPiezasDetalle) event.getObject()).getDet_cos();
+        det_sta = ((CatTblPiezasDetalle) event.getObject()).getDet_sta();
+    }
+
+    public void onRowSelectBID(SelectEvent event) {
+        flg_ing = ((CatTblPiezas) event.getObject()).getFlg_ing();
+        if ("0".equals(flg_ing)) {
+            boolinout = "false";
+        } else {
+            boolinout = "true";
+        }
+        llenarMovimientos();
+        cod_lis_pie = ((CatTblPiezas) event.getObject()).getCod_lis_pie();
+        por_qbo = ((CatTblPiezas) event.getObject()).getPor_qbo();
+        cod_pai = ((CatTblPiezas) event.getObject()).getCod_pai();
+        cod_pro = ((CatTblPiezas) event.getObject()).getCod_pro();
+        cod_mov = ((CatTblPiezas) event.getObject()).getCod_mov();
+        doc_tra = ((CatTblPiezas) event.getObject()).getDoc_tra();
+        cod_sol = ((CatTblPiezas) event.getObject()).getCod_sol();
+        fec_tra = ((CatTblPiezas) event.getObject()).getFec_tra();
+        det_obs = ((CatTblPiezas) event.getObject()).getDet_obs();
+
+        det_sta = ((CatTblPiezas) event.getObject()).getDet_sta();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            mfecha = format.parse(fec_tra);
+        } catch (Exception ex) {
+
+        }
+        llenarDetalle();
+        cerrarventanaid();
+        RequestContext.getCurrentInstance().execute("PF('wBuscarListaPiezas').hide()");
+    }
+
+    public void seleccionarpais() {
+        //llenarProveedores();
+        llenarBodegas();
+        cod_bod = "0";
+        cod_ubi = "0";
+        piezas.clear();
+    }
+
+    public void seleccionarbodega() {
+        //llenarProveedores();
+        llenarUbicaciones();
+        cod_ubi = "0";
+        piezas.clear();
+    }
+
+    public void seleccionarubi() {
+        if ("false".equals(boolinout)) {
+            llenarPiezas();
+        } else {
+            llenarPiezasout();
+        }
+    }
+
+    public void seleccionarpieza() {
+        cod_pie = catpiezasabreviado.getCodigo();
+    }
+
+    public void dateSelectedAction(SelectEvent f) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        if (piezasdetalle.isEmpty()) {
+            Date date = (Date) f.getObject();
+            fec_tra = format.format(date);
+            cod_bod = "0";
+            piezas.clear();
+        } else {
+            try {
+                mfecha = format.parse(fec_tra);
+            } catch (Exception e) {
+
+            }
+            addMessage("Cambiar Fecha", "No puede Modificarse la Fecha pues Existen Detalles asociados. ", 2);
+        }
+
+    }
+
+    public void addMessage(String summary, String detail, int tipo) {
+        FacesMessage message = new FacesMessage();
+        switch (tipo) {
+            case 1:
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+                break;
+            case 2:
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
+                break;
+        }
+
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    //************Ya no se utiliza ***************************
+    public void llenarEncabezadoSol() {
+        try {
+
+            solicitudes = new ArrayList<>();
+
+            String mQuery = "select mae.id_mae, date_format(mae.fec_sol,'%d/%m/%Y') as fec_sol, mae.nom_usu, "
+                    + "mae.cod_dep, mae.det_uso, mae.cod_maq, mae.nom_apr, mae.det_sta,"
+                    + "dep.nom_dep,maq.nom_equ,mae.det_obs "
+                    + "FROM sol_mae as mae "
+                    + "left join cat_dep as dep on mae.cod_dep = dep.cod_dep "
+                    + "left join cat_equ as maq on mae.cod_maq = maq.cod_equ "
+                    + "left join cat_usu as usu on mae.nom_usu = usu.cod_usu "
+                    + "where "
+                    + "mae.det_sta in('CERRADA','BACKORDER') "
+                    + "order by mae.fec_sol desc;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                solicitudes.add(new CatSolicitudes(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7),
+                        resVariable.getString(8),
+                        resVariable.getString(9),
+                        resVariable.getString(10),
+                        resVariable.getString(11),
+                        resVariable.getString(10),
+                        resVariable.getString(11),
+                        resVariable.getString(11),
+                        resVariable.getString(11),
+                        resVariable.getString(11),
+                        resVariable.getString(11),
+                        resVariable.getString(11)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado Solicitudes en ManTblPiezas. " + e.getMessage());
+        }
+    }
+
+    public void llenarDetallesSol() {
+        try {
+
+            solicitudesdetalle = new ArrayList<>();
+
+            String mQuery = "select id_mae, id_det, cod_ite,des_ite, det_can, det_sta FROM sol_det "
+                    + "where id_mae = " + id_mae + " order by id_det asc;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                solicitudesdetalle.add(new CatSolicitudesDetalle(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(6),
+                        resVariable.getString(6),
+                        resVariable.getString(6),
+                        resVariable.getString(6),
+                        resVariable.getString(6),
+                        resVariable.getString(6)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado Detalles de Solicitudes en ManTblPiezas. " + e.getMessage());
         }
 
     }
@@ -1811,65 +2156,6 @@ public class ManTblPiezas implements Serializable {
             System.out.println("Error en Selección de Solicitud de ManTblPiezas. " + e.getMessage());
         }
 
-    }
-
-    public void onRowSelect(SelectEvent event) {
-        cod_enc = ((CatTblPiezasDetalle) event.getObject()).getCod_enc();
-        cod_det = ((CatTblPiezasDetalle) event.getObject()).getCod_det();
-        cod_pie = ((CatTblPiezasDetalle) event.getObject()).getCod_pie();
-        cod_bod = ((CatTblPiezasDetalle) event.getObject()).getCod_bod();
-        cod_ubi = ((CatTblPiezasDetalle) event.getObject()).getCod_ubi();
-        det_can = ((CatTblPiezasDetalle) event.getObject()).getDet_can();
-        det_cos = ((CatTblPiezasDetalle) event.getObject()).getDet_cos();
-        det_sta = ((CatTblPiezasDetalle) event.getObject()).getDet_sta();
-    }
-
-    public void onRowSelectBID(SelectEvent event) {
-        cod_lis_pie = ((CatTblPiezas) event.getObject()).getCod_lis_pie();
-        por_qbo = ((CatTblPiezas) event.getObject()).getPor_qbo();
-        cod_pai = ((CatTblPiezas) event.getObject()).getCod_pai();
-        cod_pro = ((CatTblPiezas) event.getObject()).getCod_pro();
-        cod_mov = ((CatTblPiezas) event.getObject()).getCod_mov();
-        doc_tra = ((CatTblPiezas) event.getObject()).getDoc_tra();
-        cod_sol = ((CatTblPiezas) event.getObject()).getCod_sol();
-        fec_tra = ((CatTblPiezas) event.getObject()).getFec_tra();
-        det_obs = ((CatTblPiezas) event.getObject()).getDet_obs();
-        flg_ing = ((CatTblPiezas) event.getObject()).getFlg_ing();
-        det_sta = ((CatTblPiezas) event.getObject()).getDet_sta();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            mfecha = format.parse(fec_tra);
-        } catch (Exception ex) {
-
-        }
-        llenarDetalle();
-        cerrarventanaid();
-        RequestContext.getCurrentInstance().execute("PF('wBuscarListaPiezas').hide()");
-    }
-
-    public void seleccionarpais() {
-        llenarProveedores();
-        llenarBodegas();
-    }
-
-    public void dateSelectedAction(SelectEvent f) {
-        Date date = (Date) f.getObject();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        fec_tra = format.format(date);
-    }
-
-    public void addMessage(String summary, String detail, int tipo) {
-        FacesMessage message = new FacesMessage();
-        switch (tipo) {
-            case 1:
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
-                break;
-            case 2:
-                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
-                break;
-        }
-
-        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
 }

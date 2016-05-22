@@ -109,7 +109,7 @@ public class ManEstado implements Serializable {
             maestro = new ArrayList<>();
 
             String mQuery = "select "
-                    + "mae.cod_mae, mae.cod_alt, "
+                    + "mae.cod_mae, if(mae.cod_alt='','-',mae.cod_alt), "
                     + "date_format(mae.fec_sol,'%d/%m/%Y'), "
                     + "mae.cod_usu_sol, "
                     + "mae.cod_usu_apr, mae.cod_usu_rec, mae.cod_dep, mae.det_uso, mae.cod_maq, "
@@ -122,7 +122,7 @@ public class ManEstado implements Serializable {
                     + "when 5 then 'CERRADA' end as sta, "
                     + "mae.det_obs, "
                     + "date_format(mae.fec_cie,'%d/%m/%Y'), mae.flg_loc,mae.cod_pai, "
-                    + "dep.nom_dep, concat(maq.nom_equ,'-',lis.num_ser) as nomequ,"
+                    + "dep.nom_dep, lis.des_equ as nomequ,"
                     + "pai.nom_alm, usu.det_nom "
                     + "FROM sol_mae as mae "
                     + "left join cat_dep as dep on mae.cod_dep = dep.cod_dep "

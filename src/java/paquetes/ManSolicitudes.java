@@ -405,7 +405,7 @@ public class ManSolicitudes implements Serializable {
         boolNS = "true";
         maestro = new ArrayList<>();
         detalles = new ArrayList<>();
-        llenarPaises();
+        //llenarPaises();
         llenarPiezas();
         llenarUsuarios();
         llenarEquipos();
@@ -555,7 +555,6 @@ public class ManSolicitudes implements Serializable {
                     + "left join cat_equ as cequ on lequ.cod_equ = cequ.cod_equ "
                     + "left join cat_pro as cpro on lequ.cod_pro = cpro.cod_pro and lequ.cod_pai = cpro.cod_pai "
                     + "left join cat_cli as ccli on lequ.cod_cli = ccli.cod_cli and lequ.cod_pai = ccli.cod_pai "
-                    + "where "
                     + "order by lequ.cod_pai, lequ.cod_equ, lequ.num_ser ,lequ.cod_lis_equ;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -699,7 +698,7 @@ public class ManSolicitudes implements Serializable {
                     + "mae.cod_usu_apr, mae.cod_usu_rec, mae.cod_dep, mae.det_uso, mae.cod_maq, "
                     + "mae.det_sta, mae.det_obs, "
                     + "date_format(mae.fec_cie,'%d/%m/%Y'), mae.flg_loc,mae.cod_pai, "
-                    + "dep.nom_dep, concat(maq.nom_equ,'-',lis.num_ser) as nomequ, "
+                    + "dep.nom_dep, lis.des_equ as nomequ, "
                     + "pai.nom_alm, usu.det_nom "
                     + "FROM sol_mae as mae "
                     + "left join cat_dep as dep on mae.cod_dep = dep.cod_dep "
@@ -812,7 +811,7 @@ public class ManSolicitudes implements Serializable {
                         det_des_ite = macc.strQuerySQLvariable("select nom_pie from cat_pie where cod_pie=" + det_cod_ite + ";");
                     }
                     String nompai, nombod, nomubi;
-                    nompai = macc.strQuerySQLvariable("select nom_pai from cat_alm where cod_alm=" + cod_pai + ";");
+                    nompai = macc.strQuerySQLvariable("select nom_alm from cat_alm where cod_alm=" + cod_pai + ";");
                     nombod = macc.strQuerySQLvariable("select nom_bod from cat_bodegas where cod_pai=" + cod_pai + " and id_bod = " + det_cod_bod + ";");
                     nomubi = macc.strQuerySQLvariable("select nom_ubi from cat_ubicaciones where cod_bod=" + det_cod_bod + " and id_ubi = " + det_cod_ubi + ";");
                     macc.Desconectar();
@@ -824,7 +823,7 @@ public class ManSolicitudes implements Serializable {
                             det_cod_bod,
                             det_cod_ubi,
                             det_cod_ite,
-                            det_des_ite.replace("'", ""),
+                            ((det_des_ite.replace("'", " ")).replace("\\", " ")).replace("\"", " "),
                             det_det_can_sol,
                             det_det_can_ent,
                             det_det_can_sol,
@@ -863,6 +862,12 @@ public class ManSolicitudes implements Serializable {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Ingresar una Descripción o Escoger un Repuesto.", 2);
         }
+        if (!detalles.isEmpty()) {
+            if (detalles.size() == 17) {
+                mvalidar = false;
+                addMessage("Validar Datos", "Se ha alcanzado el número máximo de Items para la Solicitud.", 2);
+            }
+        }
         /*if ("0".equals(cod_pai)) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Seleccionar un País.", 2);
@@ -885,6 +890,10 @@ public class ManSolicitudes implements Serializable {
             if (validarg()) {
                 Accesos acc = new Accesos();
                 acc.Conectar();
+
+                det_uso = ((det_uso.replace("'", " ")).replace("\\", " ")).replace("\"", " ");
+                det_obs = ((det_obs.replace("'", " ")).replace("\\", " ")).replace("\"", " ");
+
                 if ("".equals(cod_mae)) {
                     mQuery = "select ifnull(max(cod_mae),0)+1 as codigo from sol_mae;";
                     cod_mae = acc.strQuerySQLvariable(mQuery);
