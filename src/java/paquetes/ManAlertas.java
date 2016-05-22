@@ -3,6 +3,7 @@ package paquetes;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
@@ -39,6 +40,9 @@ public class ManAlertas implements Serializable {
 
     @PostConstruct
     public void init() {
+        Date time= new Date();
+        System.out.println("hora de inicio "+ time.toString());
+        
         usuariosel = new ArrayList<CatUsuarios>();
         llenarLogAlertas();        
     }

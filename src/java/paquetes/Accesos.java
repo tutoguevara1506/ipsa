@@ -106,5 +106,5 @@ public class Accesos extends Conexion {
         }
         return primary;
     }
-
+    
 }

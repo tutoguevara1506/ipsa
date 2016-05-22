@@ -3,6 +3,7 @@ package paquetes;
 import java.sql.*;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 
 @ManagedBean
@@ -68,5 +69,12 @@ public class Conexion {
         
     }
     
+     public void logout() {
+         java.util.Date time= new java.util.Date();
+         System.out.println("hora de fin "+ time.toString());
+         FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().clear();
+     }
     
+       
 }
