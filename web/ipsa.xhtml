@@ -8453,11 +8453,11 @@
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputText value="Tipo de Activo" style="font-weight:bold;"/>
                         <p:selectOneMenu value="#{manActivoFijo.id_tip_act}" 
-                                         style="width:450px;text-align:right;"
+                                         style="width:250px;text-align:right;"
                                          immediate="false">  
                             <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
                             <f:selectItems value="#{manActivoFijo.tipoactivo}" var="mtipact"
-                                           itemLabel="#{mtipact.nom_tip_act}" itemValue="#{mtipact.id_tip_act}"/>
+                                           itemLabel="#{mtipact.des_tip_act}" itemValue="#{mtipact.id_tip_act}"/>
                         </p:selectOneMenu>
                         <h:outputText value="Falla" style="font-weight:bold;" />
                         <p:inputText maxlength="200" size="72" value="#{manFallas.nom_fal}" 

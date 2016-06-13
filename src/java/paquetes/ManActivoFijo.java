@@ -20,6 +20,8 @@ public class ManActivoFijo implements Serializable {
     Login cbean;
     private CatActivoFijo catactivofijo;
     private List<CatActivoFijo> activofijo;
+    private CatTipoActivo cattipoactivo;
+    private List<CatTipoActivo> tipoactivo;
     private String id_act_fij, id_tip_act, desc_equ, fecha_adquisicion, valor_adqui, id_depto, dist_gast_porc, id_seccion, id_estado, tiempo_deprecia, cuota_mes_deprecia, porcentaje_deduc, porcentaje_no_deduc, serie_equ, modelo_equ, no_inventario, observacion, codigo_equ;
 
     public ManActivoFijo() {
@@ -46,6 +48,7 @@ public class ManActivoFijo implements Serializable {
         observacion = "";
         codigo_equ = "";
         llenarActivoFijo();
+        llenarTipoActivo();
     }
 
     public void cerrarventana() {
@@ -68,6 +71,7 @@ public class ManActivoFijo implements Serializable {
         observacion = "";
         codigo_equ = "";
         activofijo = new ArrayList<>();
+        tipoactivo = new ArrayList<>();
     }
 
     public void llenarActivoFijo() {
@@ -111,6 +115,31 @@ public class ManActivoFijo implements Serializable {
         }
     }
 
+    
+    public void llenarTipoActivo() {
+        String mQuery = "";
+        try {
+            cattipoactivo = new CatTipoActivo();
+            tipoactivo = new ArrayList<>();
+
+            mQuery = "SELECT id_tip_act, des_tip_actbFROM ipsa.cat_tip_act ORDER BY id_tip_act;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                tipoactivo.add(new CatTipoActivo(
+                        resVariable.getString(1),
+                        resVariable.getString(2)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Tipos de Activo. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+
     public void nuevo() {
         id_act_fij = "";
         id_tip_act = "";
@@ -131,6 +160,7 @@ public class ManActivoFijo implements Serializable {
         observacion = "";
         codigo_equ = "";
         catactivofijo = new CatActivoFijo();
+        llenarTipoActivo();
     }
 
     public void guardar() {
@@ -488,5 +518,22 @@ public class ManActivoFijo implements Serializable {
     public void setActivofijo(List<CatActivoFijo> activofijo) {
         this.activofijo = activofijo;
     }
+
+    public CatTipoActivo getCattipoactivo() {
+        return cattipoactivo;
+    }
+
+    public void setCattipoactivo(CatTipoActivo cattipoactivo) {
+        this.cattipoactivo = cattipoactivo;
+    }
+
+    public List<CatTipoActivo> getTipoactivo() {
+        return tipoactivo;
+    }
+
+    public void setTipoactivo(List<CatTipoActivo> tipoactivo) {
+        this.tipoactivo = tipoactivo;
+    }
+    
     
 }
