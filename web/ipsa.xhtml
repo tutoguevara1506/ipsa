@@ -25,16 +25,16 @@
             </p:idleMonitor>
         </h:form>  
           
-        <p:dialog header="SesiÃ³n caducada" widgetVar="sessionTerminada"
+        <p:dialog header="Sesión caducada" widgetVar="sessionTerminada"
                   modal="true" closable="false" width="400" visible="false" resizable="false">
             <h:form>
                 <h:panelGrid columns="1" style="vertical-align: middle; text-align: center; border-style: none">
                     <h:panelGrid columns="2" style="vertical-align: middle; text-align: center; border-style: none">
-                        <h:outputText value="La sesiÃ³n a caducado por inactividad, por favor, pulse sobre el siguiente botÃ³n para volver a acceder a la aplicaciÃ³n" />
+                        <h:outputText value="La sesión a caducado por inactividad, por favor, pulse sobre el siguiente botón para volver a acceder a la aplicación" />
                         <p:graphicImage url="/resources/images/desconectado.png"  /> 
                     </h:panelGrid>
 
-                    <p:commandButton id="confirmBackToLogin" type="button" value="Iniciar sesiÃ³n"
+                    <p:commandButton id="confirmBackToLogin" type="button" value="Iniciar sesión"
                                      onclick="window.location = '#{request.contextPath}';" />
                 </h:panelGrid>
             </h:form>
@@ -43,14 +43,14 @@
 
         
         <!--********************************************************************
-        ************************** Barra de MenÃº *******************************
+        ************************** Barra de Menú *******************************
         *********************************************************************-->
 
         <h:form id="frmMadre">
 
             <p:menubar id="menumadre">
                 <p:submenu label="Mantenimiento" icon="ui-icon-wrench" >
-                    <p:submenu label="ConfiguraciÃ³n" icon="ui-icon-folder-open">
+                    <p:submenu label="Configuración" icon="ui-icon-folder-open">
                         <p:menuitem value="Procesos" icon="ui-icon-transferthick-e-w" 
                                     onclick="PF('wPaises').show()"
                                     update=":frmPaises"
@@ -72,14 +72,14 @@
                                     update=":frmMarca"
                                     disabled="#{manSeguridad.disableOpt('menuMarcas')}"
                                     />
-                        <p:menuitem value="TipologÃ­a Mant." icon="ui-icon-wrench" 
+                        <p:menuitem value="Tipología Mant." icon="ui-icon-wrench" 
                                     onclick="PF('wTipMan').show()"
                                     style="width: 125px;"
                                     action="#{manTipos.iniciarventana()}" 
                                     update=":frmTipMan"
                                     disabled="#{manSeguridad.disableOpt('menuTipoMtto')}"
                                     />
-                        <p:menuitem value="CategorÃ­as Piezas" icon="ui-icon-note" 
+                        <p:menuitem value="Categorías Piezas" icon="ui-icon-note" 
                                     onclick="PF('wCatPie').show()"
                                     style="width: 125px;"
                                     action="#{manCategorias.iniciarventana()}" 
@@ -155,7 +155,7 @@
                                 style="width: 190px;"
                                 disabled="#{manSeguridad.disableOpt('menuControlMtto')}"
                                 />
-                    <p:menuitem value="PronÃ³stico de Mantenimientos" icon="ui-icon-calendar" 
+                    <p:menuitem value="Pronóstico de Mantenimientos" icon="ui-icon-calendar" 
                                 id="menuPronosticoMtto"
                                 onclick="PF('wPronosticoMtto').show()"
                                 update=":frmPronosticoMtto"
@@ -194,8 +194,8 @@
                                 />
                 </p:submenu>
 
-                <p:submenu label="AlmacÃ©n" icon="ui-icon-home">
-                    <p:submenu label="ConfiguraciÃ³n" icon="ui-icon-pencil">
+                <p:submenu label="Almacén" icon="ui-icon-home">
+                    <p:submenu label="Configuración" icon="ui-icon-pencil">
                         <p:menuitem value="Bodegas" icon="ui-icon-home" 
                                     onclick="PF('wAlmacenes').show()"
                                     update=":frmAlmacenes"
@@ -248,7 +248,7 @@
                                     disabled="#{manSeguridad.disableOpt('menuNuevaRequisicion')}"
                                     />
 
-                        <p:menuitem value="Estado Requisicion" icon="ui-icon-help" 
+                        <p:menuitem value="Estado Requisición" icon="ui-icon-help" 
                                     onclick="PF('wEstadoReq').show()"
                                     update=":frmEstadoReq"
                                     style="width: 125px;"
@@ -266,7 +266,7 @@
 
                 </p:submenu>
                 <p:submenu label="Personal" icon="ui-icon-person">
-                    <p:submenu label="ConfiguraciÃ³n" icon="ui-icon-folder-open">
+                    <p:submenu label="Configuración" icon="ui-icon-folder-open">
                         <p:menuitem value="Cargos Personal" icon="ui-icon-contact" 
                                     onclick="PF('wCargo').show()"
                                     style="width: 170px;"
@@ -295,7 +295,7 @@
                                     action="#{manCriterios.iniciarventana()}"
                                     disabled="#{manSeguridad.disableOpt('menuCriterios')}"
                                     />
-                        <p:menuitem value="Configuracion Evaluacion" icon="ui-icon-pin-s" 
+                        <p:menuitem value="Configuración Evaluación" icon="ui-icon-pin-s" 
                                     onclick="PF('wDetEva').show()"
                                     update=":frmDetEva"
                                     style="width: 170px;"
@@ -320,7 +320,7 @@
                                 />
                 </p:submenu>
                 
-                <p:submenu label="Î‘ctivo fijo" icon="ui-icon-wrench">
+                <p:submenu label="Activo fijo" icon="ui-icon-wrench">
                     <p:menuitem value="Registro" icon="ui-icon-person"
                                 id="menuActivoFijo"
                                 onclick="PF('wActivoFijo').show()"
@@ -384,7 +384,7 @@
                                 style="width: 190px;"
                                 disabled="#{manSeguridad.disableOpt('menuCatCtrl')}"
                                 />
-                    <p:menuitem value="AsignaciÃ³n Usuarios-Grupos" icon="ui-icon-pin-s" 
+                    <p:menuitem value="Asignación Usuarios-Grupos" icon="ui-icon-pin-s" 
                                 id="menuAsigUsrGrp"
                                 onclick="PF('wUsrGrp').show()"
                                 update=":frmUsrGrp"
@@ -392,7 +392,7 @@
                                 style="width: 190px;"
                                 disabled="#{manSeguridad.disableOpt('menuAsigUsrGrp')}"
                                 />
-                    <p:menuitem value="Asignacion de derechos" icon="ui-icon-locked" 
+                    <p:menuitem value="Asignación de derechos" icon="ui-icon-locked" 
                                 id="menuAsigDerechos"
                                 onclick="PF('wSecurity').show()"
                                 update=":frmSecurity"
@@ -422,7 +422,7 @@
 
             <!--****************** ConfirmDialog Global *********************-->
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                <p:commandButton value="SÃ­" type="button" 
+                <p:commandButton value="Sí" type="button" 
                                  styleClass="ui-confirmdialog-yes" 
                                  icon="ui-icon-check" />
                 <p:commandButton value="No" type="button" 
@@ -441,7 +441,7 @@
             <h:form>
                 <p:growl id="msgs" showDetail="true" />
 
-                <p:panel id="graficaMantenimientos" header="GrÃ¡fico de Mantenimientos Preventivos" closable="true" visible="#{!manSeguridad.disableOpt('dashboardMtto')}">
+                <p:panel id="graficaMantenimientos" header="Gráfico de Mantenimientos Preventivos" closable="true" visible="#{!manSeguridad.disableOpt('dashboardMtto')}">
                     <h:form id="frmTimeLine"> 
                         <p:growl id="msgTimeLine" showDetail="true" life="4500"/>
                         <pe:timeline id="timeline" value="#{manMaestroMan.modelTimeLine}" height="330px" 
@@ -491,7 +491,7 @@
                                 <p:column style="width:60px" headerText="Fecha">
                                     <h:outputText value="#{vDaler.fec_ale}" />
                                 </p:column>
-                                <p:column style="width:180px" headerText="Descripcion">
+                                <p:column style="width:180px" headerText="Descripción">
                                     <h:outputText value="#{vDaler.ale_des}" />
                                 </p:column>
                                 <p:column style="text-align: center">                                
@@ -515,7 +515,7 @@
         </div>      
 
         <!--******************************************************************** 
-        *************************Barra NotificaciÃ³n ****************************
+        *************************Barra Notificación ****************************
         *********************************************************************-->
 
         <h:form id="frmNB"> 
@@ -567,7 +567,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -584,7 +584,7 @@
                         <h:outputText value="Usuario" style="font-weight:bold;" />
                         <p:inputText maxlength="15" size="17" value="#{manUsuarios.nom_usu}" 
                                      onfocus="this.select()"/>
-                        <h:outputText value="ContraseÃ±a" style="font-weight:bold;" />
+                        <h:outputText value="Contraseña" style="font-weight:bold;" />
                         <p:password maxlength="15" size="17" value="#{manUsuarios.des_pas}" 
                                     onfocus="this.select()"/>
                         <h:outputText value="Tipo Usuario" style="font-weight:bold;" />
@@ -664,7 +664,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -735,7 +735,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -802,7 +802,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -811,7 +811,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -890,7 +890,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -899,7 +899,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -960,12 +960,12 @@
         </p:dialog>
 
         <!--********************************************************************
-        ****************** Mantenimiento TipologÃ­a Mantenimiento ***************
+        ****************** Mantenimiento Tipología Mantenimiento ***************
         *********************************************************************-->
 
         <p:dialog  id="dlgTipMan" widgetVar="wTipMan" modal="true" 
                    width="500" height="320" closable="false" resizable="false" 
-                   header="Mantenimiento TipologÃ­a Mantenimiento" rendered="true" 
+                   header="Mantenimiento Tipología Mantenimiento" rendered="true" 
                    dynamic="false" 
                    >
 
@@ -984,7 +984,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -993,7 +993,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -1017,7 +1017,7 @@
                                          value="#{manTipos.nom_tip}"
                                          onfocus="this.select()"
                                          />
-                            <h:outputText value="ValidaciÃ³n Inmediata" style="font-weight:bold;"/>
+                            <h:outputText value="Validación Inmediata" style="font-weight:bold;"/>
                             <p:selectBooleanCheckbox value="#{manTipos.flg_urg}" />
                         </h:panelGrid>
                     </div>
@@ -1040,7 +1040,7 @@
                         <p:column style="width:60px" headerText="Tipo Mantenimiento">
                             <h:outputText value="#{vTipMan.nom_tip}" />
                         </p:column>
-                        <p:column style="width:30px; text-align: center;" headerText="ValidaciÃ³n Inmediata">
+                        <p:column style="width:30px; text-align: center;" headerText="Validación Inmediata">
                             <p:selectBooleanCheckbox value="#{vTipMan.flg_urg}" disabled="true" />
                         </p:column>
                     </p:dataTable>
@@ -1049,12 +1049,12 @@
         </p:dialog>
 
         <!--********************************************************************
-        ****************** Mantenimiento CategorÃ­as Piezas *********************
+        ****************** Mantenimiento Categorías Piezas *********************
         *********************************************************************-->
 
         <p:dialog  id="dlgCatPie" widgetVar="wCatPie" modal="true" 
                    width="500" height="320" closable="false" resizable="false" 
-                   header="Mantenimiento CategorÃ­as de Piezas" rendered="true" 
+                   header="Mantenimiento Categorías de Piezas" rendered="true" 
                    dynamic="false" 
                    >
 
@@ -1073,7 +1073,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -1082,7 +1082,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -1099,7 +1099,7 @@
                     <div style=" background-color: #ebf8fe;">
                         <p:focus for="txtnomcatpie" />
                         <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputText value="CategorÃ­a" style="font-weight:bold;"/>
+                            <h:outputText value="Categoría" style="font-weight:bold;"/>
                             <p:inputText id="txtnomcatpie" 
                                          size="50"
                                          maxlength="30"
@@ -1124,7 +1124,7 @@
                                 update=":frmCatPie"/>
                         <p:ajax event="rowUnselect"/>
 
-                        <p:column style="width:60px" headerText="CategorÃ­a Piezas">
+                        <p:column style="width:60px" headerText="Categoría Piezas">
                             <h:outputText value="#{vCatPie.nom_cat}" />
                         </p:column>
                     </p:dataTable>
@@ -1157,7 +1157,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -1166,7 +1166,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -1183,7 +1183,7 @@
                     <div style=" background-color: #ebf8fe;">
                         <p:focus for="txtnombreope" />
                         <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputText value="AcciÃ³n" style="font-weight:bold;"/>
+                            <h:outputText value="Acción" style="font-weight:bold;"/>
                             <p:inputTextarea id="txtnombreope" 
                                              cols="60"
                                              maxlength="300"
@@ -1212,7 +1212,7 @@
                                 update=":frmOpe"/>
                         <p:ajax event="rowUnselect"/>
 
-                        <p:column style="width:300px" headerText="AcciÃ³n" sortBy="#{vOpe.nom_ope}">
+                        <p:column style="width:300px" headerText="Acción" sortBy="#{vOpe.nom_ope}">
                             <h:outputText value="#{vOpe.nom_ope}" />
                         </p:column>
                     </p:dataTable>
@@ -1245,7 +1245,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -1254,7 +1254,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -1338,7 +1338,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -1347,7 +1347,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -1435,7 +1435,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -1444,7 +1444,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -1545,7 +1545,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -1554,7 +1554,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -1585,13 +1585,13 @@
                                          value="#{manClientes.per_con}"
                                          onfocus="this.select()"
                                          />
-                            <h:outputText value="TelÃ©fono Contacto" style="font-weight:bold;"/>
+                            <h:outputText value="Teléfono Contacto" style="font-weight:bold;"/>
                             <p:inputText size="50"
                                          maxlength="20"
                                          value="#{manClientes.tel_con}"
                                          onfocus="this.select()"
                                          />
-                            <h:outputText value="Correo ElectrÃ³nico" style="font-weight:bold;"/>
+                            <h:outputText value="Correo Electrónico" style="font-weight:bold;"/>
                             <p:inputText size="50"
                                          maxlength="100"
                                          value="#{manClientes.det_mai}"
@@ -1622,7 +1622,7 @@
                         <p:column style="width:80px" headerText="Contacto">
                             <h:outputText value="#{vCli.per_con}" />
                         </p:column>
-                        <p:column style="width:80px" headerText="TelÃ©fono">
+                        <p:column style="width:80px" headerText="Teléfono">
                             <h:outputText value="#{vCli.tel_con}" />
                         </p:column>
                     </p:dataTable>
@@ -1655,7 +1655,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -1664,7 +1664,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -1694,13 +1694,13 @@
                                          value="#{manProveedores.per_con}"
                                          onfocus="this.select()"
                                          />
-                            <h:outputText value="TelÃ©fono Contacto" style="font-weight:bold;"/>
+                            <h:outputText value="Teléfono Contacto" style="font-weight:bold;"/>
                             <p:inputText size="50"
                                          maxlength="20"
                                          value="#{manProveedores.tel_con}"
                                          onfocus="this.select()"
                                          />
-                            <h:outputText value="Correo ElectrÃ³nico" style="font-weight:bold;"/>
+                            <h:outputText value="Correo Electrónico" style="font-weight:bold;"/>
                             <p:inputText size="50"
                                          maxlength="100"
                                          value="#{manProveedores.det_mai}"
@@ -1731,7 +1731,7 @@
                         <p:column style="width:80px" headerText="Contacto">
                             <h:outputText value="#{vPro.per_con}" />
                         </p:column>
-                        <p:column style="width:80px" headerText="TelÃ©fono">
+                        <p:column style="width:80px" headerText="Teléfono">
                             <h:outputText value="#{vPro.tel_con}" />
                         </p:column>
                     </p:dataTable>
@@ -1763,7 +1763,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -1772,7 +1772,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -1811,7 +1811,7 @@
                                         value="#{manEquipos.nom_equ}"
                                         onfocus="this.select()"
                                         />
-                                    <h:outputText value="DescripciÃ³n Equipo" style="font-weight:bold;"/>
+                                    <h:outputText value="Descripción Equipo" style="font-weight:bold;"/>
                                     <p:inputText size="50"
                                                  maxlength="150"
                                                  value="#{manEquipos.des_equ}"
@@ -1891,7 +1891,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -1900,7 +1900,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -1926,7 +1926,7 @@
                                         <f:selectItems value="#{manPiezas.equipos}" var="vequpie"
                                                        itemLabel="#{vequpie.nom_equ}" itemValue="#{vequpie.cod_equ}"/> 
                                     </p:selectOneMenu>
-                                    <h:outputText value="CategorÃ­a" style="font-weight:bold;" />
+                                    <h:outputText value="Categoría" style="font-weight:bold;" />
                                     <p:selectOneMenu value="#{manPiezas.cod_cat}" 
                                                      style=" width: 180px;">
                                         <f:selectItem itemLabel="Ninguno" itemValue="0"/>
@@ -1941,7 +1941,7 @@
                                         <f:selectItems value="#{manPiezas.grupos}" var="catgru"
                                                        itemLabel="#{catgru.nom_gru}" itemValue="#{catgru.cod_gru}"/> 
                                     </p:selectOneMenu>
-                                    <h:outputText value="LÃ­nea" style="font-weight:bold;" />
+                                    <h:outputText value="Línea" style="font-weight:bold;" />
                                     <p:selectOneMenu value="#{manPiezas.cod_lin}" 
                                                      style=" width: 180px;"
                                                      id="somlin"
@@ -1962,7 +1962,7 @@
                                                  value="#{manPiezas.nom_pie}"
                                                  onfocus="this.select()"
                                                  />
-                                    <h:outputText value="DescripciÃ³n" style="font-weight:bold;"/>
+                                    <h:outputText value="Descripción" style="font-weight:bold;"/>
                                     <p:inputText size="45"
                                                  maxlength="150"
                                                  value="#{manPiezas.des_pie}"
@@ -2046,7 +2046,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Modificar" style=" width: 100px;"
@@ -2162,7 +2162,7 @@
                             </h:panelGrid>
                             <h:panelGrid columns="4" cellpadding="5">
                                 <h:outputText value="Cantidad" style="font-weight:bold;"/>
-                                <h:outputText value="CÃ³digo Pieza" style="font-weight:bold;"/>
+                                <h:outputText value="Código Pieza" style="font-weight:bold;"/>
                                 <h:outputText value="" style="font-weight:bold;"/>
                                 <h:outputText value="" style="font-weight:bold;"/>
                                 <p:inputText size="11"
@@ -2187,7 +2187,7 @@
                                 <h:outputText value="" style="font-weight:bold;"/>
 
                                 <h:outputText value="" style="font-weight:bold;"/>
-                                <h:outputText value="DescripciÃ³n Item no codificado" style="font-weight:bold;"/>
+                                <h:outputText value="Descripción Item no codificado" style="font-weight:bold;"/>
                                 <h:outputText value="" style="font-weight:bold;"/>
                                 <h:outputText value="" style="font-weight:bold;"/>
                                 <h:outputText value="" style="font-weight:bold;"/>
@@ -2235,7 +2235,7 @@
                         <p:column style="width:80px;" headerText="Cantidad">
                             <h:outputText value="#{vSol.det_can_sol}" />
                         </p:column>
-                        <p:column style="width:450px" headerText="DescripciÃ³n Item">
+                        <p:column style="width:450px" headerText="Descripción Item">
                             <h:outputText value="#{vSol.des_ite}" />
                         </p:column>
 
@@ -2283,7 +2283,7 @@
                         <p:column style="width:60px;" headerText="Fecha">
                             <h:outputText value="#{vSearch.fec_sol}" />
                         </p:column>
-                        <p:column style="width:30px;" headerText="CÃ³digo">
+                        <p:column style="width:30px;" headerText="Código">
                             <h:outputText value="#{vSearch.cod_mae}" />
                         </p:column>
                         <p:column style="width:140px" headerText="Departamento">
@@ -2325,7 +2325,7 @@
                                          icon="ui-icon-trash"
                                          > 
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea Eliminar este Registro?" 
+                                       message="¿Realmente desea Eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
 
@@ -2358,7 +2358,7 @@
                         <p:ajax event="rowUnselect" listener="#{manEstado.onRowUnselect}" 
                                 update=":frmEstado"/>
 
-                        <p:column style="width:40px;" headerText="CÃ³digo">
+                        <p:column style="width:40px;" headerText="Código">
                             <h:outputText value="#{vEstado.cod_alt}" />
                         </p:column>
                         <p:column style="width:60px;" headerText="Fecha">
@@ -2405,7 +2405,7 @@
                         <p:column style="width:30px;" headerText="Can.Pend.">
                             <h:outputText value="#{vEsDet.det_can_pen}" />
                         </p:column>
-                        <p:column style="width:250px" headerText="DescripciÃ³n Item">
+                        <p:column style="width:250px" headerText="Descripción Item">
                             <h:outputText value="#{vEsDet.des_ite}" />
                         </p:column>
                         <p:column style="width:100px" headerText="Estado">
@@ -2466,7 +2466,7 @@
                                             <p:inputText id="globalFilter" 
                                                          onkeyup="PF('wvSegui').filter()" 
                                                          style="width:200px;" 
-                                                         placeholder="CÃ³digo, Fecha, Solicitante"/>
+                                                         placeholder="Código, Fecha, Solicitante"/>
                                         </h:panelGroup>
 
                                     </p:outputPanel>
@@ -2478,7 +2478,7 @@
                                 <p:ajax event="rowUnselect" listener="#{manSeguimiento.onRowUnselect}" 
                                         update=":frmSeguimiento:tabseguimientosol" />
 
-                                <p:column style="width:40px;" headerText="CÃ³digo" filterBy="#{vSegui.cod_alt}" filterMatchMode="contains"  
+                                <p:column style="width:40px;" headerText="Código" filterBy="#{vSegui.cod_alt}" filterMatchMode="contains"  
                                           filterStyle="display:none; visibility:hidden;">
                                     <h:outputText value="#{vSegui.cod_alt}" />
                                 </p:column>
@@ -2529,7 +2529,7 @@
                                 <p:column style="width:30px; background-color: #ff9999;" headerText="C.Pen.">
                                     <h:outputText value="#{vSeguiDet.det_can_pen}" />
                                 </p:column>
-                                <p:column style="width:210px" headerText="DescripciÃ³n Item">
+                                <p:column style="width:210px" headerText="Descripción Item">
                                     <h:outputText value="#{vSeguiDet.des_ite}" />
                                 </p:column>
                                 <p:column style="width:80px; background-color: #ff9999;" headerText="Estado">
@@ -2667,7 +2667,7 @@
                                                      >
                                         <p:ajax event="change" listener="#{manSeguimiento.onSelectDestino()}" update="somreciporseg,sompaiseg,sombodseg,txtubisegui" />
                                         <f:selectItem  itemLabel="Usuario Final" itemValue="0" />
-                                        <f:selectItem  itemLabel="AlmacÃ©n" itemValue="1" />
+                                        <f:selectItem  itemLabel="Almacén" itemValue="1" />
                                     </p:selectOneMenu>
 
                                     <p:selectOneMenu value="#{manSeguimiento.recibidapor}" 
@@ -2723,7 +2723,7 @@
                                                      icon="ui-icon-check"
                                                      > 
                                         <p:confirm header="Guardar Entrega" 
-                                                   message="Â¿Realmente desea Guardar los cambios realizados?" 
+                                                   message="¿Realmente desea Guardar los cambios realizados?" 
                                                    icon="ui-icon-alert"/>
                                     </p:commandButton>
                                     <p:commandButton title="Cancelar" style=" width: 50px;"
@@ -2732,7 +2732,7 @@
                                                      icon="ui-icon-cancel"
                                                      > 
                                         <p:confirm header="Cancelar Entrega" 
-                                                   message="Â¿Realmente desea Cancelar el Item?" 
+                                                   message="¿Realmente desea Cancelar el Item?" 
                                                    icon="ui-icon-alert"/>
                                     </p:commandButton>
 
@@ -2750,8 +2750,8 @@
                                                  update=":frmSeguimiento"
                                                  icon="ui-icon-circle-check"
                                                  > 
-                                    <p:confirm header="AprobaciÃ³n de Solicitudes" 
-                                               message="Â¿Realmente desea Aprobar esta Solicitud?" 
+                                    <p:confirm header="Aprobación de Solicitudes" 
+                                               message="¿Realmente desea Aprobar esta Solicitud?" 
                                                icon="ui-icon-alert"/>
                                 </p:commandButton>
                                 <p:commandButton value="Denegar" style=" width: 100px;"
@@ -2759,8 +2759,8 @@
                                                  update=":frmSeguimiento"
                                                  icon="ui-icon-circle-close"
                                                  > 
-                                    <p:confirm header="AprobaciÃ³n de Solicitudes" 
-                                               message="Â¿Realmente desea Denegar esta Solicitud?" 
+                                    <p:confirm header="Aprobación de Solicitudes" 
+                                               message="¿Realmente desea Denegar esta Solicitud?" 
                                                icon="ui-icon-alert"/>
                                 </p:commandButton>
 
@@ -2816,7 +2816,7 @@
                                 <p:ajax event="rowUnselect" listener="#{manSeguimiento.onRowAprobarUnselect}" 
                                         update=":frmSeguimiento:tabseguimientosol:dtSeguiDetApr"/>
 
-                                <p:column style="width:20px;" headerText="CÃ³digo">
+                                <p:column style="width:20px;" headerText="Código">
                                     <h:outputText value="#{vSeguiApr.cod_mae}" />
                                 </p:column>
                                 <p:column style="width:40px;" headerText="Fecha">
@@ -2853,7 +2853,7 @@
                                 <p:column style="width:30px;" headerText="C.Sol.">
                                     <h:outputText value="#{vSeguiDetApr.det_can_sol}" />
                                 </p:column>
-                                <p:column style="width:250px" headerText="DescripciÃ³n Item">
+                                <p:column style="width:250px" headerText="Descripción Item">
                                     <h:outputText value="#{vSeguiDetApr.des_ite}" />
                                 </p:column>
                                 <p:column style="width:80px;" headerText="Estado">
@@ -2865,7 +2865,7 @@
                             </p:dataTable>
                         </p:panel>
                     </p:tab>
-                    <p:tab id="tabHistoSol" title="HistÃ³rico">
+                    <p:tab id="tabHistoSol" title="Histórico">
                         <p:toolbar>
                             <f:facet name="left">
 
@@ -2873,7 +2873,7 @@
                                     <h:outputText value="Buscar:" style="font-weight:bold;" />
                                     <p:inputText value="#{manSeguimiento.idbuscar}" size="25" />
                                     <p:selectOneRadio id="console" value="#{manSeguimiento.rbhistoria}">
-                                        <f:selectItem itemLabel="CÃ³digo" itemValue="0" />
+                                        <f:selectItem itemLabel="Código" itemValue="0" />
                                         <f:selectItem itemLabel="Fecha" itemValue="1" />
                                         <f:selectItem itemLabel="Solicitante" itemValue="2" />
                                     </p:selectOneRadio>
@@ -2912,7 +2912,7 @@
                                 <p:ajax event="rowUnselect" listener="#{manSeguimiento.onRowHistoriaUnselect}" 
                                         update=":frmSeguimiento:tabseguimientosol:dtHistoricasDet"/>
 
-                                <p:column style="width:30px;" headerText="CÃ³digo">
+                                <p:column style="width:30px;" headerText="Código">
                                     <h:outputText value="#{vHistoricos.cod_alt}" />
                                 </p:column>
                                 <p:column style="width:60px;" headerText="Fecha">
@@ -2960,7 +2960,7 @@
                                 <p:column style="width:30px;" headerText="Fecha">
                                     <h:outputText value="#{vHistoricasDet.fec_cie}" />
                                 </p:column>
-                                <p:column style="width:250px" headerText="DescripciÃ³n Item">
+                                <p:column style="width:250px" headerText="Descripción Item">
                                     <h:outputText value="#{vHistoricasDet.des_ite}" />
                                 </p:column>
                                 <p:column style="width:80px;" headerText="Estado">
@@ -2988,7 +2988,7 @@
 
         <p:dialog  id="dlgCodImp" widgetVar="wCodImp" modal="true" 
                    width="380" height="130" closable="false" resizable="false" 
-                   header="ImpresiÃ³n Comprobante" rendered="true" 
+                   header="Impresión Comprobante" rendered="true" 
                    dynamic="false" visible="false" 
                    >
 
@@ -3017,7 +3017,7 @@
                 </p:toolbar>
                 <p:panel>
                     <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputText value="CÃ³digo Alternativo:" style="font-weight:bold;" />
+                        <h:outputText value="Código Alternativo:" style="font-weight:bold;" />
                         <p:inputText value="#{manSeguimiento.cod_alt}" size="20" />
                     </h:panelGrid>
                 </p:panel>
@@ -3025,12 +3025,12 @@
         </p:dialog>
 
         <!--******************************************************************** 
-        ********************* Pantalla Nueva RequisiciÃ³n ***********************
+        ********************* Pantalla Nueva Requisición ***********************
         *********************************************************************-->
 
         <p:dialog  id="dlgReq" widgetVar="wReq" modal="true" 
                    width="800" height="480" closable="false" resizable="false" 
-                   header="Crear RequisiciÃ³n" rendered="true" 
+                   header="Crear Requisición" rendered="true" 
                    dynamic="false" visible="false" 
                    >
 
@@ -3049,7 +3049,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Modificar" style=" width: 100px;"
@@ -3079,7 +3079,7 @@
                             <h:panelGrid columns="4" cellpadding="5">
                                 <h:outputText value="Fecha" style="font-weight:bold;"/>
                                 <h:outputText value="Solicitante" style="font-weight:bold;"/>
-                                <h:outputText value="AlmacÃ©n" style="font-weight:bold;"/>
+                                <h:outputText value="Almacén" style="font-weight:bold;"/>
                                 <h:outputText value="Departamento" style="font-weight:bold;"/>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fecingreq"
                                              readonlyInput="true" 
@@ -3159,7 +3159,7 @@
 
                             <h:panelGrid columns="3" cellpadding="5">
                                 <h:outputText value="Cantidad" style="font-weight:bold;"/>
-                                <h:outputText value="CÃ³digo Pieza" style="font-weight:bold;"/>
+                                <h:outputText value="Código Pieza" style="font-weight:bold;"/>
                                 <p:commandButton icon="ui-icon-arrowthick-1-n" 
                                                  title="Remover Detalle" 
                                                  style=" width: 18px; height: 20px;" 
@@ -3208,13 +3208,13 @@
                                 update=":frmReq"/>
                         <p:ajax event="rowUnselect"/>
 
-                        <p:column style="width:90px;" headerText="AlmacÃ©n">
+                        <p:column style="width:90px;" headerText="Almacén">
                             <h:outputText value="#{vReq.nompai}" />
                         </p:column>
                         <p:column style="width:50px;" headerText="Cantidad">
                             <h:outputText value="#{vReq.det_can_sol}" />
                         </p:column>
-                        <p:column style="width:230px" headerText="DescripciÃ³n Item">
+                        <p:column style="width:230px" headerText="Descripción Item">
                             <h:outputText value="#{vReq.des_ite}" />
                         </p:column>
 
@@ -3226,7 +3226,7 @@
 
         <p:dialog  id="dlgSearchReq" widgetVar="wSearchReq" modal="true" 
                    width="770" height="300" closable="false" resizable="false" 
-                   header="Buscar RequisiciÃ³n" rendered="true" 
+                   header="Buscar Requisición" rendered="true" 
                    dynamic="false" visible="false" 
                    >
 
@@ -3261,7 +3261,7 @@
                         <p:column style="width:60px;" headerText="Fecha">
                             <h:outputText value="#{vSearchReq.fec_sol}" />
                         </p:column>
-                        <p:column style="width:30px;" headerText="CÃ³digo">
+                        <p:column style="width:30px;" headerText="Código">
                             <h:outputText value="#{vSearchReq.cod_mae}" />
                         </p:column>
                         <p:column style="width:140px" headerText="Departamento">
@@ -3279,12 +3279,12 @@
         </p:dialog>
 
         <!--******************************************************************** 
-        ******************* Pantalla Estado RequisiciÃ³n ************************
+        ******************* Pantalla Estado Requisición ************************
         *********************************************************************-->
 
         <p:dialog  id="dlgEstadoReq" widgetVar="wEstadoReq" modal="true" 
                    width="840" height="460" closable="false" resizable="false" 
-                   header="Estado RequisiciÃ³n" rendered="true" 
+                   header="Estado Requisición" rendered="true" 
                    dynamic="false" visible="false" 
                    >
 
@@ -3303,7 +3303,7 @@
                                          icon="ui-icon-trash"
                                          > 
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea Eliminar este Registro?" 
+                                       message="¿Realmente desea Eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
 
@@ -3336,7 +3336,7 @@
                         <p:ajax event="rowUnselect" listener="#{manRequisicionEstado.onRowUnselect}" 
                                 update=":frmEstadoReq"/>
 
-                        <p:column style="width:40px;" headerText="CÃ³digo">
+                        <p:column style="width:40px;" headerText="Código">
                             <h:outputText value="#{vEstadoReq.cod_mae}" />
                         </p:column>
                         <p:column style="width:60px;" headerText="Fecha">
@@ -3380,7 +3380,7 @@
                         <p:column style="width:30px;" headerText="Can.Pend.">
                             <h:outputText value="#{vEsDetReq.det_can_pen}" />
                         </p:column>
-                        <p:column style="width:250px" headerText="DescripciÃ³n Item">
+                        <p:column style="width:250px" headerText="Descripción Item">
                             <h:outputText value="#{vEsDetReq.des_ite}" />
                         </p:column>
                         <p:column style="width:100px" headerText="Estado">
@@ -3399,7 +3399,7 @@
 
         <p:dialog  id="dlgSeguimientoReq" widgetVar="wSeguimientoReq" modal="true" 
                    width="900" height="480" closable="false" resizable="false" 
-                   header="Seguimiento de RequisiciÃ³n" rendered="true" 
+                   header="Seguimiento de Requisición" rendered="true" 
                    dynamic="false" visible="false" 
                    >
 
@@ -3416,7 +3416,7 @@
                                                  icon="ui-icon-disk"
                                                  > 
                                     <p:confirm header="Guardar Registro" 
-                                               message="Â¿Realmente desea Guardar los cambios realizados?" 
+                                               message="¿Realmente desea Guardar los cambios realizados?" 
                                                icon="ui-icon-alert"/>
                                 </p:commandButton>
 
@@ -3452,13 +3452,13 @@
                                 <p:ajax event="rowUnselect" listener="#{manRequisicionSeguimiento.onRowUnselect}" 
                                         update=":frmSeguimientoReq:tabseguimientoreq:dtSeguiDetReq" />
 
-                                <p:column style="width:40px;" headerText="CÃ³digo">
+                                <p:column style="width:40px;" headerText="Código">
                                     <h:outputText value="#{vSeguiReq.cod_mae}" />
                                 </p:column>
                                 <p:column style="width:60px;" headerText="Fecha">
                                     <h:outputText value="#{vSeguiReq.fec_sol}" />
                                 </p:column>
-                                <p:column style="width:70px;" headerText="AlmacÃ©n">
+                                <p:column style="width:70px;" headerText="Almacén">
                                     <h:outputText value="#{vSeguiReq.nompai}" />
                                 </p:column>
                                 <p:column style="width:100px" headerText="Solicitante">
@@ -3537,7 +3537,7 @@
                                 <p:column style="width:30px;" headerText="C.Pen.">
                                     <h:outputText value="#{vSeguiDetReq.det_can_pen}" />
                                 </p:column>
-                                <p:column style="width:190px" headerText="DescripciÃ³n Item">
+                                <p:column style="width:190px" headerText="Descripción Item">
                                     <h:outputText value="#{vSeguiDetReq.des_ite}" />
                                 </p:column>
                                 <p:column style="width:80px; background-color: #fcf3a6;" headerText="Estado">
@@ -3565,8 +3565,8 @@
                                                  update=":frmSeguimientoReq"
                                                  icon="ui-icon-circle-check"
                                                  > 
-                                    <p:confirm header="AprobaciÃ³n de RequisiciÃ³n" 
-                                               message="Â¿Realmente desea Aprobar esta RequisiciÃ³n?" 
+                                    <p:confirm header="Aprobación de Requisición" 
+                                               message="¿Realmente desea Aprobar esta Requisición?" 
                                                icon="ui-icon-alert"/>
                                 </p:commandButton>
                                 <p:commandButton value="Denegar" style=" width: 100px;"
@@ -3574,8 +3574,8 @@
                                                  update=":frmSeguimientoReq"
                                                  icon="ui-icon-circle-close"
                                                  > 
-                                    <p:confirm header="AprobaciÃ³n de RequisiciÃ³n" 
-                                               message="Â¿Realmente desea Denegar esta RequisiciÃ³n?" 
+                                    <p:confirm header="Aprobación de Requisición" 
+                                               message="¿Realmente desea Denegar esta Requisición?" 
                                                icon="ui-icon-alert"/>
                                 </p:commandButton>
 
@@ -3630,13 +3630,13 @@
                                 <p:ajax event="rowUnselect" listener="#{manRequisicionSeguimiento.onRowAprobarUnselect}" 
                                         update=":frmSeguimientoReq:tabseguimientoreq:dtSeguiDetAprReq"/>
 
-                                <p:column style="width:40px;" headerText="CÃ³digo">
+                                <p:column style="width:40px;" headerText="Código">
                                     <h:outputText value="#{vSeguiAprReq.cod_mae}" />
                                 </p:column>
                                 <p:column style="width:70px;" headerText="Fecha">
                                     <h:outputText value="#{vSeguiAprReq.fec_sol}" />
                                 </p:column>
-                                <p:column style="width:90px;" headerText="AlmacÃ©n">
+                                <p:column style="width:90px;" headerText="Almacén">
                                     <h:outputText value="#{vSeguiAprReq.nompai}" />
                                 </p:column>
                                 <p:column style="width:110px" headerText="Solicitante">
@@ -3675,7 +3675,7 @@
                                 <p:column style="width:30px;" headerText="C.Sol.">
                                     <h:outputText value="#{vSeguiDetAprReq.det_can_sol}" />
                                 </p:column>
-                                <p:column style="width:190px" headerText="DescripciÃ³n Item">
+                                <p:column style="width:190px" headerText="Descripción Item">
                                     <h:outputText value="#{vSeguiDetAprReq.des_ite}" />
                                 </p:column>
                                 <p:column style="width:80px;" headerText="Estado">
@@ -3692,7 +3692,7 @@
                             <f:facet name="left">
 
                                 <h:panelGrid columns="4" cellpadding="3">
-                                    <h:outputText value="CÃ³digo:" style="font-weight:bold;" />
+                                    <h:outputText value="Código:" style="font-weight:bold;" />
                                     <p:inputText value="#{manRequisicionSeguimiento.idbuscar}" size="25" placeholder="Id's separados por comas." />
                                     <p:commandButton value="Consultar" style=" width: 100px;"
                                                      actionListener="#{manRequisicionSeguimiento.llenarMaestroHistoria()}"
@@ -3738,7 +3738,7 @@
                                 <p:column style="width:60px;" headerText="Fecha">
                                     <h:outputText value="#{vHistoricosReq.fec_sol}" />
                                 </p:column>
-                                <p:column style="width:70px;" headerText="PaÃ­s">
+                                <p:column style="width:70px;" headerText="País">
                                     <h:outputText value="#{vSvHistoricosReq.nompai}" />
                                 </p:column>
                                 <p:column style="width:90px" headerText="Solicitante">
@@ -3775,7 +3775,7 @@
                                 <p:column style="width:50px;" headerText="Bodega">
                                     <h:outputText value="#{vHistoricasDetReq.nombod}" />
                                 </p:column>
-                                <p:column style="width:50px;" headerText="UbicaciÃ³n">
+                                <p:column style="width:50px;" headerText="Ubicación">
                                     <h:outputText value="#{vHistoricasDetReq.nomubi}" />
                                 </p:column>
                                 <p:column style="width:30px;" headerText="C.Sol.">
@@ -3787,7 +3787,7 @@
                                 <p:column style="width:30px;" headerText="C.Pen.">
                                     <h:outputText value="#{vHistoricasDetReq.det_can_pen}" />
                                 </p:column>
-                                <p:column style="width:190px" headerText="DescripciÃ³n Item">
+                                <p:column style="width:190px" headerText="Descripción Item">
                                     <h:outputText value="#{vHistoricasDetReq.des_ite}" />
                                 </p:column>
                                 <p:column style="width:80px;" headerText="Estado">
@@ -3804,7 +3804,7 @@
 
         <p:dialog  id="dlgCodImpReq" widgetVar="wCodImpReq" modal="true" 
                    width="380" height="130" closable="false" resizable="false" 
-                   header="ImpresiÃ³n Comprobante" rendered="true" 
+                   header="Impresión Comprobante" rendered="true" 
                    dynamic="false" visible="false" 
                    >
 
@@ -3833,7 +3833,7 @@
                 </p:toolbar>
                 <p:panel>
                     <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputText value="CÃ³digo Alternativo:" style="font-weight:bold;" />
+                        <h:outputText value="Código Alternativo:" style="font-weight:bold;" />
                         <p:inputText value="#{manRequisicionSeguimiento.cod_alt}" size="20" />
                     </h:panelGrid>
                 </p:panel>
@@ -3864,7 +3864,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -3873,7 +3873,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Ficha" icon="ui-icon-print"
@@ -3948,7 +3948,7 @@
                     <p:tab title="General" id="tabGeneral">
                         <div style=" background-color: #ebf8fe;">
                             <p:focus for="cmbEquipolis" />
-                            <p:panel header="IdentificaciÃ³n">
+                            <p:panel header="Identificación">
                                 <h:panelGrid columns="3" cellpadding="5">
                                     <h:outputText value="Nombre de Equipo" style="font-weight:bold;"/>
                                     <h:outputText value="Tipo de Equipo" style="font-weight:bold;"/>
@@ -3973,7 +3973,7 @@
                                                        itemLabel="#{lstequpai.nom_pai}" itemValue="#{lstequpai.cod_pai}"/> 
                                     </p:selectOneMenu>
                                     <h:outputText value="Marca" style="font-weight:bold;"/>
-                                    <h:outputText value="UbicaciÃ³n" style="font-weight:bold;"/>
+                                    <h:outputText value="Ubicación" style="font-weight:bold;"/>
                                     <h:outputText value="Modelo" style="font-weight:bold;"/>
                                     <p:selectOneMenu  value="#{manListaEquipos.cod_pro}" 
                                                       style=" width: 245px;" id="somproequ">
@@ -4009,7 +4009,7 @@
                                                  value="#{manListaEquipos.det_vol}"
                                                  onfocus="this.select()"
                                                  />
-                                    <h:outputText value="CÃ³digo Interno" style="font-weight:bold;"/>
+                                    <h:outputText value="Código Interno" style="font-weight:bold;"/>
                                     <h:outputText value="" style="font-weight:bold;"/>
                                     <h:outputText value="" style="font-weight:bold;"/>
                                     <p:inputText size="40"
@@ -4031,15 +4031,15 @@
 
                         </div>
                     </p:tab>
-                    <p:tab title="GarantÃ­a" id="tabGarantia">
+                    <p:tab title="Garantía" id="tabGarantia">
                         <div style=" background-color: #ebf8fe;">
-                            <p:panel header="GarantÃ­a">
+                            <p:panel header="Garantía">
                                 <h:panelGrid columns="5" cellpadding="5">
                                     <h:outputText value="Fecha Inicio" style="font-weight:bold;"/>
                                     <h:outputText value="" style="font-weight:bold;"/>
                                     <h:outputText value="Fecha Fin" style="font-weight:bold;"/>
                                     <h:outputText value="" style="font-weight:bold;"/>
-                                    <h:outputText value="Detalle GarantÃ­a" style="font-weight:bold;"/>
+                                    <h:outputText value="Detalle Garantía" style="font-weight:bold;"/>
 
                                     <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                                  readonlyInput="true" showOn="button" size="10"
@@ -4078,11 +4078,11 @@
                     <p:tab title="Historia" id="tabHistoria">
                         <div style=" background-color: #ebf8fe;">
                             <h:panelGrid columns="6" cellpadding="5">
-                                <h:outputText value="FabricaciÃ³n" style="font-weight:bold;"/>
+                                <h:outputText value="Fabricación" style="font-weight:bold;"/>
                                 <h:outputText value="" style="font-weight:bold;"/>
                                 <h:outputText value="Compra" style="font-weight:bold;"/>
                                 <h:outputText value="" style="font-weight:bold;"/>
-                                <h:outputText value="AdquisiciÃ³n" style="font-weight:bold;"/>
+                                <h:outputText value="Adquisición" style="font-weight:bold;"/>
                                 <h:outputText value="" style="font-weight:bold;"/>
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" 
                                              readonlyInput="true" showOn="button" size="10"
@@ -4199,9 +4199,9 @@
                         <p:panel id="panelsoftware">
                             <h:panelGrid columns="5" cellpadding="5">
                                 <h:outputText value="Sistema" style="font-weight:bold;"/>
-                                <h:outputText value="VersiÃ³n Anterior" style="font-weight:bold;"/>
-                                <h:outputText value="VersiÃ³n Actual" style="font-weight:bold;"/>
-                                <h:outputText value="Fecha ActualizaciÃ³n" style="font-weight:bold;"/>
+                                <h:outputText value="Versión Anterior" style="font-weight:bold;"/>
+                                <h:outputText value="Versión Actual" style="font-weight:bold;"/>
+                                <h:outputText value="Fecha Actualización" style="font-weight:bold;"/>
                                 <h:outputText value="" style="font-weight:bold;"/>
                                 <p:inputText size="45"
                                              maxlength="200"
@@ -4257,19 +4257,19 @@
                                     <f:facet name="input"><p:inputText value="#{vSys.det_obs}" style="width:100%" required="true"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column style="width:90px" headerText="VersiÃ³n Anterior">
+                            <p:column style="width:90px" headerText="Versión Anterior">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{vSys.ver_ant}" /></f:facet>
                                     <f:facet name="input"><p:inputText value="#{vSys.ver_ant}" style="width:100%" required="true" maxlength="20"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column style="width:90px" headerText="VersiÃ³n Actual">
+                            <p:column style="width:90px" headerText="Versión Actual">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{vSys.ver_act}" /></f:facet>
                                     <f:facet name="input"><p:inputText value="#{vSys.ver_act}" style="width:100%" required="true" maxlength="20"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column style="width:100px" headerText="Fecha ActualizaciÃ³n">
+                            <p:column style="width:100px" headerText="Fecha Actualización">
                                 <h:outputText value="#{vSys.fec_act}" />
                             </p:column>
                             <p:column style="width:32px">
@@ -4289,11 +4289,11 @@
                         </p:toolbar>
                         <p:panel id="panelcontratos">
                             <h:panelGrid columns="6" cellpadding="5">
-                                <h:outputText value="NÃºmero" style="font-weight:bold;"/>
+                                <h:outputText value="Número" style="font-weight:bold;"/>
                                 <h:outputText value="Observaciones" style="font-weight:bold;"/>
                                 <h:outputText value="Fecha Inicio" style="font-weight:bold;"/>
                                 <h:outputText value="" style="font-weight:bold;"/>
-                                <h:outputText value="Fecha ExpiraciÃ³n" style="font-weight:bold;"/>
+                                <h:outputText value="Fecha Expiración" style="font-weight:bold;"/>
                                 <h:outputText value="" style="font-weight:bold;"/>
                                 <p:inputText size="20"
                                              maxlength="20"
@@ -4349,7 +4349,7 @@
                                      style="width:780px"
                                      >
 
-                            <p:column style="width:50px;" headerText="NÃºmero">
+                            <p:column style="width:50px;" headerText="Número">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{vCon.cod_ref}" /></f:facet>
                                     <f:facet name="input"><p:inputText value="#{vCon.cod_ref}" style="width:100%" required="true"/></f:facet>
@@ -4364,7 +4364,7 @@
                             <p:column style="width:70px" headerText="Fecha Contrato">
                                 <h:outputText value="#{vCon.fec_con}" />
                             </p:column>
-                            <p:column style="width:70px" headerText="Fecha ExpiraciÃ³n">
+                            <p:column style="width:70px" headerText="Fecha Expiración">
                                 <h:outputText value="#{vCon.fec_exp}" />
                             </p:column>
                             <p:column style="width:32px">
@@ -4377,12 +4377,12 @@
         </p:dialog>
 
         <!--******************************************************************** 
-        ************************ Pantalla AlmacÃ©n Piezas ***********************
+        ************************ Pantalla Almacén Piezas ***********************
         *********************************************************************-->
 
         <p:dialog  id="dlgListaPiezas" widgetVar="wListaPiezas" modal="true" 
                    width="920" height="500" closable="false" resizable="false" 
-                   header="AlmacÃ©n de Piezas" rendered="true" 
+                   header="Almacén de Piezas" rendered="true" 
                    dynamic="true" visible="false"  
                    >
             <h:form id="frmListaPiezas">
@@ -4400,7 +4400,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -4409,7 +4409,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
 
@@ -4479,7 +4479,7 @@
                     </h:panelGrid>    
 
                     <h:panelGrid columns="3" cellpadding="5">
-                        <h:outputText value="CÃ³digo Rel." style="font-weight:bold;"/>
+                        <h:outputText value="Código Rel." style="font-weight:bold;"/>
                         <h:outputText value="Doc. Entrada/Salida" style="font-weight:bold;"/>
                         <h:outputText value="Observaciones" style="font-weight:bold;"/>
                         <p:inputText maxlength="12" size="15" value="#{manTblPiezas.por_qbo}" disabled="#{!manTblPiezas.booleditable}"/>
@@ -4605,7 +4605,7 @@
 
         <p:dialog  id="dlgBuscarListaPiezas" widgetVar="wBuscarListaPiezas" modal="true" 
                    width="850" height="415" closable="false" resizable="false" 
-                   header="Movimientos de AlmacÃ©n" rendered="true" 
+                   header="Movimientos de Almacén" rendered="true" 
                    dynamic="false" visible="false"  
                    >
             <h:form id="frmBuscarListaPiezas">
@@ -4625,7 +4625,7 @@
                         <h:outputText value="Id Ingreso/Salida" style="font-weight:bold;"/>
                         <h:outputText value="Bodega" style="font-weight:bold;"/>
                         <h:outputText value="Proveedor" style="font-weight:bold;"/>
-                        <h:outputText value="CÃ³digo Rel." style="font-weight:bold;"/>
+                        <h:outputText value="Código Rel." style="font-weight:bold;"/>
                         <p:inputText size="20" value="#{manTblPiezas.cod_lis_pie}" />
                         <p:selectOneMenu value="#{manTblPiezas.paibus}" 
                                          style=" width: 160px;">
@@ -4734,7 +4734,7 @@
                                                  icon="ui-icon-disk"
                                                  > 
                                     <p:confirm header="Guardar Mantenimiento" 
-                                               message="Â¿Realmente desea Guardar Todos Los Cambios de este Mantenimiento?" 
+                                               message="¿Realmente desea Guardar Todos Los Cambios de este Mantenimiento?" 
                                                icon="ui-icon-alert"/>
                                 </p:commandButton>
 
@@ -4815,12 +4815,12 @@
 
                         <p:tabView id="tvDetMan2" activeIndex="#{manMaestroMan.tabindex}" >
                             <p:ajax event="tabChange" listener="#{manMaestroMan.onTabChange}" />
-                            <p:tab id="tabGEN" title="Detalle TÃ©cnico">
+                            <p:tab id="tabGEN" title="Detalle Técnico">
                                 <p:panel>
                                     <h:panelGrid columns="3" cellpadding="5">
                                         <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
-                                        <h:outputText value="AcciÃ³n" style="font-weight:bold;"/>
-                                        <h:outputText value="RealizÃ³" style="font-weight:bold;"/>
+                                        <h:outputText value="Acción" style="font-weight:bold;"/>
+                                        <h:outputText value="Realizó" style="font-weight:bold;"/>
                                         <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                                      readonlyInput="true" 
                                                      showOn="button" size="16"
@@ -4871,13 +4871,13 @@
                                     <p:column style="width:12px;" headerText="Fecha y Hora">
                                         <h:outputText value="#{vDetTec.fec_man}" />
                                     </p:column>
-                                    <p:column style="width:80px" headerText="AcciÃ³n">
+                                    <p:column style="width:80px" headerText="Acción">
                                         <h:outputText value="#{vDetTec.nomope}" />
                                     </p:column>
                                     <p:column style="width:80px" headerText="Observaciones">
                                         <h:outputText value="#{vDetTec.det_obs}" />
                                     </p:column>
-                                    <p:column style="width:50px" headerText="RealizÃ³">
+                                    <p:column style="width:50px" headerText="Realizó">
                                         <h:outputText value="#{vDetTec.nomusu}" />
                                     </p:column>
                                 </p:dataTable>
@@ -4887,7 +4887,7 @@
                                     <h:panelGrid columns="3" cellpadding="5">
                                         <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
                                         <h:outputText value="Responsable" style="font-weight:bold;"/>
-                                        <h:outputText value="AlmacÃ©n" style="font-weight:bold;"/>
+                                        <h:outputText value="Almacén" style="font-weight:bold;"/>
 
                                         <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                                      readonlyInput="true" showOn="button" size="16"
@@ -4913,7 +4913,7 @@
                                     <h:panelGrid columns="5" cellpadding="5">
                                         <h:outputText value="Cantidad" style="font-weight:bold;"/>
                                         <h:outputText value="Pieza Entrante" style="font-weight:bold;"/>
-                                        <h:outputText value="NÃºmeros de Serie" style="font-weight:bold;"/>
+                                        <h:outputText value="Números de Serie" style="font-weight:bold;"/>
                                         <h:outputText value="" style="font-weight:bold;"/>
                                         <h:outputText value="" style="font-weight:bold;"/>
                                         <p:inputText maxlength="12" size="10" value="#{manMaestroMan.pie_det_can}" />
@@ -4952,7 +4952,7 @@
                                     <p:column style="width:30px;" headerText="Fecha">
                                         <h:outputText value="#{vDetPie.fec_man}" />
                                     </p:column>
-                                    <p:column style="width:30px;" headerText="AlmacÃ©n">
+                                    <p:column style="width:30px;" headerText="Almacén">
                                         <h:outputText value="#{vDetPie.nompai}" />
                                     </p:column>
                                     <p:column style="width:10px" headerText="Cant">
@@ -4975,7 +4975,7 @@
                                     <h:panelGrid columns="3" cellpadding="5">
                                         <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
                                         <h:outputText value="Responsable" style="font-weight:bold;"/>
-                                        <h:outputText value="AlmacÃ©n" style="font-weight:bold;"/>
+                                        <h:outputText value="Almacén" style="font-weight:bold;"/>
 
                                         <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                                      readonlyInput="true" showOn="button" size="16"
@@ -5032,13 +5032,13 @@
                                     <p:column style="width:110px;" headerText="Fecha">
                                         <h:outputText value="#{vDetAcc.fec_man}" />
                                     </p:column>
-                                    <p:column style="width:100px;" headerText="AlmacÃ©n">
+                                    <p:column style="width:100px;" headerText="Almacén">
                                         <h:outputText value="#{vDetAcc.nompai}" />
                                     </p:column>
                                     <p:column style="width:50px" headerText="Cantidad">
                                         <h:outputText value="#{vDetAcc.det_can}" />
                                     </p:column>
-                                    <p:column style="width:400px" headerText="DescripciÃ³n">
+                                    <p:column style="width:400px" headerText="Descripción">
                                         <h:outputText value="#{vDetAcc.des_ite}" />
                                     </p:column>
 
@@ -5141,7 +5141,7 @@
                 </p:toolbar>
                 <p:panel>
                     <h:panelGrid columns="5" cellpadding="5">
-                        <h:outputText value="CÃ³digo" style="font-weight:bold;"/>
+                        <h:outputText value="Código" style="font-weight:bold;"/>
                         <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
                         <h:outputText value="Departamento" style="font-weight:bold;"/>
                         <h:outputText value="Externo" style="font-weight:bold;"/>
@@ -5163,7 +5163,7 @@
                         <p:selectOneMenu value="#{manMaestroMan.flg_ext}" 
                                          style=" width: 100px;">
                             <f:selectItem itemLabel="No" itemValue="0"/>
-                            <f:selectItem itemLabel="SÃ­" itemValue="1"/>
+                            <f:selectItem itemLabel="Sí" itemValue="1"/>
 
                         </p:selectOneMenu>
                         <p:selectOneMenu value="#{manMaestroMan.cod_tip}" 
@@ -5223,7 +5223,7 @@
                     </h:panelGrid>
                     <p:tabView tabindex="#{manMaestroMan.panindex}">
                         <p:ajax event="tabChange" listener="#{manMaestroMan.onTabPanChange}" />
-                        <p:tab id="tabOBSTEC" title="Observaciones TÃ©cnicas">
+                        <p:tab id="tabOBSTEC" title="Observaciones Técnicas">
                             <h:panelGrid columns="4" cellpadding="5">
                                 <h:outputText value="Responsable" style="font-weight:bold;"/>
                                 <p:selectOneMenu value="#{manMaestroMan.cod_usu}" 
@@ -5236,7 +5236,7 @@
                                 <p:inputText value="#{manMaestroMan.otr_per}" maxlength="300" size="38" />
                             </h:panelGrid>
                             <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputText value="DiagnÃ³stico" style="font-weight:bold;"/>
+                                <h:outputText value="Diagnóstico" style="font-weight:bold;"/>
                                 <p:inputTextarea cols="87" rows="2" value="#{manMaestroMan.obs_tec}" maxlength="300"/>
                             </h:panelGrid>
                         </p:tab>
@@ -5251,7 +5251,7 @@
                                                    itemLabel="#{somgrufalnewman.nom_gru_fal}" itemValue="#{somgrufalnewman.cod_gru_fal}"/> 
                                 </p:selectOneMenu>
 
-                                <h:outputText value="DiagnÃ³stico Falla" style="font-weight:bold;"/>
+                                <h:outputText value="Diagnóstico Falla" style="font-weight:bold;"/>
                                 <p:selectOneMenu value="#{manMaestroMan.cod_fal}" 
                                                  style=" width: 200px;"
                                                  id="somfallasnewman"
@@ -5330,7 +5330,7 @@
                                          onclick="PF('wMaestraFin').hide()"
                                          >
                             <p:confirm header="Finalizar Mantenimiento" 
-                                       message="Â¿Realmente desea Finalizar este Mantenimiento?" 
+                                       message="¿Realmente desea Finalizar este Mantenimiento?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cancelar" style=" width: 100px;"
@@ -5344,7 +5344,7 @@
                 <p:panel>
 
                     <h:panelGrid columns="1" cellpadding="5" style=" text-align: center;">
-                        <h:outputText value="Al FINALIZAR EL MANTENIMIENTO, se removerÃ¡ toda la informaciÃ³n de la lista de Trabajo y no podrÃ¡n realizarse mÃ¡s cambios en Ã©l." 
+                        <h:outputText value="Al FINALIZAR EL MANTENIMIENTO, se removerá toda la información de la lista de Trabajo y no podrán realizarse más cambios en él." 
                                       style="font-weight:bold; color: red;"/>
                     </h:panelGrid>
                 </p:panel>
@@ -5371,9 +5371,9 @@
                 <p:panel>
                     <h:panelGrid columns="5" cellpadding="5">
 
-                        <h:outputText value="PaÃ­s" style="font-weight:bold;"/>
+                        <h:outputText value="País" style="font-weight:bold;"/>
                         <h:outputText value="Bodega" style="font-weight:bold;"/>
-                        <h:outputText value="UbicaciÃ³n" style="font-weight:bold;"/>
+                        <h:outputText value="Ubicación" style="font-weight:bold;"/>
                         <h:outputText value="Pieza" style="font-weight:bold;"/>
                         <h:outputText value="" style="font-weight:bold;"/>
 
@@ -5417,7 +5417,7 @@
                     <p:column style="width:50px;" headerText="Bodega">
                         <h:outputText value="#{vExistenciasMan.nombod}" />
                     </p:column>
-                    <p:column style="width:50px;" headerText="UbicaciÃ³n">
+                    <p:column style="width:50px;" headerText="Ubicación">
                         <h:outputText value="#{vExistenciasMan.nomubi}" />
                     </p:column>
                     <p:column style="width:50px;" headerText="Pieza">
@@ -5484,7 +5484,7 @@
                         <p:column style="width:70px;" headerText="Sol/Req">
                             <h:outputText value="#{vEstadoSolReq.cod_usu_sol}" />
                         </p:column>
-                        <p:column style="width:40px;" headerText="CÃ³digo">
+                        <p:column style="width:40px;" headerText="Código">
                             <h:outputText value="#{vEstadoSolReq.cod_mae}" />
                         </p:column>
                         <p:column style="width:60px;" headerText="Fecha">
@@ -5528,7 +5528,7 @@
                         <p:column style="width:30px;" headerText="Can.Pend.">
                             <h:outputText value="#{vEsDetSolReq.det_can_pen}" />
                         </p:column>
-                        <p:column style="width:250px" headerText="DescripciÃ³n Item">
+                        <p:column style="width:250px" headerText="Descripción Item">
                             <h:outputText value="#{vEsDetSolReq.des_ite}" />
                         </p:column>
                         <p:column style="width:100px" headerText="Estado">
@@ -5574,7 +5574,7 @@
         </p:dialog>
 
         <!--********************************************************************
-        ************************** Pantalla FÃ¡tima *****************************
+        ************************** Pantalla Fátima *****************************
         *********************************************************************-->
 
         <p:dialog  id="dlgIntegralIni" widgetVar="wIntegralIni" modal="true" 
@@ -5597,7 +5597,7 @@
                                          actionListener="#{manMaestroMan.guardarintegral()}"
                                          >
                             <p:confirm header="Guardar Mantenimiento" 
-                                       message="Â¿Realmente desea Guardar Todos Los Cambios de este Mantenimiento?" 
+                                       message="¿Realmente desea Guardar Todos Los Cambios de este Mantenimiento?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton> 
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -5606,7 +5606,7 @@
                                          actionListener="#{manMaestroMan.eliminarencabezadoInt()}"
                                          >
                             <p:confirm header="Eliminar Mantenimiento" 
-                                       message="Â¿Realmente desea Eliminar este Mantenimiento?" 
+                                       message="¿Realmente desea Eliminar este Mantenimiento?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton> 
                         <p:commandButton value="Finalizar" style=" width: 100px;"
@@ -5690,7 +5690,7 @@
 
                         </p:dataTable>
                         <h:panelGrid columns="3" cellpadding="5" style=" text-align: right;">
-                            <h:outputText value="AÃ±o Solicitado (yyyy)" style="font-weight:bold;"/>
+                            <h:outputText value="Año Solicitado (yyyy)" style="font-weight:bold;"/>
                             <p:inputText id="cmdlimit" value="#{manMaestroMan.vlimit}" size="7" maxlength="11"/>
                             <p:commandButton value="Cargar" actionListener="#{manMaestroMan.llenarMantenimientosintegral()}" update="dtEncManInit,cmdlimit"/>
                         </h:panelGrid>
@@ -5699,7 +5699,7 @@
 
                         <p:panel>
                             <h:panelGrid columns="6" cellpadding="5">
-                                <h:outputText value="CÃ³digo" style="font-weight:bold;"/>
+                                <h:outputText value="Código" style="font-weight:bold;"/>
                                 <h:outputText value="Equipo" style="font-weight:bold;"/>
                                 <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
                                 <h:outputText value="Departamento" style="font-weight:bold;"/>
@@ -5729,7 +5729,7 @@
                                 <p:selectOneMenu value="#{manMaestroMan.flg_ext}" 
                                                  style=" width: 50px;">
                                     <f:selectItem itemLabel="No" itemValue="0"/>
-                                    <f:selectItem itemLabel="SÃ­" itemValue="1"/>
+                                    <f:selectItem itemLabel="Sí" itemValue="1"/>
 
                                 </p:selectOneMenu>
                                 <p:selectOneMenu value="#{manMaestroMan.cod_tip}" 
@@ -5789,7 +5789,7 @@
                             </h:panelGrid>
                             <p:tabView tabindex="#{manMaestroMan.panindex}">
                                 <p:ajax event="tabChange" listener="#{manMaestroMan.onTabPanChange}" />
-                                <p:tab id="tabOBSTECini" title="Observaciones TÃ©cnicas">
+                                <p:tab id="tabOBSTECini" title="Observaciones Técnicas">
                                     <h:panelGrid columns="4" cellpadding="5">
                                         <h:outputText value="Responsable" style="font-weight:bold;"/>
                                         <p:selectOneMenu value="#{manMaestroMan.cod_usu}" 
@@ -5802,7 +5802,7 @@
                                         <p:inputText value="#{manMaestroMan.otr_per}" maxlength="300" size="38" />
                                     </h:panelGrid>
                                     <h:panelGrid columns="2" cellpadding="5">
-                                        <h:outputText value="DiagnÃ³stico" style="font-weight:bold;"/>
+                                        <h:outputText value="Diagnóstico" style="font-weight:bold;"/>
                                         <p:inputTextarea cols="87" rows="2" value="#{manMaestroMan.obs_tec}" maxlength="300"/>
                                     </h:panelGrid>
                                 </p:tab>
@@ -5862,12 +5862,12 @@
                     <p:tab id="detintini" title="Detalle">
                         <p:tabView id="tvDetMan2ini" activeIndex="#{manMaestroMan.tabindex2}" >
                             <p:ajax event="tabChange" listener="#{manMaestroMan.onTab2Change}" />
-                            <p:tab id="tabGENini" title="Detalle TÃ©cnico">
+                            <p:tab id="tabGENini" title="Detalle Técnico">
                                 <p:panel>
                                     <h:panelGrid columns="3" cellpadding="5">
                                         <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
-                                        <h:outputText value="AcciÃ³n" style="font-weight:bold;"/>
-                                        <h:outputText value="RealizÃ³" style="font-weight:bold;"/>
+                                        <h:outputText value="Acción" style="font-weight:bold;"/>
+                                        <h:outputText value="Realizó" style="font-weight:bold;"/>
                                         <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                                      readonlyInput="true" 
                                                      showOn="button" size="16"
@@ -5918,13 +5918,13 @@
                                     <p:column style="width:12px;" headerText="Fecha y Hora">
                                         <h:outputText value="#{vDetTecIni.fec_man}" />
                                     </p:column>
-                                    <p:column style="width:80px" headerText="AcciÃ³n">
+                                    <p:column style="width:80px" headerText="Acción">
                                         <h:outputText value="#{vDetTecIni.nomope}" />
                                     </p:column>
                                     <p:column style="width:80px" headerText="Observaciones">
                                         <h:outputText value="#{vDetTecIni.det_obs}" />
                                     </p:column>
-                                    <p:column style="width:50px" headerText="RealizÃ³">
+                                    <p:column style="width:50px" headerText="Realizó">
                                         <h:outputText value="#{vDetTecIni.nomusu}" />
                                     </p:column>
                                 </p:dataTable>
@@ -5934,7 +5934,7 @@
                                     <h:panelGrid columns="3" cellpadding="5">
                                         <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
                                         <h:outputText value="Responsable" style="font-weight:bold;"/>
-                                        <h:outputText value="AlmacÃ©n" style="font-weight:bold;"/>
+                                        <h:outputText value="Almacén" style="font-weight:bold;"/>
 
                                         <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                                      readonlyInput="true" showOn="button" size="16"
@@ -5960,7 +5960,7 @@
                                     <h:panelGrid columns="5" cellpadding="5">
                                         <h:outputText value="Cantidad" style="font-weight:bold;"/>
                                         <h:outputText value="Pieza Entrante" style="font-weight:bold;"/>
-                                        <h:outputText value="NÃºmeros de Serie" style="font-weight:bold;"/>
+                                        <h:outputText value="Números de Serie" style="font-weight:bold;"/>
                                         <h:outputText value="" style="font-weight:bold;"/>
                                         <h:outputText value="" style="font-weight:bold;"/>
                                         <p:inputText maxlength="12" size="10" value="#{manMaestroMan.pie_det_can}" />
@@ -5999,7 +5999,7 @@
                                     <p:column style="width:30px;" headerText="Fecha">
                                         <h:outputText value="#{vDetPieini.fec_man}" />
                                     </p:column>
-                                    <p:column style="width:30px;" headerText="AlmacÃ©n">
+                                    <p:column style="width:30px;" headerText="Almacén">
                                         <h:outputText value="#{vDetPieini.nompai}" />
                                     </p:column>
                                     <p:column style="width:10px" headerText="Cant">
@@ -6022,7 +6022,7 @@
                                     <h:panelGrid columns="3" cellpadding="5">
                                         <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
                                         <h:outputText value="Responsable" style="font-weight:bold;"/>
-                                        <h:outputText value="AlmacÃ©n" style="font-weight:bold;"/>
+                                        <h:outputText value="Almacén" style="font-weight:bold;"/>
 
                                         <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                                      readonlyInput="true" showOn="button" size="16"
@@ -6079,13 +6079,13 @@
                                     <p:column style="width:110px;" headerText="Fecha">
                                         <h:outputText value="#{vDetAccIni.fec_man}" />
                                     </p:column>
-                                    <p:column style="width:100px;" headerText="AlmacÃ©n">
+                                    <p:column style="width:100px;" headerText="Almacén">
                                         <h:outputText value="#{vDetAccIni.nompai}" />
                                     </p:column>
                                     <p:column style="width:50px" headerText="Cantidad">
                                         <h:outputText value="#{vDetAccIni.det_can}" />
                                     </p:column>
-                                    <p:column style="width:400px" headerText="DescripciÃ³n">
+                                    <p:column style="width:400px" headerText="Descripción">
                                         <h:outputText value="#{vDetAccIni.des_ite}" />
                                     </p:column>
 
@@ -6161,15 +6161,15 @@
                                                      onclick="this.form.target = '_blank';" 
                                                      action="#{manMaestroMan.ejecutarreporteFMAN001(1)}" 
                                                      ajax="false"/>
-                                    <h:outputText value="Sistema NeumÃ¡tico" style="font-weight:bold;"/>
+                                    <h:outputText value="Sistema Neumático" style="font-weight:bold;"/>
                                     <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_001}"/>
-                                    <h:outputText value="Sistema ElÃ©ctrico, Tableros, Tomas, Acometidas, Sensores, Etc." style="font-weight:bold;"/>
+                                    <h:outputText value="Sistema Eléctrico, Tableros, Tomas, Acometidas, Sensores, Etc." style="font-weight:bold;"/>
                                     <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_002}"/>
-                                    <h:outputText value="Sistema de LubricaciÃ³n: Chumaceras, Graseras, Rodamientos, Etc." style="font-weight:bold;"/>
+                                    <h:outputText value="Sistema de Lubricación: Chumaceras, Graseras, Rodamientos, Etc." style="font-weight:bold;"/>
                                     <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_003}"/>
-                                    <h:outputText value="Sistema de Enfriamiento: Mangueras, VÃ¡lvulas, Adaptadores, Etc." style="font-weight:bold;"/>
+                                    <h:outputText value="Sistema de Enfriamiento: Mangueras, Válvulas, Adaptadores, Etc." style="font-weight:bold;"/>
                                     <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_004}"/>
-                                    <h:outputText value="TransmisiÃ³n de Potencia: Motor, Fajas, Poleas, Reductores, Etc." style="font-weight:bold;"/>
+                                    <h:outputText value="Transmisión de Potencia: Motor, Fajas, Poleas, Reductores, Etc." style="font-weight:bold;"/>
                                     <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_005}"/>
                                     <h:outputText value="Unidad de Tratamiento: Rodillos, Fundas, Rodamientos, Etc. " style="font-weight:bold;"/>
                                     <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_006}"/>
@@ -6183,19 +6183,19 @@
                                     <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_010}"/>
                                     <h:outputText value="Sellador: Soportes, Termocuplas, Etc." style="font-weight:bold;"/>
                                     <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_011}"/>
-                                    <h:outputText value="Conjunto Alineador: PistÃ³n, Mangueras, Etc." style="font-weight:bold;"/>
+                                    <h:outputText value="Conjunto Alineador: Pistón, Mangueras, Etc." style="font-weight:bold;"/>
                                     <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_012}"/>
                                     <h:outputText value="Conjunto de Unidades Impresoras." style="font-weight:bold;"/>
                                     <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_013}"/>
                                     <h:outputText value="Brazos Portabobinas Refilador: Rachet, Mangueras, Rodamientos." style="font-weight:bold;"/>
                                     <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_014}"/>
-                                    <h:outputText value="Sistema Visualizador de ProducciÃ³n: Displa, ContÃ³metro, Monitor, Etc." style="font-weight:bold;"/>
+                                    <h:outputText value="Sistema Visualizador de Producción: Displa, Contómetro, Monitor, Etc." style="font-weight:bold;"/>
                                     <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_015}"/>
-                                    <h:outputText value="Sistema de CalefacciÃ³n, Mangueras, Blower, Horno, Etc." style="font-weight:bold;"/>
+                                    <h:outputText value="Sistema de Calefacción, Mangueras, Blower, Horno, Etc." style="font-weight:bold;"/>
                                     <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_016}"/>
                                     <h:outputText value="Observaciones" style="font-weight:bold;"/>
                                     <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_rec_obs_017}"/>
-                                    <h:outputText value="Responsable ProducciÃ³n" style="font-weight:bold;"/>
+                                    <h:outputText value="Responsable Producción" style="font-weight:bold;"/>
                                     <p:selectOneMenu value="#{manMaestroMan.fm1_rec_usu_pro}" 
                                                      style=" width: 320px;">
                                         <f:selectItem itemLabel="Ninguno" itemValue="0"/>
@@ -6222,15 +6222,15 @@
                                                          onclick="this.form.target = '_blank';" 
                                                          action="#{manMaestroMan.ejecutarreporteFMAN001(2)}" 
                                                          ajax="false"/>
-                                        <h:outputText value="Sistema NeumÃ¡tico" style="font-weight:bold;"/>
+                                        <h:outputText value="Sistema Neumático" style="font-weight:bold;"/>
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_001}"/>
-                                        <h:outputText value="Sistema ElÃ©ctrico, Tableros, Tomas, Acometidas, Sensores, Etc." style="font-weight:bold;"/>
+                                        <h:outputText value="Sistema Eléctrico, Tableros, Tomas, Acometidas, Sensores, Etc." style="font-weight:bold;"/>
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_002}"/>
-                                        <h:outputText value="Sistema de LubricaciÃ³n: Chumaceras, Graseras, Rodamientos, Etc." style="font-weight:bold;"/>
+                                        <h:outputText value="Sistema de Lubricación: Chumaceras, Graseras, Rodamientos, Etc." style="font-weight:bold;"/>
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_003}"/>
-                                        <h:outputText value="Sistema de Enfriamiento: Mangueras, VÃ¡lvulas, Adaptadores, Etc." style="font-weight:bold;"/>
+                                        <h:outputText value="Sistema de Enfriamiento: Mangueras, Válvulas, Adaptadores, Etc." style="font-weight:bold;"/>
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_004}"/>
-                                        <h:outputText value="TransmisiÃ³n de Potencia: Motor, Fajas, Poleas, Reductores, Etc." style="font-weight:bold;"/>
+                                        <h:outputText value="Transmisión de Potencia: Motor, Fajas, Poleas, Reductores, Etc." style="font-weight:bold;"/>
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_005}"/>
                                         <h:outputText value="Unidad de Tratamiento: Rodillos, Fundas, Rodamientos, Etc. " style="font-weight:bold;"/>
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_006}"/>
@@ -6244,19 +6244,19 @@
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_010}"/>
                                         <h:outputText value="Sellador: Soportes, Termocuplas, Etc." style="font-weight:bold;"/>
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_011}"/>
-                                        <h:outputText value="Conjunto Alineador: PistÃ³n, Mangueras, Etc." style="font-weight:bold;"/>
+                                        <h:outputText value="Conjunto Alineador: Pistón, Mangueras, Etc." style="font-weight:bold;"/>
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_012}"/>
                                         <h:outputText value="Conjunto de Unidades Impresoras." style="font-weight:bold;"/>
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_013}"/>
                                         <h:outputText value="Brazos Portabobinas Refilador: Rachet, Mangueras, Rodamientos." style="font-weight:bold;"/>
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_014}"/>
-                                        <h:outputText value="Sistema Visualizador de ProducciÃ³n: Displa, ContÃ³metro, Monitor, Etc." style="font-weight:bold;"/>
+                                        <h:outputText value="Sistema Visualizador de Producción: Displa, Contómetro, Monitor, Etc." style="font-weight:bold;"/>
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_015}"/>
-                                        <h:outputText value="Sistema de CalefacciÃ³n, Mangueras, Blower, Horno, Etc." style="font-weight:bold;"/>
+                                        <h:outputText value="Sistema de Calefacción, Mangueras, Blower, Horno, Etc." style="font-weight:bold;"/>
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_016}"/>
                                         <h:outputText value="Observaciones" style="font-weight:bold;"/>
                                         <p:inputTextarea maxlength="500" cols="50" rows="2" value="#{manMaestroMan.fm1_ent_obs_017}"/>
-                                        <h:outputText value="Responsable ProducciÃ³n" style="font-weight:bold;"/>
+                                        <h:outputText value="Responsable Producción" style="font-weight:bold;"/>
                                         <p:selectOneMenu value="#{manMaestroMan.fm1_ent_usu_pro}" 
                                                          style=" width: 320px;">
                                             <f:selectItem itemLabel="Ninguno" itemValue="0"/>
@@ -6303,7 +6303,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -6312,7 +6312,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
 
@@ -6331,8 +6331,8 @@
                     <h:panelGrid columns="4" cellpadding="5">
                         <h:outputText value="Equipo" style="font-weight:bold;"/>
                         <h:outputText value="Tipo de Mantenimiento" style="font-weight:bold;"/>
-                        <h:outputText value="DuraciÃ³n Estimada (Horas)" style="font-weight:bold;"/>
-                        <h:outputText value="TÃ©cnico Sugerido" style="font-weight:bold;"/>
+                        <h:outputText value="Duración Estimada (Horas)" style="font-weight:bold;"/>
+                        <h:outputText value="Técnico Sugerido" style="font-weight:bold;"/>
 
                         <p:selectOneMenu value="#{manPlantillas.cod_equ}" 
                                          style=" width: 180px;"
@@ -6389,7 +6389,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -6398,7 +6398,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -6477,7 +6477,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -6486,7 +6486,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -6516,7 +6516,7 @@
                                          value="#{manControles.sid_ctrl}"
                                          onfocus="this.select()"
                                          />
-                            <h:outputText value="DescripciÃ³n" style="font-weight:bold;"/>
+                            <h:outputText value="Descripción" style="font-weight:bold;"/>
                             <p:inputText id="txtdescripcioncontrol" 
                                          size="50"
                                          maxlength="150"
@@ -6551,7 +6551,7 @@
                         <p:column style="width:80px" headerText="Nombre">
                             <h:outputText value="#{vControl.sid_ctrl}" />
                         </p:column>
-                        <p:column style="width:200px" headerText="DescripciÃ³n">
+                        <p:column style="width:200px" headerText="Descripción">
                             <h:outputText value="#{vControl.ctrl_desc}" />
                         </p:column>
                     </p:dataTable>
@@ -6560,12 +6560,12 @@
         </p:dialog>
 
         <!--******************************************************************** 
-        ****** Pantalla de AsignaciÃ³n de usuarios a grupos *********
+        ****** Pantalla de Asignación de usuarios a grupos *********
         *********************************************************************-->
 
         <p:dialog  id="dlgUsrGrp" widgetVar="wUsrGrp" modal="true" 
                    width="540" height="390" closable="false" resizable="false" 
-                   header="AsignaciÃ³n de Usuarios a Grupos" rendered="true" 
+                   header="Asignación de Usuarios a Grupos" rendered="true" 
                    dynamic="false" visible="false" 
                    >
 
@@ -6584,7 +6584,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -6593,7 +6593,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -6664,7 +6664,7 @@
 
         <p:dialog  id="dlgSecurity" widgetVar="wSecurity" modal="true" 
                    width="640" height="450" closable="false" resizable="false" 
-                   header="AsignaciÃ³n de Permisos" rendered="true" 
+                   header="Asignación de Permisos" rendered="true" 
                    dynamic="false" visible="false" 
                    >
 
@@ -6683,7 +6683,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -6692,7 +6692,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -6806,7 +6806,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -6815,7 +6815,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -6850,14 +6850,14 @@
                                              onfocus="this.select()"
                                              />
                             </h:panelGroup>
-                            <h:outputText value="DirecciÃ³n" style="font-weight:bold;"/>
+                            <h:outputText value="Dirección" style="font-weight:bold;"/>
                             <p:inputText id="txtdireccionper" 
                                          size="70"
                                          maxlength="150"
                                          value="#{manPersonas.direccion}"
                                          onfocus="this.select()"
                                          />
-                            <h:outputText value="TelÃ©fono" style="font-weight:bold;"/>
+                            <h:outputText value="Teléfono" style="font-weight:bold;"/>
                             <h:panelGroup>
                                 <p:inputText id="txttelefonoper" 
                                              size="10"
@@ -7002,7 +7002,7 @@
                         <p:column style="width:110px" headerText="Apellidos" sortBy="#{vPersonal.apellidos}" filterBy="#{vPersonal.apellidos}">
                             <h:outputText value="#{vPersonal.apellidos}" />
                         </p:column>
-                        <p:column style="width:60px" headerText="TelÃ©fono">
+                        <p:column style="width:60px" headerText="Teléfono">
                             <h:outputText value="#{vPersonal.telefono}" />
                         </p:column>
                         <p:column style="width:150px" headerText="E-Mail">
@@ -7039,7 +7039,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -7048,7 +7048,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -7103,7 +7103,7 @@
         </p:dialog>
 
         <!--******************************************************************** 
-        **************** Pantalla CalendarizaciÃ³n de mantenimientos ************
+        **************** Pantalla Calendarización de mantenimientos ************
         *********************************************************************-->
 
         <p:dialog  id="dlgCalend" widgetVar="wCalend" modal="true" 
@@ -7152,7 +7152,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Autorizar" style=" width: 100px;"
@@ -7161,7 +7161,7 @@
                                          icon="ui-icon-check"
                                          >
                             <p:confirm header="Autorizar Registro" 
-                                       message="NOTA IMPORTANTE: Este proceso no se podrÃ¡ revertir Â¿Realmente desea Autorizar este Pronostico?" 
+                                       message="NOTA IMPORTANTE: Este proceso no se podrá revertir ¿Realmente desea Autorizar este Pronostico?" 
                                        icon="ui-icon-alert"
                                        />
                         </p:commandButton>
@@ -7173,7 +7173,7 @@
                                              icon="ui-icon-close"
                                              />
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                <p:commandButton value="SÃ­" type="button" 
+                                <p:commandButton value="Sí" type="button" 
                                                  styleClass="ui-confirmdialog-yes" 
                                                  icon="ui-icon-check" />
                                 <p:commandButton value="No" type="button" 
@@ -7199,7 +7199,7 @@
                                 <p:ajax event="dateSelect" listener="#{manPronosticoMtto.dateSelected}" />
                             </p:calendar>
                             <p:spacer width="10"/>   
-                            <h:outputText value="AÃ±o a pronosticar" style="font-weight:bold;"/>
+                            <h:outputText value="Año a pronosticar" style="font-weight:bold;"/>
                             <p:spacer width="10"/>
                             <p:inputText maxlength="15" size="17" value="#{manPronosticoMtto.anho_pro_mtto}" 
                                          onfocus="this.select()" onkeypress="return valida(event)"/>
@@ -7239,7 +7239,7 @@
                         <p:column style="width:30px" headerText="Fecha Evaluacion">
                             <h:outputText value="#{vProMtto.fecha_pro_mtto}" />
                         </p:column>
-                        <p:column style="width:30px" headerText="AÃ±o Destino">
+                        <p:column style="width:30px" headerText="Año Destino">
                             <h:outputText value="#{vProMtto.anho_pro_mtto}" />
                         </p:column>
                         <p:column style="width:32px;text-align: center" headerText="Aplicado">
@@ -7382,7 +7382,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -7452,7 +7452,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -7521,7 +7521,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -7591,7 +7591,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -7661,7 +7661,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -7740,7 +7740,7 @@
                                          icon="ui-icon-disk"
                                          > 
                             <p:confirm header="Guardar Registro" 
-                                       message="Â¿Realmente desea Guardar este Registro?" 
+                                       message="¿Realmente desea Guardar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Eliminar" style=" width: 100px;"
@@ -7749,7 +7749,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -7833,7 +7833,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -7913,7 +7913,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -8020,7 +8020,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -8152,7 +8152,7 @@
                     <p:column style="width:100px" headerText="Criterio">
                         <h:outputText value="#{vDetEvaPer.nom_cri}" />
                     </p:column>
-                    <p:column style="width:300px" headerText="CalificaciÃ³n">  
+                    <p:column style="width:300px" headerText="Calificación">  
                         <p:selectOneRadio onclick="PF('evaDetalle').selectRow(#{findex})" value="#{vDetEvaPer.calif}">
                             <f:selectItem itemLabel="Malo" itemValue="1" />
                             <f:selectItem itemLabel="Regular" itemValue="2" />
@@ -8168,12 +8168,12 @@
         </p:dialog>
 
         <!-- *******************************************************************
-        *********************** Pantalla Lista EspecÃ­fica **********************
+        *********************** Pantalla Lista Específica **********************
         *********************************************************************-->
 
         <p:dialog  id="dlgLisEsp" widgetVar="wLisEsp" modal="true" 
                    width="580" height="400" closable="false" resizable="false" 
-                   header="Listados EspecÃ­ficos" rendered="true" 
+                   header="Listados Específicos" rendered="true" 
                    dynamic="true" visible="false" 
                    >
 
@@ -8197,7 +8197,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -8217,8 +8217,8 @@
                                          immediate="false">  
                             <p:ajax event="change" listener="#{manListaEspecifica.llenarLista()}" update=":frmLisEsp" />
                             <f:selectItem itemLabel="Seleccione Una" itemValue="0" />
-                            <f:selectItem itemLabel="Supervisores ProducciÃ³n" itemValue="1" />
-                            <f:selectItem itemLabel="TÃ©cnicos Mantenimiento" itemValue="2" />
+                            <f:selectItem itemLabel="Supervisores Producción" itemValue="1" />
+                            <f:selectItem itemLabel="Técnicos Mantenimiento" itemValue="2" />
                             <f:selectItem itemLabel="Aprobaciones Compras" itemValue="3" />
                             <f:selectItem itemLabel="Aprobaciones Bodega" itemValue="4" />
                         </p:selectOneMenu>
@@ -8283,7 +8283,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -8346,7 +8346,7 @@
 
                         <p:fieldset id="ususel" legend="Usuarios Seleccionados" style="width:270px ">
                             <p:outputPanel id="dropArea">
-                                <h:outputText value="Area de asignaciÃ³n." rendered="#{empty manAlertas.usuariosel}" style="font-size:24px;" />
+                                <h:outputText value="Area de asignación." rendered="#{empty manAlertas.usuariosel}" style="font-size:24px;" />
                                 <p:dataTable id="usuariosSeleccionados" var="ususel" value="#{manAlertas.usuariosel}" 
                                              rendered="#{not empty manAlertas.usuariosel}" style="width:260px" scrollHeight="150">
                                     <p:column style="width:20px">
@@ -8437,7 +8437,7 @@
                                          icon="ui-icon-trash"
                                          >
                             <p:confirm header="Eliminar Registro" 
-                                       message="Â¿Realmente desea eliminar este Registro?" 
+                                       message="¿Realmente desea eliminar este Registro?" 
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" style=" width: 100px;"
