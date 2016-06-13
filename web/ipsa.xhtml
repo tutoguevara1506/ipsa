@@ -8451,19 +8451,19 @@
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
                     <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputText value="Grupo Falla" style="font-weight:bold;"/>
-                        <p:selectOneMenu value="#{manFallas.cod_gru_fal}" 
+                        <h:outputText value="Tipo de Activo" style="font-weight:bold;"/>
+                        <p:selectOneMenu value="#{manActivoFijo.id_tip_act}" 
                                          style="width:450px;text-align:right;"
                                          immediate="false">  
                             <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
-                            <f:selectItems value="#{manFallas.grupofallas}" var="mgrufal"
-                                           itemLabel="#{mgrufal.nom_gru_fal}" itemValue="#{mgrufal.cod_gru_fal}"/>
+                            <f:selectItems value="#{manActivoFijo.tipoactivo}" var="mtipact"
+                                           itemLabel="#{mtipact.nom_tip_act}" itemValue="#{mtipact.id_tip_act}"/>
                         </p:selectOneMenu>
                         <h:outputText value="Falla" style="font-weight:bold;" />
                         <p:inputText maxlength="200" size="72" value="#{manFallas.nom_fal}" 
                                      onfocus="this.select()"/>
                     </h:panelGrid>
-                    <p:dataTable id="dtFallas" var="vFallas" 
+                    <p:dataTable id="dtActivoFijo" var="vActivoFijo" 
                                  value="#{manFallas.fallas}" 
                                  emptyMessage="No se encontraron resultados" 
                                  selectionMode="single" selection="#{manFallas.catfallas}" 
