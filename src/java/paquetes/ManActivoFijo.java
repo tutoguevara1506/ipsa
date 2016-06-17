@@ -122,7 +122,7 @@ public class ManActivoFijo implements Serializable {
             cattipoactivo = new CatTipoActivo();
             tipoactivo = new ArrayList<>();
 
-            mQuery = "SELECT id_tip_act, des_tip_actbFROM ipsa.cat_tip_act ORDER BY id_tip_act;";
+            mQuery = "SELECT id_tip_act, des_tip_act FROM ipsa.cat_tip_act ORDER BY id_tip_act;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();

@@ -8412,7 +8412,7 @@
         *********************************************************************-->
 
         <p:dialog  id="dlgActivoFijo" widgetVar="wActivoFijo" modal="true" 
-                   width="580" height="350" closable="false" resizable="false" 
+                   width="650" height="480" closable="false" resizable="false" 
                    header="Registro de Activo Fijo" rendered="true" 
                    dynamic="true" visible="false" 
                    >
@@ -8459,8 +8459,32 @@
                             <f:selectItems value="#{manActivoFijo.tipoactivo}" var="mtipact"
                                            itemLabel="#{mtipact.des_tip_act}" itemValue="#{mtipact.id_tip_act}"/>
                         </p:selectOneMenu>
-                        <h:outputText value="Falla" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manFallas.nom_fal}" 
+                        <h:outputText value="Descripcion" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.desc_equ}" 
+                                     onfocus="this.select()"/>
+                        <h:outputText value="Fecha Adquisicion" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.fecha_adquisicion}" 
+                                     onfocus="this.select()"/>
+                        <h:outputText value="Valor de Adquisicion" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.valor_adqui}" 
+                                     onfocus="this.select()"/>
+                        <h:outputText value="Departamento" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.id_depto}" 
+                                     onfocus="this.select()"/>
+                        <h:outputText value="Distribucion de gastos" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.dist_gast_porc}" 
+                                     onfocus="this.select()"/>
+                        <h:outputText value="Seccion" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.id_seccion}" 
+                                     onfocus="this.select()"/>
+                        <h:outputText value="Estado" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.id_estado}" 
+                                     onfocus="this.select()"/>
+                        <h:outputText value="Tiempo depreciacion" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.tiempo_deprecia}" 
+                                     onfocus="this.select()"/>
+                         <h:outputText value="Cuota mensual de depreciacion" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.cuota_mes_depr}" 
                                      onfocus="this.select()"/>
                     </h:panelGrid>
                     <p:dataTable id="dtActivoFijo" var="vActivoFijo" 
@@ -8469,7 +8493,7 @@
                                  selectionMode="single" selection="#{manFallas.catfallas}" 
                                  rowKey="#{vFallas.cod_fal}"
                                  editable="false" 
-                                 style="width:540px"
+                                 style="width:600px"
                                  scrollable="true"
                                  scrollHeight="190"
                                  >
