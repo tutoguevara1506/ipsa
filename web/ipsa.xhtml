@@ -8463,46 +8463,76 @@
                         <p:inputText maxlength="200" size="72" value="#{manActivoFijo.desc_equ}" 
                                      onfocus="this.select()"/>
                         <h:outputText value="Fecha Adquisicion" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.fecha_adquisicion}" 
-                                     onfocus="this.select()"/>
-                        <h:outputText value="Valor de Adquisicion" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.valor_adqui}" 
-                                     onfocus="this.select()"/>
+                        <h:panelGroup>
+                            <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fdeeva"
+                                         readonlyInput="true" 
+                                         showOn="button" size="16"
+                                         value="#{manActivoFijo.dfadqu}"
+                                         >
+                                <p:ajax event="dateSelect" listener="#{manEvaluacionPersonas.dateSelected}" />
+                            </p:calendar> 
+                            <p:spacer width="10"/>
+                            <h:outputText value="Valor de Adquisicion" style="font-weight:bold;" />
+                            <p:spacer width="10"/>
+                            <p:inputText maxlength="20" size="20" value="#{manActivoFijo.valor_adqui}" 
+                                         onfocus="this.select()"/>
+                        </h:panelGroup> 
                         <h:outputText value="Departamento" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.id_depto}" 
-                                     onfocus="this.select()"/>
+                        <h:panelGroup>
+                            <p:selectOneMenu value="#{manActivoFijo.id_depto}" 
+                                             style="width:170px;text-align:right;"
+                                             immediate="false">  
+                                <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                                <f:selectItems value="#{manActivoFijo.departamentos}" var="mdepact"
+                                               itemLabel="#{mdepact.nom_dep}" itemValue="#{mdepact.cod_dep}"/>
+                            </p:selectOneMenu>
+                            <p:spacer width="10"/>	
+                            <h:outputText value="Estado" style="font-weight:bold;" />
+                            <p:spacer width="10"/>	
+                            <p:selectOneMenu value="#{manActivoFijo.id_estado}" 
+                                             style="width:100px;text-align:right;"
+                                             immediate="false">  
+                                <f:selectItem itemLabel="Seleccione Una" itemValue="0" />
+                                <f:selectItem itemLabel="Nuevo" itemValue="1" />
+                                <f:selectItem itemLabel="Usado" itemValue="2" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        
                         <h:outputText value="Distribucion de gastos" style="font-weight:bold;" />
                         <p:inputText maxlength="200" size="72" value="#{manActivoFijo.dist_gast_porc}" 
                                      onfocus="this.select()"/>
                         <h:outputText value="Seccion" style="font-weight:bold;" />
                         <p:inputText maxlength="200" size="72" value="#{manActivoFijo.id_seccion}" 
                                      onfocus="this.select()"/>
-                        <h:outputText value="Estado" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.id_estado}" 
-                                     onfocus="this.select()"/>
                         <h:outputText value="Tiempo depreciacion" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.tiempo_deprecia}" 
-                                     onfocus="this.select()"/>
-                         <h:outputText value="Cuota mensual de depreciacion" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.cuota_mes_deprecia}" 
-                                     onfocus="this.select()"/>
+                        <h:panelGroup>
+                            <p:inputText maxlength="200" size="10" value="#{manActivoFijo.tiempo_deprecia}" 
+                                         onfocus="this.select()"/>
+                            <p:spacer width="5"/>
+                            <h:outputText value="Meses" style="font-weight:bold; width: 50px;" />
+                            <p:spacer width="25"/>
+                            <h:outputText value="Cuota depreciación" style="font-weight:bold; width: 50px;" />
+                            <p:spacer width="10"/>
+                            <p:inputText maxlength="100" size="10" value="#{manActivoFijo.cuota_mes_deprecia}" 
+                                         onfocus="this.select()"/>
+                        </h:panelGroup>
                         <h:outputText value="Porcentaje deducible" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.porcentaje_deduc}" 
+                        <p:inputText maxlength="3" size="3" value="#{manActivoFijo.porcentaje_deduc}" 
                                      onfocus="this.select()"/>
                         <h:outputText value="Porcentaje no deducible" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.porcentaje_no_deduc}" 
+                        <p:inputText maxlength="3" size="3" value="#{manActivoFijo.porcentaje_no_deduc}" 
                                      onfocus="this.select()"/>
                          <h:outputText value="Serie de equipo" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.serie_equ}" 
+                        <p:inputText maxlength="150" size="50" value="#{manActivoFijo.serie_equ}" 
                                      onfocus="this.select()"/>
                          <h:outputText value="Modelo de equipo" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.modelo_equ}" 
+                        <p:inputText maxlength="150" size="50" value="#{manActivoFijo.modelo_equ}" 
                                      onfocus="this.select()"/>
                          <h:outputText value="Numero de inventario" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.no_inventario}" 
+                        <p:inputText maxlength="200" size="50" value="#{manActivoFijo.no_inventario}" 
                                      onfocus="this.select()"/>
                          <h:outputText value="Codigo de Equipo" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.codigo_equ}" 
+                        <p:inputText maxlength="200" size="50" value="#{manActivoFijo.codigo_equ}" 
                                      onfocus="this.select()"/>
                     </h:panelGrid>
                     <p:dataTable id="dtActivoFijo" var="vActivoFijo" 

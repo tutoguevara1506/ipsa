@@ -2,7 +2,9 @@ package paquetes;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
@@ -22,8 +24,11 @@ public class ManActivoFijo implements Serializable {
     private List<CatActivoFijo> activofijo;
     private CatTipoActivo cattipoactivo;
     private List<CatTipoActivo> tipoactivo;
+    private CatDepartamentos catdepartamentos;
+    private List<CatDepartamentos> departamentos;
     private String id_act_fij, id_tip_act, desc_equ, fecha_adquisicion, valor_adqui, id_depto, dist_gast_porc, id_seccion, id_estado, tiempo_deprecia, cuota_mes_deprecia, porcentaje_deduc, porcentaje_no_deduc, serie_equ, modelo_equ, no_inventario, observacion, codigo_equ;
-
+    private Date dfadqu;
+    
     public ManActivoFijo() {
     }
 
@@ -49,6 +54,7 @@ public class ManActivoFijo implements Serializable {
         codigo_equ = "";
         llenarActivoFijo();
         llenarTipoActivo();
+        llenarDepartamentos();
     }
 
     public void cerrarventana() {
@@ -111,7 +117,7 @@ public class ManActivoFijo implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el llenado de Cargos de Personal. " + e.getMessage() + " Query: " + mQuery);
+            System.out.println("Error en el llenado de Lista de Activos. " + e.getMessage() + " Query: " + mQuery);
         }
     }
 
@@ -161,6 +167,7 @@ public class ManActivoFijo implements Serializable {
         codigo_equ = "";
         catactivofijo = new CatActivoFijo();
         llenarTipoActivo();
+        llenarDepartamentos();
     }
 
     public void guardar() {
@@ -357,6 +364,37 @@ public class ManActivoFijo implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
     
+    public void dateSelected (SelectEvent f) {
+        Date date = (Date) f.getObject();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        fecha_adquisicion = format.format(date);
+    }
+    
+    public void llenarDepartamentos() {
+        try {
+            catdepartamentos = new CatDepartamentos();
+            departamentos = new ArrayList<>();
+
+            String mQuery = "select cod_dep, cod_pai, nom_dep "
+                    + "from cat_dep order by cod_dep;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                departamentos.add(new CatDepartamentos(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Catálogo de Departamentos. " + e.getMessage());
+        }
+    }
+    
     // SETTERS y GETTERS
 
     public String getId_act_fij() {
@@ -533,6 +571,30 @@ public class ManActivoFijo implements Serializable {
 
     public void setTipoactivo(List<CatTipoActivo> tipoactivo) {
         this.tipoactivo = tipoactivo;
+    }
+
+    public Date getDfadqu() {
+        return dfadqu;
+    }
+
+    public void setDfadqu(Date dfadqu) {
+        this.dfadqu = dfadqu;
+    }
+
+    public CatDepartamentos getCatdepartamentos() {
+        return catdepartamentos;
+    }
+
+    public void setCatdepartamentos(CatDepartamentos catdepartamentos) {
+        this.catdepartamentos = catdepartamentos;
+    }
+
+    public List<CatDepartamentos> getDepartamentos() {
+        return departamentos;
+    }
+
+    public void setDepartamentos(List<CatDepartamentos> departamentos) {
+        this.departamentos = departamentos;
     }
     
     
