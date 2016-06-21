@@ -8484,15 +8484,26 @@
                         <p:inputText maxlength="200" size="72" value="#{manActivoFijo.tiempo_deprecia}" 
                                      onfocus="this.select()"/>
                          <h:outputText value="Cuota mensual de depreciacion" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.cuota_mes_depr}" 
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.cuota_mes_deprecia}" 
                                      onfocus="this.select()"/>
                         <h:outputText value="Porcentaje deducible" style="font-weight:bold;" />
                         <p:inputText maxlength="200" size="72" value="#{manActivoFijo.porcentaje_deduc}" 
                                      onfocus="this.select()"/>
                         <h:outputText value="Porcentaje no deducible" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.cuota_mes_depr}" 
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.porcentaje_no_deduc}" 
                                      onfocus="this.select()"/>
-                        
+                         <h:outputText value="Serie de equipo" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.serie_equ}" 
+                                     onfocus="this.select()"/>
+                         <h:outputText value="Modelo de equipo" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.modelo_equ}" 
+                                     onfocus="this.select()"/>
+                         <h:outputText value="Numero de inventario" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.no_inventario}" 
+                                     onfocus="this.select()"/>
+                         <h:outputText value="Codigo de Equipo" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.codigo_equ}" 
+                                     onfocus="this.select()"/>
                     </h:panelGrid>
                     <p:dataTable id="dtActivoFijo" var="vActivoFijo" 
                                  value="#{manFallas.fallas}" 
