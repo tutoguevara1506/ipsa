@@ -242,71 +242,71 @@ public class ManActivoFijo implements Serializable {
 
     public boolean validardatos() {
         boolean mValidar = true;
-        String mensaje = "";
+        String mensaje = "Debe Ingresar ";
                 
         if ("".equals(id_tip_act) == true) {
             mValidar = false;
-            mensaje= mensaje + "Debe Ingresar un tipo de Activo. \n";
+            mensaje= mensaje + "- Tipo de Activo. \n";
         }
         
         if ("".equals(desc_equ) == true) {
             mValidar = false;
-            mensaje= mensaje + "Debe Ingresar una Descripcion de Activo. \n";
+            mensaje= mensaje + "- Descripcion de Activo. \n";
         }
         
         if ("".equals(fecha_adquisicion) == true) {
             mValidar = false;
-            mensaje= mensaje + "Debe Ingresar una fecha de adquisicion. \n";
+            mensaje= mensaje + "- Fecha de adquisicion. \n";
         }
         
         if ("".equals(valor_adqui) == true) {
             mValidar = false;
-            mensaje= mensaje + "Debe Ingresar un valor de adquisicion. \n";
+            mensaje= mensaje + "- Valor de adquisicion. \n";
         }
         
         if ("".equals(id_depto) == true) {
             mValidar = false;
-            mensaje= mensaje +  "Debe Ingresar un departamento. \n";
+            mensaje= mensaje +  "- Departamento. \n";
         }
         
         if ("".equals(tiempo_deprecia) == true) {
             mValidar = false;
-            mensaje= mensaje + "Debe Ingresar un tiempo de depreciacion. \n";
+            mensaje= mensaje + "- Tiempo de depreciacion. \n";
         }
         
         if ("".equals(porcentaje_deduc) == true) {
             mValidar = false;
-            mensaje= mensaje + "Debe Ingresar un porcentaje deducible. \n";
+            mensaje= mensaje + "- Porcentaje deducible. \n";
         }
         
         if ("".equals(porcentaje_no_deduc) == true) {
             mValidar = false;
-            mensaje= mensaje + "Debe Ingresar un porcentaje no deducible. \n";
+            mensaje= mensaje + "- Porcentaje no deducible. \n";
         }
         
         if ("".equals(serie_equ) == true) {
             mValidar = false;
-            mensaje= mensaje + "Debe Ingresar un numero de serie. \n";
+            mensaje= mensaje + "- Numero de serie. \n";
         }
         
         if ("".equals(modelo_equ) == true) {
             mValidar = false;
-            mensaje= mensaje + "Debe Ingresar un modelo. \n";
+            mensaje= mensaje + "- Modelo. \n";
         }
                 
         if ("".equals(no_inventario) == true) {
             mValidar = false;
-            mensaje= mensaje + "Debe Ingresar un numero de inventario. \n";
+            mensaje= mensaje + "- Numero de inventario. \n";
         }
         
         if ("".equals(observacion) == true) {
             mValidar = false;
-            mensaje= mensaje + "Debe Ingresar una observacion. \n";
+            mensaje= mensaje + "- Observacion. \n";
         }
         
         if ("".equals(codigo_equ) == true) {
             mValidar = false;
-            mensaje= mensaje + "Debe Ingresar un codigo de equipo. \n";
+            mensaje= mensaje + "- Codigo de equipo. \n";
         }
         
         Accesos maccesos = new Accesos();
@@ -323,6 +323,7 @@ public class ManActivoFijo implements Serializable {
         }
         else
         {
+            System.out.println(mensaje);
             addMessage("Validar Datos", mensaje, 2);
             return mValidar;
         }

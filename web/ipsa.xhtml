@@ -8412,7 +8412,7 @@
         *********************************************************************-->
 
         <p:dialog  id="dlgActivoFijo" widgetVar="wActivoFijo" modal="true" 
-                   width="650" height="480" closable="false" resizable="false" 
+                   width="635" height="450" closable="false" resizable="false" 
                    header="Registro de Activo Fijo" rendered="true" 
                    dynamic="true" visible="false" 
                    >
@@ -8450,90 +8450,110 @@
                     </f:facet>
                 </p:toolbar>
                 <div style=" background-color: #ebf8fe;">
-                    <h:panelGrid columns="2" cellpadding="5">
+                    <h:panelGrid columns="2" cellpadding="5" style="vertical-align:button;">
                         <h:outputText value="Tipo de Activo" style="font-weight:bold;"/>
-                        <p:selectOneMenu value="#{manActivoFijo.id_tip_act}" 
-                                         style="width:250px;text-align:right;"
-                                         immediate="false">  
-                            <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
-                            <f:selectItems value="#{manActivoFijo.tipoactivo}" var="mtipact"
-                                           itemLabel="#{mtipact.des_tip_act}" itemValue="#{mtipact.id_tip_act}"/>
-                        </p:selectOneMenu>
-                        <h:outputText value="Descripcion" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.desc_equ}" 
-                                     onfocus="this.select()"/>
-                        <h:outputText value="Fecha Adquisicion" style="font-weight:bold;" />
                         <h:panelGroup>
-                            <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fdeeva"
-                                         readonlyInput="true" 
-                                         showOn="button" size="16"
-                                         value="#{manActivoFijo.dfadqu}"
-                                         >
-                                <p:ajax event="dateSelect" listener="#{manEvaluacionPersonas.dateSelected}" />
-                            </p:calendar> 
-                            <p:spacer width="10"/>
-                            <h:outputText value="Valor de Adquisicion" style="font-weight:bold;" />
-                            <p:spacer width="10"/>
-                            <p:inputText maxlength="20" size="20" value="#{manActivoFijo.valor_adqui}" 
-                                         onfocus="this.select()"/>
-                        </h:panelGroup> 
-                        <h:outputText value="Departamento" style="font-weight:bold;" />
-                        <h:panelGroup>
-                            <p:selectOneMenu value="#{manActivoFijo.id_depto}" 
-                                             style="width:170px;text-align:right;"
+                            <p:selectOneMenu value="#{manActivoFijo.id_tip_act}" 
+                                             style="width:200px;text-align:right;"
                                              immediate="false">  
                                 <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
-                                <f:selectItems value="#{manActivoFijo.departamentos}" var="mdepact"
-                                               itemLabel="#{mdepact.nom_dep}" itemValue="#{mdepact.cod_dep}"/>
+                                <f:selectItems value="#{manActivoFijo.tipoactivo}" var="mtipact"
+                                               itemLabel="#{mtipact.des_tip_act}" itemValue="#{mtipact.id_tip_act}"/>
                             </p:selectOneMenu>
-                            <p:spacer width="10"/>	
+                            <p:spacer width="20"/>
+                            <h:outputText value="Fecha Adquisicion" style="font-weight:bold;" />
+                            <p:spacer width="20"/>	
+                                <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fdeeva"
+                                             readonlyInput="true" 
+                                             showOn="button" size="12"
+                                             value="#{manActivoFijo.dfadqu}"
+                                             >
+                                    <p:ajax event="dateSelect" listener="#{manEvaluacionPersonas.dateSelected}" />
+                                </p:calendar> 
+                        </h:panelGroup>
+                        <h:outputText value="Descripcion" style="font-weight:bold;" />
+                        <p:inputText maxlength="250" size="70" value="#{manActivoFijo.desc_equ}" 
+                                     onfocus="this.select()"/>
+                        
+                        <h:outputText value="Valor de Adquisicion" style="font-weight:bold;" />
+                        <h:panelGroup>    
+                            <p:inputText maxlength="20" size="20" value="#{manActivoFijo.valor_adqui}" 
+                                         onfocus="this.select()"/>
+                            <p:spacer width="20" height="0"/>	
+                            <h:outputText value="Departamento" style="font-weight:bold;" />
+                            <p:spacer width="30" height="0"/>
+                            <p:selectOneMenu value="#{manActivoFijo.id_depto}" 
+                                         style="width:170px;text-align:right;"
+                                         immediate="false">  
+                                        <f:selectItem itemLabel="Seleccione Uno" itemValue="0" />  
+                                        <f:selectItems value="#{manActivoFijo.departamentos}" var="mdepact"
+                                               itemLabel="#{mdepact.nom_dep}" itemValue="#{mdepact.cod_dep}"/>
+                            </p:selectOneMenu>   
+                        </h:panelGroup>
+                        <h:outputText value="Seccion" style="font-weight:bold;" />
+                        <p:inputText maxlength="200" size="70" value="#{manActivoFijo.id_seccion}" 
+                                     onfocus="this.select()"/>
+                        <h:outputText value="Tiempo depreciacion" style="font-weight:bold;" />
+                        <h:panelGroup>
+                            <p:inputText maxlength="200" size="4" value="#{manActivoFijo.tiempo_deprecia}" 
+                                         onfocus="this.select()"/>
+                            <p:spacer width="5" height="0"/>
+                            <h:outputText value="Meses" style="font-weight:bold; width: 50px;" />
+                            <p:spacer width="25" height="0"/>
+                            <h:outputText value="Cuota depreciación" style="font-weight:bold; width: 50px;" />
+                            <p:spacer width="10" height="0"/>
+                            <p:inputText maxlength="100" size="8" value="#{manActivoFijo.cuota_mes_deprecia}" 
+                                         onfocus="this.select()"/>
+                            <p:spacer width="10" height="0"/>
                             <h:outputText value="Estado" style="font-weight:bold;" />
-                            <p:spacer width="10"/>	
+                            <p:spacer width="20" height="0"/>
                             <p:selectOneMenu value="#{manActivoFijo.id_estado}" 
                                              style="width:100px;text-align:right;"
                                              immediate="false">  
                                 <f:selectItem itemLabel="Seleccione Una" itemValue="0" />
                                 <f:selectItem itemLabel="Nuevo" itemValue="1" />
                                 <f:selectItem itemLabel="Usado" itemValue="2" />
-                            </p:selectOneMenu>
-                        </h:panelGroup>
-                        
-                        <h:outputText value="Distribucion de gastos" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.dist_gast_porc}" 
-                                     onfocus="this.select()"/>
-                        <h:outputText value="Seccion" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="72" value="#{manActivoFijo.id_seccion}" 
-                                     onfocus="this.select()"/>
-                        <h:outputText value="Tiempo depreciacion" style="font-weight:bold;" />
-                        <h:panelGroup>
-                            <p:inputText maxlength="200" size="10" value="#{manActivoFijo.tiempo_deprecia}" 
-                                         onfocus="this.select()"/>
-                            <p:spacer width="5"/>
-                            <h:outputText value="Meses" style="font-weight:bold; width: 50px;" />
-                            <p:spacer width="25"/>
-                            <h:outputText value="Cuota depreciación" style="font-weight:bold; width: 50px;" />
-                            <p:spacer width="10"/>
-                            <p:inputText maxlength="100" size="10" value="#{manActivoFijo.cuota_mes_deprecia}" 
-                                         onfocus="this.select()"/>
+                            </p:selectOneMenu>                            
                         </h:panelGroup>
                         <h:outputText value="Porcentaje deducible" style="font-weight:bold;" />
-                        <p:inputText maxlength="3" size="3" value="#{manActivoFijo.porcentaje_deduc}" 
+                        <h:panelGroup>
+                            <p:inputText maxlength="3" size="3" value="#{manActivoFijo.porcentaje_deduc}" 
+                                         onfocus="this.select()"/>
+                            <p:spacer width="10" height="0"/>
+                            <h:outputText value="%" style="font-weight:bold;" />
+                            <p:spacer width="20" height="0"/>
+                            <h:outputText value="Porcentaje no deducible" style="font-weight:bold;" />
+                            <p:spacer width="10" height="0"/>
+                            <p:inputText maxlength="3" size="3" value="#{manActivoFijo.porcentaje_no_deduc}" 
+                                         onfocus="this.select()"/>
+                            <p:spacer width="10" height="0"/>
+                            <h:outputText value="%" style="font-weight:bold;" />
+                            <p:spacer width="20" height="0"/>
+                            <h:outputText value="Distribucion de gastos" style="font-weight:bold;" />
+                            <p:spacer width="10" height="0"/>
+                            <p:inputText maxlength="20" size="2" value="#{manActivoFijo.dist_gast_porc}" 
                                      onfocus="this.select()"/>
-                        <h:outputText value="Porcentaje no deducible" style="font-weight:bold;" />
-                        <p:inputText maxlength="3" size="3" value="#{manActivoFijo.porcentaje_no_deduc}" 
-                                     onfocus="this.select()"/>
+                        </h:panelGroup>
                          <h:outputText value="Serie de equipo" style="font-weight:bold;" />
-                        <p:inputText maxlength="150" size="50" value="#{manActivoFijo.serie_equ}" 
-                                     onfocus="this.select()"/>
-                         <h:outputText value="Modelo de equipo" style="font-weight:bold;" />
-                        <p:inputText maxlength="150" size="50" value="#{manActivoFijo.modelo_equ}" 
-                                     onfocus="this.select()"/>
+                         <h:panelGroup>
+                            <p:inputText maxlength="150" size="25" value="#{manActivoFijo.serie_equ}" 
+                                         onfocus="this.select()"/>
+                            <p:spacer width="20" height="0"/>
+                             <h:outputText value="Modelo de equipo" style="font-weight:bold;" />
+                             <p:spacer width="20" height="0"/>
+                            <p:inputText maxlength="150" size="25" value="#{manActivoFijo.modelo_equ}" 
+                                         onfocus="this.select()"/>
+                        </h:panelGroup>
                          <h:outputText value="Numero de inventario" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="50" value="#{manActivoFijo.no_inventario}" 
-                                     onfocus="this.select()"/>
-                         <h:outputText value="Codigo de Equipo" style="font-weight:bold;" />
-                        <p:inputText maxlength="200" size="50" value="#{manActivoFijo.codigo_equ}" 
-                                     onfocus="this.select()"/>
+                         <h:panelGroup>
+                            <p:inputText maxlength="200" size="25" value="#{manActivoFijo.no_inventario}" 
+                                         onfocus="this.select()"/>
+                             <p:spacer width="20" height="0"/>
+                             <h:outputText value="Codigo de Equipo" style="font-weight:bold;" />
+                             <p:spacer width="20" height="0"/>
+                            <p:inputText maxlength="200" size="25" value="#{manActivoFijo.codigo_equ}" 
+                                         onfocus="this.select()"/>
+                         </h:panelGroup>
                     </h:panelGrid>
                     <p:dataTable id="dtActivoFijo" var="vActivoFijo" 
                                  value="#{manFallas.fallas}" 
@@ -8543,7 +8563,7 @@
                                  editable="false" 
                                  style="width:600px"
                                  scrollable="true"
-                                 scrollHeight="190"
+                                 scrollHeight="85"
                                  >
                         <p:ajax event="rowSelect" listener="#{manFallas.onRowSelect}" 
                                 update=":frmFallas" />
