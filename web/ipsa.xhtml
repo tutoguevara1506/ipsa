@@ -8412,7 +8412,7 @@
         *********************************************************************-->
 
         <p:dialog  id="dlgActivoFijo" widgetVar="wActivoFijo" modal="true" 
-                   width="635" height="450" closable="false" resizable="false" 
+                   width="650" height="475" closable="false" resizable="false" 
                    header="Registro de Activo Fijo" rendered="true" 
                    dynamic="true" visible="false" 
                    >
@@ -8475,10 +8475,10 @@
                         <p:inputText maxlength="250" size="70" value="#{manActivoFijo.desc_equ}" 
                                      onfocus="this.select()"/>
                         
-                        <h:outputText value="Valor de Adquisicion" style="font-weight:bold;" />
+                        <h:outputText value="Valor de Adquisicion" style="font-weight:bold;"/>
                         <h:panelGroup>    
                             <p:inputText maxlength="20" size="20" value="#{manActivoFijo.valor_adqui}" 
-                                         onfocus="this.select()"/>
+                                         onfocus="this.select()" onkeypress="return valida(event)"/>
                             <p:spacer width="20" height="0"/>	
                             <h:outputText value="Departamento" style="font-weight:bold;" />
                             <p:spacer width="30" height="0"/>
@@ -8496,14 +8496,14 @@
                         <h:outputText value="Tiempo depreciacion" style="font-weight:bold;" />
                         <h:panelGroup>
                             <p:inputText maxlength="200" size="4" value="#{manActivoFijo.tiempo_deprecia}" 
-                                         onfocus="this.select()"/>
+                                         onfocus="this.select()" onkeypress="return valida(event)"/>
                             <p:spacer width="5" height="0"/>
                             <h:outputText value="Meses" style="font-weight:bold; width: 50px;" />
                             <p:spacer width="25" height="0"/>
                             <h:outputText value="Cuota depreciación" style="font-weight:bold; width: 50px;" />
                             <p:spacer width="10" height="0"/>
                             <p:inputText maxlength="100" size="8" value="#{manActivoFijo.cuota_mes_deprecia}" 
-                                         onfocus="this.select()"/>
+                                         onfocus="this.select()" onkeypress="return valida(event)"/>
                             <p:spacer width="10" height="0"/>
                             <h:outputText value="Estado" style="font-weight:bold;" />
                             <p:spacer width="20" height="0"/>
@@ -8518,14 +8518,14 @@
                         <h:outputText value="Porcentaje deducible" style="font-weight:bold;" />
                         <h:panelGroup>
                             <p:inputText maxlength="3" size="3" value="#{manActivoFijo.porcentaje_deduc}" 
-                                         onfocus="this.select()"/>
+                                         onfocus="this.select()" onkeypress="return valida(event)"/>
                             <p:spacer width="10" height="0"/>
                             <h:outputText value="%" style="font-weight:bold;" />
                             <p:spacer width="20" height="0"/>
                             <h:outputText value="Porcentaje no deducible" style="font-weight:bold;" />
                             <p:spacer width="10" height="0"/>
                             <p:inputText maxlength="3" size="3" value="#{manActivoFijo.porcentaje_no_deduc}" 
-                                         onfocus="this.select()"/>
+                                         onfocus="this.select()" onkeypress="return valida(event)"/>
                             <p:spacer width="10" height="0"/>
                             <h:outputText value="%" style="font-weight:bold;" />
                             <p:spacer width="20" height="0"/>
@@ -8556,22 +8556,28 @@
                          </h:panelGroup>
                     </h:panelGrid>
                     <p:dataTable id="dtActivoFijo" var="vActivoFijo" 
-                                 value="#{manFallas.fallas}" 
+                                 value="#{manActivoFijo.activofijo}" 
                                  emptyMessage="No se encontraron resultados" 
-                                 selectionMode="single" selection="#{manFallas.catfallas}" 
-                                 rowKey="#{vFallas.cod_fal}"
+                                 selectionMode="single" selection="#{manActivoFijo.catactivofijo}" 
+                                 rowKey="#{vActivoFijo.id_act_fij}"
                                  editable="false" 
                                  style="width:600px"
                                  scrollable="true"
-                                 scrollHeight="85"
+                                 scrollHeight="95"
                                  >
-                        <p:ajax event="rowSelect" listener="#{manFallas.onRowSelect}" 
-                                update=":frmFallas" />
-                        <p:column style="width:30px" headerText="Grupo Falla">
-                            <h:outputText value="#{vFallas.nomgrupo}" />
+                        <p:ajax event="rowSelect" listener="#{manActivoFijo.onRowSelect}" 
+                                update=":frmActivoFijo" />
+                        <p:column style="width:20px" headerText="Codigo">
+                            <h:outputText value="#{vActivoFijo.codigo_equ}" />
                         </p:column>                    
-                        <p:column style="width:80px" headerText="Nombre Falla">
-                            <h:outputText value="#{vFallas.nom_fal}" />
+                        <p:column style="width:80px" headerText="Descripción">
+                            <h:outputText value="#{vActivoFijo.desc_equ}" />
+                        </p:column>
+                         <p:column style="width:40px" headerText="Serie">
+                             <h:outputText value="#{vActivoFijo.serie_equ}" />
+                        </p:column>
+                         <p:column style="width:30px" headerText="Fecha Adquisición">
+                             <h:outputText value="#{vActivoFijo.fecha_adquisicion}" />
                         </p:column>
                     </p:dataTable>
                 </div>
