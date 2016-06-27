@@ -8515,24 +8515,29 @@
                                 <f:selectItem itemLabel="Usado" itemValue="2" />
                             </p:selectOneMenu>                            
                         </h:panelGroup>
-                        <h:outputText value="Porcentaje deducible" style="font-weight:bold;" />
+                        <h:outputText value="Distribucion de gastos" style="font-weight:bold;" />
                         <h:panelGroup>
-                            <p:inputText maxlength="3" size="3" value="#{manActivoFijo.porcentaje_deduc}" 
-                                         onfocus="this.select()" onkeypress="return valida(event)"/>
-                            <p:spacer width="10" height="0"/>
-                            <h:outputText value="%" style="font-weight:bold;" />
+                            <p:selectBooleanCheckbox  value="#{manActivoFijo.dist_gast_porc}">
+                                <p:ajax update="porDed porNoDed" event="change"/> 
+                            </p:selectBooleanCheckbox>
+                                
                             <p:spacer width="20" height="0"/>
-                            <h:outputText value="Porcentaje no deducible" style="font-weight:bold;" />
-                            <p:spacer width="10" height="0"/>
-                            <p:inputText maxlength="3" size="3" value="#{manActivoFijo.porcentaje_no_deduc}" 
-                                         onfocus="this.select()" onkeypress="return valida(event)"/>
-                            <p:spacer width="10" height="0"/>
-                            <h:outputText value="%" style="font-weight:bold;" />
-                            <p:spacer width="20" height="0"/>
-                            <h:outputText value="Distribucion de gastos" style="font-weight:bold;" />
-                            <p:spacer width="10" height="0"/>
-                            <p:inputText maxlength="20" size="2" value="#{manActivoFijo.dist_gast_porc}" 
-                                     onfocus="this.select()"/>
+                            <h:panelGroup id="pnlprc">
+                                <h:outputText value="Porcentaje deducible" style="font-weight:bold;" />
+                                <p:spacer width="10" height="0"/>
+                                <p:inputText id= "porDed" maxlength="3" size="3" value="#{manActivoFijo.porcentaje_deduc}" 
+                                             onfocus="this.select()" onkeypress="return valida(event)" disabled="#{!manActivoFijo.dist_gast_porc}"/>
+                                <p:spacer width="10" height="0"/>
+                                <h:outputText value="%" style="font-weight:bold;" />
+                                <p:spacer width="20" height="0"/>
+                                <h:outputText value="Porcentaje no deducible" style="font-weight:bold;"/>
+                                <p:spacer width="10" height="0"/>
+                                <p:inputText id= "porNoDed" maxlength="3" size="3" value="#{manActivoFijo.porcentaje_no_deduc}" disabled="#{!manActivoFijo.dist_gast_porc}"
+                                             onfocus="this.select()" onkeypress="return valida(event)"/>
+                                <p:spacer width="10" height="0"/>
+                                <h:outputText value="%" style="font-weight:bold;" />
+                                <p:spacer width="20" height="0"/>
+                            </h:panelGroup>
                         </h:panelGroup>
                          <h:outputText value="Serie de equipo" style="font-weight:bold;" />
                          <h:panelGroup>
