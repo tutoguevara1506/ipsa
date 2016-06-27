@@ -8412,7 +8412,7 @@
         *********************************************************************-->
 
         <p:dialog  id="dlgActivoFijo" widgetVar="wActivoFijo" modal="true" 
-                   width="650" height="475" closable="false" resizable="false" 
+                   width="650" height="520" closable="false" resizable="false" 
                    header="Registro de Activo Fijo" rendered="true" 
                    dynamic="true" visible="false" 
                    >
@@ -8465,10 +8465,10 @@
                             <p:spacer width="20"/>	
                                 <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fdeeva"
                                              readonlyInput="true" 
-                                             showOn="button" size="12"
+                                             showOn="button" size="10"
                                              value="#{manActivoFijo.dfadqu}"
                                              >
-                                    <p:ajax event="dateSelect" listener="#{manEvaluacionPersonas.dateSelected}" />
+                                    <p:ajax event="dateSelect" listener="#{manActivoFijo.dateSelected}" />
                                 </p:calendar> 
                         </h:panelGroup>
                         <h:outputText value="Descripcion" style="font-weight:bold;" />
@@ -8515,7 +8515,7 @@
                                 <f:selectItem itemLabel="Usado" itemValue="2" />
                             </p:selectOneMenu>                            
                         </h:panelGroup>
-                        <h:outputText value="Distribucion de gastos" style="font-weight:bold;" />
+                        <h:outputText value="Distribucion de gastos por porcentaje" style="font-weight:bold;" />
                         <h:panelGroup>
                             <p:selectBooleanCheckbox  value="#{manActivoFijo.dist_gast_porc}">
                                 <p:ajax update="porDed porNoDed" event="change"/> 
@@ -8541,24 +8541,27 @@
                         </h:panelGroup>
                          <h:outputText value="Serie de equipo" style="font-weight:bold;" />
                          <h:panelGroup>
-                            <p:inputText maxlength="150" size="25" value="#{manActivoFijo.serie_equ}" 
+                            <p:inputText maxlength="150" size="24" value="#{manActivoFijo.serie_equ}" 
                                          onfocus="this.select()"/>
                             <p:spacer width="20" height="0"/>
                              <h:outputText value="Modelo de equipo" style="font-weight:bold;" />
                              <p:spacer width="20" height="0"/>
-                            <p:inputText maxlength="150" size="25" value="#{manActivoFijo.modelo_equ}" 
+                            <p:inputText maxlength="150" size="24" value="#{manActivoFijo.modelo_equ}" 
                                          onfocus="this.select()"/>
                         </h:panelGroup>
                          <h:outputText value="Numero de inventario" style="font-weight:bold;" />
                          <h:panelGroup>
-                            <p:inputText maxlength="200" size="25" value="#{manActivoFijo.no_inventario}" 
+                            <p:inputText maxlength="200" size="24" value="#{manActivoFijo.no_inventario}" 
                                          onfocus="this.select()"/>
                              <p:spacer width="20" height="0"/>
                              <h:outputText value="Codigo de Equipo" style="font-weight:bold;" />
                              <p:spacer width="20" height="0"/>
-                            <p:inputText maxlength="200" size="25" value="#{manActivoFijo.codigo_equ}" 
+                            <p:inputText maxlength="200" size="24" value="#{manActivoFijo.codigo_equ}" 
                                          onfocus="this.select()"/>
                          </h:panelGroup>
+                         <h:outputText value="Observación" style="font-weight:bold;" />
+                         <p:inputTextarea rows="2" cols="68"  value="#{manActivoFijo.observacion}" 
+                                         onfocus="this.select()"/>
                     </h:panelGrid>
                     <p:dataTable id="dtActivoFijo" var="vActivoFijo" 
                                  value="#{manActivoFijo.activofijo}" 
@@ -8566,7 +8569,7 @@
                                  selectionMode="single" selection="#{manActivoFijo.catactivofijo}" 
                                  rowKey="#{vActivoFijo.id_act_fij}"
                                  editable="false" 
-                                 style="width:600px"
+                                 style="width:605px"
                                  scrollable="true"
                                  scrollHeight="95"
                                  >

@@ -213,9 +213,8 @@ public class ManActivoFijo implements Serializable {
                 System.out.println("Error al Guardar Marca. " + e.getMessage() + " Query: " + mQuery);
             }
             llenarActivoFijo();
+            nuevo();
         }
-        nuevo();
-
     }
 
     public void eliminar() {
@@ -254,7 +253,7 @@ public class ManActivoFijo implements Serializable {
             mensaje= mensaje + "- Descripcion de Activo. \n";
         }
         
-        if ("".equals(fecha_adquisicion) == true) {
+        if ("".equals(dfadqu) == true) {
             mValidar = false;
             mensaje= mensaje + "- Fecha de adquisicion. \n";
         }
@@ -297,11 +296,6 @@ public class ManActivoFijo implements Serializable {
         if ("".equals(no_inventario) == true) {
             mValidar = false;
             mensaje= mensaje + "- Numero de inventario. \n";
-        }
-        
-        if ("".equals(observacion) == true) {
-            mValidar = false;
-            mensaje= mensaje + "- Observacion. \n";
         }
         
         if ("".equals(codigo_equ) == true) {
