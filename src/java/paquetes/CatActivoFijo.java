@@ -5,12 +5,12 @@ import java.io.Serializable;
 
 public class CatActivoFijo implements Serializable{
     
-    private String id_act_fij, id_tip_act, desc_equ, fecha_adquisicion, valor_adqui, id_depto, dist_gast_porc, id_seccion, id_estado, tiempo_deprecia, cuota_mes_deprecia, porcentaje_deduc, porcentaje_no_deduc, serie_equ, modelo_equ, no_inventario, observacion, codigo_equ;
+    private String id_act_fij, id_tip_act, desc_equ, fecha_adquisicion, valor_adqui, id_depto, dist_gast_porc, seccion, id_estado, tiempo_deprecia, cuota_mes_deprecia, porcentaje_deduc, porcentaje_no_deduc, serie_equ, modelo_equ, no_inventario, observacion, codigo_equ;
 
     public CatActivoFijo() {
     }
 
-    public CatActivoFijo(String id_act_fij, String id_tip_act, String desc_equ, String fecha_adquisicion, String valor_adqui, String id_depto, String dist_gast_porc, String id_seccion, String id_estado, String tiempo_deprecia, String cuota_mes_deprecia, String porcentaje_deduc, String porcentaje_no_deduc, String serie_equ, String modelo_equ, String no_inventario, String observacion, String codigo_equ ) {
+    public CatActivoFijo(String id_act_fij, String id_tip_act, String desc_equ, String fecha_adquisicion, String valor_adqui, String id_depto, String dist_gast_porc, String seccion, String id_estado, String tiempo_deprecia, String cuota_mes_deprecia, String porcentaje_deduc, String porcentaje_no_deduc, String serie_equ, String modelo_equ, String no_inventario, String observacion, String codigo_equ ) {
         this.id_act_fij = id_act_fij;
         this.id_tip_act = id_tip_act;
         this.desc_equ = desc_equ;
@@ -18,7 +18,7 @@ public class CatActivoFijo implements Serializable{
         this.valor_adqui = valor_adqui;
         this.id_depto = id_depto;
         this.dist_gast_porc = dist_gast_porc;
-        this.id_seccion = id_seccion;
+        this.seccion = seccion;
         this.id_estado = id_estado;
         this.tiempo_deprecia = tiempo_deprecia;
         this.cuota_mes_deprecia = cuota_mes_deprecia;
@@ -87,12 +87,12 @@ public class CatActivoFijo implements Serializable{
         this.dist_gast_porc = dist_gast_porc;
     }
 
-    public String getId_seccion() {
-        return id_seccion;
+    public String getSeccion() {
+        return seccion;
     }
 
-    public void setId_seccion(String id_seccion) {
-        this.id_seccion = id_seccion;
+    public void setSeccion(String seccion) {
+        this.seccion = seccion;
     }
 
     public String getId_estado() {

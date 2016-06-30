@@ -2,7 +2,9 @@ package paquetes;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +28,7 @@ public class ManActivoFijo implements Serializable {
     private List<CatTipoActivo> tipoactivo;
     private CatDepartamentos catdepartamentos;
     private List<CatDepartamentos> departamentos;
-    private String id_act_fij, id_tip_act, desc_equ, fecha_adquisicion, valor_adqui, id_depto, dist_gast_porc, id_seccion, id_estado, tiempo_deprecia, cuota_mes_deprecia, porcentaje_deduc, porcentaje_no_deduc, serie_equ, modelo_equ, no_inventario, observacion, codigo_equ;
+    private String id_act_fij, id_tip_act, desc_equ, fecha_adquisicion, valor_adqui, id_depto, dist_gast_porc, seccion, id_estado, tiempo_deprecia, cuota_mes_deprecia, porcentaje_deduc, porcentaje_no_deduc, serie_equ, modelo_equ, no_inventario, observacion, codigo_equ;
     private Date dfadqu;
     
     public ManActivoFijo() {
@@ -34,14 +36,16 @@ public class ManActivoFijo implements Serializable {
 
       
     public void iniciarventana() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        dfadqu = Date.from(Instant.now());
         id_act_fij = "";
         id_tip_act = "";
         desc_equ = "";
-        fecha_adquisicion = "";
+        fecha_adquisicion = format.format(dfadqu);
         valor_adqui = "";
         id_depto = "";
         dist_gast_porc = "";
-        id_seccion = "";
+        seccion = "";
         id_estado = "";
         tiempo_deprecia = "";
         cuota_mes_deprecia = "";
@@ -65,7 +69,7 @@ public class ManActivoFijo implements Serializable {
         valor_adqui = "";
         id_depto = "";
         dist_gast_porc = "";
-        id_seccion = "";
+        seccion = "";
         id_estado = "";
         tiempo_deprecia = "";
         cuota_mes_deprecia = "";
@@ -86,7 +90,7 @@ public class ManActivoFijo implements Serializable {
             catactivofijo = new CatActivoFijo();
             activofijo = new ArrayList<>();
 
-            mQuery = "SELECT id_act_fij, id_tip_act, desc_equ, fecha_adquisicion, valor_adqui, id_depto, dist_gast_porc, id_seccion, id_estado, tiempo_deprecia, cuota_mes_deprecia, porcentaje_deduc, porcentaje_no_deduc, serie_equ, modelo_equ, no_inventario, observacion, codigo_equ " +
+            mQuery = "SELECT id_act_fij, id_tip_act, desc_equ, DATE_FORMAT(fecha_adquisicion, '%d/%m/%Y'), valor_adqui, id_depto, dist_gast_porc, seccion, id_estado, tiempo_deprecia, cuota_mes_deprecia, porcentaje_deduc, porcentaje_no_deduc, serie_equ, modelo_equ, no_inventario, observacion, codigo_equ " +
                      "FROM ipsa.cat_act_fij ORDER BY id_act_fij;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -147,14 +151,16 @@ public class ManActivoFijo implements Serializable {
     }
 
     public void nuevo() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        dfadqu = Date.from(Instant.now());
         id_act_fij = "";
         id_tip_act = "";
         desc_equ = "";
-        fecha_adquisicion = "";
+        fecha_adquisicion = format.format(dfadqu);
         valor_adqui = "";
         id_depto = "";
         dist_gast_porc = "";
-        id_seccion = "";
+        seccion = "";
         id_estado = "";
         tiempo_deprecia = "";
         cuota_mes_deprecia = "";
@@ -180,19 +186,19 @@ public class ManActivoFijo implements Serializable {
                     mQuery = "select ifnull(max(id_act_fij),0)+1 as codigo from cat_act_fij;";
                     id_act_fij = mAccesos.strQuerySQLvariable(mQuery);
                     mQuery = "INSERT INTO ipsa.cat_act_fij (id_act_fij, id_tip_act, desc_equ, fecha_adquisicion, valor_adqui, id_depto, dist_gast_porc, "+
-                             "id_seccion, id_estado, tiempo_deprecia, cuota_mes_deprecia, porcentaje_deduc, porcentaje_no_deduc, serie_equ, modelo_equ, no_inventario, observacion, codigo_equ) " +
-                             "VALUES ("+id_act_fij+","+id_tip_act+","+desc_equ+","+fecha_adquisicion+","+ valor_adqui+ ","+ id_depto+","+ dist_gast_porc+","+
-                                        id_seccion +","+ id_estado+","+ tiempo_deprecia+ ","+ cuota_mes_deprecia+ ","+ porcentaje_deduc+ ","+ porcentaje_no_deduc+","+
-                                        serie_equ+ ","+ modelo_equ+ ","+ no_inventario + "," + observacion + ","+codigo_equ+"); ";
+                             "seccion, id_estado, tiempo_deprecia, cuota_mes_deprecia, porcentaje_deduc, porcentaje_no_deduc, serie_equ, modelo_equ, no_inventario, observacion, codigo_equ) " +
+                             "VALUES ("+id_act_fij+","+id_tip_act+",'"+desc_equ+"',str_to_date('" + fecha_adquisicion + "','%d/%m/%Y'),"+ valor_adqui+ ","+ id_depto+",'"+ dist_gast_porc+"','"+
+                                        seccion +"',"+ id_estado+","+ tiempo_deprecia+ ","+ cuota_mes_deprecia+ ","+ porcentaje_deduc+ ","+ porcentaje_no_deduc+",'"+
+                                        serie_equ+ "','"+ modelo_equ+ "','"+ no_inventario + "','" + observacion + "','"+codigo_equ+"'); ";
                 } else {
                     mQuery =  "UPDATE ipsa.cat_act_fij SET "
                             + "id_tip_act = " + id_tip_act + "," 
                             + "desc_equ = '" + desc_equ + "',"
-                            + "fecha_adquisicion = '" + fecha_adquisicion + "',"
+                            + "fecha_adquisicion = str_to_date('" + fecha_adquisicion + "','%d/%m/%Y'),"
                             + "valor_adqui = "+ valor_adqui + ","
                             + "id_depto = " + id_depto + "," 
-                            + "dist_gast_porc = " + dist_gast_porc + ","
-                            + "id_seccion = " + id_seccion + ","
+                            + "dist_gast_porc = '" + dist_gast_porc + "',"
+                            + "seccion = '" + seccion + "',"
                             + "id_estado = " + id_estado + ","
                             + "tiempo_deprecia = " + tiempo_deprecia + ","
                             + "cuota_mes_deprecia = " + cuota_mes_deprecia + ","
@@ -306,7 +312,7 @@ public class ManActivoFijo implements Serializable {
         Accesos maccesos = new Accesos();
         maccesos.Conectar();
         if ("0".equals(maccesos.strQuerySQLvariable("select count(serie_equ) from cat_act_fij "
-                + "where upper(des_car)='" + serie_equ.toUpperCase() + "';")) == false && "".equals(serie_equ)) {
+                + "where upper(serie_equ)='" + serie_equ.toUpperCase() + "';")) == false && "".equals(serie_equ)) {
             mValidar = false;
             addMessage("Validar Datos", "El Numero de serie ya existe.", 2);
         }
@@ -324,7 +330,8 @@ public class ManActivoFijo implements Serializable {
 
     }
 
-    public void onRowSelect(SelectEvent event) {
+    public void onRowSelect(SelectEvent event) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         id_act_fij = ((CatActivoFijo) event.getObject()).getId_act_fij();
         id_tip_act = ((CatActivoFijo) event.getObject()).getId_tip_act();
         desc_equ =   ((CatActivoFijo) event.getObject()).getDesc_equ();
@@ -332,7 +339,7 @@ public class ManActivoFijo implements Serializable {
         valor_adqui = ((CatActivoFijo) event.getObject()).getValor_adqui();
         id_depto = ((CatActivoFijo) event.getObject()).getId_depto();
         dist_gast_porc =((CatActivoFijo) event.getObject()).getDist_gast_porc();
-        id_seccion = ((CatActivoFijo) event.getObject()).getId_seccion();
+        seccion = ((CatActivoFijo) event.getObject()).getSeccion();
         id_estado = ((CatActivoFijo) event.getObject()).getId_estado();
         tiempo_deprecia = ((CatActivoFijo) event.getObject()).getTiempo_deprecia();
         cuota_mes_deprecia = ((CatActivoFijo) event.getObject()).getCuota_mes_deprecia();
@@ -343,6 +350,7 @@ public class ManActivoFijo implements Serializable {
         no_inventario = ((CatActivoFijo) event.getObject()).getNo_inventario();
         observacion = ((CatActivoFijo) event.getObject()).getObservacion();
         codigo_equ = ((CatActivoFijo) event.getObject()).getCodigo_equ();
+        dfadqu = format.parse(fecha_adquisicion);
     }
 
     public void addMessage(String summary, String detail, int tipo) {
@@ -448,12 +456,12 @@ public class ManActivoFijo implements Serializable {
         this.dist_gast_porc = dist_gast_porc;
     }
 
-    public String getId_seccion() {
-        return id_seccion;
+    public String getSeccion() {
+        return seccion;
     }
 
-    public void setId_seccion(String id_seccion) {
-        this.id_seccion = id_seccion;
+    public void setSeccion(String seccion) {
+        this.seccion = seccion;
     }
 
     public String getId_estado() {
@@ -591,6 +599,5 @@ public class ManActivoFijo implements Serializable {
     public void setDepartamentos(List<CatDepartamentos> departamentos) {
         this.departamentos = departamentos;
     }
-    
-    
+   
 }
