@@ -398,6 +398,23 @@ public class ManActivoFijo implements Serializable {
         }
     }
     
+    public void evaluaCuota () {
+        if ("true".equals(dist_gast_porc)){
+            try{
+                Double cuota;
+                Double porcentaje = Double.parseDouble(porcentaje_deduc)/100;
+                Integer porcentaje_no = 100 - Integer.parseInt(porcentaje_deduc);
+                porcentaje_no_deduc = String.valueOf(porcentaje_no); 
+                cuota = (Double.parseDouble(valor_adqui) * porcentaje)/Integer.parseInt(tiempo_deprecia);
+                cuota_mes_deprecia = String.format("%1$,.2f", cuota);
+                System.out.println(cuota);
+            }
+            catch (Exception e){
+                System.out.println("Error el calculo-- Division entre cero. " + e.getMessage());
+            }
+            
+        } 
+    }
     // SETTERS y GETTERS
 
     public String getId_act_fij() {
