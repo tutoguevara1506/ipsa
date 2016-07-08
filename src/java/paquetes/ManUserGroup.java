@@ -20,9 +20,9 @@ public class ManUserGroup implements Serializable {
     Login cbean;
     private CatUserGroup catusergroup;
     private List<CatUserGroup> usergroup;
-    private CatGrupos catgrupos;
+
     private List<CatGrupos> grupos;
-    private CatUsuarios catusuarios;
+
     private List<CatUsuarios> usuarios;
     private String id_usr_grp, id_grp, cod_usu;
 
@@ -45,28 +45,12 @@ public class ManUserGroup implements Serializable {
         this.usergroup = usergroup;
     }
 
-    public CatGrupos getCatgrupos() {
-        return catgrupos;
-    }
-
-    public void setCatgrupos(CatGrupos catgrupos) {
-        this.catgrupos = catgrupos;
-    }
-
     public List<CatGrupos> getGrupos() {
         return grupos;
     }
 
     public void setGrupos(List<CatGrupos> grupos) {
         this.grupos = grupos;
-    }
-
-    public CatUsuarios getCatusuarios() {
-        return catusuarios;
-    }
-
-    public void setCatusuarios(CatUsuarios catusuarios) {
-        this.catusuarios = catusuarios;
     }
 
     public List<CatUsuarios> getUsuarios() {
@@ -76,7 +60,7 @@ public class ManUserGroup implements Serializable {
     public void setUsuarios(List<CatUsuarios> usuarios) {
         this.usuarios = usuarios;
     }
-    
+
     public String getId_usr_grp() {
         return id_usr_grp;
     }
@@ -101,10 +85,8 @@ public class ManUserGroup implements Serializable {
         this.cod_usu = cod_usu;
     }
 
-   
-
     public void iniciarventana() {
-        id_usr_grp ="";
+        id_usr_grp = "";
         id_grp = "";
         cod_usu = "";
         llenarGrupos();
@@ -113,19 +95,18 @@ public class ManUserGroup implements Serializable {
     }
 
     public void cerrarventana() {
-        id_usr_grp ="";
+        id_usr_grp = "";
         id_grp = "";
         cod_usu = "";
         usergroup = new ArrayList<>();
         usuarios = new ArrayList<>();
         grupos = new ArrayList<>();
     }
-    
 
     public void llenarGrupos() {
         String mQuery = "";
         try {
-            catgrupos = new CatGrupos();
+
             grupos = new ArrayList<>();
 
             mQuery = "select id_grp, des_grp from cat_grp order by des_grp;";
@@ -145,10 +126,10 @@ public class ManUserGroup implements Serializable {
             System.out.println("Error en el llenado de Grupos de Seguridad. " + e.getMessage() + " Query: " + mQuery);
         }
     }
-    
+
     public void llenarUsuarios() {
         try {
-            catusuarios = new CatUsuarios();
+
             usuarios = new ArrayList<>();
 
             String mQuery = "select usu.cod_usu, usu.nom_usu, usu.des_pas, usu.tip_usu, usu.cod_pai, "
@@ -187,11 +168,11 @@ public class ManUserGroup implements Serializable {
             catusergroup = new CatUserGroup();
             usergroup = new ArrayList<>();
 
-            mQuery = "SELECT id_usr_grp, ipsa.cat_usr_grp.id_grp, ipsa.cat_usr_grp.cod_usu, cat_grp.des_grp, cat_usu.nom_usu\n" +
-                    "FROM ipsa.cat_usr_grp inner join \n" +
-                    "ipsa.cat_grp ON ipsa.cat_grp.id_grp = ipsa.cat_usr_grp.id_grp inner join \n" +
-                    "ipsa.cat_usu ON ipsa.cat_usu.cod_usu = ipsa.cat_usr_grp.cod_usu;";
-            
+            mQuery = "SELECT id_usr_grp, ipsa.cat_usr_grp.id_grp, ipsa.cat_usr_grp.cod_usu, cat_grp.des_grp, cat_usu.nom_usu\n"
+                    + "FROM ipsa.cat_usr_grp inner join \n"
+                    + "ipsa.cat_grp ON ipsa.cat_grp.id_grp = ipsa.cat_usr_grp.id_grp inner join \n"
+                    + "ipsa.cat_usu ON ipsa.cat_usu.cod_usu = ipsa.cat_usr_grp.cod_usu;";
+
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -211,10 +192,41 @@ public class ManUserGroup implements Serializable {
             System.out.println("Error en el llenado de Registros de Usuarios - Grupos. " + e.getMessage() + " Query: " + mQuery);
         }
     }
-    
-    
+
+    public void llenarUserGroupPorGrupo() {
+        String mQuery = "";
+        try {
+            catusergroup = new CatUserGroup();
+            usergroup = new ArrayList<>();
+
+            mQuery = "SELECT id_usr_grp, cat_usr_grp.id_grp, cat_usr_grp.cod_usu, cat_grp.des_grp, cat_usu.nom_usu "
+                    + "FROM cat_usr_grp "
+                    + "inner join cat_grp ON cat_grp.id_grp = cat_usr_grp.id_grp "
+                    + "inner join cat_usu ON cat_usu.cod_usu = cat_usr_grp.cod_usu "
+                    + "where cat_usr_grp.id_grp= " + id_grp + ";";
+
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                usergroup.add(new CatUserGroup(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Registros de Usuarios - Grupos por Grupo. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+
     public void nuevo() {
-        id_usr_grp= "";
+        id_usr_grp = "";
         id_grp = "";
         cod_usu = "";
         catusergroup = new CatUserGroup();
@@ -229,9 +241,9 @@ public class ManUserGroup implements Serializable {
                 if ("".equals(id_usr_grp)) {
                     mQuery = "select ifnull(max(id_usr_grp),0)+1 as codigo from cat_usr_grp;";
                     id_usr_grp = mAccesos.strQuerySQLvariable(mQuery);
-                    
+
                     mQuery = "insert into cat_usr_grp (id_usr_grp, id_grp, cod_usu) "
-                            + "values (" + id_usr_grp + ",'" + id_grp + "','"+ cod_usu +"');";
+                            + "values (" + id_usr_grp + ",'" + id_grp + "','" + cod_usu + "');";
                 } else {
                     mQuery = "update cat_usr_grp SET "
                             + " id_grp = '" + id_grp + "', "
@@ -280,16 +292,16 @@ public class ManUserGroup implements Serializable {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar un Grupo.", 2);
         }
-        
+
         if ("0".equals(cod_usu) == true) {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar un Usuario.", 2);
         }
-        
+
         Accesos maccesos = new Accesos();
         maccesos.Conectar();
         if ("0".equals(maccesos.strQuerySQLvariable("select count(id_usr_grp) from ipsa.cat_usr_grp "
-                + "where id_grp ='" + id_grp + "' AND cod_usu ='" + cod_usu +"';")) == false && "".equals(id_usr_grp)) {
+                + "where id_grp ='" + id_grp + "' AND cod_usu ='" + cod_usu + "';")) == false && "".equals(id_usr_grp)) {
             mValidar = false;
             addMessage("Validar Datos", "La asignacion ya existe.", 2);
         }

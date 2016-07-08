@@ -21,8 +21,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.UnselectEvent;
@@ -63,8 +61,8 @@ public class ManSeguimiento extends Conexion implements Serializable {
     private String com_cod_cor, com_cod_pro, com_det_com, com_can_com;
     private String cod_mae, det_sta, fec_cie;
     private String det_can_sol, det_can_ent, det_can_pen, mdt_cod_det, mdt_cod_ite, mdt_des_ite, mdt_non_sto, mdt_det_sta, mdt_cos_uni, det_fec_cie;
-    private String apr_cod_mae, his_cod_mae, his_cod_det;
-    private String tabindex, tabindex2, rbhistoria;
+    private String apr_cod_mae, his_cod_mae, his_cod_det, his_cod_alt;
+    private String tabindex, tabindex2, tabindex3, rbhistoria;
     private Date mfecha, mfecha2;
     private String aprobador, recibidapor, cod_pai, cod_alt, idbuscar, destino, cod_bod, des_ubi, booledit;
 
@@ -442,6 +440,14 @@ public class ManSeguimiento extends Conexion implements Serializable {
         this.his_cod_det = his_cod_det;
     }
 
+    public String getHis_cod_alt() {
+        return his_cod_alt;
+    }
+
+    public void setHis_cod_alt(String his_cod_alt) {
+        this.his_cod_alt = his_cod_alt;
+    }
+
     public String getTabindex() {
         return tabindex;
     }
@@ -456,6 +462,14 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
     public void setTabindex2(String tabindex2) {
         this.tabindex2 = tabindex2;
+    }
+
+    public String getTabindex3() {
+        return tabindex3;
+    }
+
+    public void setTabindex3(String tabindex3) {
+        this.tabindex3 = tabindex3;
     }
 
     public String getRbhistoria() {
@@ -584,6 +598,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
         tabindex = "0";
         tabindex2 = "0";
+        tabindex3 = "0";
         rbhistoria = "0";
         mfecha = Date.from(Instant.now());
         mfecha2 = Date.from(Instant.now());
@@ -592,6 +607,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
         apr_cod_mae = "";
         his_cod_mae = "";
         his_cod_det = "";
+        his_cod_alt = "";
         det_sta = "";
         det_can_sol = "";
         det_can_ent = "";
@@ -1094,7 +1110,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
             String mQuery = "select  "
                     + "det.cod_mae, det.cod_det, det.cod_pai, det.cod_bod, "
-                    + "det.cod_ubi, det.cod_ite, det.des_ite, det.det_can_sol, 0, "
+                    + "det.cod_ubi, det.cod_ite, det.des_ite, det.det_can_sol, det.det_can_ent, "
                     + "det.det_can_pen, det.non_sto, "
                     + "case det.det_sta "
                     + "when 0 then 'PENDIENTE' "
@@ -1366,6 +1382,70 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
     }
 
+    public void llenarCotizacionesH() {
+        try {
+            catcotizaciones = new CatCotizaciones();
+            cotizaciones = new ArrayList<>();
+
+            String mQuery = "select cot.cod_mae, cot.cod_det, cot.cor_det, cot.cod_pro, cot.det_cot, pro.nom_pro "
+                    + "from sol_cot as cot "
+                    + "left join cat_pro as pro on cot.cod_pro = pro.cod_pro "
+                    + "where cot.cod_mae=" + his_cod_mae + " and cot.cod_det=" + his_cod_det + " "
+                    + "order by cot.cor_det;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                cotizaciones.add(new CatCotizaciones(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado Cotizaciones en Seguimiento Solicitud Historia. " + e.getMessage());
+        }
+    }
+
+    public void llenarComprasH() {
+        try {
+            catcompras = new CatCompras();
+            compras = new ArrayList<>();
+
+            String mQuery = "select com.cod_mae, com.cod_det, com.cor_com, com.cod_pro, com.det_com, pro.nom_pro,can_com "
+                    + "from sol_com as com "
+                    + "left join cat_pro as pro on com.cod_pro = pro.cod_pro "
+                    + "where com.cod_mae=" + his_cod_mae + " and com.cod_det=" + his_cod_det + " "
+                    + "order by com.cod_mae;";
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                compras.add(new CatCompras(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5),
+                        resVariable.getString(6),
+                        resVariable.getString(7)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado Compras en Seguimiento Solicitud Historia. " + e.getMessage());
+        }
+
+    }
+
     //************************* Acciones **********************
     public void aprobar() {
         String mQuery;
@@ -1457,7 +1537,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                 }
                 acc.dmlSQLvariable(mQuery);
 
-                mQuery = "update sol_det set det_sta=1 where cod_mae=" + cod_mae + " and cod_det=" + mdt_cod_det + ";";
+                mQuery = "update sol_det set det_sta=1 where cod_mae=" + cod_mae + " and cod_det=" + mdt_cod_det + " and det_sta<=1;";
                 acc.dmlSQLvariable(mQuery);
 
                 acc.Desconectar();
@@ -1492,15 +1572,12 @@ public class ManSeguimiento extends Conexion implements Serializable {
         if ("".equals(mdt_cod_det) || "0".equals(mdt_cod_det)) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Seleccionar un Item de la Solicitud.", 2);
-        } else {
-            if (!"COTIZADO".equals(catdetalles.getDet_sta()) && !"PENDIENTE".equals(catdetalles.getDet_sta())) {
+        } else /*if (!"COTIZADO".equals(catdetalles.getDet_sta()) && !"PENDIENTE".equals(catdetalles.getDet_sta())) {
                 mvalidar = false;
                 addMessage("Validar Datos", "El Detalle Seleccionado ya no puede ser cotizado.", 2);
-            }
-            if ("".equals(cot_cod_pro) || "0".equals(cot_cod_pro)) {
-                mvalidar = false;
-                addMessage("Validar Datos", "Debe Seleccionar un Proveedor.", 2);
-            }
+            }*/ if ("".equals(cot_cod_pro) || "0".equals(cot_cod_pro)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar un Proveedor.", 2);
         }
 
         return mvalidar;
@@ -1509,10 +1586,11 @@ public class ManSeguimiento extends Conexion implements Serializable {
     public void eliminarcotizacion() {
         String mQuery = "";
         try {
-            if ("".equals(cod_mae) || "0".equals(cod_mae)) {
-                if ("".equals(mdt_cod_det) || "0".equals(mdt_cod_det)) {
+
+            if (!"".equals(cod_mae) && !"0".equals(cod_mae)) {
+                if (!"".equals(mdt_cod_det) && !"0".equals(mdt_cod_det)) {
                     if (!cotizaciones.isEmpty()) {
-                        if ("".equals(cot_cod_cor) || "0".equals(cot_cod_cor)) {
+                        if (!"".equals(cot_cod_cor) && !"0".equals(cot_cod_cor)) {
                             Accesos acc = new Accesos();
                             acc.Conectar();
                             mQuery = "delete from sol_cot where cod_mae=" + cod_mae + " and cod_det=" + mdt_cod_det + " and cor_det=" + cot_cod_cor + ";";
@@ -1553,7 +1631,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                             + cod_mae + "," + mdt_cod_det + "," + com_cod_cor + "," + com_cod_pro + "," + com_det_com + "," + com_can_com
                             + ");";
                 } else {
-                    mQuery = "update sol_cot set "
+                    mQuery = "update sol_com set "
                             + "cod_pro=" + com_cod_pro + ","
                             + "det_com=" + com_det_com + ","
                             + "can_com=" + com_can_com + " "
@@ -1563,7 +1641,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                 }
                 acc.dmlSQLvariable(mQuery);
 
-                mQuery = "update sol_det set det_sta=2 where cod_mae=" + cod_mae + " and cod_det=" + mdt_cod_det + ";";
+                mQuery = "update sol_det set det_sta=2 where cod_mae=" + cod_mae + " and cod_det=" + mdt_cod_det + " and det_sta<=2;";
                 acc.dmlSQLvariable(mQuery);
 
                 acc.Desconectar();
@@ -1603,17 +1681,15 @@ public class ManSeguimiento extends Conexion implements Serializable {
         if ("".equals(mdt_cod_det) || "0".equals(mdt_cod_det)) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Seleccionar un Item de la Solicitud.", 2);
-        } else {
-            if (!"COTIZADO".equals(catdetalles.getDet_sta()) && !"PENDIENTE".equals(catdetalles.getDet_sta()) && !"COMPRADO".equals(catdetalles.getDet_sta())) {
+        } else /*if (!"COTIZADO".equals(catdetalles.getDet_sta()) && !"PENDIENTE".equals(catdetalles.getDet_sta()) && !"COMPRADO".equals(catdetalles.getDet_sta())) {
                 mvalidar = false;
                 addMessage("Validar Datos", "El Item Seleccionado ya ha sido Comprado.", 2);
-            }
-            if ("".equals(com_cod_pro) || "0".equals(com_cod_pro)) {
-                mvalidar = false;
-                addMessage("Validar Datos", "Debe Seleccionar un Proveedor.", 2);
-            }
+            }*/ if ("".equals(com_cod_pro) || "0".equals(com_cod_pro)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar un Proveedor.", 2);
         }
 
+        /*
         Accesos acc = new Accesos();
         acc.Conectar();
         Double micantidad = acc.doubleQuerySQLvariable("select ifnull(sum(can_com),0) from sol_com where cod_mae=" + cod_mae + " and cod_det=" + mdt_cod_det + ";") + Double.valueOf(com_can_com);
@@ -1622,18 +1698,17 @@ public class ManSeguimiento extends Conexion implements Serializable {
         if (micantidad > Double.valueOf(catdetalles.getDet_can_sol())) {
             mvalidar = false;
             addMessage("Validar Datos", "La Cantidad Comprada no puede ser superior a la Cantidad Solicitada.", 2);
-        }
-
+        }*/
         return mvalidar;
     }
 
     public void eliminarcompra() {
         String mQuery = "";
         try {
-            if ("".equals(cod_mae) || "0".equals(cod_mae)) {
-                if ("".equals(mdt_cod_det) || "0".equals(mdt_cod_det)) {
+            if (!"".equals(cod_mae) && !"0".equals(cod_mae)) {
+                if (!"".equals(mdt_cod_det) && !"0".equals(mdt_cod_det)) {
                     if (!compras.isEmpty()) {
-                        if ("".equals(com_cod_cor) || "0".equals(com_cod_cor)) {
+                        if (!"".equals(com_cod_cor) && !"0".equals(com_cod_cor)) {
                             Accesos acc = new Accesos();
                             acc.Conectar();
                             mQuery = "delete from sol_com where cod_mae=" + cod_mae + " and cod_det=" + mdt_cod_det + " and cor_com=" + com_cod_cor + ";";
@@ -1675,12 +1750,21 @@ public class ManSeguimiento extends Conexion implements Serializable {
                 String strvar = acc.strQuerySQLvariable("select (det_can_pen - " + det_can_ent + " ) as resta from sol_det where cod_mae= " + cod_mae
                         + " and cod_det=" + mdt_cod_det + ";");
 
-                mQuery = "update sol_det set "
-                        + "det_can_ent = (det_can_ent + " + det_can_ent + "), "
-                        + "det_can_pen = (det_can_pen-" + det_can_ent + "), "
-                        + "cos_uni = " + mdt_cos_uni + " "
-                        + "where cod_mae= " + cod_mae
-                        + " and cod_det=" + mdt_cod_det + ";";
+                if (Double.valueOf(strvar) < 0) {
+                    mQuery = "update sol_det set "
+                            + "det_can_ent = (det_can_ent + " + det_can_ent + "), "
+                            + "det_can_pen = 0, "
+                            + "cos_uni = " + mdt_cos_uni + " "
+                            + "where cod_mae= " + cod_mae
+                            + " and cod_det=" + mdt_cod_det + ";";
+                } else {
+                    mQuery = "update sol_det set "
+                            + "det_can_ent = (det_can_ent + " + det_can_ent + "), "
+                            + "det_can_pen = (det_can_pen-" + det_can_ent + "), "
+                            + "cos_uni = " + mdt_cos_uni + " "
+                            + "where cod_mae= " + cod_mae
+                            + " and cod_det=" + mdt_cod_det + ";";
+                }
                 acc.dmlSQLvariable(mQuery);
 
                 if ("0".equals(strvar)) {
@@ -1954,7 +2038,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
         }
 
         try {
-            if (Integer.valueOf(det_can_pen) < Integer.valueOf(det_can_ent)) {
+            if (Double.valueOf(det_can_pen) < Double.valueOf(det_can_ent)) {
                 mvalidar = false;
                 addMessage("Validar Datos", "La Cantidad Entregada no puede ser Superior a la Pendiente.", 2);
             }
@@ -1990,7 +2074,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
                 addMessage("Validar Datos", "Este Item no es Pieza Codificada.", 2);
             }
         }
-        if ("0".equals(det_can_ent)) {
+        if ("0".equals(det_can_ent) || Double.valueOf(det_can_ent) < 0) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Ingresar una Cantidad Entregada superior a Cero.", 2);
         }
@@ -2092,7 +2176,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
     }
 
     public void deshacer() {
-        String mQuery = "", mdetsta;
+        String mQuery, mdetsta;
         try {
             if (validardeshacer()) {
                 Accesos acc = new Accesos();
@@ -2466,6 +2550,9 @@ public class ManSeguimiento extends Conexion implements Serializable {
         com_det_com = "";
         com_can_com = "";
 
+        RequestContext.getCurrentInstance().update("frmToolsCompras");
+        RequestContext.getCurrentInstance().execute("PF('wToolsCompras').show()");
+
     }
 
     public void onRowUnselect(UnselectEvent event) {
@@ -2492,6 +2579,7 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
     public void onRowHistoriaSelect(SelectEvent event) {
         his_cod_mae = ((CatSolicitudes) event.getObject()).getCod_mae();
+        his_cod_alt = ((CatSolicitudes) event.getObject()).getCod_alt();
         llenarDetallesHistoria();
     }
 
@@ -2501,6 +2589,11 @@ public class ManSeguimiento extends Conexion implements Serializable {
 
     public void onRowHistoriaDetalleSelect(SelectEvent event) {
         his_cod_det = ((CatSolicitudesDetalleHistoria) event.getObject()).getCod_det();
+        llenarComprasH();
+        llenarCotizacionesH();
+
+        RequestContext.getCurrentInstance().update("frmToolsComprasH");
+        RequestContext.getCurrentInstance().execute("PF('wToolsComprasH').show()");
     }
 
     public void onRowHistoriaDetalleUnselect(UnselectEvent event) {
@@ -2574,6 +2667,19 @@ public class ManSeguimiento extends Conexion implements Serializable {
         //RequestContext.getCurrentInstance().update(":frmListaEquipos:tvLE");
     }
 
+    public void onTabChange3(TabChangeEvent event) {
+        switch (event.getTab().getId()) {
+            case "tabSegCotH":
+                tabindex3 = "0";
+                break;
+            case "tabSegComH":
+                tabindex3 = "1";
+                break;
+
+        }
+
+    }
+
     public void onSelectBodega() {
         des_ubi = "";
     }
@@ -2631,9 +2737,10 @@ public class ManSeguimiento extends Conexion implements Serializable {
                 } else {
                     addMessage("Modificar Solicitud", "Código de Impresión Válido.", 1);
                 }
-            } else {
-                addMessage("Modificar Solicitud", "Código de Impresión ya Existe.", 2);
             }
+            /*else {
+                addMessage("Modificar Solicitud", "Código de Impresión ya Existe.", 2);
+            }*/
         } catch (Exception e) {
             addMessage("Modificar Solicitud", "Error al Validar Código de Impresión. " + e.getMessage(), 2);
             System.out.println("Error al Validar Código de Impresión en Seguimiento Solicitudes. " + e.getMessage() + " Query: " + mQuery);
@@ -2657,9 +2764,10 @@ public class ManSeguimiento extends Conexion implements Serializable {
                 mQuery = "update sol_mae set cod_alt='' where cod_mae=" + apr_cod_mae + ";";
                 mAccesos.dmlSQLvariable(mQuery);
                 addMessage("Modificar Solicitud", "Código de Impresión Actualizado.", 1);
-            } else {
-                addMessage("Modificar Solicitud", "Código de Impresión ya Existe.", 2);
             }
+            /*else {
+                addMessage("Modificar Solicitud", "Código de Impresión ya Existe.", 2);
+            }*/
         } catch (Exception e) {
             addMessage("Modificar Solicitud", "Error al Actualizar Código de Impresión. " + e.getMessage(), 2);
             System.out.println("Error al Actualizar Código de Impresión en Seguimiento Solicitudes. " + e.getMessage() + " Query: " + mQuery);
@@ -2680,6 +2788,23 @@ public class ManSeguimiento extends Conexion implements Serializable {
             }
         } catch (Exception e) {
             System.out.println("Error en EjecutarReporte Seguimiento Solicitudes" + e.getMessage());
+        }
+
+    }
+
+    public void ejecutarreportedetalle() {
+        try {
+            if (!"".equals(his_cod_mae) && !"0".equals(his_cod_mae)) {
+                parametros = new HashMap<>();
+                parametros.put("cod_mae", his_cod_mae);
+                nombrereporte = "/reportes/comprasdetalleporperiodo.jasper";
+                nombreexportar = "Detalle_Sol_Compra" + his_cod_alt;
+                verPDF();
+            } else {
+                addMessage("Imprimir Detalle", "Debe elegir un Registro.", 2);
+            }
+        } catch (Exception e) {
+            System.out.println("Error en EjecutarReporteDetalle Seguimiento Solicitudes" + e.getMessage());
         }
 
     }

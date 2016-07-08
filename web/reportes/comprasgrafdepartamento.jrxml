@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="2ab4ca95-88bb-42ba-82ee-453f30c9a772">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="26"/>
+	<parameter name="fecini" class="java.lang.String"/>
+	<parameter name="fecfin" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select nom_dep, sum(contador) as contador, (select count(cod_mae) from sol_mae where 
+fec_sol >= str_to_date($P{fecini},'%d/%m/%Y') and
+fec_sol <= str_to_date($P{fecfin},'%d/%m/%Y')
+) as total  from (
+select dep.nom_dep, 1 as contador
+from sol_mae as mae
+left join cat_dep as dep on mae.cod_dep = dep.cod_dep
+where 
+mae.fec_sol >= str_to_date($P{fecini},'%d/%m/%Y') and
+mae.fec_sol <= str_to_date($P{fecfin},'%d/%m/%Y')
+) as tabla
+group by nom_dep
+order by nom_dep]]>
+	</queryString>
+	<field name="nom_dep" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contador" class="java.lang.Long"/>
+	<field name="total" class="java.lang.Integer"/>
+	<variable name="contador_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{contador}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="75" splitType="Stretch">
+			<staticText>
+				<reportElement x="330" y="48" width="21" height="13" uuid="6cd38c4b-1004-42ba-8b49-cfbe19eb49ba"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="108" y="13" width="100" height="15" uuid="e5c11c7a-a145-483c-8743-2e98967be2dc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="108" y="28" width="464" height="20" uuid="9ce7dac7-5901-400f-8230-612dc47b4497"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DISTRIBUCIÓN DE SOLICITUDES POR DEPARTAMENTO]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="108" height="74" uuid="d8ba3f7b-0265-47b3-ad20-b377f5b03138"/>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="108" y="0" width="100" height="13" uuid="423adf9f-4ff2-485c-86d4-f0e08ae469e5"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA IMPRESIÓN:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="350" y="48" width="100" height="13" uuid="cea2ead1-31db-4b60-ac15-bf37be3920ad"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecfin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="48" width="100" height="13" uuid="c1b329c5-36d0-42ec-8fd1-7566d005edd2"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecini}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="452" y="0" width="80" height="13" uuid="bd9b59cb-87ee-463f-9fd9-3a7a2e5860cb"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="532" y="0" width="40" height="13" uuid="7ce93124-1588-43a8-b4aa-fd42425b18d5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="50">
+			<staticText>
+				<reportElement x="112" y="37" width="100" height="13" uuid="fcdce8a9-3ee3-4980-95bf-26a0e1e36860"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEPARTAMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="37" width="70" height="13" uuid="68b6c3ea-fb5d-4dbe-8297-27412c61ffdf"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="1" width="100" height="20" uuid="68c57ff2-3a9f-46c9-bb0d-2ae27b54bfe6"/>
+				<text><![CDATA[contador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="484" y="1" width="100" height="20" uuid="1f3d2836-a901-4e32-bed9-af1e84445320"/>
+				<text><![CDATA[total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16">
+			<textField>
+				<reportElement x="112" y="0" width="277" height="15" uuid="7f3b0ae7-f82a-4d0a-a32e-132248eafb2d"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{nom_dep}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="389" y="0" width="70" height="15" uuid="2e2567bf-630c-4e2b-b1ba-8a9d27a66976"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{contador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="484" y="0" width="48" height="15" forecolor="#FFFFFF" uuid="1a77a9ec-cd11-4a2c-98ae-752578be7c68"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="356">
+			<staticText>
+				<reportElement x="112" y="0" width="277" height="15" uuid="eb4fbc59-4f53-4263-83de-7c3c1ea238cc"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<pieChart>
+				<chart isShowLegend="false">
+					<reportElement x="58" y="50" width="462" height="276" uuid="6ab57a5c-32a7-4ef2-8cfc-1501b6deedaa"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{nom_dep}]]></keyExpression>
+					<valueExpression><![CDATA[($F{contador}*100) / $F{total}]]></valueExpression>
+					<labelExpression><![CDATA[$F{nom_dep} + " " + (($F{contador}*100) / $F{total}) + " %"]]></labelExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel>
+						<font size="8" isBold="true"/>
+					</itemLabel>
+				</piePlot>
+			</pieChart>
+			<textField>
+				<reportElement x="389" y="0" width="70" height="15" uuid="39f2a9e0-40cf-4967-9467-8767eaa1438c"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

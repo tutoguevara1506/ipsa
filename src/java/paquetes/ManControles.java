@@ -90,7 +90,7 @@ public class ManControles implements Serializable {
     public void setSid_ctrl(String sid_ctrl) {
         this.sid_ctrl = sid_ctrl;
     }
-    
+
     public void iniciarventana() {
         cod_ctrl = "";
         sid_ctrl = "";
@@ -108,7 +108,7 @@ public class ManControles implements Serializable {
         controles = new ArrayList<>();
         modulos = new ArrayList<>();
     }
-    
+
     public void llenarModulos() {
         String mQuery = "";
         try {
@@ -133,7 +133,6 @@ public class ManControles implements Serializable {
         }
     }
 
-
     public void llenarControles() {
         String mQuery = "";
         try {
@@ -141,11 +140,10 @@ public class ManControles implements Serializable {
             controles = new ArrayList<>();
 
             //mQuery = "select cod_ctrl, sid_ctrl, ctrl_desc, id_mod from cat_ctrl order by cod_ctrl;";
-            
-            mQuery = " SELECT cod_ctrl, sid_ctrl, ctrl_desc, ipsa.cat_ctrl.id_mod, ipsa.cat_mod.des_mod " +
-                     " FROM ipsa.cat_ctrl inner join ipsa.cat_mod ON "+
-                     " ipsa.cat_mod.id_mod =ipsa.cat_ctrl.id_mod;";
-            
+            mQuery = " SELECT cod_ctrl, sid_ctrl, ctrl_desc, ipsa.cat_ctrl.id_mod, ipsa.cat_mod.des_mod "
+                    + " FROM ipsa.cat_ctrl inner join ipsa.cat_mod ON "
+                    + " ipsa.cat_mod.id_mod =ipsa.cat_ctrl.id_mod;";
+
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -166,10 +164,39 @@ public class ManControles implements Serializable {
         }
     }
 
-    
-    
+    public void llenarControlesPorModulo() {
+        String mQuery = "";
+        try {
+            catcontroles = new CatControles();
+            controles = new ArrayList<>();
+
+            //mQuery = "select cod_ctrl, sid_ctrl, ctrl_desc, id_mod from cat_ctrl order by cod_ctrl;";
+            mQuery = "SELECT cod_ctrl, sid_ctrl, ctrl_desc, cat_ctrl.id_mod, cat_mod.des_mod "
+                    + "FROM cat_ctrl "
+                    + "inner join cat_mod ON cat_mod.id_mod =ipsa.cat_ctrl.id_mod where cat_ctrl.id_mod=" + id_mod + ";";
+
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                controles.add(new CatControles(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4),
+                        resVariable.getString(5)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado de Catálogo de controles por Módulo. " + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+
     public void nuevo() {
-        id_mod ="";
+        id_mod = "";
         cod_ctrl = "";
         sid_ctrl = "";
         ctrl_desc = "";
@@ -186,7 +213,7 @@ public class ManControles implements Serializable {
                     mQuery = "select ifnull(max(cod_ctrl),0)+1 as codigo from cat_ctrl;";
                     cod_ctrl = mAccesos.strQuerySQLvariable(mQuery);
                     mQuery = "insert into cat_ctrl (cod_ctrl,sid_ctrl, ctrl_desc, id_mod) "
-                            + "values (" + cod_ctrl + ",'" + sid_ctrl + "','" + ctrl_desc + "','"+ id_mod + "');";
+                            + "values (" + cod_ctrl + ",'" + sid_ctrl + "','" + ctrl_desc + "','" + id_mod + "');";
                 } else {
                     mQuery = "update cat_ctrl SET "
                             + " sid_ctrl = '" + sid_ctrl + "', "
@@ -236,7 +263,7 @@ public class ManControles implements Serializable {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar un Modulo Valido.", 2);
         }
-        
+
         if ("".equals(ctrl_desc) == true) {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar un Nombre para el control.", 2);

@@ -116,7 +116,7 @@ public class ManProveedores implements Serializable {
             proveedores = new ArrayList<>();
 
             mQuery = "select cod_pro,cod_pai,nom_pro,per_con,tel_con,det_mai  "
-                    + "from cat_pro where cod_pai = " + cod_pai + " order by cod_pro;";
+                    + "from cat_pro order by cod_pro;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -132,6 +132,8 @@ public class ManProveedores implements Serializable {
                 ));
             }
             mAccesos.Desconectar();
+            
+            
 
         } catch (Exception e) {
             System.out.println("Error en el llenado de Catálogo Proveedores. " + e.getMessage() + " Query: " + mQuery);

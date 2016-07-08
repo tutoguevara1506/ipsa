@@ -495,14 +495,24 @@ public class ManPiezas implements Serializable {
 
     public boolean validardatos() {
         boolean mValidar = true;
+        if ("".equals(vid_uti)) {
+            vid_uti = "0";
+        }
+
         if ("".equals(nom_pie)) {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar un Nombre para la Pieza.", 2);
         } else {
             Accesos macc = new Accesos();
             macc.Conectar();
-            String contador = macc.strQuerySQLvariable("select ifnull(count(cod_pie),0) as cont from cat_pie where upper(nom_pie) = '" + nom_pie.toUpperCase() + "' "
-                    + "and cod_pie <> " + cod_pie + ";");
+            String contador;
+            if ("".equals(cod_pie)) {
+                contador = macc.strQuerySQLvariable("select ifnull(count(cod_pie),0) as cont from cat_pie where upper(nom_pie) = '" + nom_pie.toUpperCase() + "' ;");
+            } else {
+                contador = macc.strQuerySQLvariable("select ifnull(count(cod_pie),0) as cont from cat_pie where upper(nom_pie) = '" + nom_pie.toUpperCase() + "' "
+                        + "and cod_pie <> " + cod_pie + ";");
+            }
+
             macc.Desconectar();
             if (!"0".equals(contador)) {
                 mValidar = false;

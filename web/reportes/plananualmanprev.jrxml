@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cb9e4b3d-cf94-4455-a90f-0e6fcb881614">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[select 
+lequ.des_equ, 
+date_format(det.fec_ini,'%d/%m/%Y') as fecini, 
+date_format(det.fec_fin,'%d/%m/%Y') as fecfin,
+case month(det.fec_ini) 
+when 1 then 'ENERO'
+when 2 then 'FEBRERO'
+when 3 then 'MARZO'
+when 4 then 'ABRIL'
+when 5 then 'MAYO'
+when 6 then 'JUNIO'
+when 7 then 'JULIO'
+when 8 then 'AGOSTO'
+when 9 then 'SEPTIEMBRE'
+when 10 then 'OCTUBRE'
+when 11 then 'NOVIEMBRE'
+when 12 then 'DICIEMBRE'
+end
+as mes,
+case mm.det_sta
+when 1 then 'PENDIENTE' 
+when 2 then 'ANULADO' 
+when 3 then 'EN PROCESO' 
+when 4 then 'FINALIZADO'
+else 'ELIMINADO'
+end as detsta,
+if(mm.fec_ini BETWEEN det.fec_ini and det.fec_fin,'SEGÚN PROGRAMA','REUBICADO') as programa,date_format(mm.fec_ini,'%d/%m/%Y') as fecori,
+if((select NOW()) > mm.fec_fin,'1','0') as validador 
+from det_pro_mtto as det
+left join lis_equ as lequ on det.cod_lis_equ = lequ.cod_lis_equ
+left join tbl_mae_man as mm on det.cod_lis_equ = mm.cod_lis_equ and det.cod_man = mm.cod_man
+where det.id_pro_mtto = (select mae.id_pro_mtto from cat_pro_mtto as mae where mae.anho_pro_mtto = (select YEAR(now())) and mae.Aprobado=1 limit 1)
+order by det.fec_ini]]>
+	</queryString>
+	<field name="des_equ" class="java.lang.String">
+		<fieldDescription><![CDATA[Descripción equipo]]></fieldDescription>
+	</field>
+	<field name="fecini" class="java.lang.String"/>
+	<field name="fecfin" class="java.lang.String"/>
+	<field name="mes" class="java.lang.String"/>
+	<field name="detsta" class="java.lang.String"/>
+	<field name="programa" class="java.lang.String"/>
+	<field name="fecori" class="java.lang.String"/>
+	<field name="validador" class="java.lang.String"/>
+	<group name="mes">
+		<groupExpression><![CDATA[$F{mes}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<staticText>
+					<reportElement x="0" y="16" width="114" height="13" uuid="1d0a5785-f18e-4fa2-8623-bd18678f95b3"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Máquina]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="184" y="16" width="55" height="13" uuid="abbaa3fe-949b-4051-a710-c84fe8627b08"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha Incio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="239" y="16" width="55" height="13" uuid="6fa3f071-8d8a-4a8c-9d80-c36bba7a753d"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha Fin]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="294" y="16" width="97" height="13" uuid="d532f1ec-ef10-4a9f-a9aa-30ea6c83d4fe"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Estado]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="572" height="16" backcolor="#CCCCCC" uuid="8d4d820e-4273-4a47-9c21-a5e554dc0b6b"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="28" width="572" height="1" uuid="9dfab49b-1e8b-4559-a009-da048cf6a88a"/>
+				</line>
+				<staticText>
+					<reportElement x="393" y="16" width="100" height="13" uuid="4fd8a206-9dbf-4e93-9698-cb0bc52e5511"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Programación]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="503" y="17" width="57" height="13" uuid="7afd06a8-a574-4063-83a3-6228cad27ac2"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nueva Fecha]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="75" splitType="Stretch">
+			<staticText>
+				<reportElement x="150" y="13" width="422" height="20" uuid="546c6dfe-8463-47ff-89d4-ddf45ed84abc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEPARTAMENTO DE MANTENIMIENTO]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="150" height="75" uuid="5f61fdee-585a-4661-be44-e4c00c8a63ef"/>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="150" y="33" width="422" height="20" uuid="53433c96-b0cb-44e8-8e0b-a3ed06d995e5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROGRAMACIÓN ANUAL MANTENIMIENTOS PREVENTIVOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement x="466" y="0" width="66" height="13" uuid="54cab2fc-e206-496d-87dc-f116d979a06d"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="532" y="0" width="40" height="13" uuid="b3d236d4-f2dc-4084-aa8a-1732d562c0a8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="114" height="12" backcolor="#CCFFFF" uuid="7b1acaf0-3ecd-43b7-8c48-9f92815cb12e"/>
+				<box leftPadding="0" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Finalizado Según Calendario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="114" y="0" width="114" height="12" forecolor="#000000" backcolor="#CCFFCC" uuid="70f1559d-6106-4a13-a1b4-c90874dcfb16"/>
+				<box leftPadding="0" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Finalizado con Reubicación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="228" y="0" width="114" height="12" backcolor="#FFFFCC" uuid="c0386e7e-4467-4aaa-b097-cec0e6ceedf3"/>
+				<box leftPadding="0" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pendiente con Reubicación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="342" y="0" width="114" height="12" backcolor="#FF9999" uuid="f954d873-9787-41b9-8911-651517c30b44"/>
+				<box leftPadding="0" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Retrasado]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="14" width="572" height="1" uuid="aff5aa98-a73f-4c16-bbe8-acc070f4dd7f"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="13" backcolor="#CCFFFF" uuid="085b727e-bd2e-4f06-8a77-095a1bc1a984">
+					<printWhenExpression><![CDATA[!$F{programa}.equals("REUBICADO") && $F{detsta}.equals("FINALIZADO")]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="13" backcolor="#CCFFCC" uuid="58d2414d-8af2-4103-9386-e7c01f3fc1f3">
+					<printWhenExpression><![CDATA[$F{programa}.equals("REUBICADO") && $F{detsta}.equals("FINALIZADO")]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="13" backcolor="#FFFF99" uuid="5d7ed387-15bf-4f7d-814b-7cace05465e3">
+					<printWhenExpression><![CDATA[$F{programa}.equals("REUBICADO") && $F{validador}.equals("0") && $F{detsta}.equals("PENDIENTE")]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="13" backcolor="#FF9999" uuid="631c645f-ee85-4e7f-8f65-07433465cde4">
+					<printWhenExpression><![CDATA[!$F{detsta}.equals("FINALIZADO") && !$F{detsta}.equals("ELIMINADO") && $F{validador}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="176" height="13" uuid="ef786950-5f78-4043-a5d3-b03df15dc94c"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{des_equ}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="184" y="0" width="55" height="13" uuid="4e61729f-fad9-44cc-9d1a-d563a6ace04b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecini}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="239" y="0" width="55" height="13" uuid="ccf705c2-cefa-4f79-a8dc-755119bdfeb4"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecfin}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="294" y="0" width="97" height="13" uuid="419bed54-e0f5-4429-9cc3-0f704b95dd30"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detsta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="393" y="0" width="100" height="13" uuid="e64ce784-81a4-46c7-8689-39dccbad2afa">
+					<printWhenExpression><![CDATA[!$F{detsta}.equals("ELIMINADO")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{programa}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="503" y="0" width="55" height="13" uuid="87bd9cd4-a53a-4f16-abcf-c0a88e7de09e">
+					<printWhenExpression><![CDATA[$F{programa}.equals("REUBICADO")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecori}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="563" y="0" width="10" height="13" uuid="4366272e-1031-48e9-ba50-2865282d75ac">
+					<printWhenExpression><![CDATA[$F{validador}.startsWith( "5" )]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{validador}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

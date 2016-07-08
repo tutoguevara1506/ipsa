@@ -21,20 +21,19 @@ public class ManSeguridad implements Serializable {
     Login cbean;
     private CatSeguridad catseguridad;
     private List<CatSeguridad> seguridad;
-    private CatModulos catmodulos;
+
     private List<CatModulos> modulos;
-    private CatControles catcontroles;
+
     private List<CatControles> controles;
-    private CatGrupos catgrupos;
+
     private List<CatGrupos> grupos;
-    private CatUsuarios catusuarios;
+
     private List<CatUsuarios> usuarios;
     private String cod_sec, cod_ctrl, id_grp, cod_usu, activo, id_mod, grupo, usuario, codCtrl, ctrlActivo;
     private Boolean disable = false;
-    
-         
+
     public ManSeguridad() {
-       
+
     }
 
     public CatSeguridad getCatseguridad() {
@@ -48,17 +47,9 @@ public class ManSeguridad implements Serializable {
     public List<CatSeguridad> getSeguridad() {
         return seguridad;
     }
-    
+
     public void setSeguridad(List<CatSeguridad> seguridad) {
         this.seguridad = seguridad;
-    }
-
-    public CatModulos getCatmodulos() {
-        return catmodulos;
-    }
-
-    public void setCatmodulos(CatModulos catmodulos) {
-        this.catmodulos = catmodulos;
     }
 
     public List<CatModulos> getModulos() {
@@ -69,28 +60,12 @@ public class ManSeguridad implements Serializable {
         this.modulos = modulos;
     }
 
-    public CatControles getCatcontroles() {
-        return catcontroles;
-    }
-
-    public void setCatcontroles(CatControles catcontroles) {
-        this.catcontroles = catcontroles;
-    }
-
     public List<CatControles> getControles() {
         return controles;
     }
 
     public void setControles(List<CatControles> controles) {
         this.controles = controles;
-    }
-
-    public CatGrupos getCatgrupos() {
-        return catgrupos;
-    }
-
-    public void setCatgrupos(CatGrupos catgrupos) {
-        this.catgrupos = catgrupos;
     }
 
     public List<CatGrupos> getGrupos() {
@@ -101,14 +76,6 @@ public class ManSeguridad implements Serializable {
         this.grupos = grupos;
     }
 
-    public CatUsuarios getCatusuarios() {
-        return catusuarios;
-    }
-
-    public void setCatusuarios(CatUsuarios catusuarios) {
-        this.catusuarios = catusuarios;
-    }
-
     public List<CatUsuarios> getUsuarios() {
         return usuarios;
     }
@@ -116,7 +83,7 @@ public class ManSeguridad implements Serializable {
     public void setUsuarios(List<CatUsuarios> usuarios) {
         this.usuarios = usuarios;
     }
-    
+
     public String getCod_sec() {
         return cod_sec;
     }
@@ -124,7 +91,7 @@ public class ManSeguridad implements Serializable {
     public void setCod_sec(String cod_sec) {
         this.cod_sec = cod_sec;
     }
-    
+
     public String getCod_ctrl() {
         return cod_ctrl;
     }
@@ -169,7 +136,6 @@ public class ManSeguridad implements Serializable {
         return activo;
     }
 
-    
     public void setActivo(String activo) {
         this.activo = activo;
     }
@@ -181,7 +147,7 @@ public class ManSeguridad implements Serializable {
     public void setCtrlActivo(String ctrlActivo) {
         this.ctrlActivo = ctrlActivo;
     }
-    
+
     public String getGrupo() {
         return grupo;
     }
@@ -197,7 +163,7 @@ public class ManSeguridad implements Serializable {
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
-    
+
     public Boolean getDisable() {
         return disable;
     }
@@ -206,19 +172,18 @@ public class ManSeguridad implements Serializable {
         this.disable = disable;
     }
 
-
     public void iniciarventana() {
         cod_sec = "";
-        id_mod = "";
-        cod_ctrl = "";
-        id_grp = "";
-        cod_usu = "";
+        id_mod = "0";
+        cod_ctrl = "0";
+        id_grp = "0";
+        cod_usu = "0";
         activo = "";
         llenarModulos();
-        llenarControles();
+        //llenarControles();
         llenarGrupos();
         llenarUsuarios();
-        llenarSeguridad();
+        //llenarSeguridad();
     }
 
     public void cerrarventana() {
@@ -229,22 +194,36 @@ public class ManSeguridad implements Serializable {
         cod_usu = "";
         activo = "";
     }
-    
-    
+
     public void llenarSeguridad() {
         String mQuery = "";
         try {
             catseguridad = new CatSeguridad();
             seguridad = new ArrayList<>();
 
-            mQuery = " SELECT cod_sec, ipsa.cat_mod.des_mod, ipsa.sec_ctrl.cod_ctrl, ipsa.cat_ctrl.ctrl_desc," +
-                     " ipsa.sec_ctrl.id_grp, ipsa.cat_grp.des_grp, ipsa.sec_ctrl.cod_usu, ipsa.cat_usu.nom_usu, activo"+
-                     " FROM ipsa.sec_ctrl INNER JOIN" +
-                     " ipsa.cat_ctrl ON ipsa.cat_ctrl.cod_ctrl = ipsa.sec_ctrl.cod_ctrl LEFT OUTER JOIN"+
-                     " ipsa.cat_grp ON ipsa.cat_grp.id_grp = ipsa.sec_ctrl.id_grp LEFT OUTER JOIN" +
-                     " ipsa.cat_mod ON ipsa.cat_mod.id_mod = ipsa.cat_ctrl.id_mod LEFT OUTER JOIN" +
-                     " ipsa.cat_usu ON ipsa.cat_usu.cod_usu = ipsa.sec_ctrl.cod_usu;";
-                          
+            if ("0".equals(id_grp)) {
+                mQuery = " SELECT cod_sec, cat_mod.id_mod, sec_ctrl.cod_ctrl, cat_ctrl.ctrl_desc,"
+                        + " sec_ctrl.id_grp, cat_grp.des_grp, sec_ctrl.cod_usu, cat_usu.nom_usu, activo"
+                        + " FROM sec_ctrl "
+                        + "INNER JOIN cat_ctrl ON cat_ctrl.cod_ctrl = sec_ctrl.cod_ctrl "
+                        + "LEFT OUTER JOIN cat_grp ON cat_grp.id_grp = sec_ctrl.id_grp "
+                        + "LEFT OUTER JOIN cat_mod ON cat_mod.id_mod = cat_ctrl.id_mod "
+                        + "LEFT OUTER JOIN cat_usu ON cat_usu.cod_usu = sec_ctrl.cod_usu "
+                        + "where cat_mod.id_mod =" + id_mod + " "
+                        + "order by sec_ctrl.id_grp,cod_sec;";
+            } else {
+                mQuery = " SELECT cod_sec, cat_mod.id_mod, sec_ctrl.cod_ctrl, cat_ctrl.ctrl_desc,"
+                        + " sec_ctrl.id_grp, cat_grp.des_grp, sec_ctrl.cod_usu, cat_usu.nom_usu, activo"
+                        + " FROM sec_ctrl "
+                        + "INNER JOIN cat_ctrl ON cat_ctrl.cod_ctrl = sec_ctrl.cod_ctrl "
+                        + "LEFT OUTER JOIN cat_grp ON cat_grp.id_grp = sec_ctrl.id_grp "
+                        + "LEFT OUTER JOIN cat_mod ON cat_mod.id_mod = cat_ctrl.id_mod "
+                        + "LEFT OUTER JOIN cat_usu ON cat_usu.cod_usu = sec_ctrl.cod_usu "
+                        + "where cat_mod.id_mod =" + id_mod + " "
+                        + "and sec_ctrl.id_grp=" + id_grp + " "
+                        + "order by sec_ctrl.id_grp,cod_sec;";
+            }
+
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -265,14 +244,14 @@ public class ManSeguridad implements Serializable {
             mAccesos.Desconectar();
 
         } catch (Exception e) {
-            System.out.println("Error en el Registro de la Seguridad. " + e.getMessage() + " Query: " + mQuery);
+            System.out.println("Error en el Llenado de la Seguridad. " + e.getMessage() + " Query: " + mQuery);
         }
     }
 
     public void llenarModulos() {
         String mQuery = "";
         try {
-            catmodulos = new CatModulos();
+
             modulos = new ArrayList<>();
 
             mQuery = "select id_mod, des_mod from cat_mod order by id_mod;";
@@ -293,19 +272,21 @@ public class ManSeguridad implements Serializable {
         }
     }
 
-
     public void llenarControles() {
         String mQuery = "";
         try {
-            catcontroles = new CatControles();
+
             controles = new ArrayList<>();
 
             //mQuery = "select cod_ctrl, sid_ctrl, ctrl_desc, id_mod from cat_ctrl order by cod_ctrl;";
-            
-            mQuery = " SELECT cod_ctrl, sid_ctrl, ctrl_desc, ipsa.cat_ctrl.id_mod, ipsa.cat_mod.des_mod " +
-                     " FROM ipsa.cat_ctrl inner join ipsa.cat_mod ON "+
-                     " ipsa.cat_mod.id_mod =ipsa.cat_ctrl.id_mod;";
-            
+            mQuery = "SELECT mcc.cod_ctrl, mcc.sid_ctrl, ctrl_desc, mcc.id_mod, cmod.des_mod "
+                    + "FROM cat_ctrl as mcc "
+                    + "inner join cat_mod as cmod ON cmod.id_mod =mcc.id_mod "
+                    + "where "
+                    + "mcc.id_mod=" + id_mod + " "
+                    + "and mcc.cod_ctrl not in (select secctrl.cod_ctrl "
+                    + "FROM sec_ctrl as secctrl where secctrl.id_grp=" + id_grp + ");";
+
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -329,7 +310,7 @@ public class ManSeguridad implements Serializable {
     public void llenarGrupos() {
         String mQuery = "";
         try {
-            catgrupos = new CatGrupos();
+
             grupos = new ArrayList<>();
 
             mQuery = "select id_grp, des_grp from cat_grp order by des_grp;";
@@ -349,10 +330,10 @@ public class ManSeguridad implements Serializable {
             System.out.println("Error en el llenado de Grupos de Seguridad. " + e.getMessage() + " Query: " + mQuery);
         }
     }
-    
+
     public void llenarUsuarios() {
         try {
-            catusuarios = new CatUsuarios();
+
             usuarios = new ArrayList<>();
 
             String mQuery = "select usu.cod_usu, usu.nom_usu, usu.des_pas, usu.tip_usu, usu.cod_pai, "
@@ -387,10 +368,10 @@ public class ManSeguridad implements Serializable {
 
     public void nuevo() {
         cod_sec = "";
-        id_mod = "";
-        cod_ctrl = "";
-        id_grp = "";
-        cod_usu = "";
+        id_mod = "0";
+        cod_ctrl = "0";
+        id_grp = "0";
+        cod_usu = "0";
         activo = "";
         catseguridad = new CatSeguridad();
     }
@@ -405,7 +386,7 @@ public class ManSeguridad implements Serializable {
                     mQuery = "select ifnull(max(cod_sec),0)+1 as codigo from sec_ctrl;";
                     cod_sec = mAccesos.strQuerySQLvariable(mQuery);
                     mQuery = "insert into sec_ctrl (cod_sec, cod_ctrl, id_grp, cod_usu, activo) "
-                            + "values (" + cod_sec + ",'" + cod_ctrl + "','" + id_grp + "','" + cod_usu + "','" +  activo + "');";
+                            + "values (" + cod_sec + ",'" + cod_ctrl + "','" + id_grp + "','" + cod_usu + "','" + activo + "');";
                 } else {
                     mQuery = "update sec_ctrl SET "
                             + " cod_ctrl = '" + cod_ctrl + "', "
@@ -452,21 +433,21 @@ public class ManSeguridad implements Serializable {
 
     public boolean validardatos() {
         boolean mValidar = true;
-        if ("".equals(cod_ctrl) == true) {
+        if ("".equals(cod_ctrl) || "0".equals(cod_ctrl)) {
             mValidar = false;
             addMessage("Validar Datos", "Debe Ingresar un Nombre para el control.", 2);
         }
-        
-        if ("".equals(activo) == true) {
+
+        if ("".equals(activo)) {
             mValidar = false;
             addMessage("Validar Datos", "Debe indicar Activo o Inactivo.", 2);
         }
-        
-        if (("".equals(id_grp) == true) && ("".equals(cod_usu) == true)) {
+
+        if ("0".equals(id_grp)  && "0".equals(cod_usu) ) {
             mValidar = false;
             addMessage("Validar Datos", "Debe indicar un Grupo o Usuario.", 2);
         }
-        
+
         Accesos maccesos = new Accesos();
         maccesos.Conectar();
         if ("0".equals(maccesos.strQuerySQLvariable("select count(cod_ctrl) from sec_ctrl "
@@ -478,26 +459,26 @@ public class ManSeguridad implements Serializable {
         return mValidar;
 
     }
-    
-    public boolean disableOpt(String idControl){
+
+    public boolean disableOpt(String idControl) {
         grupo = "";
         codCtrl = "";
         usuario = cbean.getCod_usu();
-        
-        if (!"1".equals(usuario)){
-           
+
+        if (!"1".equals(usuario)) {
+
             Accesos maccesos = new Accesos();
             maccesos.Conectar();
-                grupo = maccesos.strQuerySQLvariable("select id_grp from cat_usr_grp where cod_usu = '"+ usuario +"' limit 1;");
-                codCtrl = maccesos.strQuerySQLvariable("select cod_ctrl from cat_ctrl where sid_ctrl = '"+ idControl +"' limit 1;");
-                
-                ctrlActivo = maccesos.strQuerySQLvariable("select activo from sec_ctrl where cod_ctrl = '" + codCtrl + "' AND ( id_grp = '"+ grupo +"' OR cod_usu = '" + usuario + "') limit 1;");
-                
-             maccesos.Desconectar();
+            grupo = maccesos.strQuerySQLvariable("select id_grp from cat_usr_grp where cod_usu = '" + usuario + "' limit 1;");
+            codCtrl = maccesos.strQuerySQLvariable("select cod_ctrl from cat_ctrl where sid_ctrl = '" + idControl + "' limit 1;");
 
-             disable = "".equals(ctrlActivo);
+            ctrlActivo = maccesos.strQuerySQLvariable("select activo from sec_ctrl where cod_ctrl = '" + codCtrl + "' AND ( id_grp = '" + grupo + "' OR cod_usu = '" + usuario + "') limit 1;");
+
+            maccesos.Desconectar();
+
+            disable = "".equals(ctrlActivo);
         }
-         
+
         return disable;
     }
 
@@ -507,7 +488,12 @@ public class ManSeguridad implements Serializable {
         cod_ctrl = ((CatSeguridad) event.getObject()).getCod_ctrl();
         id_grp = ((CatSeguridad) event.getObject()).getId_grp();
         cod_usu = ((CatSeguridad) event.getObject()).getCod_usu();
-        activo =  ((CatSeguridad) event.getObject()).getActivo();
+        activo = ((CatSeguridad) event.getObject()).getActivo();
+    }
+    
+    public void onSelectGrupo() {
+        llenarControles();
+        llenarSeguridad();
     }
 
     public void addMessage(String summary, String detail, int tipo) {

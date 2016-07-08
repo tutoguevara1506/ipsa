@@ -63,52 +63,41 @@ public class ManMaestroMan extends Conexion implements Serializable {
     private static final long serialVersionUID = 8774297541534938L;
     @Inject
     Login cbean;
+    private List<CatDepartamentos> departamentos;
     private List<CatGrupoFallas> grupofallas;
     private List<CatFallas> listafallas;
-    private CatOperaciones catoperaciones;
     private List<CatOperaciones> operaciones;
-    private CatTipos cattipos;
     private List<CatTipos> tipos;
-    private CatPeriodos catperiodos;
     private List<CatPeriodos> periodos;
-    private CatMantenimientos catmantenimientos;
-    private List<CatMantenimientos> mantenimientos;
-    private CatClientes catclientes;
     private List<CatClientes> clientes;
-    private CatPaises catpaises;
     private List<CatPaises> paises;
-    private CatBodegas catbodegas;
     private List<CatBodegas> bodegas;
-    private CatUbicaciones catubicaciones;
     private List<CatUbicaciones> ubicaciones;
-    private CatUsuarios catusuarios;
     private List<CatUsuarios> usuarios;
     private List<CatUsuarios> supervisores;
-    private CatEquipos catequipos;
     private List<CatEquipos> equipos;
-    private CatListaEquipos catlistaequipos;
     private List<CatListaEquipos> lequipos;
-    private CatExistenciaReal catexistenciareal;
     private List<CatExistenciaReal> existenciareal;
-    private CatPiezasConExistencia catpiezasconexistencia;
     private List<CatPiezasConExistencia> existencias;
+    private CatMantenimientosFal catmantenimientosfal;
+    private List<CatMantenimientosFal> fallas;
+    private CatMantenimientos catmantenimientos;
+    private List<CatMantenimientos> mantenimientos;
     private CatMantenimientosGen catmantenimientosgen;
     private List<CatMantenimientosGen> general;
     private CatMantenimientosPie catmantenimientospie;
     private List<CatMantenimientosPie> piezas;
     private CatMantenimientosAne catmantenimientosane;
     private List<CatMantenimientosAne> anexos;
-    private CatMantenimientosFal catmantenimientosfal;
-    private List<CatMantenimientosFal> fallas;
     private CatMantenimientosAcc catmantenimientosacc;
     private List<CatMantenimientosAcc> accesorios;
-    private List<CatSolicitudesDetalle> solicitudes;
-    private List<CatSolicitudesDetalle> requisiciones;
+    private CatMantenimientosFMAN005 catmantenimientos005;
+    private List<CatMantenimientosFMAN005> fman005;
+
     private CatCalendario catcalendario;
     private List<CatCalendario> listaMttos;
     private List<CatCalendario> listaMttosPre;
-    private CatDepartamentos catdepartamentos;
-    private List<CatDepartamentos> departamentos;
+
     private ScheduleModel mttoModel;
     private ScheduleEvent mtto = new DefaultScheduleEvent();
 
@@ -136,7 +125,27 @@ public class ManMaestroMan extends Conexion implements Serializable {
             fm1_ent_obs_006, fm1_ent_obs_007, fm1_ent_obs_008, fm1_ent_obs_009, fm1_ent_obs_010, fm1_ent_obs_011, fm1_ent_obs_012, fm1_ent_obs_013, fm1_ent_obs_014,
             fm1_ent_obs_015, fm1_ent_obs_016, fm1_ent_obs_017, fm1_ent_usu_pro, fm1_ent_usu_man;
 
+    //Variables para cheklist F-MAN-005 
+    private String fm5_cod_lis_equ, fm5_cod_man, fm5_det_man, fm5_obs_001;
+
     private UploadedFile file;
+
+    //********** Por Borrar ***************
+    private CatOperaciones catoperaciones;
+    private CatTipos cattipos;
+    private CatPeriodos catperiodos;
+    private CatClientes catclientes;
+    private CatPaises catpaises;
+    private CatBodegas catbodegas;
+    private CatUbicaciones catubicaciones;
+    private CatUsuarios catusuarios;
+    private CatEquipos catequipos;
+    private CatListaEquipos catlistaequipos;
+    private CatExistenciaReal catexistenciareal;
+    private CatPiezasConExistencia catpiezasconexistencia;
+    private CatDepartamentos catdepartamentos;
+    private List<CatSolicitudesDetalle> solicitudes;
+    private List<CatSolicitudesDetalle> requisiciones;
 
     public ManMaestroMan() {
     }
@@ -524,6 +533,22 @@ public class ManMaestroMan extends Conexion implements Serializable {
 
     public void setAccesorios(List<CatMantenimientosAcc> accesorios) {
         this.accesorios = accesorios;
+    }
+
+    public CatMantenimientosFMAN005 getCatmantenimientos005() {
+        return catmantenimientos005;
+    }
+
+    public void setCatmantenimientos005(CatMantenimientosFMAN005 catmantenimientos005) {
+        this.catmantenimientos005 = catmantenimientos005;
+    }
+
+    public List<CatMantenimientosFMAN005> getFman005() {
+        return fman005;
+    }
+
+    public void setFman005(List<CatMantenimientosFMAN005> fman005) {
+        this.fman005 = fman005;
     }
 
     public List<CatSolicitudesDetalle> getSolicitudes() {
@@ -1470,6 +1495,38 @@ public class ManMaestroMan extends Conexion implements Serializable {
         this.fm1_ent_usu_man = fm1_ent_usu_man;
     }
 
+    public String getFm5_cod_lis_equ() {
+        return fm5_cod_lis_equ;
+    }
+
+    public void setFm5_cod_lis_equ(String fm5_cod_lis_equ) {
+        this.fm5_cod_lis_equ = fm5_cod_lis_equ;
+    }
+
+    public String getFm5_cod_man() {
+        return fm5_cod_man;
+    }
+
+    public void setFm5_cod_man(String fm5_cod_man) {
+        this.fm5_cod_man = fm5_cod_man;
+    }
+
+    public String getFm5_det_man() {
+        return fm5_det_man;
+    }
+
+    public void setFm5_det_man(String fm5_det_man) {
+        this.fm5_det_man = fm5_det_man;
+    }
+
+    public String getFm5_obs_001() {
+        return fm5_obs_001;
+    }
+
+    public void setFm5_obs_001(String fm5_obs_001) {
+        this.fm5_obs_001 = fm5_obs_001;
+    }
+
     //********************* Pantalla ORIGINAL ********************************
     public void iniciarventana() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -2267,6 +2324,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
         piezas = new ArrayList<>();
         anexos = new ArrayList<>();
         accesorios = new ArrayList<>();
+        fman005 = new ArrayList<>();
 
         llenarUsuarios();
         llenarOperaciones();
@@ -2353,6 +2411,12 @@ public class ManMaestroMan extends Conexion implements Serializable {
         fm1_ent_obs_017 = "";
         fm1_ent_usu_pro = "0";
         fm1_ent_usu_man = "0";
+
+        //************* F-MAN-005 ****************
+        fm5_cod_lis_equ = "";
+        fm5_cod_man = "";
+        fm5_det_man = "";
+        fm5_obs_001 = "";
 
     }
 
@@ -2478,6 +2542,10 @@ public class ManMaestroMan extends Conexion implements Serializable {
         fm1_ent_obs_017 = "";
         fm1_ent_usu_pro = "0";
         fm1_ent_usu_man = "0";
+        fm5_cod_lis_equ = "";
+        fm5_cod_man = "";
+        fm5_det_man = "";
+        fm5_obs_001 = "";
 
     }
 
@@ -2486,6 +2554,8 @@ public class ManMaestroMan extends Conexion implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('wvEncManIni').clearFilters()");
         try {
             cod_man = "";
+            catmantenimientos = new CatMantenimientos();
+            mantenimientos = new ArrayList<>();
             catmantenimientosgen = new CatMantenimientosGen();
             general = new ArrayList<>();
             catmantenimientospie = new CatMantenimientosPie();
@@ -2494,8 +2564,8 @@ public class ManMaestroMan extends Conexion implements Serializable {
             accesorios = new ArrayList<>();
             catmantenimientosane = new CatMantenimientosAne();
             anexos = new ArrayList<>();
-            catmantenimientos = new CatMantenimientos();
-            mantenimientos = new ArrayList<>();
+            catmantenimientos005 = new CatMantenimientosFMAN005();
+            fman005 = new ArrayList<>();
 
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -2514,7 +2584,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
                     + "tip.nom_tip,"
                     + "case mm.det_sta "
                     + "when 1 then 'PENDIENTE' "
-                    + "when 2 then 'CANCELADO' "
+                    + "when 2 then 'ANULADO' "
                     + "when 3 then 'EN PROCESO' "
                     + "when 4 then 'FINALIZADO' "
                     + "end as status, "
@@ -2582,7 +2652,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
             System.out.println("Error en el llenado de Mantenimientos Integral en ManMaestroMan. " + e.getMessage() + " Query: " + mQuery);
         }
     }
-    
+
     public void llenarMantenimientosintegral2() {
         String mQuery = "";
         RequestContext.getCurrentInstance().execute("PF('wvEncManIni').clearFilters()");
@@ -2607,7 +2677,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
                     + "tip.nom_tip,"
                     + "case mm.det_sta "
                     + "when 1 then 'PENDIENTE' "
-                    + "when 2 then 'CANCELADO' "
+                    + "when 2 then 'ANULADO' "
                     + "when 3 then 'EN PROCESO' "
                     + "when 4 then 'FINALIZADO' "
                     + "end as status, "
@@ -2687,6 +2757,11 @@ public class ManMaestroMan extends Conexion implements Serializable {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Escoger un Tipo de Mantenimiento.", 2);
         }
+        if ("2".equals(det_sta)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "El Mantenimiento ha sido Anulado.", 2);
+        }
+
         if (mvalidar) {
             try {
                 RequestContext.getCurrentInstance().execute("PF('wvEncManIni').clearFilters()");
@@ -2744,7 +2819,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
 
                 int correlativo = 0;
                 Double mItems = 0.0;
-                String mValoresGeneral = "", mValoresPiezas = "", mValoresAccesorios = "", mValoresAnexos = "", mValoresFMAN001 = "";
+                String mValoresGeneral = "", mValoresPiezas = "", mValoresAccesorios = "", mValoresAnexos = "", mValoresFMAN001 = "", mValoresFMAN005 = "";
                 try {
                     for (int i = 0; i < general.size(); i++) {
                         mValoresGeneral = mValoresGeneral + ",(" + cod_lis_equ + "," + cod_man + "," + (i + 1)
@@ -2777,6 +2852,11 @@ public class ManMaestroMan extends Conexion implements Serializable {
                             mItems = mItems + Double.valueOf(accesorios.get(i).getDet_can());
                         }
 
+                    }
+
+                    for (int i = 0; i < fman005.size(); i++) {
+                        mValoresFMAN005 = mValoresFMAN005 + ",(" + cod_lis_equ + "," + cod_man + "," + (i + 1)
+                                + ",'" + fman005.get(i).getObs_001() + "')";
                     }
 
                     mAccesos.Conectar();
@@ -2838,6 +2918,8 @@ public class ManMaestroMan extends Conexion implements Serializable {
                     mAccesos.dmlSQLvariable(mQuery);
                     mQuery = "delete from tbl_det_man_001 where cod_lis_equ =" + cod_lis_equ + " and cod_man= " + cod_man + "; ";
                     mAccesos.dmlSQLvariable(mQuery);
+                    mQuery = "delete from tbl_det_man_005 where cod_lis_equ =" + cod_lis_equ + " and cod_man= " + cod_man + "; ";
+                    mAccesos.dmlSQLvariable(mQuery);
 
                     if (general.size() > 0) {
                         mValoresGeneral = "insert into tbl_det_man_gen (cod_lis_equ,cod_man,det_man,fec_man,cod_ope,det_obs,cod_usu,det_min) VALUES "
@@ -2863,9 +2945,13 @@ public class ManMaestroMan extends Conexion implements Serializable {
                             + "  ,obs_004,obs_005,obs_006,obs_007,obs_008,obs_009,obs_010,obs_011,obs_012,obs_013,obs_014 "
                             + "  ,obs_015,obs_016,obs_017,usu_pro,usu_man) VALUES" + mValoresFMAN001;
                     mAccesos.dmlSQLvariable(mValoresFMAN001);
-
-                    mAccesos.dmlSQLvariable("update tbl_mae_man set det_sta = 3 where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";");
-
+                    if (fman005.size() > 0) {
+                        mValoresAccesorios = "insert into tbl_det_man_005 (cod_lis_equ,cod_man,det_man,obs_001) VALUES " + mValoresFMAN005.substring(1) + ";";
+                        mAccesos.dmlSQLvariable(mValoresAccesorios);
+                    }
+                    if (!"4".equals(det_sta)) {
+                        mAccesos.dmlSQLvariable("update tbl_mae_man set det_sta = 3 where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";");
+                    }
                     mAccesos.Desconectar();
 
                     addMessage("Guardar Detalles Mantenimiento", "La Información ha sido almacenada con éxito.", 1);
@@ -2882,6 +2968,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
                     System.out.println(" Accesorios: " + mValoresAccesorios);
                     System.out.println(" Anexos: " + mValoresAnexos);
                     System.out.println(" FMAN001: " + mValoresFMAN001);
+                    System.out.println(" FMAN005: " + mValoresFMAN005);
 
                 }
 
@@ -2903,6 +2990,8 @@ public class ManMaestroMan extends Conexion implements Serializable {
         mAccesos.Conectar();
         if ("".equals(cod_lis_equ) == false && "0".equals(cod_lis_equ) == false && "".equals(cod_man) == false) {
             try {
+                mQuery = "delete from tbl_det_man_005 where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
+                mAccesos.dmlSQLvariable(mQuery);
                 mQuery = "delete from tbl_det_man_001 where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
                 mAccesos.dmlSQLvariable(mQuery);
                 mQuery = "delete from tbl_det_man_ane where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
@@ -2920,12 +3009,34 @@ public class ManMaestroMan extends Conexion implements Serializable {
                 addMessage("Eliminar Mantenimiento", "Información Eliminada con éxito.", 1);
             } catch (Exception e) {
                 addMessage("Eliminar Mantenimiento", "Error al momento de Eliminar la información. " + e.getMessage(), 2);
-                System.out.println("Error al Eliminar Equipo. " + e.getMessage() + " Query: " + mQuery);
+                System.out.println("Error al Eliminar Mantenimiento. " + e.getMessage() + " Query: " + mQuery);
             }
             iniciarventanaintegral();
 
         } else {
             addMessage("Eliminar Mantenimiento", "Debe elegir un Registro.", 2);
+        }
+        mAccesos.Desconectar();
+    }
+
+    public void anular() {
+        String mQuery = "";
+        Accesos mAccesos = new Accesos();
+        mAccesos.Conectar();
+        if ("".equals(cod_lis_equ) == false && "0".equals(cod_lis_equ) == false && "".equals(cod_man) == false) {
+            try {
+                mQuery = "update tbl_mae_man set det_sta = 2 where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
+                mAccesos.dmlSQLvariable(mQuery);
+                addMessage("Anular Mantenimiento", "Anulación realizada con éxito.", 1);
+
+            } catch (Exception e) {
+                addMessage("Anular Mantenimiento", "Error al momento de Anular la información. " + e.getMessage(), 2);
+                System.out.println("Error al Anular Mantenimiento. " + e.getMessage() + " Query: " + mQuery);
+            }
+            iniciarventanaintegral();
+
+        } else {
+            addMessage("Anular Mantenimiento", "Debe elegir un Registro.", 2);
         }
         mAccesos.Desconectar();
     }
@@ -2992,6 +3103,8 @@ public class ManMaestroMan extends Conexion implements Serializable {
             System.out.println("Error en convertir fechas encabezado." + ex.getMessage() + " fec_ini: " + fec_ini + " fec_fin: " + fec_fin);
         }
 
+        fm5_obs_001 = "";
+
         llenarFallas();
         llenarGeneral();
         llenarPiezas();
@@ -2999,6 +3112,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
         llenarAnexos();
         llenarFMAN001REC();
         llenarFMAN001ENT();
+        llenarFMAN005();
 
     }
 
@@ -3039,6 +3153,9 @@ public class ManMaestroMan extends Conexion implements Serializable {
             case "tab001ent":
                 tabindex = "5";
                 break;
+            case "tab005":
+                tabindex = "6";
+                break;
 
         }
         //System.out.println(tabindex);
@@ -3067,7 +3184,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
                         resVariable.getString(6),
                         resVariable.getString(7),
                         resVariable.getString(8),
-                        "", "", "", "", "", "", "", "", "", "", "", "","",""
+                        "", "", "", "", "", "", "", "", "", "", "", "", "", ""
                 ));
             }
             mAccesos.Desconectar();
@@ -3671,6 +3788,35 @@ public class ManMaestroMan extends Conexion implements Serializable {
         }
     }
 
+    public void llenarFMAN005() {
+        String mQuery = "";
+        try {
+
+            mQuery = "select  "
+                    + "cod_lis_equ, cod_man, det_man, obs_001 "
+                    + "from tbl_det_man_005 "
+                    + "where cod_lis_equ = " + cod_lis_equ + " "
+                    + "and cod_man=" + cod_man + " ;";
+
+            ResultSet resVariable;
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+            resVariable = mAccesos.querySQLvariable(mQuery);
+            while (resVariable.next()) {
+                fman005.add(new CatMantenimientosFMAN005(
+                        resVariable.getString(1),
+                        resVariable.getString(2),
+                        resVariable.getString(3),
+                        resVariable.getString(4)
+                ));
+            }
+            mAccesos.Desconectar();
+
+        } catch (Exception e) {
+            System.out.println("Error en el llenado FMAN005 en ManMaestroMan" + e.getMessage() + " Query: " + mQuery);
+        }
+    }
+
     //******************** Mantenimiento Tablas Detalle Mantenimiento ************************
     public void agregarfalla() {
         if (validarfalla()) {
@@ -4243,6 +4389,68 @@ public class ManMaestroMan extends Conexion implements Serializable {
         }
     }
 
+    public void agregarFMAN005() {
+        if (validarFMAN005()) {
+            int correlativo = 0;
+            try {
+                for (int i = 0; i < fman005.size(); i++) {
+                    if (Integer.valueOf(fman005.get(i).getDet_man()) > correlativo) {
+                        correlativo = Integer.valueOf(fman005.get(i).getDet_man());
+                    }
+                }
+
+                fman005.add(new CatMantenimientosFMAN005(
+                        cod_lis_equ,
+                        cod_man,
+                        String.valueOf(correlativo + 1),
+                        ((fm5_obs_001.replace("'", " ")).replace("/", " ")).replace("\\", " ")
+                ));
+
+                fm5_obs_001 = "";
+
+            } catch (Exception e) {
+                System.out.println("Error en Agregar FMAN005 ManMaestroMan." + e.getMessage());
+            }
+        }
+
+    }
+
+    public boolean validarFMAN005() {
+        boolean mvalidar = true;
+
+        if ("".equals(fm5_obs_001)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Ingresar Un Detalle del Trabajo Realizado.", 2);
+        }
+        if ("".equals(cod_lis_equ) || "0".equals(cod_lis_equ)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar un Equipo.", 2);
+        }
+        /*else if ("".equals(cod_man)) {
+            mvalidar = false;
+            addMessage("Validar Datos", "Debe Seleccionar un Mantenimiento.", 2);
+        }*/
+
+        return mvalidar;
+
+    }
+
+    public void eliminarFMAN005() {
+        if ("".equals(fm5_det_man)) {
+            addMessage("Eliminar Detalles", "Debe Seleccionar un Trabajo para Remover.", 2);
+        } else {
+            for (int i = 0; i < fman005.size(); i++) {
+                if (cod_lis_equ.equals(fman005.get(i).getCod_lis_equ())
+                        && cod_man.equals(fman005.get(i).getCod_man())
+                        && fm5_det_man.equals(fman005.get(i).getDet_man())) {
+                    fman005.remove(i);
+                }
+            }
+
+            fm5_obs_001 = "";
+        }
+    }
+
     public void finalizarmantenimiento() {
         String mQuery = "";
         if (validarfinalizar()) {
@@ -4284,7 +4492,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
                 macc.Desconectar();
                 limpiarventana();
                 iniciarventanaintegral();
-                
+
                 addMessage("Finalizar Mantenimiento", "El Mantenimiento ha Finalizado Satisfactoriamente.", 1);
             } catch (Exception e) {
                 addMessage("Finalizar Mantenimiento", "El Mantenimiento no ha podido Finalizar.", 1);
@@ -4409,6 +4617,13 @@ public class ManMaestroMan extends Conexion implements Serializable {
         ane_tip_ane = ((CatMantenimientosAne) event.getObject()).getTip_ane();
         ane_rut_ane = ((CatMantenimientosAne) event.getObject()).getRut_ane();
         ane_cod_usu = ((CatMantenimientosAne) event.getObject()).getCod_usu();
+
+    }
+
+    public void onRowSelectFM005(SelectEvent event) {
+
+        fm5_det_man = ((CatMantenimientosFMAN005) event.getObject()).getDet_man();
+        fm5_obs_001 = ((CatMantenimientosFMAN005) event.getObject()).getObs_001();
 
     }
 
@@ -4871,6 +5086,20 @@ public class ManMaestroMan extends Conexion implements Serializable {
         }
 
     }
+    
+    public void ejecutarreportePROGRAMA() {
+        try {
+            
+                parametros = new HashMap<>();
+                nombrereporte = "/reportes/plananualmanprev.jasper";
+                nombreexportar = "plananualmanprev";
+                verPDF();
+            
+        } catch (Exception e) {
+            System.out.println("Error en EjecutarReporte Programa." + e.getMessage());
+        }
+
+    }
 
     public void verPDF() {
         try {
@@ -4887,7 +5116,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
             FacesContext.getCurrentInstance().responseComplete();
             Desconectar();
         } catch (JRException | IOException e) {
-            System.out.println("Error en verPDF en MaestraMan." + e.getMessage());
+            System.out.println("Error en verPDF en MaestroMan." + e.getMessage());
         }
     }
 

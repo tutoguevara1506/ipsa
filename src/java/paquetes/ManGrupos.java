@@ -75,7 +75,7 @@ public class ManGrupos implements Serializable {
             catgrupos = new CatGrupos();
             grupos = new ArrayList<>();
 
-            mQuery = "select id_grp, des_grp from cat_grp order by des_grp;";
+            mQuery = "select id_grp, des_grp from cat_grp order by id_grp;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();

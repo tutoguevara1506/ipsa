@@ -43,9 +43,10 @@ public class ManRequisicionNueva implements Serializable {
     private List<CatUbicaciones> ubicaciones;
 
     private String cod_mae, cod_alt, fec_sol, cod_usu_sol, cod_usu_apr, cod_usu_rec, cod_dep, det_uso, cod_maq, det_sta, det_obs, fec_cie, cod_pai, flg_loc;
-    private String det_cod_det, det_cod_pai, det_cod_bod, det_cod_ubi, det_cod_ite, det_des_ite, det_det_can_sol, det_det_can_ent, det_det_can_pen, det_non_sto, det_det_sta, det_fec_cie;
+    private String det_cod_det, det_cod_pai, det_cod_bod, det_cod_ubi, det_cod_ite, det_des_ite, det_det_can_sol, det_det_can_ent, det_det_can_pen, det_non_sto,
+            det_det_sta, det_fec_cie;
     private Date mfecha;
-    private String tabindex, boolNS;
+    private String tabindex, boolNS, img_pro, nomprod;
 
     public ManRequisicionNueva() {
     }
@@ -370,6 +371,22 @@ public class ManRequisicionNueva implements Serializable {
         this.boolNS = boolNS;
     }
 
+    public String getImg_pro() {
+        return img_pro;
+    }
+
+    public void setImg_pro(String img_pro) {
+        this.img_pro = img_pro;
+    }
+
+    public String getNomprod() {
+        return nomprod;
+    }
+
+    public void setNomprod(String nomprod) {
+        this.nomprod = nomprod;
+    }
+
     public void iniciarventana() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -402,9 +419,11 @@ public class ManRequisicionNueva implements Serializable {
         det_fec_cie = "null";
         tabindex = "0";
         boolNS = "true";
+        img_pro = "";
+        nomprod = "";
         maestro = new ArrayList<>();
         detalles = new ArrayList<>();
-        llenarPaises();
+        //llenarPaises();
         llenarPiezas();
         llenarUsuarios();
         llenarEquipos();
@@ -439,6 +458,8 @@ public class ManRequisicionNueva implements Serializable {
         det_non_sto = "0";
         det_det_sta = "0";
         det_fec_cie = "";
+        img_pro = "";
+        nomprod = "";
         tabindex = "0";
         usuarios = new ArrayList<>();
         equipos = new ArrayList<>();
@@ -479,6 +500,8 @@ public class ManRequisicionNueva implements Serializable {
         det_fec_cie = "null";
         tabindex = "0";
         boolNS = "true";
+        img_pro = "";
+        nomprod = "";
         catmaestro = new CatSolicitudes();
         catdetalles = new CatSolicitudesDetalle();
         detalles = new ArrayList<>();
@@ -553,8 +576,6 @@ public class ManRequisicionNueva implements Serializable {
                     + "left join cat_equ as cequ on lequ.cod_equ = cequ.cod_equ "
                     + "left join cat_pro as cpro on lequ.cod_pro = cpro.cod_pro and lequ.cod_pai = cpro.cod_pai "
                     + "left join cat_cli as ccli on lequ.cod_cli = ccli.cod_cli and lequ.cod_pai = ccli.cod_pai "
-                    + "where "
-                    + "lequ.cod_pai = " + cod_pai + " "
                     + "order by lequ.cod_pai, lequ.cod_equ, lequ.num_ser ,lequ.cod_lis_equ;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
@@ -599,7 +620,7 @@ public class ManRequisicionNueva implements Serializable {
             departamentos = new ArrayList<>();
 
             String mQuery = "select cod_dep, cod_pai, nom_dep "
-                    + "from cat_dep where cod_pai = " + cod_pai + " order by cod_dep;";
+                    + "from cat_dep order by cod_dep;";
             ResultSet resVariable;
             Accesos mAccesos = new Accesos();
             mAccesos.Conectar();
@@ -641,7 +662,6 @@ public class ManRequisicionNueva implements Serializable {
         }
     }
 
-    
     public void llenarPiezas() {
         String mQuery = "";
         try {
@@ -807,7 +827,7 @@ public class ManRequisicionNueva implements Serializable {
                     det_des_ite = macc.strQuerySQLvariable("select nom_pie from cat_pie where cod_pie=" + det_cod_ite + ";");
 
                     String nompai, nombod, nomubi;
-                    nompai = macc.strQuerySQLvariable("select nom_alm from cat_alm where cod_alm=" + cod_pai + ";");
+                    nompai = "";
                     nombod = "";
                     nomubi = "";
                     macc.Desconectar();
@@ -858,17 +878,16 @@ public class ManRequisicionNueva implements Serializable {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Escoger un Item.", 2);
         }
-        if ("0".equals(cod_pai)) {
-            mvalidar = false;
-            addMessage("Validar Datos", "Debe Seleccionar un País.", 2);
-        }
-
         if ("".equals(det_det_can_sol)) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Ingresar una Cantidad mayor que Cero.", 2);
         } else if (Double.valueOf(det_det_can_sol) <= 0) {
             mvalidar = false;
             addMessage("Validar Datos", "Debe Ingresar una Cantidad mayor que Cero.", 2);
+        }
+        if (detalles.size() > 10) {
+            mvalidar = false;
+            addMessage("Validar Datos", "El máximo de Items por requisición es de 10.", 2);
         }
         return mvalidar;
 
@@ -973,6 +992,28 @@ public class ManRequisicionNueva implements Serializable {
         }
     }
 
+    public void onCloseImg() {
+        img_pro = "";
+        nomprod = "";
+    }
+
+    public void iniciarimagen() {
+        try {
+            if ("0".equals(det_cod_ite) || "".equals(det_cod_ite)) {
+                img_pro = "/resources/images/piezas/noimage.png";
+                nomprod = "NINGUNO";
+            } else {
+                Accesos acc = new Accesos();
+                acc.Conectar();
+                img_pro = acc.strQuerySQLvariable("Select det_ima from cat_pie where cod_pie=" + det_cod_ite + ";");
+                nomprod = acc.strQuerySQLvariable("Select concat(cod_ref,'--',nom_pie) as nompro from cat_pie where cod_pie=" + det_cod_ite + ";");
+                acc.Desconectar();
+            }
+        } catch (Exception e) {
+            System.out.println("Error en Iniciar Imagen de ManRequisicionNueva. " + e.getMessage());
+        }
+    }
+
     public void onRowSelect(SelectEvent event) {
 
         det_cod_det = ((CatSolicitudesDetalle) event.getObject()).getCod_det();
@@ -1053,10 +1094,8 @@ public class ManRequisicionNueva implements Serializable {
     public void onChangePais() {
         llenarDepartamentos();
         llenarEquipos();
-        
 
     }
-
 
     public void onChangeNonStock() {
         if ("0".equals(det_non_sto)) {

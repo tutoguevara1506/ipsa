@@ -167,7 +167,7 @@ public class ManBodegas implements Serializable {
                 if ("".equals(id_bod)) {
                     mQuery = "select ifnull(max(id_bod),0)+1 as codigo from cat_bodegas;";
                     id_bod = mAccesos.strQuerySQLvariable(mQuery);
-                    mQuery = "insert into cat_bodegas (id_bod,nom_bod,cod_alm) "
+                    mQuery = "insert into cat_bodegas (id_bod,nom_bod,cod_pai) "
                             + "values (" + id_bod + ",'" + nom_bod + "'," + cod_alm + ");";
                 } else {
                     mQuery = "update cat_bodegas SET "
@@ -224,8 +224,8 @@ public class ManBodegas implements Serializable {
         Accesos maccesos = new Accesos();
         maccesos.Conectar();
         if ("0".equals(maccesos.strQuerySQLvariable("select count(id_bod) from cat_bodegas "
-                + "where upper(nom_bod)='" + nom_bod.toUpperCase() + "' and cod_alm ="
-                + getCod_alm() + ";")) == false
+                + "where upper(nom_bod)='" + nom_bod.toUpperCase() + "' and cod_pai ="
+                + cod_alm + ";")) == false
                 && "".equals(id_bod)) {
             mValidar = false;
             addMessage("Validar Datos", "El Nombre de Estante ya existe.", 2);

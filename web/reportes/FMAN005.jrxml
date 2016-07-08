@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="24a3def9-5054-4a53-b246-e82eda52b605">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="cod_lis_equ" class="java.lang.String"/>
@@ -13,14 +13,10 @@ fec_ini,
 fec_fin, 
 ifnull((select det_nom from cat_usu as tecni where tecni.cod_usu= mm.cod_usu limit 1),'') as tecnico, 
 ifnull((select det_nom from cat_usu as superv where superv.cod_usu=mm.cod_sup limit 1),'') as supervisor, 
-(select 
-group_concat(concat(ifnull(if(UPPER(co.nom_ope)='ACCIÓN PERSONALIZADA','',co.nom_ope),''),' ',mg.det_obs) separator ',')
-as Resultado 
-from tbl_det_man_gen as mg
-left join cat_ope as co on mg.cod_ope = co.cod_ope
-WHERE mg.cod_lis_equ = mm.cod_lis_equ AND mg.cod_man = mm.cod_man) as tareas
+concat(fm5.det_man,' - ', fm5.obs_001) as tareas
 FROM tbl_mae_man as mm
-left join  lis_equ as lequ on mm.cod_lis_equ = lequ.cod_lis_equ 
+inner join tbl_det_man_005 as fm5 on  mm.cod_lis_equ=fm5.cod_lis_equ and mm.cod_man = fm5.cod_man
+left join lis_equ as lequ on mm.cod_lis_equ = lequ.cod_lis_equ 
 left join cat_pai as pai on lequ.cod_pai = pai.cod_pai 
 WHERE 
 mm.cod_lis_equ = $P{cod_lis_equ}
@@ -45,7 +41,7 @@ AND mm.cod_man = $P{cod_man}]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="156" splitType="Stretch">
+		<band height="101" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="23" width="752" height="20" uuid="8e3bb302-268b-46de-847f-d1007e0ed8b8"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -92,13 +88,6 @@ AND mm.cod_man = $P{cod_man}]]>
 				</textElement>
 				<text><![CDATA[DEPARTAMENTO:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="4" y="131" width="748" height="20" uuid="5efe741f-20a1-4b58-878f-69826d1f9115"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[DETALLE DE TRABAJOS REALIZADOS]]></text>
-			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="327" y="78" width="182" height="20" uuid="9b248905-8a7f-46b5-8839-b7a4d74ea65b"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
@@ -122,59 +111,50 @@ AND mm.cod_man = $P{cod_man}]]>
 			</textField>
 		</band>
 	</title>
+	<pageHeader>
+		<band height="37">
+			<staticText>
+				<reportElement x="0" y="13" width="752" height="20" uuid="5efe741f-20a1-4b58-878f-69826d1f9115"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DETALLE DE TRABAJOS REALIZADOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="632" y="0" width="80" height="13" uuid="be79161a-6594-4d3f-b758-407947a802c4"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="712" y="0" width="40" height="13" uuid="521de452-7828-4699-8d6c-b30106b54a23"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
 	<detail>
-		<band height="216" splitType="Stretch">
-			<rectangle>
-				<reportElement mode="Transparent" x="4" y="0" width="748" height="12" forecolor="#CCCCCC" uuid="af0df0ef-1276-4a65-8538-046fc3427f7d"/>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="4" y="12" width="748" height="12" forecolor="#CCCCCC" uuid="51213d7a-85a2-4582-b651-9f6281375697"/>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="4" y="24" width="748" height="12" forecolor="#CCCCCC" uuid="b6b93e48-2b55-4a8c-941f-4d14242fe41d"/>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="4" y="36" width="748" height="12" forecolor="#CCCCCC" uuid="2ea80acb-abd9-41d8-a7fc-7ddacd5b5ad6"/>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="4" y="48" width="748" height="12" forecolor="#CCCCCC" uuid="3ecb9793-d266-49e2-8e77-b557859fce27"/>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="4" y="60" width="748" height="12" forecolor="#CCCCCC" uuid="0534620b-c725-4a66-ab30-a2c569b173f1"/>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="4" y="72" width="748" height="12" forecolor="#CCCCCC" uuid="83bb66a5-0485-4b36-8856-24124e7fe350"/>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="4" y="84" width="748" height="12" forecolor="#CCCCCC" uuid="72f575bd-a57c-4236-af5b-b6cf3a178f8e"/>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="4" y="96" width="748" height="12" forecolor="#CCCCCC" uuid="af581c03-50ad-4909-8035-1f22a9a2d406"/>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="4" y="108" width="748" height="12" forecolor="#CCCCCC" uuid="9582ec55-9bda-4bcc-97d8-2ebba97e7089"/>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="4" y="120" width="748" height="12" forecolor="#CCCCCC" uuid="cfedfb91-f870-44ac-ae99-5f5ada4872d4"/>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="4" y="132" width="748" height="12" forecolor="#CCCCCC" uuid="b929e397-20a8-4866-95d3-7db9ed8ab907"/>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="4" y="144" width="748" height="12" forecolor="#CCCCCC" uuid="30216721-c3d7-4c3a-a9a9-54dff40f948a"/>
-			</rectangle>
+		<band height="15" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="4" y="2" width="748" height="9" uuid="2accebd7-e4cd-40ab-a21b-060b1b1faaf7"/>
-				<box leftPadding="3" rightPadding="3"/>
-				<textElement textAlignment="Justified" verticalAlignment="Top">
+				<reportElement x="0" y="0" width="752" height="15" uuid="6ad5cf14-a240-4039-9c96-78bc4979e368"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Justified">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tareas}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="144" splitType="Stretch">
+	<lastPageFooter>
+		<band height="148">
 			<staticText>
 				<reportElement x="4" y="24" width="129" height="20" uuid="7d699b55-87ed-4aff-8d19-3e18573cd2e6"/>
 				<textElement verticalAlignment="Middle">
@@ -226,5 +206,5 @@ AND mm.cod_man = $P{cod_man}]]>
 				<reportElement x="550" y="41" width="173" height="1" uuid="d8620ac2-4dbf-4648-9efc-39cf13fe6108"/>
 			</line>
 		</band>
-	</columnFooter>
+	</lastPageFooter>
 </jasperReport>
