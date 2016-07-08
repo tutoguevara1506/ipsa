@@ -407,7 +407,6 @@ public class ManActivoFijo implements Serializable {
                 porcentaje_no_deduc = String.valueOf(porcentaje_no); 
                 cuota = (Double.parseDouble(valor_adqui) * porcentaje)/Integer.parseInt(tiempo_deprecia);
                 cuota_mes_deprecia = String.format("%1$,.2f", cuota);
-                System.out.println(cuota);
             }
             catch (Exception e){
                 System.out.println("Error el calculo-- Division entre cero. " + e.getMessage());

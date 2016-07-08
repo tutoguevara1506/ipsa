@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f1b7d2a7-1636-4c15-bee0-8016b69eeee8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFE4BF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFF4E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="45a59ec9-d5b7-4ea0-a041-ceb511556f60"/>
+	<queryString>
+		<![CDATA[SELECT
+     cat_act_fij.`id_act_fij` AS cat_act_fij_id_act_fij,
+     cat_act_fij.`id_tip_act` AS cat_act_fij_id_tip_act,
+     cat_tip_act.`des_tip_act` AS cat_tip_act_des_tip_act,
+     cat_act_fij.`desc_equ` AS cat_act_fij_desc_equ,
+     cat_act_fij.`fecha_adquisicion` AS cat_act_fij_fecha_adquisicion,
+     cat_act_fij.`valor_adqui` AS cat_act_fij_valor_adqui,
+     cat_act_fij.`id_depto` AS cat_act_fij_id_depto,
+     cat_dep.`nom_dep` AS cat_dep_nom_dep,
+     cat_act_fij.`dist_gast_porc` AS cat_act_fij_dist_gast_porc,
+     CASE cat_act_fij.`dist_gast_porc` WHEN 'true' THEN 'X' END AS distribucion,
+     cat_act_fij.`seccion` AS cat_act_fij_seccion,
+     cat_act_fij.`id_estado` AS cat_act_fij_id_estado,
+     CASE cat_act_fij.`id_estado` WHEN 1 THEN 'NUEVO' WHEN 2 THEN 'USADO' END AS des_estado,
+     cat_act_fij.`tiempo_deprecia` AS cat_act_fij_tiempo_deprecia,
+     cat_act_fij.`cuota_mes_deprecia` AS cat_act_fij_cuota_mes_deprecia,
+     cat_act_fij.`porcentaje_deduc` AS cat_act_fij_porcentaje_deduc,
+     cat_act_fij.`porcentaje_no_deduc` AS cat_act_fij_porcentaje_no_deduc,
+     cat_act_fij.`serie_equ` AS cat_act_fij_serie_equ,
+     cat_act_fij.`modelo_equ` AS cat_act_fij_modelo_equ,
+     cat_act_fij.`no_inventario` AS cat_act_fij_no_inventario,
+     cat_act_fij.`observacion` AS cat_act_fij_observacion,
+     cat_act_fij.`codigo_equ` AS cat_act_fij_codigo_equ
+FROM
+     `cat_act_fij` cat_act_fij INNER JOIN `cat_tip_act` cat_tip_act ON  cat_tip_act.id_tip_act = cat_act_fij.id_tip_act INNER JOIN `cat_dep` cat_dep ON cat_dep.cod_dep = cat_act_fij.id_depto ]]>
+	</queryString>
+	<field name="cat_act_fij_id_act_fij" class="java.lang.Integer"/>
+	<field name="cat_act_fij_id_tip_act" class="java.lang.Integer"/>
+	<field name="cat_tip_act_des_tip_act" class="java.lang.String"/>
+	<field name="cat_act_fij_desc_equ" class="java.lang.String"/>
+	<field name="cat_act_fij_fecha_adquisicion" class="java.sql.Date"/>
+	<field name="cat_act_fij_valor_adqui" class="java.lang.Double"/>
+	<field name="cat_act_fij_id_depto" class="java.lang.Integer"/>
+	<field name="cat_dep_nom_dep" class="java.lang.String"/>
+	<field name="cat_act_fij_dist_gast_porc" class="java.lang.String"/>
+	<field name="distribucion" class="java.lang.String"/>
+	<field name="cat_act_fij_seccion" class="java.lang.String"/>
+	<field name="cat_act_fij_id_estado" class="java.lang.Integer"/>
+	<field name="des_estado" class="java.lang.String"/>
+	<field name="cat_act_fij_tiempo_deprecia" class="java.lang.Integer"/>
+	<field name="cat_act_fij_cuota_mes_deprecia" class="java.lang.Double"/>
+	<field name="cat_act_fij_porcentaje_deduc" class="java.lang.Double"/>
+	<field name="cat_act_fij_porcentaje_no_deduc" class="java.lang.Double"/>
+	<field name="cat_act_fij_serie_equ" class="java.lang.String"/>
+	<field name="cat_act_fij_modelo_equ" class="java.lang.String"/>
+	<field name="cat_act_fij_no_inventario" class="java.lang.String"/>
+	<field name="cat_act_fij_observacion" class="java.lang.String"/>
+	<field name="cat_act_fij_codigo_equ" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="52" splitType="Stretch">
+			<staticText>
+				<reportElement x="156" y="0" width="297" height="20" uuid="21d04224-690c-4b61-82b7-40fe5b379585"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INDUSTRIAS PLASTICAS, S.A. DE C.V.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="173" y="20" width="264" height="29" uuid="4a331a3a-cd4e-4987-be8a-f606115c8c0e"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FICHA DE ACTIVO FIJO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="258" splitType="Stretch">
+			<rectangle>
+				<reportElement x="5" y="7" width="545" height="245" uuid="06c2acc5-1623-4a0b-bbf5-ff1f26b35243"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="26" y="110" width="520" height="33" uuid="b8989a9b-aba0-4df9-a3a3-8534a7d9b276"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="35" y="147" width="56" height="20" uuid="2c8dcc70-551c-4c94-a85e-d9e9b5242971"/>
+				<text><![CDATA[Codigo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="91" y="147" width="100" height="20" uuid="dd356666-87e5-4d17-97cf-7bdd7960207b"/>
+				<textFieldExpression><![CDATA[$F{cat_act_fij_codigo_equ}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="275" y="147" width="100" height="20" uuid="cdfbf159-1c85-4e3c-b878-055f06440612"/>
+				<text><![CDATA[Numero  Inventario:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="376" y="147" width="166" height="20" uuid="dbbee49b-eda6-4b03-ae75-8c136d5f0e4f"/>
+				<textFieldExpression><![CDATA[$F{cat_act_fij_no_inventario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="91" y="167" width="100" height="20" uuid="6b42adb8-187f-49ff-8f84-f662bc80e253"/>
+				<textFieldExpression><![CDATA[$F{cat_act_fij_serie_equ}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="35" y="168" width="56" height="20" uuid="7bd250a8-af1e-42cf-8aed-ba12cc10ea68"/>
+				<text><![CDATA[Serie:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="376" y="167" width="166" height="20" uuid="630ef872-eb85-495e-a786-49b224e67f23"/>
+				<textFieldExpression><![CDATA[$F{cat_act_fij_modelo_equ}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="275" y="167" width="100" height="20" uuid="ff7a7540-604e-4dca-ac70-97443eca3bf3"/>
+				<text><![CDATA[Modelo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="377" y="190" width="165" height="20" uuid="adc9b85a-1632-4ceb-a976-ad48518bb01e"/>
+				<textFieldExpression><![CDATA[$F{cat_act_fij_fecha_adquisicion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="275" y="190" width="100" height="20" uuid="4a66cc9c-d706-4ccf-be6d-12cd7bdc2207"/>
+				<text><![CDATA[Fecha Adquisicion:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="91" y="190" width="100" height="20" uuid="db3abed0-63e3-4b56-872c-3c55d80a8d28"/>
+				<textFieldExpression><![CDATA[$F{cat_act_fij_valor_adqui}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="35" y="190" width="56" height="20" uuid="848a8d20-3046-49e0-a6f4-49a0c3213a94"/>
+				<text><![CDATA[Precio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="13" width="100" height="20" uuid="e61fbbe1-9a1d-43f2-86f9-da53d2f6f184"/>
+				<text><![CDATA[Tipo de Activo: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="33" width="100" height="20" uuid="6ef180ec-505e-42c1-92b1-4a5485a85f24"/>
+				<text><![CDATA[Descripción: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="148" y="33" width="210" height="31" uuid="1ece8290-d679-4671-aa56-cd060209496c"/>
+				<textFieldExpression><![CDATA[$F{cat_act_fij_desc_equ}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="477" y="13" width="50" height="20" uuid="56933066-fab9-4963-835d-f4cb5a5dcf06"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{cat_act_fij_codigo_equ}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="363" y="13" width="96" height="20" uuid="be859c76-cb8d-4e9f-960d-a25032bca730"/>
+				<text><![CDATA[Correlativo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="64" width="100" height="20" uuid="ad636489-35db-44e3-a177-6e0b4f24afbf"/>
+				<text><![CDATA[Departamento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="478" y="64" width="49" height="20" uuid="c9143f49-a0b6-4bff-9b6d-2572e8947710"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{cat_act_fij_tiempo_deprecia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="361" y="65" width="100" height="20" uuid="3eb6d484-f844-418c-84e0-94c6fb189a87"/>
+				<text><![CDATA[Depreciar en Meses:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="87" width="99" height="20" uuid="6eaa162c-8313-4650-8108-b0e8d245091c"/>
+				<text><![CDATA[Valor de adquisición:]]></text>
+			</staticText>
+			<textField pattern="$ #,##0.00">
+				<reportElement x="151" y="87" width="100" height="20" uuid="db390472-d7eb-4d58-878a-9c273e0f354f"/>
+				<textFieldExpression><![CDATA[$F{cat_act_fij_valor_adqui}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="472" y="87" width="55" height="20" uuid="5998b195-b97e-41e8-8e02-07ffe433a82e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{cat_act_fij_fecha_adquisicion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="361" y="87" width="110" height="20" uuid="a07024ed-9c77-43b2-ba6a-ac4d5081b7a8"/>
+				<text><![CDATA[Fecha de Adquisición:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="148" y="13" width="210" height="20" uuid="3b05ba00-b435-4bd2-882b-fd9d0f438e60"/>
+				<textFieldExpression><![CDATA[$F{cat_tip_act_des_tip_act}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="66" width="209" height="20" uuid="1e59e176-1abd-48c9-8074-535d0a844b60"/>
+				<textFieldExpression><![CDATA[$F{cat_dep_nom_dep}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="363" y="33" width="96" height="20" uuid="3f2ce995-c0e3-4403-9cf7-8a04909766a4"/>
+				<text><![CDATA[Estado:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="477" y="33" width="50" height="20" uuid="e526dcd1-c996-41e4-a64c-257dda932072"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{des_estado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="41" y="112" width="110" height="33" uuid="8e9a06c6-1af3-4e41-b4a8-e7cb3c8f2aff"/>
+				<text><![CDATA[Distribución de gastos
+Por porcentaje]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="156" y="117" width="30" height="20" uuid="cd01426b-a196-4bdc-8734-0941f69d3f1f"/>
+				<textFieldExpression><![CDATA[$F{distribucion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="201" y="118" width="116" height="20" uuid="9ee05041-9f58-4d5d-a18d-26613bd1a46e"/>
+				<text><![CDATA[Porcentaje Daducible:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="119" width="126" height="20" uuid="45ea6857-dc02-4476-a325-686aea8ef3d0"/>
+				<text><![CDATA[Porcentaje no deducible: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="321" y="118" width="37" height="20" uuid="011fc7c4-3a86-4fa2-be72-a7e675b62c2e"/>
+				<textFieldExpression><![CDATA[$F{cat_act_fij_porcentaje_deduc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="119" width="37" height="20" uuid="baa0ae30-d8c8-4a68-8a99-99f13a19450b"/>
+				<textFieldExpression><![CDATA[$F{cat_act_fij_porcentaje_no_deduc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="33" y="214" width="68" height="20" uuid="d5bc52ae-4ab0-422f-b18f-cd1aa29abd67"/>
+				<text><![CDATA[Observación: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="105" y="214" width="435" height="35" uuid="d2486610-5f31-4cc5-a148-f132556fcc9c"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{cat_act_fij_observacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="45" height="22" uuid="a299aff3-8470-45c0-9677-9acd736dc22b"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="10" width="100" height="20" uuid="dd7a5f31-430a-4df7-a073-471d6b5ed84a"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Fecha Cuota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="5" width="78" height="28" uuid="f4b9b3e5-1d26-4a2b-a48a-81edb47a0f5c"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Depreciación Reclamada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="5" width="78" height="28" uuid="57b35220-5384-4285-9915-8f25293f57f6"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Depreciación Acumulada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="5" width="97" height="26" uuid="5605620f-543a-4a2c-bc7c-3e83e5fe3c06"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Remanente Sujeto 
+a depreciacion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="6" width="97" height="26" uuid="4f8d7087-c6f8-48b4-9b6a-c747c0f0eb46"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Valor
+Actual]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement x="307" y="5" width="199" height="20" uuid="31621d51-697b-4b76-bb1f-aa6d12b8aa32"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="510" y="5" width="40" height="20" uuid="e88b0427-d2cc-4f10-8b72-213273df3a56"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
