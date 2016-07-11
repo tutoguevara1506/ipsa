@@ -414,6 +414,10 @@ public class ManActivoFijo implements Serializable {
             
         } 
     }
+    
+     public void llenarFichaActivoFijo () {
+        
+    }
     // SETTERS y GETTERS
 
     public String getId_act_fij() {

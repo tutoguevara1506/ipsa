@@ -8573,7 +8573,7 @@
                                  scrollable="true"
                                  scrollHeight="95"
                                  widgetVar="activoFijoDT"
-                                 rowIndexVar="logIndex"   
+                                 rowIndexVar="afIndex"   
                                  >
                         <p:ajax event="rowSelect" listener="#{manActivoFijo.onRowSelect}" 
                                 update=":frmActivoFijo" />
@@ -8589,14 +8589,9 @@
                          <p:column style="width:30px" headerText="Fecha Adquisición">
                              <h:outputText value="#{vActivoFijo.fecha_adquisicion}" />
                         </p:column>
-                        <p:column style="width:5px">                                
-                            <p:commandButton update=":dlgPeriodoActivoFijo"
-                                            icon="ui-icon-print"
-                                            title="Periodo Activo Fijo"
-                                            onclick="PF('activoFijoDT').selectRow(#{logIndex})" 
-                                            action="#{manAlertas.remove}"
-                                            process="@form">
-                                <f:setPropertyActionListener value="#{vDaler}" target="#{manAlertas.logalertas}" />
+                        <p:column style="width:32px;text-align: center">
+                            <p:commandButton update=":dlgPeriodoActivoFijo" oncomplete="PF('wPeriodoActivoFijo').show()" onclick="PF('activoFijoDT').selectRow(#{afIndex})" icon="ui-icon-print" title="Ficha Activo Fijo" action="#{manActivoFijo.llenarFichaActivoFijo}">
+                                <f:setPropertyActionListener value="#{vActivoFijo}" target="#{manActivoFijo.catactivofijo}" />
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
@@ -8605,7 +8600,7 @@
             </h:form>
         </p:dialog>  
         <p:dialog  id="dlgPeriodoActivoFijo" widgetVar="wPeriodoActivoFijo" modal="true" 
-                   width="900" height="540" closable="false" resizable="false" 
+                   width="250" height="120" closable="false" resizable="false" 
                    header="Periodo a calcular ficha de Activo Fijo" rendered="true" 
                    dynamic="false" visible="false" 
                    >
@@ -8620,8 +8615,8 @@
                                          ajax="false"
                                          />
                         <p:commandButton value="Cerrar" style=" width: 100px;"
-                                         onclick="PF('wDetalleProMtto').hide()"
-                                         update=":frmDetalleProMtto"
+                                         onclick="PF('wPeriodoActivoFijo').hide()"
+                                         update=":frmActivoFijo"
                                          icon="ui-icon-close"
                                          />
 
