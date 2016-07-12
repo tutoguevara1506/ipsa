@@ -29,7 +29,7 @@ public class ManActivoFijo implements Serializable {
     private CatDepartamentos catdepartamentos;
     private List<CatDepartamentos> departamentos;
     private String id_act_fij, id_tip_act, desc_equ, fecha_adquisicion, valor_adqui, id_depto, dist_gast_porc, seccion, id_estado, tiempo_deprecia, cuota_mes_deprecia, porcentaje_deduc, porcentaje_no_deduc, serie_equ, modelo_equ, no_inventario, observacion, codigo_equ;
-    private Date dfadqu;
+    private Date dfadqu, dfcalculo;
     
     public ManActivoFijo() {
     }
@@ -416,7 +416,7 @@ public class ManActivoFijo implements Serializable {
     }
     
      public void llenarFichaActivoFijo () {
-        
+        System.out.println(dfcalculo);
     }
     // SETTERS y GETTERS
 
@@ -618,6 +618,14 @@ public class ManActivoFijo implements Serializable {
 
     public void setDepartamentos(List<CatDepartamentos> departamentos) {
         this.departamentos = departamentos;
+    }
+
+    public Date getDfcalculo() {
+        return dfcalculo;
+    }
+
+    public void setDfcalculo(Date dfcalculo) {
+        this.dfcalculo = dfcalculo;
     }
    
 }

@@ -8622,8 +8622,16 @@
 
                     </f:facet>
                 </p:toolbar>
-                    <h:panelGrid columns="1">  
-                        <h:outputText value="#{timelinepro.des_equ}" style="font-size:8px"/>  
+                    <p:spacer width="20" height="20"/>
+                    <h:panelGrid columns="2"> 
+                         <h:outputText value="Fecha de Calculo: " style="font-weight:bold;" />
+                         <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fdecalc"
+                                             readonlyInput="true" 
+                                             showOn="button" size="10"
+                                             value="#{manActivoFijo.dfcalculo}"
+                                             >
+                                    <p:ajax event="dateSelect" listener="#{manActivoFijo.dateSelected}" />
+                        </p:calendar> 
                     </h:panelGrid>  
             </h:form>
         </p:dialog>
