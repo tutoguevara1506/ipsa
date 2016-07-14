@@ -8590,7 +8590,7 @@
                              <h:outputText value="#{vActivoFijo.fecha_adquisicion}" />
                         </p:column>
                         <p:column style="width:32px;text-align: center">
-                            <p:commandButton update=":dlgPeriodoActivoFijo" oncomplete="PF('wPeriodoActivoFijo').show()" onclick="PF('activoFijoDT').selectRow(#{afIndex})" icon="ui-icon-print" title="Ficha Activo Fijo" action="#{manActivoFijo.llenarFichaActivoFijo}">
+                            <p:commandButton update=":dlgPeriodoActivoFijo" oncomplete="PF('wPeriodoActivoFijo').show()" onclick="PF('activoFijoDT').selectRow(#{afIndex})" icon="ui-icon-print" title="Ficha Activo Fijo">
                                 <f:setPropertyActionListener value="#{vActivoFijo}" target="#{manActivoFijo.catactivofijo}" />
                             </p:commandButton>
                         </p:column>
@@ -8611,7 +8611,7 @@
                     <f:facet name="left">
                         <p:commandButton value="Imprimir" icon="ui-icon-print"
                                          onclick="this.form.target = '_blank';" 
-                                         action="#{manPronosticoMtto.imprimir()}" 
+                                         action="#{manActivoFijo.imprimir()}" 
                                          ajax="false"
                                          />
                         <p:commandButton value="Cerrar" style=" width: 100px;"
@@ -8627,7 +8627,7 @@
                          <h:outputText value="Fecha de Calculo: " style="font-weight:bold;" />
                          <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fdecalc"
                                              readonlyInput="true" 
-                                             showOn="button" size="10"
+                                             showOn="button" size="12"
                                              value="#{manActivoFijo.dfcalculo}"
                                              >
                                     <p:ajax event="dateSelect" listener="#{manActivoFijo.dateSelected}" />

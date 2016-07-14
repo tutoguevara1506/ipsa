@@ -24,6 +24,12 @@
 		</box>
 	</style>
 	<subDataset name="Table Dataset 1" uuid="45a59ec9-d5b7-4ea0-a041-ceb511556f60"/>
+	<parameter name="id_act_fij" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dfcalculo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      cat_act_fij.`id_act_fij` AS cat_act_fij_id_act_fij,
@@ -49,7 +55,8 @@
      cat_act_fij.`observacion` AS cat_act_fij_observacion,
      cat_act_fij.`codigo_equ` AS cat_act_fij_codigo_equ
 FROM
-     `cat_act_fij` cat_act_fij INNER JOIN `cat_tip_act` cat_tip_act ON  cat_tip_act.id_tip_act = cat_act_fij.id_tip_act INNER JOIN `cat_dep` cat_dep ON cat_dep.cod_dep = cat_act_fij.id_depto ]]>
+     `cat_act_fij` cat_act_fij INNER JOIN `cat_tip_act` cat_tip_act ON  cat_tip_act.id_tip_act = cat_act_fij.id_tip_act INNER JOIN `cat_dep` cat_dep ON cat_dep.cod_dep = cat_act_fij.id_depto
+WHERE cat_act_fij.`id_act_fij` = $P{id_act_fij}]]>
 	</queryString>
 	<field name="cat_act_fij_id_act_fij" class="java.lang.Integer"/>
 	<field name="cat_act_fij_id_tip_act" class="java.lang.Integer"/>

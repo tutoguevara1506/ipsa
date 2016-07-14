@@ -1,18 +1,28 @@
 package paquetes;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
 import org.primefaces.event.SelectEvent;
 
 @Named
@@ -415,8 +425,42 @@ public class ManActivoFijo implements Serializable {
         } 
     }
     
+    public void imprimir() {
+        llenarFichaActivoFijo();
+        try {
+            byte[] content;
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            content = imprimirFichaActivoFijo();
+            response.setContentType("application/pdf");
+            response.setContentLength(content == null ? 0 : content.length);
+            response.getOutputStream().write(content);
+            response.getOutputStream().flush();
+            FacesContext.getCurrentInstance().responseComplete();
+        } catch (SQLException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public byte[] imprimirFichaActivoFijo() throws SQLException, JRException {
+        ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String reportPath = ctx.getRealPath(File.separator + "reportes" + File.separator);
+        HashMap param = new HashMap();
+        param.put("dfcalculo", dfcalculo);
+        param.put("id_act_fij", id_act_fij);
+        
+        System.out.println(id_act_fij);
+
+        Accesos racc = new Accesos();
+        return JasperRunManager.runReportToPdf(reportPath + File.separator + "fichaActivoFijo.jasper", param, racc.Conectar());
+    }
+   
+    
      public void llenarFichaActivoFijo () {
-        System.out.println(dfcalculo);
+        System.out.println("entra");
     }
     // SETTERS y GETTERS
 
