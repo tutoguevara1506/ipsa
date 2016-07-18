@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -339,6 +340,27 @@ public class ManActivoFijo implements Serializable {
         }
 
     }
+    
+     public boolean validarIngresoFecha() {
+         
+        boolean mValidar = true;
+        String mensaje = "Debe Ingresar ";
+        
+         if (dfcalculo == null) {
+            mValidar = false;
+            mensaje= mensaje + "- Tiempo de depreciacion. \n";
+        }
+         
+         if (mValidar){            
+            return mValidar;
+        }
+        else
+        {
+            System.out.println(mensaje);
+            addMessage("Validar Datos", mensaje, 2);
+            return mValidar;
+        }
+    }
 
     public void onRowSelect(SelectEvent event) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -426,22 +448,25 @@ public class ManActivoFijo implements Serializable {
     }
     
     public void imprimir() {
-        llenarFichaActivoFijo();
-        try {
-            byte[] content;
-            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-            content = imprimirFichaActivoFijo();
-            response.setContentType("application/pdf");
-            response.setContentLength(content == null ? 0 : content.length);
-            response.getOutputStream().write(content);
-            response.getOutputStream().flush();
-            FacesContext.getCurrentInstance().responseComplete();
-        } catch (SQLException ex) {
-            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JRException ex) {
-            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        
+        if (validarIngresoFecha()) {
+            try {
+                llenarFichaActivoFijo();
+                byte[] content;
+                HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+                content = imprimirFichaActivoFijo();
+                response.setContentType("application/pdf");
+                response.setContentLength(content == null ? 0 : content.length);
+                response.getOutputStream().write(content);
+                response.getOutputStream().flush();
+                FacesContext.getCurrentInstance().responseComplete();
+            } catch (SQLException ex) {
+                Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JRException ex) {
+                Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -452,15 +477,82 @@ public class ManActivoFijo implements Serializable {
         param.put("dfcalculo", dfcalculo);
         param.put("id_act_fij", id_act_fij);
         
-        System.out.println(id_act_fij);
+        //System.out.println(id_act_fij);
 
         Accesos racc = new Accesos();
         return JasperRunManager.runReportToPdf(reportPath + File.separator + "fichaActivoFijo.jasper", param, racc.Conectar());
     }
-   
+    
+    public Date sumarMesesFecha(Date fecha, int meses){
+      Calendar calendar = Calendar.getInstance();
+      calendar.setTime(fecha); // Configuramos la fecha que se recibe
+      calendar.add(Calendar.MONTH, meses);  // numero de días a añadir, o restar en caso de días<0
+      return calendar.getTime(); // Devuelve el objeto Date con los nuevos días añadidos
+    }
+
+    public static Calendar DateToCalendar(Date date){ 
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
     
      public void llenarFichaActivoFijo () {
-        System.out.println("entra");
+        String mQuery = "";
+        String existe = "";
+        
+            try {
+                Accesos mAccesos = new Accesos();
+                mAccesos.Conectar();
+                
+                mQuery = "select ifnull(count(id_act_fij),0) from det_act_fij where id_act_fij ="+id_act_fij+";";
+                existe = mAccesos.strQuerySQLvariable(mQuery);
+                
+                if ("0".equals(existe)) {
+                    Integer meses = 0;
+                    Date fec_det_act_fij = dfadqu;
+                    Double depr_calculada = null;
+                     
+                    while( !fec_det_act_fij.after(dfcalculo)){
+           
+                        fec_det_act_fij = sumarMesesFecha(dfadqu, meses);
+                        
+                        if (fec_det_act_fij.equals(dfadqu)){
+                            
+                            Calendar cfadqu;
+                            
+                            cfadqu = DateToCalendar(dfadqu);
+                            Integer dias;
+                            
+                            dias = cfadqu.get(Calendar.DAY_OF_MONTH) - cfadqu.getActualMaximum(cfadqu.DAY_OF_MONTH);
+                            System.out.println(dias);
+                            
+                            //depr_calculada = Double.parseDouble(cuota_mes_deprecia)/
+                        }
+                        else
+                        {
+                            depr_calculada = Double.parseDouble(cuota_mes_deprecia);
+                        }
+                        
+                         /*mQuery = "INSERT INTO ipsa.det_act_fij (id_act_fij, fec_det_act_fij, depr_calculada, depr_acumulada, rem_suj_dep, valor_actual) " +
+                                  "VALUES ("+ id_act_fij +", last_day("+ fec_det_act_fij +"),"+ depr_calculada +","+ depr_acumulada + "," + rem_suj_dep + "," + valor_actual+ ");";
+                         
+                         mAccesos.dmlSQLvariable(mQuery);
+                         meses++;
+                         */            
+                    }
+                    mAccesos.Desconectar();
+                    
+                   
+                } else {
+                    
+                }
+                mAccesos.dmlSQLvariable(mQuery);
+                mAccesos.Desconectar();
+                
+            } catch (Exception e) {
+                addMessage("Guardar Cargo", "Error al momento de guardar la información. " + e.getMessage(), 2);
+                System.out.println("Error al Guardar Marca. " + e.getMessage() + " Query: " + mQuery);
+            }         
     }
     // SETTERS y GETTERS
 
