@@ -1,18 +1,29 @@
 package paquetes;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
 import org.primefaces.event.SelectEvent;
 
 @Named
@@ -29,7 +40,7 @@ public class ManActivoFijo implements Serializable {
     private CatDepartamentos catdepartamentos;
     private List<CatDepartamentos> departamentos;
     private String id_act_fij, id_tip_act, desc_equ, fecha_adquisicion, valor_adqui, id_depto, dist_gast_porc, seccion, id_estado, tiempo_deprecia, cuota_mes_deprecia, porcentaje_deduc, porcentaje_no_deduc, serie_equ, modelo_equ, no_inventario, observacion, codigo_equ;
-    private Date dfadqu;
+    private Date dfadqu, dfcalculo;
     
     public ManActivoFijo() {
     }
@@ -153,6 +164,7 @@ public class ManActivoFijo implements Serializable {
     public void nuevo() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         dfadqu = Date.from(Instant.now());
+        dfcalculo = Date.from(Instant.now());
         id_act_fij = "";
         id_tip_act = "";
         desc_equ = "";
@@ -329,7 +341,7 @@ public class ManActivoFijo implements Serializable {
         }
 
     }
-
+    
     public void onRowSelect(SelectEvent event) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         id_act_fij = ((CatActivoFijo) event.getObject()).getId_act_fij();
@@ -351,6 +363,8 @@ public class ManActivoFijo implements Serializable {
         observacion = ((CatActivoFijo) event.getObject()).getObservacion();
         codigo_equ = ((CatActivoFijo) event.getObject()).getCodigo_equ();
         dfadqu = format.parse(fecha_adquisicion);
+        System.out.println(dfadqu);
+        dfcalculo = Date.from(Instant.now());
     }
 
     public void addMessage(String summary, String detail, int tipo) {
@@ -407,7 +421,6 @@ public class ManActivoFijo implements Serializable {
                 porcentaje_no_deduc = String.valueOf(porcentaje_no); 
                 cuota = (Double.parseDouble(valor_adqui) * porcentaje)/Integer.parseInt(tiempo_deprecia);
                 cuota_mes_deprecia = String.format("%1$,.2f", cuota);
-                System.out.println(cuota);
             }
             catch (Exception e){
                 System.out.println("Error el calculo-- Division entre cero. " + e.getMessage());
@@ -415,6 +428,157 @@ public class ManActivoFijo implements Serializable {
             
         } 
     }
+    
+    public void imprimir() {
+        try {
+            llenarFichaActivoFijo();
+            byte[] content;
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            content = imprimirFichaActivoFijo();
+            response.setContentType("application/pdf");
+            response.setContentLength(content == null ? 0 : content.length);
+            response.getOutputStream().write(content);
+            response.getOutputStream().flush();
+            FacesContext.getCurrentInstance().responseComplete();
+        } catch (SQLException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public byte[] imprimirFichaActivoFijo() throws SQLException, JRException {
+        ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String reportPath = ctx.getRealPath(File.separator + "reportes" + File.separator);
+        HashMap param = new HashMap();
+        param.put("dfcalculo", dfcalculo);
+        param.put("id_act_fij", id_act_fij);
+        
+        //System.out.println(id_act_fij);
+
+        Accesos racc = new Accesos();
+        return JasperRunManager.runReportToPdf(reportPath + File.separator + "fichaActivoFijo.jasper", param, racc.Conectar());
+    }
+    
+    public Date sumarMesesFecha(Date fecha, int meses){
+      Calendar calendar = Calendar.getInstance();
+      calendar.setTime(fecha); // Configuramos la fecha que se recibe
+      calendar.add(Calendar.MONTH, meses);  // numero de días a añadir, o restar en caso de días<0
+      return calendar.getTime(); // Devuelve el objeto Date con los nuevos días añadidos
+    }
+
+    public static Calendar DateToCalendar(Date date){ 
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
+    
+     public void llenarFichaActivoFijo () {
+        String mQuery = "";
+        String existe = "";
+        
+            try {
+                Accesos mAccesos = new Accesos();
+                mAccesos.Conectar();
+                
+                mQuery = "select ifnull(count(id_act_fij),0) from det_act_fij where id_act_fij ="+id_act_fij+";";
+                existe = mAccesos.strQuerySQLvariable(mQuery);
+                                
+                if ("0".equals(existe)) {
+                    calculaCampos();
+                   
+                } else {
+                    
+                    mQuery = "delete from det_act_fij where id_act_fij ="+id_act_fij+";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                    calculaCampos();
+                }
+               
+                mAccesos.Desconectar();
+                
+                
+            } catch (Exception e) {
+                addMessage("Guardar Cargo", "Error al momento de guardar la información. " + e.getMessage(), 2);
+                System.out.println("Error al Guardar Marca. " + e.getMessage() + " Query: " + mQuery);
+            }         
+    }
+     
+     public void calculaCampos(){
+        String mQuery = "";
+        
+        try {
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+        
+            Integer meses = 0;
+            Date fec_det_act_fij;
+            Double depr_calculada;
+            Double depr_acumulada = 0.0;
+            Double montoDepreciar = Double.parseDouble(valor_adqui) * (Double.parseDouble(porcentaje_deduc)/100);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+            Double rem_suj_dep;
+            Double valor_actual;
+
+            Calendar desde = Calendar.getInstance();
+            Calendar hasta = Calendar.getInstance();
+            desde.setTime(dfadqu);
+            hasta.setTime(dfcalculo);
+
+
+            while( desde.before(hasta)){
+
+                fec_det_act_fij = sumarMesesFecha(dfadqu, meses);
+
+                if (fec_det_act_fij.equals(dfadqu)){
+
+                    Calendar cfadqu;
+
+                    cfadqu = DateToCalendar(dfadqu);
+                    Integer dias;
+
+                    dias =  cfadqu.getActualMaximum(cfadqu.DAY_OF_MONTH) - cfadqu.get(Calendar.DAY_OF_MONTH);
+
+                    depr_calculada = Double.parseDouble(cuota_mes_deprecia)/dias;
+                }
+                else
+                {
+                    depr_calculada = Double.parseDouble(cuota_mes_deprecia);
+                }
+
+                if (depr_acumulada <= montoDepreciar){
+                    depr_acumulada = depr_acumulada + depr_calculada;
+                    if (depr_acumulada > montoDepreciar){
+                        depr_acumulada = montoDepreciar;
+                    }
+                }
+                else
+                {
+                    depr_acumulada = montoDepreciar;
+                }
+
+                rem_suj_dep = montoDepreciar - depr_acumulada;
+                valor_actual = Double.parseDouble(valor_adqui) - depr_acumulada;
+
+                 mQuery = "INSERT INTO ipsa.det_act_fij (id_act_fij, meses, fec_det_act_fij, depr_calculada, depr_acumulada, rem_suj_dep, valor_actual) " +
+                          "VALUES ("+ id_act_fij +","+ meses +",'"+ format.format(fec_det_act_fij)+"',"+ depr_calculada +","+ depr_acumulada + "," + rem_suj_dep + "," + valor_actual+ ");";
+
+
+
+                 desde.setTime(fec_det_act_fij);
+                 mAccesos.dmlSQLvariable(mQuery);
+                 meses++;           
+            }
+            mAccesos.Desconectar();  
+            
+        } catch (Exception e) {
+                addMessage("Calculo de Ficha", "Error al momento de calcular la ficha. " + e.getMessage(), 2);
+                System.out.println("Error al Calcular la ficha. " + e.getMessage() + " Query: " + mQuery);
+            }         
+     
+     }
+     
     // SETTERS y GETTERS
 
     public String getId_act_fij() {
@@ -615,6 +779,14 @@ public class ManActivoFijo implements Serializable {
 
     public void setDepartamentos(List<CatDepartamentos> departamentos) {
         this.departamentos = departamentos;
+    }
+
+    public Date getDfcalculo() {
+        return dfcalculo;
+    }
+
+    public void setDfcalculo(Date dfcalculo) {
+        this.dfcalculo = dfcalculo;
     }
    
 }
