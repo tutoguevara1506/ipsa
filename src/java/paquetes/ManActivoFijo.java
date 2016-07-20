@@ -549,6 +549,9 @@ public class ManActivoFijo implements Serializable {
 
                 if (depr_acumulada <= montoDepreciar){
                     depr_acumulada = depr_acumulada + depr_calculada;
+                    if (depr_acumulada > montoDepreciar){
+                        depr_acumulada = montoDepreciar;
+                    }
                 }
                 else
                 {

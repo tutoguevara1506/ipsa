@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f1b7d2a7-1636-4c15-bee0-8016b69eeee8">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="222"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -29,6 +29,9 @@
 	</parameter>
 	<parameter name="dfcalculo" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\RAREcheverria\\Documents\\NetBeansProjects\\ipsa\\web\\reportes\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -104,7 +107,7 @@ WHERE cat_act_fij.`id_act_fij` = $P{id_act_fij}]]>
 	<pageHeader>
 		<band height="258" splitType="Stretch">
 			<rectangle>
-				<reportElement x="5" y="7" width="545" height="245" uuid="06c2acc5-1623-4a0b-bbf5-ff1f26b35243"/>
+				<reportElement x="5" y="7" width="550" height="245" uuid="06c2acc5-1623-4a0b-bbf5-ff1f26b35243"/>
 			</rectangle>
 			<rectangle radius="10">
 				<reportElement x="26" y="110" width="520" height="33" uuid="b8989a9b-aba0-4df9-a3a3-8534a7d9b276"/>
@@ -274,23 +277,23 @@ Por porcentaje]]></text>
 				<text><![CDATA[Fecha Cuota]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="160" y="5" width="78" height="28" uuid="f4b9b3e5-1d26-4a2b-a48a-81edb47a0f5c"/>
+				<reportElement x="169" y="5" width="78" height="28" uuid="f4b9b3e5-1d26-4a2b-a48a-81edb47a0f5c"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Depreciación Reclamada]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="251" y="5" width="78" height="28" uuid="57b35220-5384-4285-9915-8f25293f57f6"/>
+				<reportElement x="282" y="5" width="78" height="28" uuid="57b35220-5384-4285-9915-8f25293f57f6"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Depreciación Acumulada]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="340" y="5" width="97" height="26" uuid="5605620f-543a-4a2c-bc7c-3e83e5fe3c06"/>
+				<reportElement x="368" y="6" width="97" height="26" uuid="5605620f-543a-4a2c-bc7c-3e83e5fe3c06"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Remanente Sujeto 
 a depreciacion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="445" y="6" width="97" height="26" uuid="4f8d7087-c6f8-48b4-9b6a-c747c0f0eb46"/>
+				<reportElement x="500" y="7" width="52" height="26" uuid="4f8d7087-c6f8-48b4-9b6a-c747c0f0eb46"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Valor
 Actual]]></text>
@@ -298,7 +301,16 @@ Actual]]></text>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="35" splitType="Stretch"/>
+		<band height="29" splitType="Stretch">
+			<subreport>
+				<reportElement x="6" y="4" width="540" height="22" uuid="f5a006de-6e95-457d-b817-d96feb5f054f"/>
+				<subreportParameter name="id_act_fij">
+					<subreportParameterExpression><![CDATA[$F{cat_act_fij_id_act_fij}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "fichaActivoFijo_detalle.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
