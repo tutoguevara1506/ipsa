@@ -164,6 +164,7 @@ public class ManActivoFijo implements Serializable {
     public void nuevo() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         dfadqu = Date.from(Instant.now());
+        dfcalculo = Date.from(Instant.now());
         id_act_fij = "";
         id_tip_act = "";
         desc_equ = "";
@@ -341,27 +342,6 @@ public class ManActivoFijo implements Serializable {
 
     }
     
-     public boolean validarIngresoFecha() {
-         
-        boolean mValidar = true;
-        String mensaje = "Debe Ingresar ";
-        
-         if (dfcalculo == null) {
-            mValidar = false;
-            mensaje= mensaje + "- Tiempo de depreciacion. \n";
-        }
-         
-         if (mValidar){            
-            return mValidar;
-        }
-        else
-        {
-            System.out.println(mensaje);
-            addMessage("Validar Datos", mensaje, 2);
-            return mValidar;
-        }
-    }
-
     public void onRowSelect(SelectEvent event) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         id_act_fij = ((CatActivoFijo) event.getObject()).getId_act_fij();
@@ -383,6 +363,8 @@ public class ManActivoFijo implements Serializable {
         observacion = ((CatActivoFijo) event.getObject()).getObservacion();
         codigo_equ = ((CatActivoFijo) event.getObject()).getCodigo_equ();
         dfadqu = format.parse(fecha_adquisicion);
+        System.out.println(dfadqu);
+        dfcalculo = Date.from(Instant.now());
     }
 
     public void addMessage(String summary, String detail, int tipo) {
@@ -448,25 +430,22 @@ public class ManActivoFijo implements Serializable {
     }
     
     public void imprimir() {
-        
-        if (validarIngresoFecha()) {
-            try {
-                llenarFichaActivoFijo();
-                byte[] content;
-                HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-                content = imprimirFichaActivoFijo();
-                response.setContentType("application/pdf");
-                response.setContentLength(content == null ? 0 : content.length);
-                response.getOutputStream().write(content);
-                response.getOutputStream().flush();
-                FacesContext.getCurrentInstance().responseComplete();
-            } catch (SQLException ex) {
-                Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (JRException ex) {
-                Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            llenarFichaActivoFijo();
+            byte[] content;
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            content = imprimirFichaActivoFijo();
+            response.setContentType("application/pdf");
+            response.setContentLength(content == null ? 0 : content.length);
+            response.getOutputStream().write(content);
+            response.getOutputStream().flush();
+            FacesContext.getCurrentInstance().responseComplete();
+        } catch (SQLException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ManMaestroMan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -506,54 +485,97 @@ public class ManActivoFijo implements Serializable {
                 
                 mQuery = "select ifnull(count(id_act_fij),0) from det_act_fij where id_act_fij ="+id_act_fij+";";
                 existe = mAccesos.strQuerySQLvariable(mQuery);
-                
+                                
                 if ("0".equals(existe)) {
-                    Integer meses = 0;
-                    Date fec_det_act_fij = dfadqu;
-                    Double depr_calculada = null;
-                     
-                    while( !fec_det_act_fij.after(dfcalculo)){
-           
-                        fec_det_act_fij = sumarMesesFecha(dfadqu, meses);
-                        
-                        if (fec_det_act_fij.equals(dfadqu)){
-                            
-                            Calendar cfadqu;
-                            
-                            cfadqu = DateToCalendar(dfadqu);
-                            Integer dias;
-                            
-                            dias = cfadqu.get(Calendar.DAY_OF_MONTH) - cfadqu.getActualMaximum(cfadqu.DAY_OF_MONTH);
-                            System.out.println(dias);
-                            
-                            //depr_calculada = Double.parseDouble(cuota_mes_deprecia)/
-                        }
-                        else
-                        {
-                            depr_calculada = Double.parseDouble(cuota_mes_deprecia);
-                        }
-                        
-                         /*mQuery = "INSERT INTO ipsa.det_act_fij (id_act_fij, fec_det_act_fij, depr_calculada, depr_acumulada, rem_suj_dep, valor_actual) " +
-                                  "VALUES ("+ id_act_fij +", last_day("+ fec_det_act_fij +"),"+ depr_calculada +","+ depr_acumulada + "," + rem_suj_dep + "," + valor_actual+ ");";
-                         
-                         mAccesos.dmlSQLvariable(mQuery);
-                         meses++;
-                         */            
-                    }
-                    mAccesos.Desconectar();
-                    
+                    calculaCampos();
                    
                 } else {
                     
+                    mQuery = "delete from det_act_fij where id_act_fij ="+id_act_fij+";";
+                    mAccesos.dmlSQLvariable(mQuery);
+                    calculaCampos();
                 }
-                mAccesos.dmlSQLvariable(mQuery);
+               
                 mAccesos.Desconectar();
+                
                 
             } catch (Exception e) {
                 addMessage("Guardar Cargo", "Error al momento de guardar la información. " + e.getMessage(), 2);
                 System.out.println("Error al Guardar Marca. " + e.getMessage() + " Query: " + mQuery);
             }         
     }
+     
+     public void calculaCampos(){
+        String mQuery = "";
+        
+        try {
+            Accesos mAccesos = new Accesos();
+            mAccesos.Conectar();
+        
+            Integer meses = 0;
+            Date fec_det_act_fij;
+            Double depr_calculada;
+            Double depr_acumulada = 0.0;
+            Double montoDepreciar = Double.parseDouble(valor_adqui) * (Double.parseDouble(porcentaje_deduc)/100);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+            Double rem_suj_dep;
+            Double valor_actual;
+
+            Calendar desde = Calendar.getInstance();
+            Calendar hasta = Calendar.getInstance();
+            desde.setTime(dfadqu);
+            hasta.setTime(dfcalculo);
+
+
+            while( desde.before(hasta)){
+
+                fec_det_act_fij = sumarMesesFecha(dfadqu, meses);
+
+                if (fec_det_act_fij.equals(dfadqu)){
+
+                    Calendar cfadqu;
+
+                    cfadqu = DateToCalendar(dfadqu);
+                    Integer dias;
+
+                    dias =  cfadqu.getActualMaximum(cfadqu.DAY_OF_MONTH) - cfadqu.get(Calendar.DAY_OF_MONTH);
+
+                    depr_calculada = Double.parseDouble(cuota_mes_deprecia)/dias;
+                }
+                else
+                {
+                    depr_calculada = Double.parseDouble(cuota_mes_deprecia);
+                }
+
+                if (depr_acumulada <= montoDepreciar){
+                    depr_acumulada = depr_acumulada + depr_calculada;
+                }
+                else
+                {
+                    depr_acumulada = montoDepreciar;
+                }
+
+                rem_suj_dep = montoDepreciar - depr_acumulada;
+                valor_actual = Double.parseDouble(valor_adqui) - depr_acumulada;
+
+                 mQuery = "INSERT INTO ipsa.det_act_fij (id_act_fij, meses, fec_det_act_fij, depr_calculada, depr_acumulada, rem_suj_dep, valor_actual) " +
+                          "VALUES ("+ id_act_fij +","+ meses +",'"+ format.format(fec_det_act_fij)+"',"+ depr_calculada +","+ depr_acumulada + "," + rem_suj_dep + "," + valor_actual+ ");";
+
+
+
+                 desde.setTime(fec_det_act_fij);
+                 mAccesos.dmlSQLvariable(mQuery);
+                 meses++;           
+            }
+            mAccesos.Desconectar();  
+            
+        } catch (Exception e) {
+                addMessage("Calculo de Ficha", "Error al momento de calcular la ficha. " + e.getMessage(), 2);
+                System.out.println("Error al Calcular la ficha. " + e.getMessage() + " Query: " + mQuery);
+            }         
+     
+     }
+     
     // SETTERS y GETTERS
 
     public String getId_act_fij() {
