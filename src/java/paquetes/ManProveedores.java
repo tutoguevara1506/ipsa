@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 @Named
@@ -107,6 +108,7 @@ public class ManProveedores implements Serializable {
         tel_con = "";
         det_mai = "";
         proveedores = new ArrayList<>();
+        RequestContext.getCurrentInstance().execute("PF('wvPro').clearFilters()");
     }
 
     public void llenarProveedores() {
@@ -148,6 +150,7 @@ public class ManProveedores implements Serializable {
         tel_con = "";
         det_mai = "";
         catproveedores = new CatProveedores();
+        RequestContext.getCurrentInstance().execute("PF('wvPro').clearFilters()");
     }
 
     public void guardar() {

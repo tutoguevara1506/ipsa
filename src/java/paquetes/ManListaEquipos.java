@@ -1440,7 +1440,7 @@ public class ManListaEquipos extends Conexion implements Serializable {
                         resVariable.getString(7),
                         resVariable.getString(8),
                         resVariable.getString(9),
-                        resVariable.getString(10), "", "", "", "", "", "", "", "", "", "", "", "", ""
+                        resVariable.getString(10), "", "", "", "", "", "", "", "", "", "", "", "", "", ""
                 ));
             }
             mAccesos.Desconectar();

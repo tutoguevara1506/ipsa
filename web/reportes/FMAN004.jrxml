@@ -14,7 +14,7 @@
 nom_pai, 
 des_equ, 
 cod_pri, 
-fec_ini, 
+fec_ent_pro as fec_ini, 
 fec_fin, 
 ifnull((select det_nom from cat_usu as tecni where tecni.cod_usu= mm.cod_usu limit 1),'') as tecnico, 
 ifnull((select det_nom from cat_usu as superv where superv.cod_usu=mm.cod_sup limit 1),'') as supervisor, 

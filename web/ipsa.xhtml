@@ -1729,15 +1729,32 @@
                                  scrollable="true"
                                  scrollHeight="170"
                                  style="width:500px"
+                                 widgetVar="wvPro"
                                  >
+                        
+                        <f:facet name="header">
+                                    <p:outputPanel style=" text-align: right;">
+                                        <h:panelGroup>
+                                            <h:outputText value="Filtrar:&nbsp;&nbsp;" />
+                                            <p:inputText id="globalFilter" 
+                                                         onkeyup="PF('wvPro').filter()" 
+                                                         style="width:250px;" 
+                                                         placeholder="Proveedor o Contacto"/>
+                                        </h:panelGroup>
+
+                                    </p:outputPanel>
+                                </f:facet>
+                       
                         <p:ajax event="rowSelect" listener="#{manProveedores.onRowSelect}" 
                                 update=":frmPro"/>
                         <p:ajax event="rowUnselect"/>
 
-                        <p:column style="width:160px" headerText="Proveedor">
+                        <p:column style="width:160px" headerText="Proveedor" filterBy="#{vPro.nom_pro}" filterMatchMode="contains"  
+                                          filterStyle="display:none; visibility:hidden;">
                             <h:outputText value="#{vPro.nom_pro}" />
                         </p:column>
-                        <p:column style="width:80px" headerText="Contacto">
+                        <p:column style="width:80px" headerText="Contacto" filterBy="#{vPro.per_con}" filterMatchMode="contains"  
+                                          filterStyle="display:none; visibility:hidden;">
                             <h:outputText value="#{vPro.per_con}" />
                         </p:column>
                         <p:column style="width:80px" headerText="Teléfono">
@@ -5451,7 +5468,7 @@
                 <p:panel>
                     <h:panelGrid columns="5" cellpadding="5">
                         <h:outputText value="Código" style="font-weight:bold;"/>
-                        <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
+                        <h:outputText value="Fecha Ent.Prod." style="font-weight:bold;"/>
                         <h:outputText value="Departamento" style="font-weight:bold;"/>
                         <h:outputText value="Externo" style="font-weight:bold;"/>
                         <h:outputText value="Tipo" style="font-weight:bold;"/>
@@ -5459,9 +5476,9 @@
                         <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                      readonlyInput="true" showOn="button" 
                                      size="16"
-                                     value="#{manMaestroMan.dfecini}"
+                                     value="#{manMaestroMan.dfecentpro}"
                                      >
-                            <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezado}" />
+                            <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFentregaProd}" />
                         </p:calendar>
                         <p:selectOneMenu value="#{manMaestroMan.cod_dep}" 
                                          style=" width: 160px;">
@@ -5520,8 +5537,16 @@
                                          />
                     </h:panelGrid>
                     <p:separator />
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputText value="ESPACIO RESERVADO PARA MANTENIMIENTO &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; Fecha entrega" style="font-weight:bold;"/>
+                    <h:panelGrid columns="4" cellpadding="5">
+                        <h:outputText value="ESPACIO RESERVADO PARA MANTENIMIENTO &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; Fecha Inicio Man." style="font-weight:bold;"/>
+                        <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
+                                     readonlyInput="true" showOn="button" 
+                                     size="16"
+                                     value="#{manMaestroMan.dfecini}"
+                                     >
+                            <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezado}" />
+                        </p:calendar>
+                        <h:outputText value="Fecha Ent. a Prod." style="font-weight:bold;"/>
                         <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                      readonlyInput="true" showOn="button" 
                                      size="16"
@@ -6010,7 +6035,7 @@
                             <h:panelGrid columns="6" cellpadding="5">
                                 <h:outputText value="Código" style="font-weight:bold;"/>
                                 <h:outputText value="Equipo" style="font-weight:bold;"/>
-                                <h:outputText value="Fecha y hora" style="font-weight:bold;"/>
+                                <h:outputText value="Fec.Entre. a Mantto." style="font-weight:bold;"/>
                                 <h:outputText value="Departamento" style="font-weight:bold;"/>
                                 <h:outputText value="Externo" style="font-weight:bold;"/>
                                 <h:outputText value="Tipo" style="font-weight:bold;"/>
@@ -6023,11 +6048,11 @@
                                                    itemLabel="#{lequmanini.des_equ}" itemValue="#{lequmanini.cod_lis_equ}"/> 
                                 </p:selectOneMenu>
                                 <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
-                                             readonlyInput="true" showOn="button" 
-                                             size="16"
-                                             value="#{manMaestroMan.dfecini}"
-                                             >
-                                    <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezado}" />
+                                     readonlyInput="true" showOn="button" 
+                                     size="16"
+                                     value="#{manMaestroMan.dfecentpro}"
+                                     >
+                                    <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFentregaProd}" />
                                 </p:calendar>
                                 <p:selectOneMenu value="#{manMaestroMan.cod_dep}" 
                                                  style=" width: 140px;">
@@ -6086,8 +6111,16 @@
                                                  />
                             </h:panelGrid>
                             <p:separator />
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputText value="ESPACIO RESERVADO PARA MANTENIMIENTO &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; Fecha entrega" style="font-weight:bold;"/>
+                            <h:panelGrid columns="4" cellpadding="5">
+                                <h:outputText value="ESPACIO RESERVADO PARA MANTENIMIENTO &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; Fecha Inicio Man." style="font-weight:bold;"/>
+                                <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
+                                             readonlyInput="true" showOn="button" 
+                                             size="16"
+                                             value="#{manMaestroMan.dfecini}"
+                                             >
+                                    <p:ajax event="dateSelect" listener="#{manMaestroMan.dateSelectedFencabezado}" />
+                                </p:calendar>
+                                <h:outputText value="Fecha Ent. a Prod." style="font-weight:bold;"/>
                                 <p:calendar  pattern="dd/MM/yyyy HH:mm" locale="es" 
                                              readonlyInput="true" showOn="button" 
                                              size="16"

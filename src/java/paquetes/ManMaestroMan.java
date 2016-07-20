@@ -102,7 +102,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
     private ScheduleEvent mtto = new DefaultScheduleEvent();
 
     private String cod_lis_equ, cod_man, cod_tip, det_obs, fec_ini, fec_fin,
-            det_sta, cod_usu, cod_per, flg_ext, cod_sup, turno, cod_pri, cod_dep, cod_alt, obs_tec, otr_per;
+            det_sta, cod_usu, cod_per, flg_ext, cod_sup, turno, cod_pri, cod_dep, cod_alt, obs_tec, otr_per, fec_ent_pro;
     private String gen_det_man, gen_fec_man, gen_cod_ope, gen_det_obs, gen_cod_usu, gen_det_min;
     private String pie_det_man, pie_fec_man, pie_cod_pai, pie_cod_bod, pie_cod_ubi,
             pie_det_can, pie_cod_pie, pie_num_ser, pie_cod_usu;
@@ -110,7 +110,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
     private String acc_det_man, acc_fec_man, acc_cod_pai, acc_det_can, acc_des_ite, acc_cod_usu;
 
     private String tabindex, buscar_serie, nompai, nombod, nomubi, cod_gru_fal, cod_fal, otr_fal, mmensaje, panindex, vlimit, tabindex2;
-    private Date dfecha1, dfecha2, dfecha3, dfecfinF, dfecini;
+    private Date dfecha1, dfecha2, dfecha3, dfecfinF, dfecini, dfecentpro;
     private TreeNode root, selectednode;
 
     // Variables para timeline
@@ -959,6 +959,14 @@ public class ManMaestroMan extends Conexion implements Serializable {
         this.dfecini = dfecini;
     }
 
+    public Date getDfecentpro() {
+        return dfecentpro;
+    }
+
+    public void setDfecentpro(Date dfecentpro) {
+        this.dfecentpro = dfecentpro;
+    }
+
     public TreeNode getRoot() {
         return root;
     }
@@ -1117,6 +1125,14 @@ public class ManMaestroMan extends Conexion implements Serializable {
 
     public void setOtr_per(String otr_per) {
         this.otr_per = otr_per;
+    }
+
+    public String getFec_ent_pro() {
+        return fec_ent_pro;
+    }
+
+    public void setFec_ent_pro(String fec_ent_pro) {
+        this.fec_ent_pro = fec_ent_pro;
     }
 
     public TimelineEvent getEventTimeLine() {
@@ -1662,12 +1678,14 @@ public class ManMaestroMan extends Conexion implements Serializable {
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             dfecini = Date.from(Instant.now());
             dfecfinF = Date.from(Instant.now());
+            dfecentpro = Date.from(Instant.now());
             panindex = "0";
             cod_man = "";
             cod_tip = "0";
             det_obs = "";
             fec_ini = format.format(dfecini);
             fec_fin = format.format(dfecfinF);
+            fec_ent_pro = format.format(dfecentpro);
             det_sta = "0";
             cod_usu = "0";
             cod_per = "0";
@@ -1732,6 +1750,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
         det_obs = "";
         fec_ini = "";
         fec_fin = "";
+        fec_ent_pro = "";
         det_sta = "";
         cod_usu = "0";
         cod_per = "0";
@@ -1828,7 +1847,8 @@ public class ManMaestroMan extends Conexion implements Serializable {
                         + "end as color,"
                         + "mm.cod_per, "
                         + "per.nom_per,"
-                        + "mm.flg_ext,mm.cod_sup, mm.turno, mm.cod_pri, mm.cod_dep,mm.cod_alt,mm.obs_tec,mm.otr_per,lis.des_equ "
+                        + "mm.flg_ext,mm.cod_sup, mm.turno, mm.cod_pri, mm.cod_dep,mm.cod_alt,mm.obs_tec,mm.otr_per,lis.des_equ, "
+                        + "date_format(mm.fec_ent_pro,'%d/%m/%Y %H:%i') "
                         + "from tbl_mae_man as mm "
                         + "left join cat_tip as tip on mm.cod_tip = tip.cod_tip "
                         + "left join cat_per as per on mm.cod_per = per.cod_per "
@@ -1866,7 +1886,8 @@ public class ManMaestroMan extends Conexion implements Serializable {
                             resVariable.getString(20),
                             resVariable.getString(21),
                             resVariable.getString(22),
-                            resVariable.getString(23)
+                            resVariable.getString(23),
+                            resVariable.getString(24)
                     ));
 
                 }
@@ -1933,13 +1954,13 @@ public class ManMaestroMan extends Conexion implements Serializable {
                     mQuery = "insert into tbl_mae_man (cod_lis_equ,cod_man,"
                             + "cod_tip,det_obs,fec_ini,fec_fin,det_sta,cod_usu,"
                             + "cod_per,flg_ext,cod_sup,turno,cod_pri,cod_dep,"
-                            + "cod_alt,obs_tec,otr_per) "
+                            + "cod_alt,obs_tec,otr_per,fec_ent_pro) "
                             + "VALUES (" + cod_lis_equ + "," + cod_man + ","
                             + cod_tip + ",'" + det_obs.replace("'", " ") + "',"
                             + "str_to_date('" + fec_ini + "','%d/%m/%Y %H:%i'),str_to_date('" + fec_fin + "','%d/%m/%Y %H:%i'),1,"
                             + cod_usu + "," + cod_per + "," + flg_ext + ","
                             + cod_sup + "," + turno + ",'" + cod_pri + "'," + cod_dep + ","
-                            + cod_alt + ",'" + obs_tec + "','" + otr_per + "');";
+                            + cod_alt + ",'" + obs_tec + "','" + otr_per + "',str_to_date('" + fec_ent_pro + "','%d/%m/%Y %H:%i'));";
                 } else {
                     mQuery = "delete from tbl_det_man_fal where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
                     mAccesos.dmlSQLvariable(mQuery);
@@ -1948,6 +1969,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
                             + "det_obs= '" + det_obs.replace("'", " ") + "',"
                             + "fec_ini = str_to_date('" + fec_ini + "','%d/%m/%Y %H:%i'),"
                             + "fec_fin = str_to_date('" + fec_fin + "','%d/%m/%Y %H:%i'),"
+                            + "fec_ent_pro = str_to_date('" + fec_ent_pro + "','%d/%m/%Y %H:%i'),"
                             + "cod_usu = " + cod_usu + ","
                             + "cod_per= " + cod_per + ","
                             + "flg_ext= " + flg_ext + ","
@@ -2008,6 +2030,8 @@ public class ManMaestroMan extends Conexion implements Serializable {
         mAccesos.Conectar();
         if ("".equals(cod_lis_equ) == false && "0".equals(cod_lis_equ) == false && "".equals(cod_man) == false) {
             try {
+                mQuery = "delete from tbl_det_man_005 where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
+                mAccesos.dmlSQLvariable(mQuery);
                 mQuery = "delete from tbl_det_man_001 where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
                 mAccesos.dmlSQLvariable(mQuery);
                 mQuery = "delete from tbl_det_man_ane where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
@@ -2186,6 +2210,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
         det_obs = ((CatMantenimientos) event.getObject()).getDet_obs();
         fec_ini = ((CatMantenimientos) event.getObject()).getFec_ini();
         fec_fin = ((CatMantenimientos) event.getObject()).getFec_fin();
+        fec_ent_pro = ((CatMantenimientos) event.getObject()).getFec_ent_pro();
         det_sta = ((CatMantenimientos) event.getObject()).getDet_sta();
         cod_usu = ((CatMantenimientos) event.getObject()).getCod_usu();
         cod_per = ((CatMantenimientos) event.getObject()).getCod_per();
@@ -2202,6 +2227,9 @@ public class ManMaestroMan extends Conexion implements Serializable {
         }
         if ("00/00/0000".equals(fec_fin)) {
             fec_fin = "";
+        }
+        if ("00/00/0000".equals(fec_ent_pro)) {
+            fec_ent_pro = "";
         }
 
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -2237,6 +2265,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
         try {
             dfecini = format.parse(fec_ini);
             dfecfinF = format.parse(fec_fin);
+            dfecentpro = format.parse(fec_ent_pro);
         } catch (Exception ex) {
             System.out.println("Error en convertir fechas encabezado." + ex.getMessage() + " fec_ini: " + fec_ini + " fec_fin: " + fec_fin);
         }
@@ -2278,8 +2307,8 @@ public class ManMaestroMan extends Conexion implements Serializable {
         cod_man = "";
         cod_tip = "";
         det_obs = "";
-        fec_ini = format.format(dfecha1);
-        fec_fin = format.format(dfecha1);
+        //fec_ini = format.format(dfecha1);
+        //fec_fin = format.format(dfecha1);
         det_sta = "";
         cod_usu = "0";
         cod_per = "0";
@@ -2337,11 +2366,13 @@ public class ManMaestroMan extends Conexion implements Serializable {
 
         dfecini = Date.from(Instant.now());
         dfecfinF = Date.from(Instant.now());
+        dfecentpro = Date.from(Instant.now());
         panindex = "0";
         cod_tip = "0";
         det_obs = "";
         fec_ini = format.format(dfecini);
         fec_fin = format.format(dfecfinF);
+        fec_ent_pro = format.format(dfecentpro);
         det_sta = "0";
         cod_usu = "0";
         cod_per = "0";
@@ -2433,8 +2464,8 @@ public class ManMaestroMan extends Conexion implements Serializable {
         cod_man = "";
         cod_tip = "";
         det_obs = "";
-        fec_ini = format.format(dfecha1);
-        fec_fin = format.format(dfecha1);
+        //fec_ini = format.format(dfecha1);
+        //fec_fin = format.format(dfecha1);
         det_sta = "";
         cod_usu = "0";
         cod_per = "0";
@@ -2481,11 +2512,13 @@ public class ManMaestroMan extends Conexion implements Serializable {
         accesorios = new ArrayList<>();
         dfecini = Date.from(Instant.now());
         dfecfinF = Date.from(Instant.now());
+        dfecentpro = Date.from(Instant.now());
         panindex = "0";
         cod_tip = "0";
         det_obs = "";
         fec_ini = format.format(dfecini);
         fec_fin = format.format(dfecfinF);
+        fec_ent_pro = format.format(dfecentpro);
         det_sta = "0";
         cod_usu = "0";
         cod_per = "0";
@@ -2606,7 +2639,8 @@ public class ManMaestroMan extends Conexion implements Serializable {
                     + "end as color,"
                     + "mm.cod_per, "
                     + "per.nom_per, "
-                    + "mm.flg_ext,mm.cod_sup, mm.turno, mm.cod_pri, mm.cod_dep,mm.cod_alt,mm.obs_tec,mm.otr_per,lis.des_equ "
+                    + "mm.flg_ext,mm.cod_sup, mm.turno, mm.cod_pri, mm.cod_dep,mm.cod_alt,mm.obs_tec,mm.otr_per,lis.des_equ, "
+                    + "date_format(mm.fec_ent_pro,'%d/%m/%Y %H:%i') "
                     + "from tbl_mae_man as mm "
                     + "left join cat_tip as tip on mm.cod_tip = tip.cod_tip "
                     + "left join cat_per as per on mm.cod_per = per.cod_per "
@@ -2642,7 +2676,8 @@ public class ManMaestroMan extends Conexion implements Serializable {
                         resVariable.getString(20),
                         resVariable.getString(21),
                         resVariable.getString(22),
-                        resVariable.getString(23)
+                        resVariable.getString(23),
+                        resVariable.getString(24)
                 ));
 
             }
@@ -2699,7 +2734,8 @@ public class ManMaestroMan extends Conexion implements Serializable {
                     + "end as color,"
                     + "mm.cod_per, "
                     + "per.nom_per, "
-                    + "mm.flg_ext,mm.cod_sup, mm.turno, mm.cod_pri, mm.cod_dep,mm.cod_alt,mm.obs_tec,mm.otr_per,lis.des_equ "
+                    + "mm.flg_ext,mm.cod_sup, mm.turno, mm.cod_pri, mm.cod_dep,mm.cod_alt,mm.obs_tec,mm.otr_per,lis.des_equ, "
+                    + "date_format(mm.fec_ent_pro,'%d/%m/%Y %H:%i') "
                     + "from tbl_mae_man as mm "
                     + "left join cat_tip as tip on mm.cod_tip = tip.cod_tip "
                     + "left join cat_per as per on mm.cod_per = per.cod_per "
@@ -2735,7 +2771,8 @@ public class ManMaestroMan extends Conexion implements Serializable {
                         resVariable.getString(20),
                         resVariable.getString(21),
                         resVariable.getString(22),
-                        resVariable.getString(23)
+                        resVariable.getString(23),
+                        resVariable.getString(24)
                 ));
 
             }
@@ -2773,13 +2810,13 @@ public class ManMaestroMan extends Conexion implements Serializable {
                     mQuery = "insert into tbl_mae_man (cod_lis_equ,cod_man,"
                             + "cod_tip,det_obs,fec_ini,fec_fin,det_sta,cod_usu,"
                             + "cod_per,flg_ext,cod_sup,turno,cod_pri,cod_dep,"
-                            + "cod_alt,obs_tec,otr_per) "
+                            + "cod_alt,obs_tec,otr_per,fec_ent_pro) "
                             + "VALUES (" + cod_lis_equ + "," + cod_man + ","
                             + cod_tip + ",'" + det_obs.replace("'", " ") + "',"
                             + "str_to_date('" + fec_ini + "','%d/%m/%Y %H:%i'),str_to_date('" + fec_fin + "','%d/%m/%Y %H:%i'),1,"
                             + cod_usu + "," + cod_per + "," + flg_ext + ","
                             + cod_sup + "," + turno + ",'" + cod_pri + "'," + cod_dep + ","
-                            + cod_alt + ",'" + obs_tec + "','" + otr_per + "');";
+                            + cod_alt + ",'" + obs_tec + "','" + otr_per + "',str_to_date('" + fec_ent_pro + "','%d/%m/%Y %H:%i'));";
                 } else {
                     mQuery = "delete from tbl_det_man_fal where cod_lis_equ=" + cod_lis_equ + " and cod_man=" + cod_man + ";";
                     mAccesos.dmlSQLvariable(mQuery);
@@ -2788,6 +2825,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
                             + "det_obs= '" + det_obs.replace("'", " ") + "',"
                             + "fec_ini = str_to_date('" + fec_ini + "','%d/%m/%Y %H:%i'),"
                             + "fec_fin = str_to_date('" + fec_fin + "','%d/%m/%Y %H:%i'),"
+                            + "fec_ent_pro = str_to_date('" + fec_ent_pro + "','%d/%m/%Y %H:%i'),"
                             + "cod_usu = " + cod_usu + ","
                             + "cod_per= " + cod_per + ","
                             + "flg_ext= " + flg_ext + ","
@@ -3048,6 +3086,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
         det_obs = ((CatMantenimientos) event.getObject()).getDet_obs();
         fec_ini = ((CatMantenimientos) event.getObject()).getFec_ini();
         fec_fin = ((CatMantenimientos) event.getObject()).getFec_fin();
+        fec_ent_pro = ((CatMantenimientos) event.getObject()).getFec_ent_pro();
         det_sta = ((CatMantenimientos) event.getObject()).getDet_sta();
         cod_usu = ((CatMantenimientos) event.getObject()).getCod_usu();
         cod_per = ((CatMantenimientos) event.getObject()).getCod_per();
@@ -3064,6 +3103,9 @@ public class ManMaestroMan extends Conexion implements Serializable {
         }
         if ("00/00/0000".equals(fec_fin)) {
             fec_fin = "";
+        }
+        if ("00/00/0000".equals(fec_ent_pro)) {
+            fec_ent_pro = "";
         }
 
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -3099,6 +3141,7 @@ public class ManMaestroMan extends Conexion implements Serializable {
         try {
             dfecini = format.parse(fec_ini);
             dfecfinF = format.parse(fec_fin);
+            dfecentpro = format.parse(fec_ent_pro);
         } catch (Exception ex) {
             System.out.println("Error en convertir fechas encabezado." + ex.getMessage() + " fec_ini: " + fec_ini + " fec_fin: " + fec_fin);
         }
@@ -4673,6 +4716,12 @@ public class ManMaestroMan extends Conexion implements Serializable {
         //RequestContext.getCurrentInstance().update(":frmListaEquipos:tvLE");
     }
 
+    public void dateSelectedFentregaProd(SelectEvent f) {
+        Date date = (Date) f.getObject();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        fec_ent_pro = format.format(date);
+    }
+    
     public void dateSelectedFencabezado(SelectEvent f) {
         Date date = (Date) f.getObject();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -5086,15 +5135,15 @@ public class ManMaestroMan extends Conexion implements Serializable {
         }
 
     }
-    
+
     public void ejecutarreportePROGRAMA() {
         try {
-            
-                parametros = new HashMap<>();
-                nombrereporte = "/reportes/plananualmanprev.jasper";
-                nombreexportar = "plananualmanprev";
-                verPDF();
-            
+
+            parametros = new HashMap<>();
+            nombrereporte = "/reportes/plananualmanprev.jasper";
+            nombreexportar = "plananualmanprev";
+            verPDF();
+
         } catch (Exception e) {
             System.out.println("Error en EjecutarReporte Programa." + e.getMessage());
         }
