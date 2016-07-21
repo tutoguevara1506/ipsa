@@ -8605,7 +8605,7 @@
                 <p:toolbar>
                     <f:facet name="left">
                         <p:commandButton value="Imprimir" icon="ui-icon-print"
-                                         action="#{manActivoFijo.imprimir()}" 
+                                         action="#{manActivoFijo.imprimir(1)}" 
                                          onclick="this.form.target = '_blank';" 
                                          ajax="false"
                                          />
@@ -8628,7 +8628,77 @@
                     </h:panelGrid>  
             </h:form>
         </p:dialog>
+        
+        
+        
+        <p:dialog  id="dlgConsultaActivoFijo" widgetVar="wConsultaActivoFijo" modal="true" 
+                   width="650" height="520" closable="false" resizable="false" 
+                   header="Consulta de Activo Fijo" rendered="true" 
+                   dynamic="true" visible="false" 
+                   >
 
+            <h:form id="frmConsultaActivoFijo"> 
+                <p:growl id="msgConsultaActivoFijo" showDetail="true" life="4500"/>
+                <p:toolbar>
+                     <f:facet name="left">
+                        <p:commandButton value="Imprimir" icon="ui-icon-print"
+                                         action="#{manActivoFijo.imprimir(2)}" 
+                                         onclick="this.form.target = '_blank';" 
+                                         ajax="false"
+                                         />
+                        <p:commandButton value="Cerrar" style=" width: 100px;"
+                                         onclick="PF('wConsultaActivoFijo').hide()"
+                                         update=":frmConsultaFijo"
+                                         icon="ui-icon-close"
+                                         />
+                    </f:facet>
+                </p:toolbar>
+                <div style=" background-color: #ebf8fe;">
+                   <h:panelGrid columns="4"> 
+                         <h:outputText value="Fecha de Inicio: " style="font-weight:bold;" />
+                         <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fIniConsulta"
+                                             readonlyInput="true" 
+                                             showOn="button" size="12"
+                                             value="#{manActivoFijo.dfIniConsulta}"
+                                             />
+                         <h:outputText value="Fecha de Fin: " style="font-weight:bold;" />
+                         <p:calendar  pattern="dd/MM/yyyy" locale="es" id="fFinConsulta"
+                                             readonlyInput="true" 
+                                             showOn="button" size="12"
+                                             value="#{manActivoFijo.dfFinConsulta}"
+                                             />
+                    </h:panelGrid>  
+                    <p:dataTable id="dtConsultaActivoFijo" var="vConsultaActivoFijo" 
+                                 value="#{manActivoFijo.activofijo}" 
+                                 emptyMessage="No se encontraron resultados" 
+                                 selectionMode="single" selection="#{manActivoFijo.catactivofijo}" 
+                                 rowKey="#{vConsultaActivoFijo.id_act_fij}"
+                                 editable="false" 
+                                 style="width:605px"
+                                 scrollable="true"
+                                 scrollHeight="95"
+                                 
+                                 >
+                        <p:ajax event="rowSelect" listener="#{manActivoFijo.onRowSelect}" 
+                                update=":frmActivoFijo" />
+                        <p:column style="width:20px" headerText="Codigo">
+                            <h:outputText value="#{vConsultaActivoFijo.codigo_equ}" />
+                        </p:column>                    
+                        <p:column style="width:80px" headerText="Descripción">
+                            <h:outputText value="#{vConsultaActivoFijo.desc_equ}" />
+                        </p:column>
+                         <p:column style="width:40px" headerText="Serie">
+                             <h:outputText value="#{vConsultaActivoFijo.serie_equ}" />
+                        </p:column>
+                         <p:column style="width:30px" headerText="Fecha Adquisición">
+                             <h:outputText value="#{vConsultaActivoFijo.fecha_adquisicion}" />
+                        </p:column>
+                        
+                    </p:dataTable>
+                </div>
+                   
+            </h:form>
+        </p:dialog>
 
     </h:body>
 

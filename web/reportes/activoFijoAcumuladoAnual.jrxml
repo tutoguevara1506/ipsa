@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d2a3c3ee-2dca-4b2e-afc8-b84e8f858729">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="2"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT
+     cat_act_fij.`id_act_fij` AS id_act_fij,
+     cat_act_fij.`id_tip_act` AS id_tip_act,
+     cat_act_fij.`desc_equ` AS desc_equ,
+     cat_act_fij.`fecha_adquisicion` AS fecha_adquisicion,
+     cat_act_fij.`valor_adqui` AS valor_adqui,
+     cat_act_fij.`id_depto` AS id_depto,
+     cat_act_fij.`dist_gast_porc` AS dist_gast_porc,
+     cat_act_fij.`seccion` AS seccion,
+     cat_act_fij.`id_estado` AS id_estado,
+     cat_act_fij.`tiempo_deprecia` AS tiempo_deprecia,
+     cat_act_fij.`cuota_mes_deprecia` AS cuota_mes_deprecia,
+     (cat_act_fij.`porcentaje_deduc`/100) AS porcentaje_deduc,
+     cat_act_fij.`porcentaje_no_deduc` AS porcentaje_no_deduc,
+     cat_act_fij.`serie_equ` AS serie_equ,
+     cat_act_fij.`modelo_equ` AS modelo_equ,
+     cat_act_fij.`no_inventario` AS no_inventario,
+     cat_act_fij.`observacion` AS observacion,
+     cat_act_fij.`codigo_equ` AS codigo_equ,
+     YEAR (cat_act_fij.`fecha_adquisicion`) AS anho_adqui
+FROM
+     `cat_act_fij` cat_act_fij
+ORDER BY YEAR (cat_act_fij.`fecha_adquisicion`) ASC]]>
+	</queryString>
+	<field name="id_act_fij" class="java.lang.Integer">
+		<fieldDescription><![CDATA[identificador del activo fijo]]></fieldDescription>
+	</field>
+	<field name="id_tip_act" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Identificador de tipo de activo]]></fieldDescription>
+	</field>
+	<field name="desc_equ" class="java.lang.String">
+		<fieldDescription><![CDATA[Descripcion del activo]]></fieldDescription>
+	</field>
+	<field name="fecha_adquisicion" class="java.sql.Date">
+		<fieldDescription><![CDATA[Fecha de adquisicion]]></fieldDescription>
+	</field>
+	<field name="valor_adqui" class="java.lang.Double">
+		<fieldDescription><![CDATA[Valor de adquisicion]]></fieldDescription>
+	</field>
+	<field name="id_depto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[identificador del departamento]]></fieldDescription>
+	</field>
+	<field name="dist_gast_porc" class="java.lang.String">
+		<fieldDescription><![CDATA[Distribucion de gastos por porcentaje]]></fieldDescription>
+	</field>
+	<field name="seccion" class="java.lang.String">
+		<fieldDescription><![CDATA[identificador de la seccion]]></fieldDescription>
+	</field>
+	<field name="id_estado" class="java.lang.Integer">
+		<fieldDescription><![CDATA[1 = nuevo 2 = usado]]></fieldDescription>
+	</field>
+	<field name="tiempo_deprecia" class="java.lang.Integer">
+		<fieldDescription><![CDATA[tiempo total en el que se depreciara el bien]]></fieldDescription>
+	</field>
+	<field name="cuota_mes_deprecia" class="java.lang.Double">
+		<fieldDescription><![CDATA[Cuota mensual de depreciacion]]></fieldDescription>
+	</field>
+	<field name="porcentaje_deduc" class="java.lang.Double">
+		<fieldDescription><![CDATA[porcentaje deducible]]></fieldDescription>
+	</field>
+	<field name="porcentaje_no_deduc" class="java.lang.Double">
+		<fieldDescription><![CDATA[porcentaje no deducible]]></fieldDescription>
+	</field>
+	<field name="serie_equ" class="java.lang.String">
+		<fieldDescription><![CDATA[serie del equipo]]></fieldDescription>
+	</field>
+	<field name="modelo_equ" class="java.lang.String">
+		<fieldDescription><![CDATA[modelo del equipo]]></fieldDescription>
+	</field>
+	<field name="no_inventario" class="java.lang.String">
+		<fieldDescription><![CDATA[numero de inventario del equipo]]></fieldDescription>
+	</field>
+	<field name="observacion" class="java.lang.String">
+		<fieldDescription><![CDATA[Observaciones]]></fieldDescription>
+	</field>
+	<field name="codigo_equ" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="anho_adqui" class="java.lang.Long"/>
+	<group name="anho_adqu">
+		<groupExpression><![CDATA[$F{fecha_adquisicion}]]></groupExpression>
+		<groupHeader>
+			<band height="35">
+				<frame>
+					<reportElement mode="Opaque" x="-21" y="7" width="843" height="24" forecolor="#B89F7D" backcolor="#F2EBDF" uuid="6ffc3256-ec54-42c6-810a-7e1fb46012f1"/>
+					<rectangle>
+						<reportElement mode="Opaque" x="25" y="0" width="36" height="24" backcolor="#736343" uuid="006f3774-d7b3-421d-806c-fc60fa5d023f"/>
+						<graphicElement>
+							<pen lineWidth="0.0"/>
+						</graphicElement>
+					</rectangle>
+					<textField>
+						<reportElement style="SubTitle" x="68" y="0" width="755" height="24" forecolor="#736343" uuid="bec490ca-62d5-47a0-a358-32cf470a5370"/>
+						<textElement>
+							<font size="16" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{anho_adqui}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="40" y="0" width="737" height="26" uuid="69dd6332-6b3c-45f4-b690-c0437800cffc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Industrias Plasticas, S.A. de C.V.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="40" y="26" width="737" height="22" uuid="802fa09b-ea9c-4f55-8053-c43eaf6c39dd"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[DETALLE DE DEPRECIACION DE ACTIVO FIJO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="48" width="248" height="17" uuid="59e27060-0fe1-4c0a-812a-77401d66a5eb"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE ACTIVO FIJO AL ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="65" width="737" height="17" uuid="bacfaec3-b759-4dad-9806-53f8575750ab"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[CIFRAS EXPRESADAS EN DOLARES DE LOS ESTADOS UNIDOS DE NORTE AMERICA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="32" width="802" height="1" uuid="23ae3cad-9040-4f76-9b03-56e3ccd4aa7e"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="15" width="47" height="15" forecolor="#736343" uuid="9d7ee0dd-3e25-42a4-897f-189521df3241"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="63" y="15" width="229" height="15" forecolor="#736343" uuid="f4a149a6-f732-49fc-a615-2d7e5313119e"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="417" y="16" width="47" height="15" forecolor="#736343" uuid="83b51e5a-529a-42aa-a301-185ed9c364d7"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Costo Adqui]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="366" y="15" width="32" height="15" forecolor="#736343" uuid="d01fe2d1-4f22-4a13-bf73-2330829f0020"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[% Aplicar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="292" y="2" width="74" height="31" forecolor="#736343" uuid="d2dbd16f-25eb-477d-8b11-795ae4f92336"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Fecha
+ Adquisicion]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="40d4b308-8ff0-4b3f-890c-443e7342bedf"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="63" y="0" width="229" height="15" uuid="51d2cfc0-a4b4-4468-8378-ad69246c2826"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{desc_equ}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="$ #,##0.00">
+					<reportElement style="Detail" x="417" y="0" width="47" height="15" uuid="515f1d88-abe5-4d07-8d92-a333c6759a56"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{valor_adqui}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0 %">
+					<reportElement style="Detail" x="366" y="0" width="32" height="15" uuid="ddf8e17b-7045-4b3c-923f-dd25c849a30c"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{porcentaje_deduc}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="4" y="0" width="47" height="15" uuid="7e9e817b-1fd7-469a-87f4-409c158edd4e"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{codigo_equ}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+					<reportElement style="Detail" x="292" y="0" width="60" height="15" uuid="12aef077-f28a-415c-9c58-e54b5baa8faa"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fecha_adquisicion}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="25986856-76d4-451d-a498-62068a0e45c1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="7430da6e-0163-4c4b-aa9e-15ee869e4f10"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="cb5c1d9b-cb36-404f-8d04-2b56e266b42d"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="5d68ae11-5210-49e4-a2b1-c70fdb8e1277"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="a9a4540a-6c78-49a9-bb6f-ed23fa0d92fe"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

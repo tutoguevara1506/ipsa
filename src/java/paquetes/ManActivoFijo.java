@@ -429,12 +429,20 @@ public class ManActivoFijo implements Serializable {
         } 
     }
     
-    public void imprimir() {
+   public void imprimir(Integer num) {
         try {
-            llenarFichaActivoFijo();
+            
             byte[] content;
+            if (num == 1){
+                llenarFichaActivoFijo();           
+                content = imprimirFichaActivoFijo();
+            }
+            else
+            {
+                content = imprimirReporteAnualActivoFijo();
+            }
+            
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-            content = imprimirFichaActivoFijo();
             response.setContentType("application/pdf");
             response.setContentLength(content == null ? 0 : content.length);
             response.getOutputStream().write(content);
@@ -461,6 +469,20 @@ public class ManActivoFijo implements Serializable {
         Accesos racc = new Accesos();
         return JasperRunManager.runReportToPdf(reportPath + File.separator + "fichaActivoFijo.jasper", param, racc.Conectar());
     }
+    
+    public byte[] imprimirReporteAnualActivoFijo() throws SQLException, JRException {
+        ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String reportPath = ctx.getRealPath(File.separator + "reportes" + File.separator);
+        HashMap param = new HashMap();
+        param.put("dfcalculo", dfcalculo);
+        param.put("id_act_fij", id_act_fij);
+        
+        //System.out.println(id_act_fij);
+
+        Accesos racc = new Accesos();
+        return JasperRunManager.runReportToPdf(reportPath + File.separator + "fichaActivoFijo.jasper", param, racc.Conectar());
+    }
+    
     
     public Date sumarMesesFecha(Date fecha, int meses){
       Calendar calendar = Calendar.getInstance();
