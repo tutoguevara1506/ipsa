@@ -198,7 +198,7 @@ and enc.det_man = $P{det_man}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{des_equ}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy h:mm a" isBlankWhenNull="true">
+			<textField pattern="dd/MM/yyyy hh:mm aaa" isBlankWhenNull="true">
 				<reportElement x="61" y="4" width="260" height="13" uuid="2c1d50e4-1180-491a-a73f-adddded89071">
 					<printWhenExpression><![CDATA["2".equals($P{det_man})]]></printWhenExpression>
 				</reportElement>

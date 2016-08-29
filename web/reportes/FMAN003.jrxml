@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9b7bf2b2-9f76-4493-92f3-1f590d9aa14b">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString language="SQL">
-		<![CDATA[select 
+		<![CDATA[select @rownum:=@rownum+1 AS rownum, t.* 
+from (SELECT @rownum:=0) r,
+(select 
 lequ.des_equ as nombre, 
 pai.nom_pai as ubicacion, 
 lequ.det_pot as potencia, 
@@ -17,7 +19,7 @@ lequ.cod_cli as observaciones
 from lis_equ as lequ
 left join cat_mar as mar on lequ.cod_pro = mar.id_mar
 left join cat_pai as pai on lequ.cod_pai = pai.cod_pai
-order by pai.nom_pai, lequ.des_equ]]>
+order by pai.nom_pai, lequ.des_equ) t]]>
 	</queryString>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="ubicacion" class="java.lang.String"/>
@@ -28,6 +30,7 @@ order by pai.nom_pai, lequ.des_equ]]>
 	<field name="marca" class="java.lang.String"/>
 	<field name="codigointerno" class="java.lang.String"/>
 	<field name="observaciones" class="java.lang.String"/>
+	<field name="rownum" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -76,7 +79,7 @@ order by pai.nom_pai, lequ.des_equ]]>
 				</textElement>
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
-			<textField pattern="EEEEE dd MMMMM yyyy hh:mm aaa">
+			<textField pattern="dd/MM/yyyy hh:mm aaa">
 				<reportElement x="39" y="0" width="144" height="20" uuid="59eec28e-7308-4561-b88a-245c72f8084a"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isStrikeThrough="false"/>
@@ -84,7 +87,7 @@ order by pai.nom_pai, lequ.des_equ]]>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="61" width="73" height="35" uuid="2fda247a-6f75-4755-b046-b359c053b7a4"/>
+				<reportElement x="21" y="61" width="72" height="35" uuid="2fda247a-6f75-4755-b046-b359c053b7a4"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -92,12 +95,12 @@ order by pai.nom_pai, lequ.des_equ]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRE DEL EQUIPO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="73" y="61" width="63" height="35" uuid="2807d322-e174-4f93-a482-fde544a9f661"/>
+				<reportElement x="93" y="61" width="53" height="35" uuid="2807d322-e174-4f93-a482-fde544a9f661"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -105,12 +108,12 @@ order by pai.nom_pai, lequ.des_equ]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[UBICACIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="136" y="61" width="53" height="35" uuid="90d7309e-0cf9-4016-a05d-aa4a9080e186"/>
+				<reportElement x="146" y="61" width="53" height="35" uuid="90d7309e-0cf9-4016-a05d-aa4a9080e186"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -118,12 +121,12 @@ order by pai.nom_pai, lequ.des_equ]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[POTENCIA (KW-HP)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="189" y="61" width="53" height="35" uuid="10dc598d-06a0-4214-98e7-0c941d8db8a0"/>
+				<reportElement x="199" y="61" width="43" height="35" uuid="10dc598d-06a0-4214-98e7-0c941d8db8a0"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -131,7 +134,7 @@ order by pai.nom_pai, lequ.des_equ]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[VOLTAJE]]></text>
 			</staticText>
@@ -144,7 +147,7 @@ order by pai.nom_pai, lequ.des_equ]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[MODELO]]></text>
 			</staticText>
@@ -157,7 +160,7 @@ order by pai.nom_pai, lequ.des_equ]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SERIE]]></text>
 			</staticText>
@@ -170,7 +173,7 @@ order by pai.nom_pai, lequ.des_equ]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[MARCA (PROCEDENCIA)]]></text>
 			</staticText>
@@ -183,7 +186,7 @@ order by pai.nom_pai, lequ.des_equ]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CÓDIGO INTERNO]]></text>
 			</staticText>
@@ -196,16 +199,29 @@ order by pai.nom_pai, lequ.des_equ]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[OBSERVACIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="61" width="20" height="35" uuid="45658bc1-9d94-40af-a59e-7ffb17f7f95f"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
 	<detail>
 		<band height="13" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="73" height="13" uuid="332a24a4-7374-4237-a04b-379f2dba2661"/>
+				<reportElement stretchType="RelativeToBandHeight" x="21" y="0" width="72" height="13" uuid="332a24a4-7374-4237-a04b-379f2dba2661"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -218,7 +234,7 @@ order by pai.nom_pai, lequ.des_equ]]>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="73" y="0" width="63" height="13" uuid="a91ae980-619c-49d2-886a-459390a8315b"/>
+				<reportElement stretchType="RelativeToBandHeight" x="93" y="0" width="53" height="13" uuid="a91ae980-619c-49d2-886a-459390a8315b"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -231,7 +247,7 @@ order by pai.nom_pai, lequ.des_equ]]>
 				<textFieldExpression><![CDATA[$F{ubicacion}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="136" y="0" width="53" height="13" uuid="b1161aca-8dc1-49e3-8a9a-8c127cbc1e97"/>
+				<reportElement stretchType="RelativeToBandHeight" x="146" y="0" width="53" height="13" uuid="b1161aca-8dc1-49e3-8a9a-8c127cbc1e97"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -244,7 +260,7 @@ order by pai.nom_pai, lequ.des_equ]]>
 				<textFieldExpression><![CDATA[$F{potencia}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="189" y="0" width="53" height="13" uuid="cc9a28e1-42fa-4188-8d8c-528631c81a3c"/>
+				<reportElement stretchType="RelativeToBandHeight" x="199" y="0" width="43" height="13" uuid="cc9a28e1-42fa-4188-8d8c-528631c81a3c"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -321,6 +337,19 @@ order by pai.nom_pai, lequ.des_equ]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="0" width="20" height="13" uuid="a2df3c18-7e8f-4b3e-9d5c-4b773e4ea0b9"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rownum}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<lastPageFooter>
@@ -338,9 +367,9 @@ order by pai.nom_pai, lequ.des_equ]]>
 			<staticText>
 				<reportElement x="279" y="76" width="293" height="20" uuid="9c544f80-0129-473b-b272-1f1dcb425b54"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[SUPERVISOR]]></text>
+				<text><![CDATA[GERENTE DE PRODUCCIÓN Y/O JEFE DE PLANTA DE FABRICACIÓN]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="42" y="56" width="22" height="20" uuid="dfb7be8f-dbe2-40b8-8f64-42df3f3e89f9"/>
@@ -352,7 +381,7 @@ order by pai.nom_pai, lequ.des_equ]]>
 			<staticText>
 				<reportElement x="0" y="76" width="279" height="20" uuid="43a35faa-a6a8-4467-9e65-d2c6f7e6fad3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[JEFE DE MANTENIMIENTO]]></text>
 			</staticText>
@@ -369,6 +398,20 @@ order by pai.nom_pai, lequ.des_equ]]>
 			<line>
 				<reportElement x="52" y="74" width="173" height="1" uuid="0a40d648-c26b-4cac-8b50-960640a66197"/>
 			</line>
+			<staticText>
+				<reportElement x="1" y="36" width="63" height="20" uuid="28f821ad-0766-4cf2-8df2-96423f0a0517"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Elaborado por:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="36" width="63" height="20" uuid="9a05bcf8-31e8-44cb-b392-905b1a4f346e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Aprobado por:]]></text>
+			</staticText>
 		</band>
 	</lastPageFooter>
 </jasperReport>

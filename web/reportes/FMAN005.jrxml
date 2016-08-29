@@ -102,7 +102,7 @@ AND mm.cod_man = $P{cod_man}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{des_equ}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy h:mm a" isBlankWhenNull="true">
+			<textField pattern="dd/MM/yyyy hh:mm aaa" isBlankWhenNull="true">
 				<reportElement x="48" y="78" width="159" height="20" uuid="156ea89b-a415-4c97-9818-909a6cfad5e4"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
