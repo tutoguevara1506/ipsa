@@ -8903,7 +8903,9 @@
                             <h:outputText value="Tiempo depreciacion" style="font-weight:bold;" />
                             <p:spacer width="10" height="0"/>
                             <p:inputText maxlength="200" size="4" value="#{manActivoFijo.tiempo_deprecia}" 
-                                         onfocus="this.select()" onkeypress="return valida(event)" valueChangeListener="#{manActivoFijo.evaluaCuota}"/>
+                                         onfocus="this.select()" onkeypress="return valida(event)">
+                                         <p:ajax event="change" listener="#{manActivoFijo.evaluaCuota()}" update="valAdq cuoDepre" />
+                            </p:inputText>
                             <p:spacer width="10" height="0"/>
                             <h:outputText value="Meses" style="font-weight:bold; width: 50px;" />
                             <p:spacer width="30" height="0"/>
