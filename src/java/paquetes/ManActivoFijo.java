@@ -412,20 +412,32 @@ public class ManActivoFijo implements Serializable {
         }
     }
     
+    public void calculaPorcentajes(){
+        Integer porcentaje = 100 - Integer.parseInt(porcentaje_no_deduc);
+        Integer porcentaje_no = 100 - Integer.parseInt(porcentaje_deduc);
+        porcentaje_no_deduc = String.valueOf(porcentaje_no); 
+        porcentaje_deduc = String.valueOf(porcentaje);
+        evaluaCuota();
+    }
+    
     public void evaluaCuota () {
+        
         if ("true".equals(dist_gast_porc)){
-            try{
-                Double cuota;
+            try{            
                 Double porcentaje = Double.parseDouble(porcentaje_deduc)/100;
-                Integer porcentaje_no = 100 - Integer.parseInt(porcentaje_deduc);
-                porcentaje_no_deduc = String.valueOf(porcentaje_no); 
-                cuota = (Double.parseDouble(valor_adqui) * porcentaje)/Integer.parseInt(tiempo_deprecia);
+                Integer tiempo = Integer.parseInt(tiempo_deprecia);
+                Double valor = Double.parseDouble(valor_adqui);
+                                                
+                if (tiempo == 0){
+                    tiempo = 1;
+                }
+                                
+                Double cuota = ( valor * porcentaje)/tiempo;
                 cuota_mes_deprecia = String.format("%1$,.2f", cuota);
             }
             catch (Exception e){
                 System.out.println("Error el calculo-- Division entre cero. " + e.getMessage());
-            }
-            
+            }            
         } 
     }
     
