@@ -60,7 +60,7 @@ public class ManActivoFijo implements Serializable {
         id_estado = "";
         tiempo_deprecia = "";
         cuota_mes_deprecia = "";
-        porcentaje_deduc = "0";
+        porcentaje_deduc = "100";
         porcentaje_no_deduc = "0";
         serie_equ = "";
         modelo_equ = "";
@@ -84,7 +84,7 @@ public class ManActivoFijo implements Serializable {
         id_estado = "";
         tiempo_deprecia = "";
         cuota_mes_deprecia = "";
-        porcentaje_deduc = "0";
+        porcentaje_deduc = "100";
         porcentaje_no_deduc = "0";
         serie_equ = "";
         modelo_equ = "";
@@ -176,7 +176,7 @@ public class ManActivoFijo implements Serializable {
         id_estado = "";
         tiempo_deprecia = "";
         cuota_mes_deprecia = "";
-        porcentaje_deduc = "0";
+        porcentaje_deduc = "100";
         porcentaje_no_deduc = "0";
         serie_equ = "";
         modelo_equ = "";
